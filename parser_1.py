@@ -102,5 +102,5 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc()
 
-result = parser.parse("整数 数字;")
+result = parser.parse("整数 dsd 数字;")
 print(result)

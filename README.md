@@ -47,3 +47,4 @@ def t_ID(t):
     t.type = reserved.get(t.value,'ID')  
     return t
 ```
+For now it has structure very similar to our previous program littleduck20 these first progress I focus in the lexer
