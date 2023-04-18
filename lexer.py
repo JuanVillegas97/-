@@ -3,15 +3,16 @@ import ply.lex as lex
 # Tuple of reserved names.
 reserved = {
     'プログラム':'PROGRAM',
-    '整数':'INT', #せいすう
-    '浮動小数点数':'FLOAT', #ふどうしょうすうてんすう
-    '文字列': 'STRING', #もじれつ
+    '整数':'INT', 
+    '浮動小数点数':'FLOAT', 
+    '文字列': 'STRING', 
     '文字':  'CHAR',
     'もし' : 'IF',
     'ならば' : 'THEN',
     '違えば' : 'ELSE',
-    '繰り返す' : 'WHILE', #ひょうじ
+    '繰り返す' : 'WHILE', 
     'プリント':'PRINT',
+    'メイン ' : 'MAIN'
 }
 
 # List of token names.
@@ -32,8 +33,11 @@ tokens = [
     'COLON',#Done
     'COMMA',#Done
     'ID', #Done
-    'CTEI', #Done
-    'CTEF', #Done
+    'CTEI',#Done
+    'CTEF',#Done
+    'CTES'#Done
+    'CTEC',#Done
+    'CTEB'
 ]+ list(reserved.values())
 
 
@@ -53,6 +57,8 @@ t_RBRACE  = r'\}'
 t_SEMICOLON = r';'
 t_COLON     = r':'
 t_COMMA     = r','
+t_PROGRAM = r'プログラム'
+t_MAIN = r'メイン'
 
 # matches any sequence of one or more characters that are either Katakana, Hiragana, or Kanji.
 def t_ID(t):
@@ -60,23 +66,23 @@ def t_ID(t):
     t.type = reserved.get(t.value,'ID')   
     return t
 
-def t_FLOAT(t):
+def t_CTEF(t):
     r'([0-9]+[.])[0-9]+'
     t.value = float(t.value)
     return t
 
-def t_INT(t):
+def t_CTEI(t):
     r'\d+'
     t.value = int(t.value)
     return t
 
-def t_STRING(t):
+def t_CTES(t):
     r'\".*?\"'
     t.value = t.value[1:-1]  # Remove quotes from value
     return t
 
 
-def t_CHAR(t):
+def t_CTEC(t):
     r'\'[^\']\''
     t.value = t.value[1:-1]  # Remove quotes from value
     return t

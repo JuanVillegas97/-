@@ -149,6 +149,8 @@
   },
   "active": "6df325236ad98c94",
   "lastOpenFiles": [
+    "parsetab.py",
+    "parser.out",
     "__pycache__/parsetab.cpython-311.pyc",
     "__pycache__/lexer.cpython-311.pyc",
     "ply/__pycache__/yacc.cpython-311.pyc"

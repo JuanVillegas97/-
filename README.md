@@ -25,18 +25,24 @@ tokens = [
 ]+ list(reserved.values())
 ```
 ### Reserved 
-| Kanji        | Hiragana                 | English |
-| ------------ | ------------------------ | ------- |
-| プログラム   | ぷろぐらむ               | PROGRAM |
-| 整数         | せいすう                 | INT     |
-| 浮動小数点数 | ふどうしょうすうてんすう | FLOAT   |
-| 文字         | もじ                     | CHAR    |
-| 文字列       | もじれつ                 | STRING  |
-| もし         | もし                     | IF      |
-| ならば       | ならば                   | THEN    |
-| 違えば       | ちがえば                 | ELSE    |
-| 繰り返す     | くりかえす               | WHILE   |
-| プリント     | ぷりんと                 | PRINT   |
+| Kanji        | Hiragana                 | English  |
+| ------------ | ------------------------ | -------- |
+| 関数         | かんすう                 | FUNCTION |
+| 整数         | せいすう                 | INT      |
+| 浮動小数点数 | ふどうしょうすうてんすう | FLOAT    |
+| 文字         | もじ                     | CHAR     |
+| 文字列       | もじれつ                 | STRING   |
+| 違えば       | ちがえば                 | ELSE     |
+| 繰り返す     | くりかえす               | WHILE    |
+| もし         | もし                     | IF       |
+| ならば       | ならば                   | THEN     |
+| ブーリアン   | ぶうりあん               | BOOLEAN  |
+| トゥルー     | とうるう                 | TRUE     |
+| フォルス     | ふぉるす                 | FALSE    |
+| メイン       | めいん                   | MAIN     |
+| プリント     | ぷりんと                 | PRINT    |
+| プログラム   | ぷろぐらむ               | PROGRAM  |
+| リターン     | りたあん                 | RETURN   |
 
 
 ## Regular expresions
@@ -48,3 +54,7 @@ def t_ID(t):
     return t
 ```
 For now it has structure very similar to our previous program littleduck20 these first progress I focus in the lexer
+
+## Second commit 
+### Thing left to do:
+A lot of thing first gotta make sure the parse does the job before star creating more parsing blockk laso I should chec that ID aldso get alphanumeric values

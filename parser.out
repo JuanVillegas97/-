@@ -2,143 +2,91 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+    CHAR
     COLON
     COMMA
+    CTEB
     CTEF
     CTEI
+    CTESCTEC
+    DIVIDE
+    ELSE
+    EQUALS
+    FLOAT
     GREATER
+    IF
+    INT
     LBRACE
     LESS
+    LPAREN
+    MAIN
+    MINUS
     NOTEQUAL
-    PROGRAM
+    PLUS
+    PRINT
     RBRACE
+    RPAREN
+    STRING
     THEN
+    TIMES
+    WHILE
 
 Grammar
 
 Rule 0     S' -> program
-Rule 1     program -> program_statement
-Rule 2     program -> empty
-Rule 3     program_statement -> var_declaration
-Rule 4     program_statement -> statement
-Rule 5     var_declaration -> type ID SEMICOLON
-Rule 6     statement -> print_statement
-Rule 7     statement -> assignment_statement
-Rule 8     statement -> if_statement
-Rule 9     statement -> while_statement
-Rule 10    print_statement -> PRINT LPAREN expression RPAREN SEMICOLON
-Rule 11    assignment_statement -> ID EQUALS expression SEMICOLON
-Rule 12    if_statement -> IF LPAREN expression RPAREN statement
-Rule 13    if_statement -> IF LPAREN expression RPAREN statement ELSE statement
-Rule 14    while_statement -> WHILE LPAREN expression RPAREN statement
-Rule 15    expression -> expression PLUS term
-Rule 16    expression -> expression MINUS term
-Rule 17    expression -> term
-Rule 18    term -> term TIMES factor
-Rule 19    term -> term DIVIDE factor
-Rule 20    term -> factor
-Rule 21    factor -> LPAREN expression RPAREN
-Rule 22    factor -> ID
-Rule 23    factor -> type
-Rule 24    type -> INT
-Rule 25    type -> FLOAT
-Rule 26    type -> STRING
-Rule 27    type -> CHAR
-Rule 28    empty -> <empty>
+Rule 1     program -> PROGRAM ID SEMICOLON
+Rule 2     empty -> <empty>
 
 Terminals, with rules where they appear
 
-CHAR                 : 27
+CHAR                 : 
 COLON                : 
 COMMA                : 
+CTEB                 : 
 CTEF                 : 
 CTEI                 : 
-DIVIDE               : 19
-ELSE                 : 13
-EQUALS               : 11
-FLOAT                : 25
+CTESCTEC             : 
+DIVIDE               : 
+ELSE                 : 
+EQUALS               : 
+FLOAT                : 
 GREATER              : 
-ID                   : 5 11 22
-IF                   : 12 13
-INT                  : 24
+ID                   : 1
+IF                   : 
+INT                  : 
 LBRACE               : 
 LESS                 : 
-LPAREN               : 10 12 13 14 21
-MINUS                : 16
+LPAREN               : 
+MAIN                 : 
+MINUS                : 
 NOTEQUAL             : 
-PLUS                 : 15
-PRINT                : 10
-PROGRAM              : 
+PLUS                 : 
+PRINT                : 
+PROGRAM              : 1
 RBRACE               : 
-RPAREN               : 10 12 13 14 21
-SEMICOLON            : 5 10 11
-STRING               : 26
+RPAREN               : 
+SEMICOLON            : 1
+STRING               : 
 THEN                 : 
-TIMES                : 18
-WHILE                : 14
+TIMES                : 
+WHILE                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-assignment_statement : 7
-empty                : 2
-expression           : 10 11 12 13 14 15 16 21
-factor               : 18 19 20
-if_statement         : 8
-print_statement      : 6
+empty                : 
 program              : 0
-program_statement    : 1
-statement            : 4 12 13 13 14
-term                 : 15 16 17 18 19
-type                 : 5 23
-var_declaration      : 3
-while_statement      : 9
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . program
-    (1) program -> . program_statement
-    (2) program -> . empty
-    (3) program_statement -> . var_declaration
-    (4) program_statement -> . statement
-    (28) empty -> .
-    (5) var_declaration -> . type ID SEMICOLON
-    (6) statement -> . print_statement
-    (7) statement -> . assignment_statement
-    (8) statement -> . if_statement
-    (9) statement -> . while_statement
-    (24) type -> . INT
-    (25) type -> . FLOAT
-    (26) type -> . STRING
-    (27) type -> . CHAR
-    (10) print_statement -> . PRINT LPAREN expression RPAREN SEMICOLON
-    (11) assignment_statement -> . ID EQUALS expression SEMICOLON
-    (12) if_statement -> . IF LPAREN expression RPAREN statement
-    (13) if_statement -> . IF LPAREN expression RPAREN statement ELSE statement
-    (14) while_statement -> . WHILE LPAREN expression RPAREN statement
+    (1) program -> . PROGRAM ID SEMICOLON
 
-    $end            reduce using rule 28 (empty -> .)
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-    CHAR            shift and go to state 15
-    PRINT           shift and go to state 16
-    ID              shift and go to state 7
-    IF              shift and go to state 17
-    WHILE           shift and go to state 18
+    PROGRAM         shift and go to state 2
 
     program                        shift and go to state 1
-    program_statement              shift and go to state 2
-    empty                          shift and go to state 3
-    var_declaration                shift and go to state 4
-    statement                      shift and go to state 5
-    type                           shift and go to state 6
-    print_statement                shift and go to state 8
-    assignment_statement           shift and go to state 9
-    if_statement                   shift and go to state 10
-    while_statement                shift and go to state 11
 
 state 1
 
@@ -148,698 +96,21 @@ state 1
 
 state 2
 
-    (1) program -> program_statement .
+    (1) program -> PROGRAM . ID SEMICOLON
 
-    $end            reduce using rule 1 (program -> program_statement .)
+    ID              shift and go to state 3
 
 
 state 3
 
-    (2) program -> empty .
+    (1) program -> PROGRAM ID . SEMICOLON
 
-    $end            reduce using rule 2 (program -> empty .)
+    SEMICOLON       shift and go to state 4
 
 
 state 4
 
-    (3) program_statement -> var_declaration .
+    (1) program -> PROGRAM ID SEMICOLON .
 
-    $end            reduce using rule 3 (program_statement -> var_declaration .)
+    $end            reduce using rule 1 (program -> PROGRAM ID SEMICOLON .)
 
-
-state 5
-
-    (4) program_statement -> statement .
-
-    $end            reduce using rule 4 (program_statement -> statement .)
-
-
-state 6
-
-    (5) var_declaration -> type . ID SEMICOLON
-
-    ID              shift and go to state 19
-
-
-state 7
-
-    (11) assignment_statement -> ID . EQUALS expression SEMICOLON
-
-    EQUALS          shift and go to state 20
-
-
-state 8
-
-    (6) statement -> print_statement .
-
-    $end            reduce using rule 6 (statement -> print_statement .)
-    ELSE            reduce using rule 6 (statement -> print_statement .)
-
-
-state 9
-
-    (7) statement -> assignment_statement .
-
-    $end            reduce using rule 7 (statement -> assignment_statement .)
-    ELSE            reduce using rule 7 (statement -> assignment_statement .)
-
-
-state 10
-
-    (8) statement -> if_statement .
-
-    $end            reduce using rule 8 (statement -> if_statement .)
-    ELSE            reduce using rule 8 (statement -> if_statement .)
-
-
-state 11
-
-    (9) statement -> while_statement .
-
-    $end            reduce using rule 9 (statement -> while_statement .)
-    ELSE            reduce using rule 9 (statement -> while_statement .)
-
-
-state 12
-
-    (24) type -> INT .
-
-    ID              reduce using rule 24 (type -> INT .)
-    TIMES           reduce using rule 24 (type -> INT .)
-    DIVIDE          reduce using rule 24 (type -> INT .)
-    SEMICOLON       reduce using rule 24 (type -> INT .)
-    PLUS            reduce using rule 24 (type -> INT .)
-    MINUS           reduce using rule 24 (type -> INT .)
-    RPAREN          reduce using rule 24 (type -> INT .)
-
-
-state 13
-
-    (25) type -> FLOAT .
-
-    ID              reduce using rule 25 (type -> FLOAT .)
-    TIMES           reduce using rule 25 (type -> FLOAT .)
-    DIVIDE          reduce using rule 25 (type -> FLOAT .)
-    SEMICOLON       reduce using rule 25 (type -> FLOAT .)
-    PLUS            reduce using rule 25 (type -> FLOAT .)
-    MINUS           reduce using rule 25 (type -> FLOAT .)
-    RPAREN          reduce using rule 25 (type -> FLOAT .)
-
-
-state 14
-
-    (26) type -> STRING .
-
-    ID              reduce using rule 26 (type -> STRING .)
-    TIMES           reduce using rule 26 (type -> STRING .)
-    DIVIDE          reduce using rule 26 (type -> STRING .)
-    SEMICOLON       reduce using rule 26 (type -> STRING .)
-    PLUS            reduce using rule 26 (type -> STRING .)
-    MINUS           reduce using rule 26 (type -> STRING .)
-    RPAREN          reduce using rule 26 (type -> STRING .)
-
-
-state 15
-
-    (27) type -> CHAR .
-
-    ID              reduce using rule 27 (type -> CHAR .)
-    TIMES           reduce using rule 27 (type -> CHAR .)
-    DIVIDE          reduce using rule 27 (type -> CHAR .)
-    SEMICOLON       reduce using rule 27 (type -> CHAR .)
-    PLUS            reduce using rule 27 (type -> CHAR .)
-    MINUS           reduce using rule 27 (type -> CHAR .)
-    RPAREN          reduce using rule 27 (type -> CHAR .)
-
-
-state 16
-
-    (10) print_statement -> PRINT . LPAREN expression RPAREN SEMICOLON
-
-    LPAREN          shift and go to state 21
-
-
-state 17
-
-    (12) if_statement -> IF . LPAREN expression RPAREN statement
-    (13) if_statement -> IF . LPAREN expression RPAREN statement ELSE statement
-
-    LPAREN          shift and go to state 22
-
-
-state 18
-
-    (14) while_statement -> WHILE . LPAREN expression RPAREN statement
-
-    LPAREN          shift and go to state 23
-
-
-state 19
-
-    (5) var_declaration -> type ID . SEMICOLON
-
-    SEMICOLON       shift and go to state 24
-
-
-state 20
-
-    (11) assignment_statement -> ID EQUALS . expression SEMICOLON
-    (15) expression -> . expression PLUS term
-    (16) expression -> . expression MINUS term
-    (17) expression -> . term
-    (18) term -> . term TIMES factor
-    (19) term -> . term DIVIDE factor
-    (20) term -> . factor
-    (21) factor -> . LPAREN expression RPAREN
-    (22) factor -> . ID
-    (23) factor -> . type
-    (24) type -> . INT
-    (25) type -> . FLOAT
-    (26) type -> . STRING
-    (27) type -> . CHAR
-
-    LPAREN          shift and go to state 29
-    ID              shift and go to state 25
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-    CHAR            shift and go to state 15
-
-    expression                     shift and go to state 26
-    term                           shift and go to state 27
-    factor                         shift and go to state 28
-    type                           shift and go to state 30
-
-state 21
-
-    (10) print_statement -> PRINT LPAREN . expression RPAREN SEMICOLON
-    (15) expression -> . expression PLUS term
-    (16) expression -> . expression MINUS term
-    (17) expression -> . term
-    (18) term -> . term TIMES factor
-    (19) term -> . term DIVIDE factor
-    (20) term -> . factor
-    (21) factor -> . LPAREN expression RPAREN
-    (22) factor -> . ID
-    (23) factor -> . type
-    (24) type -> . INT
-    (25) type -> . FLOAT
-    (26) type -> . STRING
-    (27) type -> . CHAR
-
-    LPAREN          shift and go to state 29
-    ID              shift and go to state 25
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-    CHAR            shift and go to state 15
-
-    expression                     shift and go to state 31
-    term                           shift and go to state 27
-    factor                         shift and go to state 28
-    type                           shift and go to state 30
-
-state 22
-
-    (12) if_statement -> IF LPAREN . expression RPAREN statement
-    (13) if_statement -> IF LPAREN . expression RPAREN statement ELSE statement
-    (15) expression -> . expression PLUS term
-    (16) expression -> . expression MINUS term
-    (17) expression -> . term
-    (18) term -> . term TIMES factor
-    (19) term -> . term DIVIDE factor
-    (20) term -> . factor
-    (21) factor -> . LPAREN expression RPAREN
-    (22) factor -> . ID
-    (23) factor -> . type
-    (24) type -> . INT
-    (25) type -> . FLOAT
-    (26) type -> . STRING
-    (27) type -> . CHAR
-
-    LPAREN          shift and go to state 29
-    ID              shift and go to state 25
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-    CHAR            shift and go to state 15
-
-    expression                     shift and go to state 32
-    term                           shift and go to state 27
-    factor                         shift and go to state 28
-    type                           shift and go to state 30
-
-state 23
-
-    (14) while_statement -> WHILE LPAREN . expression RPAREN statement
-    (15) expression -> . expression PLUS term
-    (16) expression -> . expression MINUS term
-    (17) expression -> . term
-    (18) term -> . term TIMES factor
-    (19) term -> . term DIVIDE factor
-    (20) term -> . factor
-    (21) factor -> . LPAREN expression RPAREN
-    (22) factor -> . ID
-    (23) factor -> . type
-    (24) type -> . INT
-    (25) type -> . FLOAT
-    (26) type -> . STRING
-    (27) type -> . CHAR
-
-    LPAREN          shift and go to state 29
-    ID              shift and go to state 25
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-    CHAR            shift and go to state 15
-
-    expression                     shift and go to state 33
-    term                           shift and go to state 27
-    factor                         shift and go to state 28
-    type                           shift and go to state 30
-
-state 24
-
-    (5) var_declaration -> type ID SEMICOLON .
-
-    $end            reduce using rule 5 (var_declaration -> type ID SEMICOLON .)
-
-
-state 25
-
-    (22) factor -> ID .
-
-    TIMES           reduce using rule 22 (factor -> ID .)
-    DIVIDE          reduce using rule 22 (factor -> ID .)
-    SEMICOLON       reduce using rule 22 (factor -> ID .)
-    PLUS            reduce using rule 22 (factor -> ID .)
-    MINUS           reduce using rule 22 (factor -> ID .)
-    RPAREN          reduce using rule 22 (factor -> ID .)
-
-
-state 26
-
-    (11) assignment_statement -> ID EQUALS expression . SEMICOLON
-    (15) expression -> expression . PLUS term
-    (16) expression -> expression . MINUS term
-
-    SEMICOLON       shift and go to state 34
-    PLUS            shift and go to state 35
-    MINUS           shift and go to state 36
-
-
-state 27
-
-    (17) expression -> term .
-    (18) term -> term . TIMES factor
-    (19) term -> term . DIVIDE factor
-
-    SEMICOLON       reduce using rule 17 (expression -> term .)
-    PLUS            reduce using rule 17 (expression -> term .)
-    MINUS           reduce using rule 17 (expression -> term .)
-    RPAREN          reduce using rule 17 (expression -> term .)
-    TIMES           shift and go to state 37
-    DIVIDE          shift and go to state 38
-
-
-state 28
-
-    (20) term -> factor .
-
-    TIMES           reduce using rule 20 (term -> factor .)
-    DIVIDE          reduce using rule 20 (term -> factor .)
-    SEMICOLON       reduce using rule 20 (term -> factor .)
-    PLUS            reduce using rule 20 (term -> factor .)
-    MINUS           reduce using rule 20 (term -> factor .)
-    RPAREN          reduce using rule 20 (term -> factor .)
-
-
-state 29
-
-    (21) factor -> LPAREN . expression RPAREN
-    (15) expression -> . expression PLUS term
-    (16) expression -> . expression MINUS term
-    (17) expression -> . term
-    (18) term -> . term TIMES factor
-    (19) term -> . term DIVIDE factor
-    (20) term -> . factor
-    (21) factor -> . LPAREN expression RPAREN
-    (22) factor -> . ID
-    (23) factor -> . type
-    (24) type -> . INT
-    (25) type -> . FLOAT
-    (26) type -> . STRING
-    (27) type -> . CHAR
-
-    LPAREN          shift and go to state 29
-    ID              shift and go to state 25
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-    CHAR            shift and go to state 15
-
-    expression                     shift and go to state 39
-    term                           shift and go to state 27
-    factor                         shift and go to state 28
-    type                           shift and go to state 30
-
-state 30
-
-    (23) factor -> type .
-
-    TIMES           reduce using rule 23 (factor -> type .)
-    DIVIDE          reduce using rule 23 (factor -> type .)
-    SEMICOLON       reduce using rule 23 (factor -> type .)
-    PLUS            reduce using rule 23 (factor -> type .)
-    MINUS           reduce using rule 23 (factor -> type .)
-    RPAREN          reduce using rule 23 (factor -> type .)
-
-
-state 31
-
-    (10) print_statement -> PRINT LPAREN expression . RPAREN SEMICOLON
-    (15) expression -> expression . PLUS term
-    (16) expression -> expression . MINUS term
-
-    RPAREN          shift and go to state 40
-    PLUS            shift and go to state 35
-    MINUS           shift and go to state 36
-
-
-state 32
-
-    (12) if_statement -> IF LPAREN expression . RPAREN statement
-    (13) if_statement -> IF LPAREN expression . RPAREN statement ELSE statement
-    (15) expression -> expression . PLUS term
-    (16) expression -> expression . MINUS term
-
-    RPAREN          shift and go to state 41
-    PLUS            shift and go to state 35
-    MINUS           shift and go to state 36
-
-
-state 33
-
-    (14) while_statement -> WHILE LPAREN expression . RPAREN statement
-    (15) expression -> expression . PLUS term
-    (16) expression -> expression . MINUS term
-
-    RPAREN          shift and go to state 42
-    PLUS            shift and go to state 35
-    MINUS           shift and go to state 36
-
-
-state 34
-
-    (11) assignment_statement -> ID EQUALS expression SEMICOLON .
-
-    $end            reduce using rule 11 (assignment_statement -> ID EQUALS expression SEMICOLON .)
-    ELSE            reduce using rule 11 (assignment_statement -> ID EQUALS expression SEMICOLON .)
-
-
-state 35
-
-    (15) expression -> expression PLUS . term
-    (18) term -> . term TIMES factor
-    (19) term -> . term DIVIDE factor
-    (20) term -> . factor
-    (21) factor -> . LPAREN expression RPAREN
-    (22) factor -> . ID
-    (23) factor -> . type
-    (24) type -> . INT
-    (25) type -> . FLOAT
-    (26) type -> . STRING
-    (27) type -> . CHAR
-
-    LPAREN          shift and go to state 29
-    ID              shift and go to state 25
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-    CHAR            shift and go to state 15
-
-    term                           shift and go to state 43
-    factor                         shift and go to state 28
-    type                           shift and go to state 30
-
-state 36
-
-    (16) expression -> expression MINUS . term
-    (18) term -> . term TIMES factor
-    (19) term -> . term DIVIDE factor
-    (20) term -> . factor
-    (21) factor -> . LPAREN expression RPAREN
-    (22) factor -> . ID
-    (23) factor -> . type
-    (24) type -> . INT
-    (25) type -> . FLOAT
-    (26) type -> . STRING
-    (27) type -> . CHAR
-
-    LPAREN          shift and go to state 29
-    ID              shift and go to state 25
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-    CHAR            shift and go to state 15
-
-    term                           shift and go to state 44
-    factor                         shift and go to state 28
-    type                           shift and go to state 30
-
-state 37
-
-    (18) term -> term TIMES . factor
-    (21) factor -> . LPAREN expression RPAREN
-    (22) factor -> . ID
-    (23) factor -> . type
-    (24) type -> . INT
-    (25) type -> . FLOAT
-    (26) type -> . STRING
-    (27) type -> . CHAR
-
-    LPAREN          shift and go to state 29
-    ID              shift and go to state 25
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-    CHAR            shift and go to state 15
-
-    factor                         shift and go to state 45
-    type                           shift and go to state 30
-
-state 38
-
-    (19) term -> term DIVIDE . factor
-    (21) factor -> . LPAREN expression RPAREN
-    (22) factor -> . ID
-    (23) factor -> . type
-    (24) type -> . INT
-    (25) type -> . FLOAT
-    (26) type -> . STRING
-    (27) type -> . CHAR
-
-    LPAREN          shift and go to state 29
-    ID              shift and go to state 25
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-    CHAR            shift and go to state 15
-
-    factor                         shift and go to state 46
-    type                           shift and go to state 30
-
-state 39
-
-    (21) factor -> LPAREN expression . RPAREN
-    (15) expression -> expression . PLUS term
-    (16) expression -> expression . MINUS term
-
-    RPAREN          shift and go to state 47
-    PLUS            shift and go to state 35
-    MINUS           shift and go to state 36
-
-
-state 40
-
-    (10) print_statement -> PRINT LPAREN expression RPAREN . SEMICOLON
-
-    SEMICOLON       shift and go to state 48
-
-
-state 41
-
-    (12) if_statement -> IF LPAREN expression RPAREN . statement
-    (13) if_statement -> IF LPAREN expression RPAREN . statement ELSE statement
-    (6) statement -> . print_statement
-    (7) statement -> . assignment_statement
-    (8) statement -> . if_statement
-    (9) statement -> . while_statement
-    (10) print_statement -> . PRINT LPAREN expression RPAREN SEMICOLON
-    (11) assignment_statement -> . ID EQUALS expression SEMICOLON
-    (12) if_statement -> . IF LPAREN expression RPAREN statement
-    (13) if_statement -> . IF LPAREN expression RPAREN statement ELSE statement
-    (14) while_statement -> . WHILE LPAREN expression RPAREN statement
-
-    PRINT           shift and go to state 16
-    ID              shift and go to state 7
-    IF              shift and go to state 17
-    WHILE           shift and go to state 18
-
-    statement                      shift and go to state 49
-    print_statement                shift and go to state 8
-    assignment_statement           shift and go to state 9
-    if_statement                   shift and go to state 10
-    while_statement                shift and go to state 11
-
-state 42
-
-    (14) while_statement -> WHILE LPAREN expression RPAREN . statement
-    (6) statement -> . print_statement
-    (7) statement -> . assignment_statement
-    (8) statement -> . if_statement
-    (9) statement -> . while_statement
-    (10) print_statement -> . PRINT LPAREN expression RPAREN SEMICOLON
-    (11) assignment_statement -> . ID EQUALS expression SEMICOLON
-    (12) if_statement -> . IF LPAREN expression RPAREN statement
-    (13) if_statement -> . IF LPAREN expression RPAREN statement ELSE statement
-    (14) while_statement -> . WHILE LPAREN expression RPAREN statement
-
-    PRINT           shift and go to state 16
-    ID              shift and go to state 7
-    IF              shift and go to state 17
-    WHILE           shift and go to state 18
-
-    statement                      shift and go to state 50
-    print_statement                shift and go to state 8
-    assignment_statement           shift and go to state 9
-    if_statement                   shift and go to state 10
-    while_statement                shift and go to state 11
-
-state 43
-
-    (15) expression -> expression PLUS term .
-    (18) term -> term . TIMES factor
-    (19) term -> term . DIVIDE factor
-
-    SEMICOLON       reduce using rule 15 (expression -> expression PLUS term .)
-    PLUS            reduce using rule 15 (expression -> expression PLUS term .)
-    MINUS           reduce using rule 15 (expression -> expression PLUS term .)
-    RPAREN          reduce using rule 15 (expression -> expression PLUS term .)
-    TIMES           shift and go to state 37
-    DIVIDE          shift and go to state 38
-
-
-state 44
-
-    (16) expression -> expression MINUS term .
-    (18) term -> term . TIMES factor
-    (19) term -> term . DIVIDE factor
-
-    SEMICOLON       reduce using rule 16 (expression -> expression MINUS term .)
-    PLUS            reduce using rule 16 (expression -> expression MINUS term .)
-    MINUS           reduce using rule 16 (expression -> expression MINUS term .)
-    RPAREN          reduce using rule 16 (expression -> expression MINUS term .)
-    TIMES           shift and go to state 37
-    DIVIDE          shift and go to state 38
-
-
-state 45
-
-    (18) term -> term TIMES factor .
-
-    TIMES           reduce using rule 18 (term -> term TIMES factor .)
-    DIVIDE          reduce using rule 18 (term -> term TIMES factor .)
-    SEMICOLON       reduce using rule 18 (term -> term TIMES factor .)
-    PLUS            reduce using rule 18 (term -> term TIMES factor .)
-    MINUS           reduce using rule 18 (term -> term TIMES factor .)
-    RPAREN          reduce using rule 18 (term -> term TIMES factor .)
-
-
-state 46
-
-    (19) term -> term DIVIDE factor .
-
-    TIMES           reduce using rule 19 (term -> term DIVIDE factor .)
-    DIVIDE          reduce using rule 19 (term -> term DIVIDE factor .)
-    SEMICOLON       reduce using rule 19 (term -> term DIVIDE factor .)
-    PLUS            reduce using rule 19 (term -> term DIVIDE factor .)
-    MINUS           reduce using rule 19 (term -> term DIVIDE factor .)
-    RPAREN          reduce using rule 19 (term -> term DIVIDE factor .)
-
-
-state 47
-
-    (21) factor -> LPAREN expression RPAREN .
-
-    TIMES           reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-    SEMICOLON       reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-
-
-state 48
-
-    (10) print_statement -> PRINT LPAREN expression RPAREN SEMICOLON .
-
-    $end            reduce using rule 10 (print_statement -> PRINT LPAREN expression RPAREN SEMICOLON .)
-    ELSE            reduce using rule 10 (print_statement -> PRINT LPAREN expression RPAREN SEMICOLON .)
-
-
-state 49
-
-    (12) if_statement -> IF LPAREN expression RPAREN statement .
-    (13) if_statement -> IF LPAREN expression RPAREN statement . ELSE statement
-
-  ! shift/reduce conflict for ELSE resolved as shift
-    $end            reduce using rule 12 (if_statement -> IF LPAREN expression RPAREN statement .)
-    ELSE            shift and go to state 51
-
-  ! ELSE            [ reduce using rule 12 (if_statement -> IF LPAREN expression RPAREN statement .) ]
-
-
-state 50
-
-    (14) while_statement -> WHILE LPAREN expression RPAREN statement .
-
-    $end            reduce using rule 14 (while_statement -> WHILE LPAREN expression RPAREN statement .)
-    ELSE            reduce using rule 14 (while_statement -> WHILE LPAREN expression RPAREN statement .)
-
-
-state 51
-
-    (13) if_statement -> IF LPAREN expression RPAREN statement ELSE . statement
-    (6) statement -> . print_statement
-    (7) statement -> . assignment_statement
-    (8) statement -> . if_statement
-    (9) statement -> . while_statement
-    (10) print_statement -> . PRINT LPAREN expression RPAREN SEMICOLON
-    (11) assignment_statement -> . ID EQUALS expression SEMICOLON
-    (12) if_statement -> . IF LPAREN expression RPAREN statement
-    (13) if_statement -> . IF LPAREN expression RPAREN statement ELSE statement
-    (14) while_statement -> . WHILE LPAREN expression RPAREN statement
-
-    PRINT           shift and go to state 16
-    ID              shift and go to state 7
-    IF              shift and go to state 17
-    WHILE           shift and go to state 18
-
-    statement                      shift and go to state 52
-    print_statement                shift and go to state 8
-    assignment_statement           shift and go to state 9
-    if_statement                   shift and go to state 10
-    while_statement                shift and go to state 11
-
-state 52
-
-    (13) if_statement -> IF LPAREN expression RPAREN statement ELSE statement .
-
-    $end            reduce using rule 13 (if_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
-    ELSE            reduce using rule 13 (if_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
-
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for ELSE in state 49 resolved as shift
