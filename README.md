@@ -58,3 +58,5 @@ For now it has structure very similar to our previous program littleduck20 these
 ## Second commit 
 ### Thing left to do:
 A lot of thing first gotta make sure the parse does the job before star creating more parsing blockk laso I should chec that ID aldso get alphanumeric values
+## Third commit 
+Well I changed the regular expression of ID to a mix of Japanese and English words,

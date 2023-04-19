@@ -12,7 +12,12 @@ reserved = {
     '違えば' : 'ELSE',
     '繰り返す' : 'WHILE', 
     'プリント':'PRINT',
-    'メイン ' : 'MAIN'
+    'メイン ' : 'MAIN',
+    'ブーリアン' : 'BOOLEAN',
+    'トゥルー' : 'TRUE',
+    'フォルス' : 'FALSE',
+    'プリント' : 'PRINT',
+    'リターン' : 'RETURN',
 }
 
 # List of token names.
@@ -35,9 +40,11 @@ tokens = [
     'ID', #Done
     'CTEI',#Done
     'CTEF',#Done
-    'CTES'#Done
+    'CTES',#Done
     'CTEC',#Done
-    'CTEB'
+    'CTEB',#Done
+    'RBRACK',#Done
+    'LBRACK',#Done
 ]+ list(reserved.values())
 
 
@@ -54,15 +61,15 @@ t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
 t_LBRACE   = r'\{'
 t_RBRACE  = r'\}'
+t_LBRACK = r'\['
+t_RBRACK  = r'\]'
 t_SEMICOLON = r';'
 t_COLON     = r':'
 t_COMMA     = r','
-t_PROGRAM = r'プログラム'
-t_MAIN = r'メイン'
 
-# matches any sequence of one or more characters that are either Katakana, Hiragana, or Kanji.
+
 def t_ID(t):
-    r'[\u30A0-\u30FF\u3040-\u309F\u4E00-\u9FFF]+' 
+    r'[\u30A0-\u30FF\u3040-\u309F\u4E00-\u9FFF]+|[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'ID')   
     return t
 
@@ -76,11 +83,17 @@ def t_CTEI(t):
     t.value = int(t.value)
     return t
 
+def t_CTEB(t):
+    r'\s*(true|false)\s*'
+    t.type = 'CTEB'
+    t.value = t.value.strip()# strip whitespace and convert to lowercase
+    return t
+
+
 def t_CTES(t):
     r'\".*?\"'
     t.value = t.value[1:-1]  # Remove quotes from value
     return t
-
 
 def t_CTEC(t):
     r'\'[^\']\''
@@ -97,7 +110,7 @@ t_ignore  = ' \t'
 
 # Error handling rule
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    print("Illegal character '{}' at: {}".format(t.value[0], t.lexer.lineno))
     t.lexer.skip(1)
 
 # Build the lexer
