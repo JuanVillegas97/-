@@ -18,6 +18,7 @@ reserved = {
     'フォルス' : 'FALSE',
     'プリント' : 'PRINT',
     'リターン' : 'RETURN',
+    '変数': 'VARIABLE',
 }
 
 # List of token names.
@@ -45,6 +46,7 @@ tokens = [
     'CTEB',#Done
     'RBRACK',#Done
     'LBRACK',#Done
+    'COMMENT',#Done
 ]+ list(reserved.values())
 
 
@@ -104,6 +106,10 @@ def t_CTEC(t):
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
+def t_COMMENT(t):
+    r'\/\/.*'
+    pass # ignore comments
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'BOOLEAN CHAR COLON COMMA CTEB CTEC CTEF CTEI CTES DIVIDE ELSE EQUALS FALSE FLOAT GREATER ID IF INT LBRACE LBRACK LESS LPAREN MAIN MINUS NOTEQUAL PLUS PRINT PROGRAM RBRACE RBRACK RETURN RPAREN SEMICOLON STRING THEN TIMES TRUE WHILE\n    program : PROGRAM LPAREN RPAREN block\n    \n    block : LBRACE statement_list RBRACE\n            | empty\n    \n    statement_list : statement\n                    | statement_list statement\n    \n    statement : variable_declaration\n                | variable_assignation\n    \n    variable_assignation : ID EQUALS expression SEMICOLON\n    \n    variable_declaration : simple_type id_list SEMICOLON\n                        | simple_type LBRACK CTEI RBRACK id_list SEMICOLON\n    \n    id_list : ID\n            | id_list COMMA ID\n    \n    simple_type : INT\n                | FLOAT\n                | CHAR\n                | STRING\n                | BOOLEAN\n    \n    expression : factor \n                | expression PLUS factor\n                | expression MINUS factor\n    \n    term : factor \n        | term TIMES factor\n        | term DIVIDE factor\n    \n    factor : ID\n        | cte\n        | LPAREN expression RPAREN\n    \n    cte : CTEI\n        | CTEF\n        | CTEC\n        | CTES\n        | CTEB\n    \n    empty :\n    '
+_lr_signature = 'BOOLEAN CHAR COLON COMMA COMMENT CTEB CTEC CTEF CTEI CTES DIVIDE ELSE EQUALS FALSE FLOAT GREATER ID IF INT LBRACE LBRACK LESS LPAREN MAIN MINUS NOTEQUAL PLUS PRINT PROGRAM RBRACE RBRACK RETURN RPAREN SEMICOLON STRING THEN TIMES TRUE VARIABLE WHILE\n    program : PROGRAM ID SEMICOLON var_declaration\n    \n    var_declaration : VARIABLE simple_type variables SEMICOLON\n    \n    variables : variables COMMA variable\n            | variable\n    \n    variable : ID\n            | ID LBRACK expression RBRACK\n            | ID LBRACK expression RBRACK LBRACK expression RBRACK\n    \n    simple_type : INT\n                | FLOAT\n                | CHAR\n                | STRING\n                | BOOLEAN\n    \n    expression : term \n                | term PLUS term\n                | term MINUS term\n    \n    term : factor \n        | factor TIMES factor\n        | factor DIVIDE factor\n    \n    factor : variable\n        | cte\n        | LPAREN expression RPAREN \n    \n    cte : CTEI\n        | CTEF\n        | CTEC\n        | CTES\n        | CTEB\n    '
     
-_lr_action_items = {'PROGRAM':([0,],[2,]),'$end':([1,4,5,7,19,],[0,-32,-1,-3,-2,]),'LPAREN':([2,24,32,41,42,],[3,32,32,32,32,]),'RPAREN':([3,28,30,31,33,34,35,36,37,43,45,46,47,],[4,-24,-18,-25,-27,-28,-29,-30,-31,47,-19,-20,-26,]),'LBRACE':([4,],[6,]),'ID':([6,8,9,10,11,12,14,15,16,17,18,20,24,25,26,32,39,40,41,42,48,],[13,13,-4,-6,-7,23,-13,-14,-15,-16,-17,-5,28,-9,38,28,23,-8,28,28,-10,]),'INT':([6,8,9,10,11,20,25,40,48,],[14,14,-4,-6,-7,-5,-9,-8,-10,]),'FLOAT':([6,8,9,10,11,20,25,40,48,],[15,15,-4,-6,-7,-5,-9,-8,-10,]),'CHAR':([6,8,9,10,11,20,25,40,48,],[16,16,-4,-6,-7,-5,-9,-8,-10,]),'STRING':([6,8,9,10,11,20,25,40,48,],[17,17,-4,-6,-7,-5,-9,-8,-10,]),'BOOLEAN':([6,8,9,10,11,20,25,40,48,],[18,18,-4,-6,-7,-5,-9,-8,-10,]),'RBRACE':([8,9,10,11,20,25,40,48,],[19,-4,-6,-7,-5,-9,-8,-10,]),'LBRACK':([12,14,15,16,17,18,],[22,-13,-14,-15,-16,-17,]),'EQUALS':([13,],[24,]),'SEMICOLON':([21,23,28,29,30,31,33,34,35,36,37,38,44,45,46,47,],[25,-11,-24,40,-18,-25,-27,-28,-29,-30,-31,-12,48,-19,-20,-26,]),'COMMA':([21,23,38,44,],[26,-11,-12,26,]),'CTEI':([22,24,32,41,42,],[27,33,33,33,33,]),'CTEF':([24,32,41,42,],[34,34,34,34,]),'CTEC':([24,32,41,42,],[35,35,35,35,]),'CTES':([24,32,41,42,],[36,36,36,36,]),'CTEB':([24,32,41,42,],[37,37,37,37,]),'RBRACK':([27,],[39,]),'PLUS':([28,29,30,31,33,34,35,36,37,43,45,46,47,],[-24,41,-18,-25,-27,-28,-29,-30,-31,41,-19,-20,-26,]),'MINUS':([28,29,30,31,33,34,35,36,37,43,45,46,47,],[-24,42,-18,-25,-27,-28,-29,-30,-31,42,-19,-20,-26,]),}
+_lr_action_items = {'PROGRAM':([0,],[2,]),'$end':([1,5,16,],[0,-1,-2,]),'ID':([2,7,8,9,10,11,12,17,18,25,32,33,34,35,37,],[3,15,-8,-9,-10,-11,-12,15,15,15,15,15,15,15,15,]),'SEMICOLON':([3,13,14,15,19,31,44,],[4,16,-4,-5,-3,-6,-7,]),'VARIABLE':([4,],[6,]),'INT':([6,],[8,]),'FLOAT':([6,],[9,]),'CHAR':([6,],[10,]),'STRING':([6,],[11,]),'BOOLEAN':([6,],[12,]),'COMMA':([13,14,15,19,31,44,],[17,-4,-5,-3,-6,-7,]),'TIMES':([15,22,23,24,26,27,28,29,30,31,42,44,],[-5,34,-19,-20,-22,-23,-24,-25,-26,-6,-21,-7,]),'DIVIDE':([15,22,23,24,26,27,28,29,30,31,42,44,],[-5,35,-19,-20,-22,-23,-24,-25,-26,-6,-21,-7,]),'PLUS':([15,21,22,23,24,26,27,28,29,30,31,40,41,42,44,],[-5,32,-16,-19,-20,-22,-23,-24,-25,-26,-6,-17,-18,-21,-7,]),'MINUS':([15,21,22,23,24,26,27,28,29,30,31,40,41,42,44,],[-5,33,-16,-19,-20,-22,-23,-24,-25,-26,-6,-17,-18,-21,-7,]),'RBRACK':([15,20,21,22,23,24,26,27,28,29,30,31,38,39,40,41,42,43,44,],[-5,31,-13,-16,-19,-20,-22,-23,-24,-25,-26,-6,-14,-15,-17,-18,-21,44,-7,]),'RPAREN':([15,21,22,23,24,26,27,28,29,30,31,36,38,39,40,41,42,44,],[-5,-13,-16,-19,-20,-22,-23,-24,-25,-26,-6,42,-14,-15,-17,-18,-21,-7,]),'LBRACK':([15,31,],[18,37,]),'LPAREN':([18,25,32,33,34,35,37,],[25,25,25,25,25,25,25,]),'CTEI':([18,25,32,33,34,35,37,],[26,26,26,26,26,26,26,]),'CTEF':([18,25,32,33,34,35,37,],[27,27,27,27,27,27,27,]),'CTEC':([18,25,32,33,34,35,37,],[28,28,28,28,28,28,28,]),'CTES':([18,25,32,33,34,35,37,],[29,29,29,29,29,29,29,]),'CTEB':([18,25,32,33,34,35,37,],[30,30,30,30,30,30,30,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'block':([4,],[5,]),'empty':([4,],[7,]),'statement_list':([6,],[8,]),'statement':([6,8,],[9,20,]),'variable_declaration':([6,8,],[10,10,]),'variable_assignation':([6,8,],[11,11,]),'simple_type':([6,8,],[12,12,]),'id_list':([12,39,],[21,44,]),'expression':([24,32,],[29,43,]),'factor':([24,32,41,42,],[30,30,45,46,]),'cte':([24,32,41,42,],[31,31,31,31,]),}
+_lr_goto_items = {'program':([0,],[1,]),'var_declaration':([4,],[5,]),'simple_type':([6,],[7,]),'variables':([7,],[13,]),'variable':([7,17,18,25,32,33,34,35,37,],[14,19,23,23,23,23,23,23,23,]),'expression':([18,25,37,],[20,36,43,]),'term':([18,25,32,33,37,],[21,21,38,39,21,]),'factor':([18,25,32,33,34,35,37,],[22,22,22,22,40,41,22,]),'cte':([18,25,32,33,34,35,37,],[24,24,24,24,24,24,24,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,36 +27,30 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> PROGRAM LPAREN RPAREN block','program',4,'p_program','parser_1.py',6),
-  ('block -> LBRACE statement_list RBRACE','block',3,'p_block','parser_1.py',12),
-  ('block -> empty','block',1,'p_block','parser_1.py',13),
-  ('statement_list -> statement','statement_list',1,'p_statement_list','parser_1.py',18),
-  ('statement_list -> statement_list statement','statement_list',2,'p_statement_list','parser_1.py',19),
-  ('statement -> variable_declaration','statement',1,'p_statement','parser_1.py',24),
-  ('statement -> variable_assignation','statement',1,'p_statement','parser_1.py',25),
-  ('variable_assignation -> ID EQUALS expression SEMICOLON','variable_assignation',4,'p_variable_assignation','parser_1.py',30),
-  ('variable_declaration -> simple_type id_list SEMICOLON','variable_declaration',3,'p_variable_declaration','parser_1.py',35),
-  ('variable_declaration -> simple_type LBRACK CTEI RBRACK id_list SEMICOLON','variable_declaration',6,'p_variable_declaration','parser_1.py',36),
-  ('id_list -> ID','id_list',1,'p_id_list','parser_1.py',42),
-  ('id_list -> id_list COMMA ID','id_list',3,'p_id_list','parser_1.py',43),
-  ('simple_type -> INT','simple_type',1,'p_simple_type','parser_1.py',48),
-  ('simple_type -> FLOAT','simple_type',1,'p_simple_type','parser_1.py',49),
-  ('simple_type -> CHAR','simple_type',1,'p_simple_type','parser_1.py',50),
-  ('simple_type -> STRING','simple_type',1,'p_simple_type','parser_1.py',51),
-  ('simple_type -> BOOLEAN','simple_type',1,'p_simple_type','parser_1.py',52),
-  ('expression -> factor','expression',1,'p_expression','parser_1.py',57),
-  ('expression -> expression PLUS factor','expression',3,'p_expression','parser_1.py',58),
-  ('expression -> expression MINUS factor','expression',3,'p_expression','parser_1.py',59),
-  ('term -> factor','term',1,'p_term','parser_1.py',64),
-  ('term -> term TIMES factor','term',3,'p_term','parser_1.py',65),
-  ('term -> term DIVIDE factor','term',3,'p_term','parser_1.py',66),
-  ('factor -> ID','factor',1,'p_factor','parser_1.py',71),
-  ('factor -> cte','factor',1,'p_factor','parser_1.py',72),
-  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor','parser_1.py',73),
-  ('cte -> CTEI','cte',1,'p_cte','parser_1.py',78),
-  ('cte -> CTEF','cte',1,'p_cte','parser_1.py',79),
-  ('cte -> CTEC','cte',1,'p_cte','parser_1.py',80),
-  ('cte -> CTES','cte',1,'p_cte','parser_1.py',81),
-  ('cte -> CTEB','cte',1,'p_cte','parser_1.py',82),
-  ('empty -> <empty>','empty',0,'p_empty','parser_1.py',87),
+  ('program -> PROGRAM ID SEMICOLON var_declaration','program',4,'p_program','parser_1.py',6),
+  ('var_declaration -> VARIABLE simple_type variables SEMICOLON','var_declaration',4,'p_var_declaration','parser_1.py',12),
+  ('variables -> variables COMMA variable','variables',3,'p_variables','parser_1.py',19),
+  ('variables -> variable','variables',1,'p_variables','parser_1.py',20),
+  ('variable -> ID','variable',1,'p_variable','parser_1.py',27),
+  ('variable -> ID LBRACK expression RBRACK','variable',4,'p_variable','parser_1.py',28),
+  ('variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK','variable',7,'p_variable','parser_1.py',29),
+  ('simple_type -> INT','simple_type',1,'p_simple_type','parser_1.py',36),
+  ('simple_type -> FLOAT','simple_type',1,'p_simple_type','parser_1.py',37),
+  ('simple_type -> CHAR','simple_type',1,'p_simple_type','parser_1.py',38),
+  ('simple_type -> STRING','simple_type',1,'p_simple_type','parser_1.py',39),
+  ('simple_type -> BOOLEAN','simple_type',1,'p_simple_type','parser_1.py',40),
+  ('expression -> term','expression',1,'p_expression','parser_1.py',47),
+  ('expression -> term PLUS term','expression',3,'p_expression','parser_1.py',48),
+  ('expression -> term MINUS term','expression',3,'p_expression','parser_1.py',49),
+  ('term -> factor','term',1,'p_term','parser_1.py',56),
+  ('term -> factor TIMES factor','term',3,'p_term','parser_1.py',57),
+  ('term -> factor DIVIDE factor','term',3,'p_term','parser_1.py',58),
+  ('factor -> variable','factor',1,'p_factor','parser_1.py',65),
+  ('factor -> cte','factor',1,'p_factor','parser_1.py',66),
+  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor','parser_1.py',67),
+  ('cte -> CTEI','cte',1,'p_cte','parser_1.py',74),
+  ('cte -> CTEF','cte',1,'p_cte','parser_1.py',75),
+  ('cte -> CTEC','cte',1,'p_cte','parser_1.py',76),
+  ('cte -> CTES','cte',1,'p_cte','parser_1.py',77),
+  ('cte -> CTEB','cte',1,'p_cte','parser_1.py',78),
 ]

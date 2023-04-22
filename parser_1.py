@@ -3,45 +3,30 @@ from lexer import tokens
 
 def p_program(p):
     '''
-    program : PROGRAM LPAREN RPAREN block
+    program : PROGRAM ID SEMICOLON var_declaration
     '''
     p[0] = "PROGRAM COMPILED"
 
-def p_block(p):
+def p_var_declaration(p):
     '''
-    block : LBRACE statement_list RBRACE
-            | empty
+    var_declaration : VARIABLE simple_type variables SEMICOLON
     '''
+    # implementation of variable_declaration function
 
-def p_statement_list(p):
+def p_variables(p):
     '''
-    statement_list : statement
-                    | statement_list statement
+    variables : variables COMMA variable
+            | variable
     '''
+    # implementation of variables function
 
-def p_statement(p): 
+def p_variable(p):
     '''
-    statement : variable_declaration
-                | variable_assignation
+    variable : ID
+            | ID LBRACK expression RBRACK
+            | ID LBRACK expression RBRACK LBRACK expression RBRACK
     '''
-
-def p_variable_assignation(p):
-    '''
-    variable_assignation : ID EQUALS expression SEMICOLON
-    '''
-
-def p_variable_declaration(p):
-    '''
-    variable_declaration : simple_type id_list SEMICOLON
-                        | simple_type LBRACK CTEI RBRACK id_list SEMICOLON
-    '''
-    # Your code here
-
-def p_id_list(p):
-    '''
-    id_list : ID
-            | id_list COMMA ID
-    '''
+    # implementation of variable function
 
 def p_simple_type(p):
     '''
@@ -51,28 +36,33 @@ def p_simple_type(p):
                 | STRING
                 | BOOLEAN
     '''
+    # implementation of simple_type function
 
+    
 def p_expression(p):
     '''
-    expression : factor 
-                | expression PLUS factor
-                | expression MINUS factor
+    expression : term 
+                | term PLUS term
+                | term MINUS term
     '''
+    # implementation of expression function
 
 def p_term(p):
     '''
     term : factor 
-        | term TIMES factor
-        | term DIVIDE factor
+        | factor TIMES factor
+        | factor DIVIDE factor
     '''
+    # implementation of term function
 
 def p_factor(p):
     '''
-    factor : ID
+    factor : variable
         | cte
-        | LPAREN expression RPAREN
+        | LPAREN expression RPAREN 
     '''
-    
+    # implementation of factor function
+
 def p_cte(p):
     '''
     cte : CTEI
@@ -81,14 +71,48 @@ def p_cte(p):
         | CTES
         | CTEB
     '''
+    # implementation of cte function
 
-def p_empty(p):
-    '''
-    empty :
-    '''
-    pass
-    
-#! LEFT TO DO MORE STAMENTS
+# def p_empty(p):
+#     '''
+#     empty :
+#     '''
+#     pass
+
+
+# def p_block(p):
+#     '''
+#     block : LBRACE statement_list RBRACE comment_opt
+#             | empty
+#     '''
+
+
+# def p_comment_opt(p):
+#     '''
+#     comment_opt : comment
+#                 | empty
+#     '''
+
+# def p_comment(p):
+#     '''
+#     comment : COMMENT
+#     '''
+
+# def p_statement_list(p):
+#     '''
+#     statement_list : statement
+#                     | statement_list statement
+#     '''
+
+# def p_statement(p): 
+#     '''
+#     statement : variable_assignation
+#                 | declaration
+#                 | variable_init
+#                 | multi_declaration
+#                 | empty
+#     '''
+
 
 def p_error(p):
     if p:
@@ -96,15 +120,16 @@ def p_error(p):
     else:
         print("Syntax error: unexpected end of input")
 
-# Build the parser
+def error(token):
+    print(f"Syntax error: Unexpected token '{token.value}' at line {token.lineno}, column {token.lexpos}")
+
+
+
 parser = yacc.yacc(debug=True)
 
 input_string = '''
-プログラム(){
-    整数 number, uwu;
-    整数[1] numasdsadber;
-
-}
+プログラム my_program;
+変数 整数 x, y[10], z[5][5];
 '''
 result = parser.parse(input_string)
 print(result)

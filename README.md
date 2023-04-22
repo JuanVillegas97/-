@@ -24,7 +24,7 @@ tokens = [
     'ID', #Done
 ]+ list(reserved.values())
 ```
-### Reserved 
+## Reserved 
 | Kanji        | Hiragana                 | English  |
 | ------------ | ------------------------ | -------- |
 | 関数         | かんすう                 | FUNCTION |
@@ -44,8 +44,16 @@ tokens = [
 | プログラム   | ぷろぐらむ               | PROGRAM  |
 | リターン     | りたあん                 | RETURN   |
 
-
-## Regular expresions
+## Semantic Table
+| left_op | right_op | +   | -   | /     | >       | <       | AND     | OR      | !=      | 
+| ------- | -------- | --- | --- | ----- | ------- | ------- | ------- | ------- | ------- |
+| int     | int      | int | int | flaot | boolean | boolean | boolean | boolean | Boolean |
+| int     | float    |     |     |       |         |         |         |         |         |
+| int     | char     |     |     |       |         |         |         |         |         |
+| int     | boolean  |     |     |       |         |         |         |         |         |
+| int     | string   |     |     |       |         |         |         |         |         |
+| int     | array    |     |     |       |         |         |         |         |         |
+## First commit
 The only notable mention is the one for the ID  that matches any sequence of one or more characters that are either Katakana, Hiragana, or Kanji.
 ```py
 def t_ID(t):
@@ -56,7 +64,10 @@ def t_ID(t):
 For now it has structure very similar to our previous program littleduck20 these first progress I focus in the lexer
 
 ## Second commit 
-### Thing left to do:
 A lot of thing first gotta make sure the parse does the job before star creating more parsing blockk laso I should chec that ID aldso get alphanumeric values
-## Third commit 
-Well I changed the regular expression of ID to a mix of Japanese and English words,
+## Third commt
+Well I changed the regular expression of ID to a mix of Japanese and English words, made a lot of progress in the parse currently working with the list statements
+## Fourth commit
+### LEFT THINGS TO DO
+- In p_variable_declaration I need to add the complex type and as well teh recursion check diagrams given in class
+- In p_factor add call
