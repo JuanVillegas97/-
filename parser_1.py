@@ -38,14 +38,35 @@ def p_simple_type(p):
     '''
     # implementation of simple_type function
 
-    
+
 def p_expression(p):
     '''
-    expression : term 
+    expression : t_expression 
+            | t_expression ASSIGN t_expression
+    '''
+
+def p_t_expression(p):
+    '''
+    t_expression : g_expression 
+                | g_expression AND g_expression
+                | g_expression OR  g_expression
+    '''
+
+def p_g_expression(p):
+    '''
+    g_expression : m_expression 
+                | m_expression LESS     m_expression
+                | m_expression GREATER  m_expression
+                | m_expression EQUALS   m_expression
+                | m_expression NOTEQUAL m_expression
+    '''
+
+def p_m_expression(p):
+    '''
+    m_expression : term 
                 | term PLUS term
                 | term MINUS term
     '''
-    # implementation of expression function
 
 def p_term(p):
     '''
@@ -130,6 +151,7 @@ parser = yacc.yacc(debug=True)
 input_string = '''
 プログラム my_program;
 変数 整数 x, y[10], z[5][5];
+Juanですメキシコ人です
 '''
 result = parser.parse(input_string)
 print(result)

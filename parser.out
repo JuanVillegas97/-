@@ -5,14 +5,10 @@ Unused terminals:
     COLON
     COMMENT
     ELSE
-    EQUALS
     FALSE
-    GREATER
     IF
     LBRACE
-    LESS
     MAIN
-    NOTEQUAL
     PRINT
     RBRACE
     RETURN
@@ -35,60 +31,73 @@ Rule 9     simple_type -> FLOAT
 Rule 10    simple_type -> CHAR
 Rule 11    simple_type -> STRING
 Rule 12    simple_type -> BOOLEAN
-Rule 13    expression -> term
-Rule 14    expression -> term PLUS term
-Rule 15    expression -> term MINUS term
-Rule 16    term -> factor
-Rule 17    term -> factor TIMES factor
-Rule 18    term -> factor DIVIDE factor
-Rule 19    factor -> variable
-Rule 20    factor -> cte
-Rule 21    factor -> LPAREN expression RPAREN
-Rule 22    cte -> CTEI
-Rule 23    cte -> CTEF
-Rule 24    cte -> CTEC
-Rule 25    cte -> CTES
-Rule 26    cte -> CTEB
+Rule 13    expression -> t_expression
+Rule 14    expression -> t_expression ASSIGN t_expression
+Rule 15    t_expression -> g_expression
+Rule 16    t_expression -> g_expression AND g_expression
+Rule 17    t_expression -> g_expression OR g_expression
+Rule 18    g_expression -> m_expression
+Rule 19    g_expression -> m_expression LESS m_expression
+Rule 20    g_expression -> m_expression GREATER m_expression
+Rule 21    g_expression -> m_expression EQUALS m_expression
+Rule 22    g_expression -> m_expression NOTEQUAL m_expression
+Rule 23    m_expression -> term
+Rule 24    m_expression -> term PLUS term
+Rule 25    m_expression -> term MINUS term
+Rule 26    term -> factor
+Rule 27    term -> factor TIMES factor
+Rule 28    term -> factor DIVIDE factor
+Rule 29    factor -> variable
+Rule 30    factor -> cte
+Rule 31    factor -> LPAREN expression RPAREN
+Rule 32    cte -> CTEI
+Rule 33    cte -> CTEF
+Rule 34    cte -> CTEC
+Rule 35    cte -> CTES
+Rule 36    cte -> CTEB
 
 Terminals, with rules where they appear
 
+AND                  : 16
+ASSIGN               : 14
 BOOLEAN              : 12
 CHAR                 : 10
 COLON                : 
 COMMA                : 3
 COMMENT              : 
-CTEB                 : 26
-CTEC                 : 24
-CTEF                 : 23
-CTEI                 : 22
-CTES                 : 25
-DIVIDE               : 18
+CTEB                 : 36
+CTEC                 : 34
+CTEF                 : 33
+CTEI                 : 32
+CTES                 : 35
+DIVIDE               : 28
 ELSE                 : 
-EQUALS               : 
+EQUALS               : 21
 FALSE                : 
 FLOAT                : 9
-GREATER              : 
+GREATER              : 20
 ID                   : 1 5 6 7
 IF                   : 
 INT                  : 8
 LBRACE               : 
 LBRACK               : 6 7 7
-LESS                 : 
-LPAREN               : 21
+LESS                 : 19
+LPAREN               : 31
 MAIN                 : 
-MINUS                : 15
-NOTEQUAL             : 
-PLUS                 : 14
+MINUS                : 25
+NOTEQUAL             : 22
+OR                   : 17
+PLUS                 : 24
 PRINT                : 
 PROGRAM              : 1
 RBRACE               : 
 RBRACK               : 6 7 7
 RETURN               : 
-RPAREN               : 21
+RPAREN               : 31
 SEMICOLON            : 1 2
 STRING               : 11
 THEN                 : 
-TIMES                : 17
+TIMES                : 27
 TRUE                 : 
 VARIABLE             : 2
 WHILE                : 
@@ -96,14 +105,17 @@ error                :
 
 Nonterminals, with rules where they appear
 
-cte                  : 20
-expression           : 6 7 7 21
-factor               : 16 17 17 18 18
+cte                  : 30
+expression           : 6 7 7 31
+factor               : 26 27 27 28 28
+g_expression         : 15 16 16 17 17
+m_expression         : 18 19 19 20 20 21 21 22 22
 program              : 0
 simple_type          : 2
-term                 : 13 14 14 15 15
+t_expression         : 13 14 14
+term                 : 23 24 24 25 25
 var_declaration      : 1
-variable             : 3 4 19
+variable             : 3 4 29
 variables            : 2 3
 
 Parsing method: LALR
@@ -248,6 +260,13 @@ state 15
     DIVIDE          reduce using rule 5 (variable -> ID .)
     PLUS            reduce using rule 5 (variable -> ID .)
     MINUS           reduce using rule 5 (variable -> ID .)
+    LESS            reduce using rule 5 (variable -> ID .)
+    GREATER         reduce using rule 5 (variable -> ID .)
+    EQUALS          reduce using rule 5 (variable -> ID .)
+    NOTEQUAL        reduce using rule 5 (variable -> ID .)
+    AND             reduce using rule 5 (variable -> ID .)
+    OR              reduce using rule 5 (variable -> ID .)
+    ASSIGN          reduce using rule 5 (variable -> ID .)
     RBRACK          reduce using rule 5 (variable -> ID .)
     RPAREN          reduce using rule 5 (variable -> ID .)
     LBRACK          shift and go to state 18
@@ -275,37 +294,50 @@ state 18
 
     (6) variable -> ID LBRACK . expression RBRACK
     (7) variable -> ID LBRACK . expression RBRACK LBRACK expression RBRACK
-    (13) expression -> . term
-    (14) expression -> . term PLUS term
-    (15) expression -> . term MINUS term
-    (16) term -> . factor
-    (17) term -> . factor TIMES factor
-    (18) term -> . factor DIVIDE factor
-    (19) factor -> . variable
-    (20) factor -> . cte
-    (21) factor -> . LPAREN expression RPAREN
+    (13) expression -> . t_expression
+    (14) expression -> . t_expression ASSIGN t_expression
+    (15) t_expression -> . g_expression
+    (16) t_expression -> . g_expression AND g_expression
+    (17) t_expression -> . g_expression OR g_expression
+    (18) g_expression -> . m_expression
+    (19) g_expression -> . m_expression LESS m_expression
+    (20) g_expression -> . m_expression GREATER m_expression
+    (21) g_expression -> . m_expression EQUALS m_expression
+    (22) g_expression -> . m_expression NOTEQUAL m_expression
+    (23) m_expression -> . term
+    (24) m_expression -> . term PLUS term
+    (25) m_expression -> . term MINUS term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
     (5) variable -> . ID
     (6) variable -> . ID LBRACK expression RBRACK
     (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (22) cte -> . CTEI
-    (23) cte -> . CTEF
-    (24) cte -> . CTEC
-    (25) cte -> . CTES
-    (26) cte -> . CTEB
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
 
-    LPAREN          shift and go to state 25
+    LPAREN          shift and go to state 28
     ID              shift and go to state 15
-    CTEI            shift and go to state 26
-    CTEF            shift and go to state 27
-    CTEC            shift and go to state 28
-    CTES            shift and go to state 29
-    CTEB            shift and go to state 30
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
 
     expression                     shift and go to state 20
-    term                           shift and go to state 21
-    factor                         shift and go to state 22
-    variable                       shift and go to state 23
-    cte                            shift and go to state 24
+    t_expression                   shift and go to state 21
+    g_expression                   shift and go to state 22
+    m_expression                   shift and go to state 23
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
 
 state 19
 
@@ -320,155 +352,273 @@ state 20
     (6) variable -> ID LBRACK expression . RBRACK
     (7) variable -> ID LBRACK expression . RBRACK LBRACK expression RBRACK
 
-    RBRACK          shift and go to state 31
+    RBRACK          shift and go to state 34
 
 
 state 21
 
-    (13) expression -> term .
-    (14) expression -> term . PLUS term
-    (15) expression -> term . MINUS term
+    (13) expression -> t_expression .
+    (14) expression -> t_expression . ASSIGN t_expression
 
-    RBRACK          reduce using rule 13 (expression -> term .)
-    RPAREN          reduce using rule 13 (expression -> term .)
-    PLUS            shift and go to state 32
-    MINUS           shift and go to state 33
+    RBRACK          reduce using rule 13 (expression -> t_expression .)
+    RPAREN          reduce using rule 13 (expression -> t_expression .)
+    ASSIGN          shift and go to state 35
 
 
 state 22
 
-    (16) term -> factor .
-    (17) term -> factor . TIMES factor
-    (18) term -> factor . DIVIDE factor
+    (15) t_expression -> g_expression .
+    (16) t_expression -> g_expression . AND g_expression
+    (17) t_expression -> g_expression . OR g_expression
 
-    PLUS            reduce using rule 16 (term -> factor .)
-    MINUS           reduce using rule 16 (term -> factor .)
-    RBRACK          reduce using rule 16 (term -> factor .)
-    RPAREN          reduce using rule 16 (term -> factor .)
-    TIMES           shift and go to state 34
-    DIVIDE          shift and go to state 35
+    ASSIGN          reduce using rule 15 (t_expression -> g_expression .)
+    RBRACK          reduce using rule 15 (t_expression -> g_expression .)
+    RPAREN          reduce using rule 15 (t_expression -> g_expression .)
+    AND             shift and go to state 36
+    OR              shift and go to state 37
 
 
 state 23
 
-    (19) factor -> variable .
+    (18) g_expression -> m_expression .
+    (19) g_expression -> m_expression . LESS m_expression
+    (20) g_expression -> m_expression . GREATER m_expression
+    (21) g_expression -> m_expression . EQUALS m_expression
+    (22) g_expression -> m_expression . NOTEQUAL m_expression
 
-    TIMES           reduce using rule 19 (factor -> variable .)
-    DIVIDE          reduce using rule 19 (factor -> variable .)
-    PLUS            reduce using rule 19 (factor -> variable .)
-    MINUS           reduce using rule 19 (factor -> variable .)
-    RBRACK          reduce using rule 19 (factor -> variable .)
-    RPAREN          reduce using rule 19 (factor -> variable .)
+    AND             reduce using rule 18 (g_expression -> m_expression .)
+    OR              reduce using rule 18 (g_expression -> m_expression .)
+    ASSIGN          reduce using rule 18 (g_expression -> m_expression .)
+    RBRACK          reduce using rule 18 (g_expression -> m_expression .)
+    RPAREN          reduce using rule 18 (g_expression -> m_expression .)
+    LESS            shift and go to state 38
+    GREATER         shift and go to state 39
+    EQUALS          shift and go to state 40
+    NOTEQUAL        shift and go to state 41
 
 
 state 24
 
-    (20) factor -> cte .
+    (23) m_expression -> term .
+    (24) m_expression -> term . PLUS term
+    (25) m_expression -> term . MINUS term
 
-    TIMES           reduce using rule 20 (factor -> cte .)
-    DIVIDE          reduce using rule 20 (factor -> cte .)
-    PLUS            reduce using rule 20 (factor -> cte .)
-    MINUS           reduce using rule 20 (factor -> cte .)
-    RBRACK          reduce using rule 20 (factor -> cte .)
-    RPAREN          reduce using rule 20 (factor -> cte .)
+    LESS            reduce using rule 23 (m_expression -> term .)
+    GREATER         reduce using rule 23 (m_expression -> term .)
+    EQUALS          reduce using rule 23 (m_expression -> term .)
+    NOTEQUAL        reduce using rule 23 (m_expression -> term .)
+    AND             reduce using rule 23 (m_expression -> term .)
+    OR              reduce using rule 23 (m_expression -> term .)
+    ASSIGN          reduce using rule 23 (m_expression -> term .)
+    RBRACK          reduce using rule 23 (m_expression -> term .)
+    RPAREN          reduce using rule 23 (m_expression -> term .)
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
 
 
 state 25
 
-    (21) factor -> LPAREN . expression RPAREN
-    (13) expression -> . term
-    (14) expression -> . term PLUS term
-    (15) expression -> . term MINUS term
-    (16) term -> . factor
-    (17) term -> . factor TIMES factor
-    (18) term -> . factor DIVIDE factor
-    (19) factor -> . variable
-    (20) factor -> . cte
-    (21) factor -> . LPAREN expression RPAREN
-    (5) variable -> . ID
-    (6) variable -> . ID LBRACK expression RBRACK
-    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (22) cte -> . CTEI
-    (23) cte -> . CTEF
-    (24) cte -> . CTEC
-    (25) cte -> . CTES
-    (26) cte -> . CTEB
+    (26) term -> factor .
+    (27) term -> factor . TIMES factor
+    (28) term -> factor . DIVIDE factor
 
-    LPAREN          shift and go to state 25
-    ID              shift and go to state 15
-    CTEI            shift and go to state 26
-    CTEF            shift and go to state 27
-    CTEC            shift and go to state 28
-    CTES            shift and go to state 29
-    CTEB            shift and go to state 30
+    PLUS            reduce using rule 26 (term -> factor .)
+    MINUS           reduce using rule 26 (term -> factor .)
+    LESS            reduce using rule 26 (term -> factor .)
+    GREATER         reduce using rule 26 (term -> factor .)
+    EQUALS          reduce using rule 26 (term -> factor .)
+    NOTEQUAL        reduce using rule 26 (term -> factor .)
+    AND             reduce using rule 26 (term -> factor .)
+    OR              reduce using rule 26 (term -> factor .)
+    ASSIGN          reduce using rule 26 (term -> factor .)
+    RBRACK          reduce using rule 26 (term -> factor .)
+    RPAREN          reduce using rule 26 (term -> factor .)
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
 
-    expression                     shift and go to state 36
-    term                           shift and go to state 21
-    factor                         shift and go to state 22
-    variable                       shift and go to state 23
-    cte                            shift and go to state 24
 
 state 26
 
-    (22) cte -> CTEI .
+    (29) factor -> variable .
 
-    TIMES           reduce using rule 22 (cte -> CTEI .)
-    DIVIDE          reduce using rule 22 (cte -> CTEI .)
-    PLUS            reduce using rule 22 (cte -> CTEI .)
-    MINUS           reduce using rule 22 (cte -> CTEI .)
-    RBRACK          reduce using rule 22 (cte -> CTEI .)
-    RPAREN          reduce using rule 22 (cte -> CTEI .)
+    TIMES           reduce using rule 29 (factor -> variable .)
+    DIVIDE          reduce using rule 29 (factor -> variable .)
+    PLUS            reduce using rule 29 (factor -> variable .)
+    MINUS           reduce using rule 29 (factor -> variable .)
+    LESS            reduce using rule 29 (factor -> variable .)
+    GREATER         reduce using rule 29 (factor -> variable .)
+    EQUALS          reduce using rule 29 (factor -> variable .)
+    NOTEQUAL        reduce using rule 29 (factor -> variable .)
+    AND             reduce using rule 29 (factor -> variable .)
+    OR              reduce using rule 29 (factor -> variable .)
+    ASSIGN          reduce using rule 29 (factor -> variable .)
+    RBRACK          reduce using rule 29 (factor -> variable .)
+    RPAREN          reduce using rule 29 (factor -> variable .)
 
 
 state 27
 
-    (23) cte -> CTEF .
+    (30) factor -> cte .
 
-    TIMES           reduce using rule 23 (cte -> CTEF .)
-    DIVIDE          reduce using rule 23 (cte -> CTEF .)
-    PLUS            reduce using rule 23 (cte -> CTEF .)
-    MINUS           reduce using rule 23 (cte -> CTEF .)
-    RBRACK          reduce using rule 23 (cte -> CTEF .)
-    RPAREN          reduce using rule 23 (cte -> CTEF .)
+    TIMES           reduce using rule 30 (factor -> cte .)
+    DIVIDE          reduce using rule 30 (factor -> cte .)
+    PLUS            reduce using rule 30 (factor -> cte .)
+    MINUS           reduce using rule 30 (factor -> cte .)
+    LESS            reduce using rule 30 (factor -> cte .)
+    GREATER         reduce using rule 30 (factor -> cte .)
+    EQUALS          reduce using rule 30 (factor -> cte .)
+    NOTEQUAL        reduce using rule 30 (factor -> cte .)
+    AND             reduce using rule 30 (factor -> cte .)
+    OR              reduce using rule 30 (factor -> cte .)
+    ASSIGN          reduce using rule 30 (factor -> cte .)
+    RBRACK          reduce using rule 30 (factor -> cte .)
+    RPAREN          reduce using rule 30 (factor -> cte .)
 
 
 state 28
 
-    (24) cte -> CTEC .
+    (31) factor -> LPAREN . expression RPAREN
+    (13) expression -> . t_expression
+    (14) expression -> . t_expression ASSIGN t_expression
+    (15) t_expression -> . g_expression
+    (16) t_expression -> . g_expression AND g_expression
+    (17) t_expression -> . g_expression OR g_expression
+    (18) g_expression -> . m_expression
+    (19) g_expression -> . m_expression LESS m_expression
+    (20) g_expression -> . m_expression GREATER m_expression
+    (21) g_expression -> . m_expression EQUALS m_expression
+    (22) g_expression -> . m_expression NOTEQUAL m_expression
+    (23) m_expression -> . term
+    (24) m_expression -> . term PLUS term
+    (25) m_expression -> . term MINUS term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
 
-    TIMES           reduce using rule 24 (cte -> CTEC .)
-    DIVIDE          reduce using rule 24 (cte -> CTEC .)
-    PLUS            reduce using rule 24 (cte -> CTEC .)
-    MINUS           reduce using rule 24 (cte -> CTEC .)
-    RBRACK          reduce using rule 24 (cte -> CTEC .)
-    RPAREN          reduce using rule 24 (cte -> CTEC .)
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
 
+    expression                     shift and go to state 46
+    t_expression                   shift and go to state 21
+    g_expression                   shift and go to state 22
+    m_expression                   shift and go to state 23
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
 
 state 29
 
-    (25) cte -> CTES .
+    (32) cte -> CTEI .
 
-    TIMES           reduce using rule 25 (cte -> CTES .)
-    DIVIDE          reduce using rule 25 (cte -> CTES .)
-    PLUS            reduce using rule 25 (cte -> CTES .)
-    MINUS           reduce using rule 25 (cte -> CTES .)
-    RBRACK          reduce using rule 25 (cte -> CTES .)
-    RPAREN          reduce using rule 25 (cte -> CTES .)
+    TIMES           reduce using rule 32 (cte -> CTEI .)
+    DIVIDE          reduce using rule 32 (cte -> CTEI .)
+    PLUS            reduce using rule 32 (cte -> CTEI .)
+    MINUS           reduce using rule 32 (cte -> CTEI .)
+    LESS            reduce using rule 32 (cte -> CTEI .)
+    GREATER         reduce using rule 32 (cte -> CTEI .)
+    EQUALS          reduce using rule 32 (cte -> CTEI .)
+    NOTEQUAL        reduce using rule 32 (cte -> CTEI .)
+    AND             reduce using rule 32 (cte -> CTEI .)
+    OR              reduce using rule 32 (cte -> CTEI .)
+    ASSIGN          reduce using rule 32 (cte -> CTEI .)
+    RBRACK          reduce using rule 32 (cte -> CTEI .)
+    RPAREN          reduce using rule 32 (cte -> CTEI .)
 
 
 state 30
 
-    (26) cte -> CTEB .
+    (33) cte -> CTEF .
 
-    TIMES           reduce using rule 26 (cte -> CTEB .)
-    DIVIDE          reduce using rule 26 (cte -> CTEB .)
-    PLUS            reduce using rule 26 (cte -> CTEB .)
-    MINUS           reduce using rule 26 (cte -> CTEB .)
-    RBRACK          reduce using rule 26 (cte -> CTEB .)
-    RPAREN          reduce using rule 26 (cte -> CTEB .)
+    TIMES           reduce using rule 33 (cte -> CTEF .)
+    DIVIDE          reduce using rule 33 (cte -> CTEF .)
+    PLUS            reduce using rule 33 (cte -> CTEF .)
+    MINUS           reduce using rule 33 (cte -> CTEF .)
+    LESS            reduce using rule 33 (cte -> CTEF .)
+    GREATER         reduce using rule 33 (cte -> CTEF .)
+    EQUALS          reduce using rule 33 (cte -> CTEF .)
+    NOTEQUAL        reduce using rule 33 (cte -> CTEF .)
+    AND             reduce using rule 33 (cte -> CTEF .)
+    OR              reduce using rule 33 (cte -> CTEF .)
+    ASSIGN          reduce using rule 33 (cte -> CTEF .)
+    RBRACK          reduce using rule 33 (cte -> CTEF .)
+    RPAREN          reduce using rule 33 (cte -> CTEF .)
 
 
 state 31
+
+    (34) cte -> CTEC .
+
+    TIMES           reduce using rule 34 (cte -> CTEC .)
+    DIVIDE          reduce using rule 34 (cte -> CTEC .)
+    PLUS            reduce using rule 34 (cte -> CTEC .)
+    MINUS           reduce using rule 34 (cte -> CTEC .)
+    LESS            reduce using rule 34 (cte -> CTEC .)
+    GREATER         reduce using rule 34 (cte -> CTEC .)
+    EQUALS          reduce using rule 34 (cte -> CTEC .)
+    NOTEQUAL        reduce using rule 34 (cte -> CTEC .)
+    AND             reduce using rule 34 (cte -> CTEC .)
+    OR              reduce using rule 34 (cte -> CTEC .)
+    ASSIGN          reduce using rule 34 (cte -> CTEC .)
+    RBRACK          reduce using rule 34 (cte -> CTEC .)
+    RPAREN          reduce using rule 34 (cte -> CTEC .)
+
+
+state 32
+
+    (35) cte -> CTES .
+
+    TIMES           reduce using rule 35 (cte -> CTES .)
+    DIVIDE          reduce using rule 35 (cte -> CTES .)
+    PLUS            reduce using rule 35 (cte -> CTES .)
+    MINUS           reduce using rule 35 (cte -> CTES .)
+    LESS            reduce using rule 35 (cte -> CTES .)
+    GREATER         reduce using rule 35 (cte -> CTES .)
+    EQUALS          reduce using rule 35 (cte -> CTES .)
+    NOTEQUAL        reduce using rule 35 (cte -> CTES .)
+    AND             reduce using rule 35 (cte -> CTES .)
+    OR              reduce using rule 35 (cte -> CTES .)
+    ASSIGN          reduce using rule 35 (cte -> CTES .)
+    RBRACK          reduce using rule 35 (cte -> CTES .)
+    RPAREN          reduce using rule 35 (cte -> CTES .)
+
+
+state 33
+
+    (36) cte -> CTEB .
+
+    TIMES           reduce using rule 36 (cte -> CTEB .)
+    DIVIDE          reduce using rule 36 (cte -> CTEB .)
+    PLUS            reduce using rule 36 (cte -> CTEB .)
+    MINUS           reduce using rule 36 (cte -> CTEB .)
+    LESS            reduce using rule 36 (cte -> CTEB .)
+    GREATER         reduce using rule 36 (cte -> CTEB .)
+    EQUALS          reduce using rule 36 (cte -> CTEB .)
+    NOTEQUAL        reduce using rule 36 (cte -> CTEB .)
+    AND             reduce using rule 36 (cte -> CTEB .)
+    OR              reduce using rule 36 (cte -> CTEB .)
+    ASSIGN          reduce using rule 36 (cte -> CTEB .)
+    RBRACK          reduce using rule 36 (cte -> CTEB .)
+    RPAREN          reduce using rule 36 (cte -> CTEB .)
+
+
+state 34
 
     (6) variable -> ID LBRACK expression RBRACK .
     (7) variable -> ID LBRACK expression RBRACK . LBRACK expression RBRACK
@@ -479,225 +629,617 @@ state 31
     DIVIDE          reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
     PLUS            reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
     MINUS           reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
+    LESS            reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
+    GREATER         reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
+    EQUALS          reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
+    NOTEQUAL        reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
+    AND             reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
+    OR              reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
+    ASSIGN          reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
     RBRACK          reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
     RPAREN          reduce using rule 6 (variable -> ID LBRACK expression RBRACK .)
-    LBRACK          shift and go to state 37
+    LBRACK          shift and go to state 47
 
-
-state 32
-
-    (14) expression -> term PLUS . term
-    (16) term -> . factor
-    (17) term -> . factor TIMES factor
-    (18) term -> . factor DIVIDE factor
-    (19) factor -> . variable
-    (20) factor -> . cte
-    (21) factor -> . LPAREN expression RPAREN
-    (5) variable -> . ID
-    (6) variable -> . ID LBRACK expression RBRACK
-    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (22) cte -> . CTEI
-    (23) cte -> . CTEF
-    (24) cte -> . CTEC
-    (25) cte -> . CTES
-    (26) cte -> . CTEB
-
-    LPAREN          shift and go to state 25
-    ID              shift and go to state 15
-    CTEI            shift and go to state 26
-    CTEF            shift and go to state 27
-    CTEC            shift and go to state 28
-    CTES            shift and go to state 29
-    CTEB            shift and go to state 30
-
-    term                           shift and go to state 38
-    factor                         shift and go to state 22
-    variable                       shift and go to state 23
-    cte                            shift and go to state 24
-
-state 33
-
-    (15) expression -> term MINUS . term
-    (16) term -> . factor
-    (17) term -> . factor TIMES factor
-    (18) term -> . factor DIVIDE factor
-    (19) factor -> . variable
-    (20) factor -> . cte
-    (21) factor -> . LPAREN expression RPAREN
-    (5) variable -> . ID
-    (6) variable -> . ID LBRACK expression RBRACK
-    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (22) cte -> . CTEI
-    (23) cte -> . CTEF
-    (24) cte -> . CTEC
-    (25) cte -> . CTES
-    (26) cte -> . CTEB
-
-    LPAREN          shift and go to state 25
-    ID              shift and go to state 15
-    CTEI            shift and go to state 26
-    CTEF            shift and go to state 27
-    CTEC            shift and go to state 28
-    CTES            shift and go to state 29
-    CTEB            shift and go to state 30
-
-    term                           shift and go to state 39
-    factor                         shift and go to state 22
-    variable                       shift and go to state 23
-    cte                            shift and go to state 24
-
-state 34
-
-    (17) term -> factor TIMES . factor
-    (19) factor -> . variable
-    (20) factor -> . cte
-    (21) factor -> . LPAREN expression RPAREN
-    (5) variable -> . ID
-    (6) variable -> . ID LBRACK expression RBRACK
-    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (22) cte -> . CTEI
-    (23) cte -> . CTEF
-    (24) cte -> . CTEC
-    (25) cte -> . CTES
-    (26) cte -> . CTEB
-
-    LPAREN          shift and go to state 25
-    ID              shift and go to state 15
-    CTEI            shift and go to state 26
-    CTEF            shift and go to state 27
-    CTEC            shift and go to state 28
-    CTES            shift and go to state 29
-    CTEB            shift and go to state 30
-
-    factor                         shift and go to state 40
-    variable                       shift and go to state 23
-    cte                            shift and go to state 24
 
 state 35
 
-    (18) term -> factor DIVIDE . factor
-    (19) factor -> . variable
-    (20) factor -> . cte
-    (21) factor -> . LPAREN expression RPAREN
+    (14) expression -> t_expression ASSIGN . t_expression
+    (15) t_expression -> . g_expression
+    (16) t_expression -> . g_expression AND g_expression
+    (17) t_expression -> . g_expression OR g_expression
+    (18) g_expression -> . m_expression
+    (19) g_expression -> . m_expression LESS m_expression
+    (20) g_expression -> . m_expression GREATER m_expression
+    (21) g_expression -> . m_expression EQUALS m_expression
+    (22) g_expression -> . m_expression NOTEQUAL m_expression
+    (23) m_expression -> . term
+    (24) m_expression -> . term PLUS term
+    (25) m_expression -> . term MINUS term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
     (5) variable -> . ID
     (6) variable -> . ID LBRACK expression RBRACK
     (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (22) cte -> . CTEI
-    (23) cte -> . CTEF
-    (24) cte -> . CTEC
-    (25) cte -> . CTES
-    (26) cte -> . CTEB
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
 
-    LPAREN          shift and go to state 25
+    LPAREN          shift and go to state 28
     ID              shift and go to state 15
-    CTEI            shift and go to state 26
-    CTEF            shift and go to state 27
-    CTEC            shift and go to state 28
-    CTES            shift and go to state 29
-    CTEB            shift and go to state 30
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
 
-    factor                         shift and go to state 41
-    variable                       shift and go to state 23
-    cte                            shift and go to state 24
+    t_expression                   shift and go to state 48
+    g_expression                   shift and go to state 22
+    m_expression                   shift and go to state 23
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
 
 state 36
 
-    (21) factor -> LPAREN expression . RPAREN
-
-    RPAREN          shift and go to state 42
-
-
-state 37
-
-    (7) variable -> ID LBRACK expression RBRACK LBRACK . expression RBRACK
-    (13) expression -> . term
-    (14) expression -> . term PLUS term
-    (15) expression -> . term MINUS term
-    (16) term -> . factor
-    (17) term -> . factor TIMES factor
-    (18) term -> . factor DIVIDE factor
-    (19) factor -> . variable
-    (20) factor -> . cte
-    (21) factor -> . LPAREN expression RPAREN
+    (16) t_expression -> g_expression AND . g_expression
+    (18) g_expression -> . m_expression
+    (19) g_expression -> . m_expression LESS m_expression
+    (20) g_expression -> . m_expression GREATER m_expression
+    (21) g_expression -> . m_expression EQUALS m_expression
+    (22) g_expression -> . m_expression NOTEQUAL m_expression
+    (23) m_expression -> . term
+    (24) m_expression -> . term PLUS term
+    (25) m_expression -> . term MINUS term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
     (5) variable -> . ID
     (6) variable -> . ID LBRACK expression RBRACK
     (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (22) cte -> . CTEI
-    (23) cte -> . CTEF
-    (24) cte -> . CTEC
-    (25) cte -> . CTES
-    (26) cte -> . CTEB
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
 
-    LPAREN          shift and go to state 25
+    LPAREN          shift and go to state 28
     ID              shift and go to state 15
-    CTEI            shift and go to state 26
-    CTEF            shift and go to state 27
-    CTEC            shift and go to state 28
-    CTES            shift and go to state 29
-    CTEB            shift and go to state 30
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
 
-    expression                     shift and go to state 43
-    term                           shift and go to state 21
-    factor                         shift and go to state 22
-    variable                       shift and go to state 23
-    cte                            shift and go to state 24
+    g_expression                   shift and go to state 49
+    m_expression                   shift and go to state 23
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
+
+state 37
+
+    (17) t_expression -> g_expression OR . g_expression
+    (18) g_expression -> . m_expression
+    (19) g_expression -> . m_expression LESS m_expression
+    (20) g_expression -> . m_expression GREATER m_expression
+    (21) g_expression -> . m_expression EQUALS m_expression
+    (22) g_expression -> . m_expression NOTEQUAL m_expression
+    (23) m_expression -> . term
+    (24) m_expression -> . term PLUS term
+    (25) m_expression -> . term MINUS term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
+
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
+
+    g_expression                   shift and go to state 50
+    m_expression                   shift and go to state 23
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
 
 state 38
 
-    (14) expression -> term PLUS term .
+    (19) g_expression -> m_expression LESS . m_expression
+    (23) m_expression -> . term
+    (24) m_expression -> . term PLUS term
+    (25) m_expression -> . term MINUS term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
 
-    RBRACK          reduce using rule 14 (expression -> term PLUS term .)
-    RPAREN          reduce using rule 14 (expression -> term PLUS term .)
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
 
+    m_expression                   shift and go to state 51
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
 
 state 39
 
-    (15) expression -> term MINUS term .
+    (20) g_expression -> m_expression GREATER . m_expression
+    (23) m_expression -> . term
+    (24) m_expression -> . term PLUS term
+    (25) m_expression -> . term MINUS term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
 
-    RBRACK          reduce using rule 15 (expression -> term MINUS term .)
-    RPAREN          reduce using rule 15 (expression -> term MINUS term .)
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
 
+    m_expression                   shift and go to state 52
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
 
 state 40
 
-    (17) term -> factor TIMES factor .
+    (21) g_expression -> m_expression EQUALS . m_expression
+    (23) m_expression -> . term
+    (24) m_expression -> . term PLUS term
+    (25) m_expression -> . term MINUS term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
 
-    PLUS            reduce using rule 17 (term -> factor TIMES factor .)
-    MINUS           reduce using rule 17 (term -> factor TIMES factor .)
-    RBRACK          reduce using rule 17 (term -> factor TIMES factor .)
-    RPAREN          reduce using rule 17 (term -> factor TIMES factor .)
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
 
+    m_expression                   shift and go to state 53
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
 
 state 41
 
-    (18) term -> factor DIVIDE factor .
+    (22) g_expression -> m_expression NOTEQUAL . m_expression
+    (23) m_expression -> . term
+    (24) m_expression -> . term PLUS term
+    (25) m_expression -> . term MINUS term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
 
-    PLUS            reduce using rule 18 (term -> factor DIVIDE factor .)
-    MINUS           reduce using rule 18 (term -> factor DIVIDE factor .)
-    RBRACK          reduce using rule 18 (term -> factor DIVIDE factor .)
-    RPAREN          reduce using rule 18 (term -> factor DIVIDE factor .)
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
 
+    m_expression                   shift and go to state 54
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
 
 state 42
 
-    (21) factor -> LPAREN expression RPAREN .
+    (24) m_expression -> term PLUS . term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
 
-    TIMES           reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-    RBRACK          reduce using rule 21 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 21 (factor -> LPAREN expression RPAREN .)
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
 
+    term                           shift and go to state 55
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
 
 state 43
 
-    (7) variable -> ID LBRACK expression RBRACK LBRACK expression . RBRACK
+    (25) m_expression -> term MINUS . term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
 
-    RBRACK          shift and go to state 44
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
 
+    term                           shift and go to state 56
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
 
 state 44
+
+    (27) term -> factor TIMES . factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
+
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
+
+    factor                         shift and go to state 57
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
+
+state 45
+
+    (28) term -> factor DIVIDE . factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
+
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
+
+    factor                         shift and go to state 58
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
+
+state 46
+
+    (31) factor -> LPAREN expression . RPAREN
+
+    RPAREN          shift and go to state 59
+
+
+state 47
+
+    (7) variable -> ID LBRACK expression RBRACK LBRACK . expression RBRACK
+    (13) expression -> . t_expression
+    (14) expression -> . t_expression ASSIGN t_expression
+    (15) t_expression -> . g_expression
+    (16) t_expression -> . g_expression AND g_expression
+    (17) t_expression -> . g_expression OR g_expression
+    (18) g_expression -> . m_expression
+    (19) g_expression -> . m_expression LESS m_expression
+    (20) g_expression -> . m_expression GREATER m_expression
+    (21) g_expression -> . m_expression EQUALS m_expression
+    (22) g_expression -> . m_expression NOTEQUAL m_expression
+    (23) m_expression -> . term
+    (24) m_expression -> . term PLUS term
+    (25) m_expression -> . term MINUS term
+    (26) term -> . factor
+    (27) term -> . factor TIMES factor
+    (28) term -> . factor DIVIDE factor
+    (29) factor -> . variable
+    (30) factor -> . cte
+    (31) factor -> . LPAREN expression RPAREN
+    (5) variable -> . ID
+    (6) variable -> . ID LBRACK expression RBRACK
+    (7) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (32) cte -> . CTEI
+    (33) cte -> . CTEF
+    (34) cte -> . CTEC
+    (35) cte -> . CTES
+    (36) cte -> . CTEB
+
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 15
+    CTEI            shift and go to state 29
+    CTEF            shift and go to state 30
+    CTEC            shift and go to state 31
+    CTES            shift and go to state 32
+    CTEB            shift and go to state 33
+
+    expression                     shift and go to state 60
+    t_expression                   shift and go to state 21
+    g_expression                   shift and go to state 22
+    m_expression                   shift and go to state 23
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    variable                       shift and go to state 26
+    cte                            shift and go to state 27
+
+state 48
+
+    (14) expression -> t_expression ASSIGN t_expression .
+
+    RBRACK          reduce using rule 14 (expression -> t_expression ASSIGN t_expression .)
+    RPAREN          reduce using rule 14 (expression -> t_expression ASSIGN t_expression .)
+
+
+state 49
+
+    (16) t_expression -> g_expression AND g_expression .
+
+    ASSIGN          reduce using rule 16 (t_expression -> g_expression AND g_expression .)
+    RBRACK          reduce using rule 16 (t_expression -> g_expression AND g_expression .)
+    RPAREN          reduce using rule 16 (t_expression -> g_expression AND g_expression .)
+
+
+state 50
+
+    (17) t_expression -> g_expression OR g_expression .
+
+    ASSIGN          reduce using rule 17 (t_expression -> g_expression OR g_expression .)
+    RBRACK          reduce using rule 17 (t_expression -> g_expression OR g_expression .)
+    RPAREN          reduce using rule 17 (t_expression -> g_expression OR g_expression .)
+
+
+state 51
+
+    (19) g_expression -> m_expression LESS m_expression .
+
+    AND             reduce using rule 19 (g_expression -> m_expression LESS m_expression .)
+    OR              reduce using rule 19 (g_expression -> m_expression LESS m_expression .)
+    ASSIGN          reduce using rule 19 (g_expression -> m_expression LESS m_expression .)
+    RBRACK          reduce using rule 19 (g_expression -> m_expression LESS m_expression .)
+    RPAREN          reduce using rule 19 (g_expression -> m_expression LESS m_expression .)
+
+
+state 52
+
+    (20) g_expression -> m_expression GREATER m_expression .
+
+    AND             reduce using rule 20 (g_expression -> m_expression GREATER m_expression .)
+    OR              reduce using rule 20 (g_expression -> m_expression GREATER m_expression .)
+    ASSIGN          reduce using rule 20 (g_expression -> m_expression GREATER m_expression .)
+    RBRACK          reduce using rule 20 (g_expression -> m_expression GREATER m_expression .)
+    RPAREN          reduce using rule 20 (g_expression -> m_expression GREATER m_expression .)
+
+
+state 53
+
+    (21) g_expression -> m_expression EQUALS m_expression .
+
+    AND             reduce using rule 21 (g_expression -> m_expression EQUALS m_expression .)
+    OR              reduce using rule 21 (g_expression -> m_expression EQUALS m_expression .)
+    ASSIGN          reduce using rule 21 (g_expression -> m_expression EQUALS m_expression .)
+    RBRACK          reduce using rule 21 (g_expression -> m_expression EQUALS m_expression .)
+    RPAREN          reduce using rule 21 (g_expression -> m_expression EQUALS m_expression .)
+
+
+state 54
+
+    (22) g_expression -> m_expression NOTEQUAL m_expression .
+
+    AND             reduce using rule 22 (g_expression -> m_expression NOTEQUAL m_expression .)
+    OR              reduce using rule 22 (g_expression -> m_expression NOTEQUAL m_expression .)
+    ASSIGN          reduce using rule 22 (g_expression -> m_expression NOTEQUAL m_expression .)
+    RBRACK          reduce using rule 22 (g_expression -> m_expression NOTEQUAL m_expression .)
+    RPAREN          reduce using rule 22 (g_expression -> m_expression NOTEQUAL m_expression .)
+
+
+state 55
+
+    (24) m_expression -> term PLUS term .
+
+    LESS            reduce using rule 24 (m_expression -> term PLUS term .)
+    GREATER         reduce using rule 24 (m_expression -> term PLUS term .)
+    EQUALS          reduce using rule 24 (m_expression -> term PLUS term .)
+    NOTEQUAL        reduce using rule 24 (m_expression -> term PLUS term .)
+    AND             reduce using rule 24 (m_expression -> term PLUS term .)
+    OR              reduce using rule 24 (m_expression -> term PLUS term .)
+    ASSIGN          reduce using rule 24 (m_expression -> term PLUS term .)
+    RBRACK          reduce using rule 24 (m_expression -> term PLUS term .)
+    RPAREN          reduce using rule 24 (m_expression -> term PLUS term .)
+
+
+state 56
+
+    (25) m_expression -> term MINUS term .
+
+    LESS            reduce using rule 25 (m_expression -> term MINUS term .)
+    GREATER         reduce using rule 25 (m_expression -> term MINUS term .)
+    EQUALS          reduce using rule 25 (m_expression -> term MINUS term .)
+    NOTEQUAL        reduce using rule 25 (m_expression -> term MINUS term .)
+    AND             reduce using rule 25 (m_expression -> term MINUS term .)
+    OR              reduce using rule 25 (m_expression -> term MINUS term .)
+    ASSIGN          reduce using rule 25 (m_expression -> term MINUS term .)
+    RBRACK          reduce using rule 25 (m_expression -> term MINUS term .)
+    RPAREN          reduce using rule 25 (m_expression -> term MINUS term .)
+
+
+state 57
+
+    (27) term -> factor TIMES factor .
+
+    PLUS            reduce using rule 27 (term -> factor TIMES factor .)
+    MINUS           reduce using rule 27 (term -> factor TIMES factor .)
+    LESS            reduce using rule 27 (term -> factor TIMES factor .)
+    GREATER         reduce using rule 27 (term -> factor TIMES factor .)
+    EQUALS          reduce using rule 27 (term -> factor TIMES factor .)
+    NOTEQUAL        reduce using rule 27 (term -> factor TIMES factor .)
+    AND             reduce using rule 27 (term -> factor TIMES factor .)
+    OR              reduce using rule 27 (term -> factor TIMES factor .)
+    ASSIGN          reduce using rule 27 (term -> factor TIMES factor .)
+    RBRACK          reduce using rule 27 (term -> factor TIMES factor .)
+    RPAREN          reduce using rule 27 (term -> factor TIMES factor .)
+
+
+state 58
+
+    (28) term -> factor DIVIDE factor .
+
+    PLUS            reduce using rule 28 (term -> factor DIVIDE factor .)
+    MINUS           reduce using rule 28 (term -> factor DIVIDE factor .)
+    LESS            reduce using rule 28 (term -> factor DIVIDE factor .)
+    GREATER         reduce using rule 28 (term -> factor DIVIDE factor .)
+    EQUALS          reduce using rule 28 (term -> factor DIVIDE factor .)
+    NOTEQUAL        reduce using rule 28 (term -> factor DIVIDE factor .)
+    AND             reduce using rule 28 (term -> factor DIVIDE factor .)
+    OR              reduce using rule 28 (term -> factor DIVIDE factor .)
+    ASSIGN          reduce using rule 28 (term -> factor DIVIDE factor .)
+    RBRACK          reduce using rule 28 (term -> factor DIVIDE factor .)
+    RPAREN          reduce using rule 28 (term -> factor DIVIDE factor .)
+
+
+state 59
+
+    (31) factor -> LPAREN expression RPAREN .
+
+    TIMES           reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    LESS            reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    GREATER         reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    EQUALS          reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    NOTEQUAL        reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    AND             reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    OR              reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    ASSIGN          reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    RBRACK          reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 31 (factor -> LPAREN expression RPAREN .)
+
+
+state 60
+
+    (7) variable -> ID LBRACK expression RBRACK LBRACK expression . RBRACK
+
+    RBRACK          shift and go to state 61
+
+
+state 61
 
     (7) variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .
 
@@ -707,6 +1249,13 @@ state 44
     DIVIDE          reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
     PLUS            reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
     MINUS           reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
+    LESS            reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
+    GREATER         reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
+    EQUALS          reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
+    NOTEQUAL        reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
+    AND             reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
+    OR              reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
+    ASSIGN          reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
     RBRACK          reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
     RPAREN          reduce using rule 7 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
 

@@ -3,7 +3,7 @@ import ply.lex as lex
 # Tuple of reserved names.
 reserved = {
     'プログラム':'PROGRAM',
-    '整数':'INT', 
+    '整数': 'INT', 
     '浮動小数点数':'FLOAT', 
     '文字列': 'STRING', 
     '文字':  'CHAR',
@@ -19,10 +19,12 @@ reserved = {
     'プリント' : 'PRINT',
     'リターン' : 'RETURN',
     '変数': 'VARIABLE',
+    '関数': 'FUNCTION',
 }
 
 # List of token names.
 tokens = [
+    'ASSIGN', #Done
     'PLUS',   #Done
     'MINUS',  #Done
     'TIMES',  #Done
@@ -47,6 +49,8 @@ tokens = [
     'RBRACK',#Done
     'LBRACK',#Done
     'COMMENT',#Done
+    'AND',#Done
+    'OR',#Done
 ]+ list(reserved.values())
 
 
@@ -55,7 +59,8 @@ t_PLUS    = r'\+'
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
-t_EQUALS  = r'='
+t_ASSIGN  = r'='
+t_EQUALS  = r'=='
 t_NOTEQUAL= r'!='
 t_LESS    = r'<'
 t_GREATER = r'>'
@@ -68,7 +73,8 @@ t_RBRACK  = r'\]'
 t_SEMICOLON = r';'
 t_COLON     = r':'
 t_COMMA     = r','
-
+t_AND     = r'&&'
+t_OR = r'\|\|'
 
 def t_ID(t):
     r'[\u30A0-\u30FF\u3040-\u309F\u4E00-\u9FFF]+|[a-zA-Z_][a-zA-Z_0-9]*'

@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "README.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -69,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "f5210e168e1af567",
@@ -149,13 +149,19 @@
   },
   "active": "db57025a2de0020f",
   "lastOpenFiles": [
+    "mso3278.tmp",
+    "mso2C7C.tmp",
+    "~$oposal.docx",
+    "~WRL0899.tmp",
+    "~WRD0880.tmp",
+    "Proposal.docx",
+    "~WRL2735.tmp",
+    "~WRD2716.tmp",
+    "[.md",
+    "README.md",
     "diagram.drawio.crswap",
     "2023-04-18.md",
-    "README.md",
     "parsetab.py",
-    "parser.out",
-    "__pycache__/parsetab.cpython-311.pyc",
-    "__pycache__/lexer.cpython-311.pyc",
-    "ply/__pycache__/yacc.cpython-311.pyc"
+    "parser.out"
   ]
 }
