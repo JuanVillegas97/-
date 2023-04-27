@@ -21,6 +21,7 @@ reserved = {
     '変数': 'VARIABLE',
     '関数': 'FUNCTION',
     'エンド' : 'END',
+    '入力する' : 'READ',
 }
 
 # List of token names.

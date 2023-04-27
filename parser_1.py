@@ -1,9 +1,10 @@
 import ply.yacc as yacc
+import sys
 from lexer import tokens
 
 def p_program(p):
     '''
-    program : PROGRAM ID SEMICOLON var_declaration functions MAIN body END
+    program : PROGRAM ID SEMICOLON var_declaration functions MAIN LPAREN RPAREN body END
     '''
     p[0] = "PROGRAM COMPILED"
 
@@ -12,45 +13,25 @@ def p_functions(p):
     '''
     functions : functions function
                     | function
+                    | empty
+
     '''
 
 def p_function(p):
     '''
     function : FUNCTION simple_type ID LPAREN parameters RPAREN body
-            | empty
     '''
 
 def p_parameters(p):
     '''
-    parameters : parameter_list
+    parameters : parameters  COMMA parameter
+                | parameter
                 | empty
-    '''
-
-def p_parameter_list(p):
-    '''
-    parameter_list : parameter
-                    | parameter_list COMMA parameter
     '''
 
 def p_parameter(p):
     '''
     parameter : simple_type ID 
-    '''
-
-def p_body(p):
-    '''
-    body : LBRACE statement RBRACE
-    '''
-
-def p_statement(p):
-    '''
-    statement : assingation
-            | empty
-    '''
-
-def p_assingation(p):
-    '''
-    assingation : variable ASSIGN expression SEMICOLON
     '''
 
 def p_var_declaration(p):
@@ -73,7 +54,35 @@ def p_variable(p):
             | ID LBRACK expression RBRACK
             | ID LBRACK expression RBRACK LBRACK expression RBRACK
     '''
-    # implementation of variable function
+
+def p_body(p):
+    '''
+    body : LBRACE statements RBRACE
+    '''
+    
+def p_statements(p):
+    '''
+    statements : statements statement
+            | statement
+            | empty
+    '''
+
+def p_statement(p):
+    '''
+    statement : assingation
+            | read
+    '''
+
+def p_read(p):
+    '''
+    read : READ variable SEMICOLON
+    '''
+
+def p_assingation(p):
+    '''
+    assingation : variable ASSIGN expression SEMICOLON
+    '''
+
 
 def p_simple_type(p):
     '''
@@ -89,47 +98,61 @@ def p_simple_type(p):
 def p_expression(p):
     '''
     expression : t_expression 
-            | t_expression ASSIGN t_expression
+                | t_expression ASSIGN t_expression
     '''
 
 def p_t_expression(p):
     '''
     t_expression : g_expression 
                 | g_expression AND g_expression
-                | g_expression OR  g_expression
+                | g_expression OR g_expression
     '''
 
 def p_g_expression(p):
     '''
     g_expression : m_expression 
-                | m_expression LESS     m_expression
-                | m_expression GREATER  m_expression
-                | m_expression EQUALS   m_expression
-                | m_expression NOTEQUAL m_expression
+                | m_expression comparison_operator m_expression
     '''
 
 def p_m_expression(p):
     '''
     m_expression : term 
-                | term PLUS term
-                | term MINUS term
+                | term addition_operator term
     '''
 
 def p_term(p):
     '''
     term : factor 
-        | factor TIMES factor
-        | factor DIVIDE factor
+        | factor multiplication_operator factor
     '''
-    # implementation of term function
 
 def p_factor(p):
     '''
     factor : variable
-        | cte
-        | LPAREN expression RPAREN 
+            | cte
+            | LPAREN expression RPAREN 
     '''
-    # implementation of factor function
+
+def p_comparison_operator(p):
+    '''
+    comparison_operator : LESS
+                        | GREATER
+                        | EQUALS
+                        | NOTEQUAL
+    '''
+
+def p_addition_operator(p):
+    '''
+    addition_operator : PLUS
+                      | MINUS
+    '''
+
+def p_multiplication_operator(p):
+    '''
+    multiplication_operator : TIMES
+                            | DIVIDE
+    '''
+
 
 def p_cte(p):
     '''
@@ -148,13 +171,6 @@ def p_empty(p):
     pass
 
 
-# def p_block(p):
-#     '''
-#     block : LBRACE statement_list RBRACE comment_opt
-#             | empty
-#     '''
-
-
 # def p_comment_opt(p):
 #     '''
 #     comment_opt : comment
@@ -166,20 +182,6 @@ def p_empty(p):
 #     comment : COMMENT
 #     '''
 
-# def p_statement_list(p):
-#     '''
-#     statement_list : statement
-#                     | statement_list statement
-#     '''
-
-# def p_statement(p): 
-#     '''
-#     statement : variable_assignation
-#                 | declaration
-#                 | variable_init
-#                 | multi_declaration
-#                 | empty
-#     '''
 
 
 def p_error(p):
@@ -190,6 +192,7 @@ def p_error(p):
 
 def error(token):
     print(f"Syntax error: Unexpected token '{token.value}' at line {token.lineno}, column {token.lexpos}")
+
 
 
 
@@ -208,11 +211,12 @@ input_string = '''
     y = 2 + a;
 }
 
-メイン{
+メイン(){
+    a = 1;
+    a = 1;
 
 }
 
 エンド
 '''
 result = parser.parse(input_string)
-print(result)
