@@ -4,42 +4,23 @@ from lexer import tokens
 
 def p_program(p):
     '''
-    program : PROGRAM ID SEMICOLON var_declaration functions MAIN LPAREN RPAREN body END
+    program : PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations body END
     '''
     p[0] = "PROGRAM COMPILED"
 
-
-def p_functions(p):
+def p_var_declarations(p):
     '''
-    functions : functions function
-                    | function
+    var_declarations : var_declarations var_declaration 
+                    | var_declaration
                     | empty
-
-    '''
-
-def p_function(p):
-    '''
-    function : FUNCTION simple_type ID LPAREN parameters RPAREN body
-    '''
-
-def p_parameters(p):
-    '''
-    parameters : parameters  COMMA parameter
-                | parameter
-                | empty
-    '''
-
-def p_parameter(p):
-    '''
-    parameter : simple_type ID 
     '''
 
 def p_var_declaration(p):
     '''
     var_declaration : VARIABLE simple_type variables SEMICOLON
-                    | empty
     '''
     # implementation of variable_declaration function
+
 
 def p_variables(p):
     '''
@@ -53,6 +34,31 @@ def p_variable(p):
     variable : ID
             | ID LBRACK expression RBRACK
             | ID LBRACK expression RBRACK LBRACK expression RBRACK
+    '''
+
+def p_functions(p):
+    '''
+    functions : functions function
+                    | function
+                    | empty
+
+    '''
+
+def p_function(p):
+    '''
+    function : FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations body
+    '''
+
+def p_parameters(p):
+    '''
+    parameters : parameters  COMMA parameter
+                | parameter
+                | empty
+    '''
+
+def p_parameter(p):
+    '''
+    parameter : simple_type ID 
     '''
 
 def p_body(p):
@@ -70,12 +76,20 @@ def p_statements(p):
 def p_statement(p):
     '''
     statement : assingation
+            | invocation
             | read
+            | return
     '''
+
+def p_return(p):
+    '''
+    return : RETURN expression SEMICOLON
+    '''
+
 
 def p_read(p):
     '''
-    read : READ variable SEMICOLON
+    read : READ LPAREN variable RPAREN SEMICOLON
     '''
 
 def p_assingation(p):
@@ -84,16 +98,17 @@ def p_assingation(p):
     '''
 
 
-def p_simple_type(p):
+def p_invocation(p):
     '''
-    simple_type : INT
-                | FLOAT
-                | CHAR
-                | STRING
-                | BOOLEAN
+    invocation : ID LPAREN expressions RPAREN SEMICOLON
     '''
-    # implementation of simple_type function
 
+def p_expressions(p):
+    '''
+    expressions : expressions COMMA expression  
+                | expression
+                | empty
+    '''
 
 def p_expression(p):
     '''
@@ -101,11 +116,37 @@ def p_expression(p):
                 | t_expression ASSIGN t_expression
     '''
 
+def p_var_declarations(p):
+    '''
+    var_declarations : var_declarations var_declaration 
+                    | var_declaration
+                    | empty
+    '''
+
+def p_var_declaration(p):
+    '''
+    var_declaration : VARIABLE simple_type variables SEMICOLON
+    '''
+    # implementation of variable_declaration function
+
+def p_variables(p):
+    '''
+    variables : variables COMMA variable
+            | variable
+    '''
+    # implementation of variables function
+
+def p_variable(p):
+    '''
+    variable : ID
+            | ID LBRACK expression RBRACK
+            | ID LBRACK expression RBRACK LBRACK expression RBRACK
+    '''
+
 def p_t_expression(p):
     '''
     t_expression : g_expression 
-                | g_expression AND g_expression
-                | g_expression OR g_expression
+                | g_expression boolean_operator g_expression
     '''
 
 def p_g_expression(p):
@@ -144,7 +185,13 @@ def p_comparison_operator(p):
 def p_addition_operator(p):
     '''
     addition_operator : PLUS
-                      | MINUS
+                    | MINUS
+    '''
+
+def p_boolean_operator(p):
+    '''
+    boolean_operator : AND
+                    | OR
     '''
 
 def p_multiplication_operator(p):
@@ -153,6 +200,15 @@ def p_multiplication_operator(p):
                             | DIVIDE
     '''
 
+def p_simple_type(p):
+    '''
+    simple_type : INT
+                | FLOAT
+                | CHAR
+                | STRING
+                | BOOLEAN
+    '''
+    # implementation of simple_type function
 
 def p_cte(p):
     '''
@@ -200,21 +256,27 @@ parser = yacc.yacc(debug=True)
 
 input_string = '''
 プログラム my_program;
+変数 整数 my_int, ヴァ[10], z[5][5];
 
-変数 整数 x, y[10], z[5][5];
-
-関数 整数 myFunc(整数 x, 整数 y){
+関数 整数 myFunc(整数 x, 整数 y)
+変数 ブール my_boolean;
+{
     x = 5 + 2;
 }
 
-関数 文字 myFun_2(整数 x, 整数 y){
+関数 文字 myFun_2(整数 x, 文字 y)
+変数 文字 my_char;
+{
     y = 2 + a;
 }
 
-メイン(){
-    a = 1;
-    a = 1;
-
+メイン()
+変数 文字 my_char;
+{
+    my_char = 'a';
+    my_int = 1;
+    入力する(asdas);
+    myFun_2(my_int,my_char);
 }
 
 エンド
