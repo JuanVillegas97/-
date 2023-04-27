@@ -3,13 +3,60 @@ from lexer import tokens
 
 def p_program(p):
     '''
-    program : PROGRAM ID SEMICOLON var_declaration
+    program : PROGRAM ID SEMICOLON var_declaration functions MAIN body END
     '''
     p[0] = "PROGRAM COMPILED"
+
+
+def p_functions(p):
+    '''
+    functions : functions function
+                    | function
+    '''
+
+def p_function(p):
+    '''
+    function : FUNCTION simple_type ID LPAREN parameters RPAREN body
+            | empty
+    '''
+
+def p_parameters(p):
+    '''
+    parameters : parameter_list
+                | empty
+    '''
+
+def p_parameter_list(p):
+    '''
+    parameter_list : parameter
+                    | parameter_list COMMA parameter
+    '''
+
+def p_parameter(p):
+    '''
+    parameter : simple_type ID 
+    '''
+
+def p_body(p):
+    '''
+    body : LBRACE statement RBRACE
+    '''
+
+def p_statement(p):
+    '''
+    statement : assingation
+            | empty
+    '''
+
+def p_assingation(p):
+    '''
+    assingation : variable ASSIGN expression SEMICOLON
+    '''
 
 def p_var_declaration(p):
     '''
     var_declaration : VARIABLE simple_type variables SEMICOLON
+                    | empty
     '''
     # implementation of variable_declaration function
 
@@ -94,11 +141,11 @@ def p_cte(p):
     '''
     # implementation of cte function
 
-# def p_empty(p):
-#     '''
-#     empty :
-#     '''
-#     pass
+def p_empty(p):
+    '''
+    empty :
+    '''
+    pass
 
 
 # def p_block(p):
@@ -150,8 +197,22 @@ parser = yacc.yacc(debug=True)
 
 input_string = '''
 プログラム my_program;
+
 変数 整数 x, y[10], z[5][5];
-Juanですメキシコ人です
+
+関数 整数 myFunc(整数 x, 整数 y){
+    x = 5 + 2;
+}
+
+関数 文字 myFun_2(整数 x, 整数 y){
+    y = 2 + a;
+}
+
+メイン{
+
+}
+
+エンド
 '''
 result = parser.parse(input_string)
 print(result)

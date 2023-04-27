@@ -12,7 +12,7 @@ reserved = {
     '違えば' : 'ELSE',
     '繰り返す' : 'WHILE', 
     'プリント':'PRINT',
-    'メイン ' : 'MAIN',
+    'メイン' : 'MAIN',
     'ブーリアン' : 'BOOLEAN',
     'トゥルー' : 'TRUE',
     'フォルス' : 'FALSE',
@@ -20,6 +20,7 @@ reserved = {
     'リターン' : 'RETURN',
     '変数': 'VARIABLE',
     '関数': 'FUNCTION',
+    'エンド' : 'END',
 }
 
 # List of token names.
