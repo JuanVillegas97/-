@@ -1,0 +1,32 @@
+プログラム my_program;
+変数 整数 my_int, ヴァ[10], z[5][5];
+
+関数 整数 myFunc(整数 x, 整数 y)
+変数 ブール my_boolean;
+{
+    x = 5 + 2;
+    リターン x;
+}
+
+関数 文字 myFun_2(整数 x, 文字 y)
+変数 文字 my_char;
+{
+    y = 2 + a;
+    リターン y;
+}
+
+関数 無効 my_void()
+{
+
+}
+メイン()
+変数 文字 my_char;
+{
+    my_char = 'a';
+    my_int = 1;
+    入力する(asdas);
+    myFun_2(my_int,my_char);
+
+}
+
+エンド

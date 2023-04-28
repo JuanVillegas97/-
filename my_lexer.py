@@ -22,6 +22,7 @@ reserved = {
     '関数': 'FUNCTION',
     'エンド' : 'END',
     '入力する' : 'READ',
+    '無効': 'VOID',
 }
 
 # List of token names.

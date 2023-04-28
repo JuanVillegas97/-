@@ -1,10 +1,9 @@
 import ply.yacc as yacc
-import sys
-from lexer import tokens
+from my_lexer import tokens
 
 def p_program(p):
     '''
-    program : PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations body END
+    program : PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations LBRACE statements RBRACE END
     '''
     p[0] = "PROGRAM COMPILED"
 
@@ -46,7 +45,8 @@ def p_functions(p):
 
 def p_function(p):
     '''
-    function : FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations body
+    function : FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations LBRACE statements statement RBRACE
+            |  FUNCTION VOID ID LPAREN parameters RPAREN var_declarations LBRACE statements RBRACE
     '''
 
 def p_parameters(p):
@@ -61,11 +61,6 @@ def p_parameter(p):
     parameter : simple_type ID 
     '''
 
-def p_body(p):
-    '''
-    body : LBRACE statements RBRACE
-    '''
-    
 def p_statements(p):
     '''
     statements : statements statement
@@ -85,7 +80,6 @@ def p_return(p):
     '''
     return : RETURN expression SEMICOLON
     '''
-
 
 def p_read(p):
     '''
@@ -114,33 +108,6 @@ def p_expression(p):
     '''
     expression : t_expression 
                 | t_expression ASSIGN t_expression
-    '''
-
-def p_var_declarations(p):
-    '''
-    var_declarations : var_declarations var_declaration 
-                    | var_declaration
-                    | empty
-    '''
-
-def p_var_declaration(p):
-    '''
-    var_declaration : VARIABLE simple_type variables SEMICOLON
-    '''
-    # implementation of variable_declaration function
-
-def p_variables(p):
-    '''
-    variables : variables COMMA variable
-            | variable
-    '''
-    # implementation of variables function
-
-def p_variable(p):
-    '''
-    variable : ID
-            | ID LBRACK expression RBRACK
-            | ID LBRACK expression RBRACK LBRACK expression RBRACK
     '''
 
 def p_t_expression(p):
@@ -254,31 +221,7 @@ def error(token):
 
 parser = yacc.yacc(debug=True)
 
-input_string = '''
-プログラム my_program;
-変数 整数 my_int, ヴァ[10], z[5][5];
+with open("input.txt", "r",encoding="utf-8") as file:
+    code = file.read()
 
-関数 整数 myFunc(整数 x, 整数 y)
-変数 ブール my_boolean;
-{
-    x = 5 + 2;
-}
-
-関数 文字 myFun_2(整数 x, 文字 y)
-変数 文字 my_char;
-{
-    y = 2 + a;
-}
-
-メイン()
-変数 文字 my_char;
-{
-    my_char = 'a';
-    my_int = 1;
-    入力する(asdas);
-    myFun_2(my_int,my_char);
-}
-
-エンド
-'''
-result = parser.parse(input_string)
+result = parser.parse(code)
