@@ -149,5 +149,5 @@ Well, I changed the regular expression of ID to a mix of Japanese and English wo
 I focused in the diagrams in this commit and my proposal so it took me time of no coding
 ### LEFT THINGS TO DO
 In `p_variable_declaration`, I need to add `p_complex_type`
-In `p_factor`, I need to add `p_invocation`
-I need to change the diagram where body was because I removed `p_body` and instead just used LBRACE `p_statements` RBRACE
+I need to recheck myd iagrams some of my statements might by missing semicolons
+I still need ot implement the while, for, do-while, and also check the print function to print strings 

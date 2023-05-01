@@ -26,7 +26,12 @@
     my_int = 1;
     入力する(asdas);
     myFun_2(my_int,my_char);
-
+    もし(5<3){
+        my_int = 3;
+    }違えば{
+        my_int = 5;
+    }
+    プリント(aaa);
 }
 
 エンド

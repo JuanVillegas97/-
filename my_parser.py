@@ -1,6 +1,8 @@
 import ply.yacc as yacc
 from my_lexer import tokens
 
+functions_directory = {}
+
 def p_program(p):
     '''
     program : PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations LBRACE statements RBRACE END
@@ -49,11 +51,31 @@ def p_function(p):
             |  FUNCTION VOID ID LPAREN parameters RPAREN var_declarations LBRACE statements RBRACE
     '''
 
+    if len(p) == 12:
+        # Function with a return type
+        functions_directory[p[3]] = {
+            'name': p[3],
+            'type': p[2],
+            'parameters': p[5],
+            'var_declarations': p[7],
+            'statements': p[9],
+            'return_statement': p[10]
+        }
+    else:
+        # Function without a return type (void)
+        functions_directory[p[3]]= {
+            'name': p[3],
+            'type': 'void',
+            'parameters': p[5],
+            'var_declarations': p[7],
+            'statements': p[9]
+        }
+
 def p_parameters(p):
     '''
     parameters : parameters  COMMA parameter
-                | parameter
-                | empty
+    | parameter
+    | empty
     '''
 
 def p_parameter(p):
@@ -64,17 +86,33 @@ def p_parameter(p):
 def p_statements(p):
     '''
     statements : statements statement
-            | statement
-            | empty
+    | statement
+    | empty
     '''
 
 def p_statement(p):
     '''
     statement : assingation
-            | invocation
-            | read
-            | return
+    | invocation
+    | if
+    | read
+    | return
+    | print
     '''
+
+def p_print(p):
+    '''
+    print : PRINT LPAREN expression RPAREN SEMICOLON
+    print : PRINT LPAREN CTES RPAREN SEMICOLON
+    '''
+
+def p_if(p):
+    '''
+    if : IF LPAREN expression RPAREN LBRACE statements RBRACE 
+        | IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE 
+    '''
+
+
 
 def p_return(p):
     '''
@@ -139,6 +177,7 @@ def p_factor(p):
     factor : variable
             | cte
             | LPAREN expression RPAREN 
+            | invocation
     '''
 
 def p_comparison_operator(p):
@@ -175,6 +214,8 @@ def p_simple_type(p):
                 | STRING
                 | BOOLEAN
     '''
+    for element in p:
+        print (element)
     # implementation of simple_type function
 
 def p_cte(p):
@@ -225,3 +266,12 @@ with open("input.txt", "r",encoding="utf-8") as file:
     code = file.read()
 
 result = parser.parse(code)
+
+# for function_name, function_data in functions_directory.items():
+#     print(f"Function: {function_name}")
+#     print(f"Type: {function_data['type']}")
+#     print("Parameters:", function_data['parameters'])
+#     print("Statements:", function_data['statements'])
+#     print("Variables:", function_data['var_declarations'])
+#     print("Return type:", function_data['return_statement'])
+#     print()

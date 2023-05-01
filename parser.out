@@ -4,10 +4,7 @@ Unused terminals:
 
     COLON
     COMMENT
-    ELSE
     FALSE
-    IF
-    PRINT
     THEN
     TRUE
     WHILE
@@ -39,95 +36,102 @@ Rule 21    statements -> statement
 Rule 22    statements -> empty
 Rule 23    statement -> assingation
 Rule 24    statement -> invocation
-Rule 25    statement -> read
-Rule 26    statement -> return
-Rule 27    return -> RETURN expression SEMICOLON
-Rule 28    read -> READ LPAREN variable RPAREN SEMICOLON
-Rule 29    assingation -> variable ASSIGN expression SEMICOLON
-Rule 30    invocation -> ID LPAREN expressions RPAREN SEMICOLON
-Rule 31    expressions -> expressions COMMA expression
-Rule 32    expressions -> expression
-Rule 33    expressions -> empty
-Rule 34    expression -> t_expression
-Rule 35    expression -> t_expression ASSIGN t_expression
-Rule 36    t_expression -> g_expression
-Rule 37    t_expression -> g_expression boolean_operator g_expression
-Rule 38    g_expression -> m_expression
-Rule 39    g_expression -> m_expression comparison_operator m_expression
-Rule 40    m_expression -> term
-Rule 41    m_expression -> term addition_operator term
-Rule 42    term -> factor
-Rule 43    term -> factor multiplication_operator factor
-Rule 44    factor -> variable
-Rule 45    factor -> cte
-Rule 46    factor -> LPAREN expression RPAREN
-Rule 47    comparison_operator -> LESS
-Rule 48    comparison_operator -> GREATER
-Rule 49    comparison_operator -> EQUALS
-Rule 50    comparison_operator -> NOTEQUAL
-Rule 51    addition_operator -> PLUS
-Rule 52    addition_operator -> MINUS
-Rule 53    boolean_operator -> AND
-Rule 54    boolean_operator -> OR
-Rule 55    multiplication_operator -> TIMES
-Rule 56    multiplication_operator -> DIVIDE
-Rule 57    simple_type -> INT
-Rule 58    simple_type -> FLOAT
-Rule 59    simple_type -> CHAR
-Rule 60    simple_type -> STRING
-Rule 61    simple_type -> BOOLEAN
-Rule 62    cte -> CTEI
-Rule 63    cte -> CTEF
-Rule 64    cte -> CTEC
-Rule 65    cte -> CTES
-Rule 66    cte -> CTEB
-Rule 67    empty -> <empty>
+Rule 25    statement -> if
+Rule 26    statement -> read
+Rule 27    statement -> return
+Rule 28    statement -> print
+Rule 29    print -> PRINT LPAREN expression RPAREN SEMICOLON
+Rule 30    print -> PRINT LPAREN CTES RPAREN SEMICOLON
+Rule 31    if -> IF LPAREN expression RPAREN LBRACE statements RBRACE
+Rule 32    if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+Rule 33    return -> RETURN expression SEMICOLON
+Rule 34    read -> READ LPAREN variable RPAREN SEMICOLON
+Rule 35    assingation -> variable ASSIGN expression SEMICOLON
+Rule 36    invocation -> ID LPAREN expressions RPAREN SEMICOLON
+Rule 37    expressions -> expressions COMMA expression
+Rule 38    expressions -> expression
+Rule 39    expressions -> empty
+Rule 40    expression -> t_expression
+Rule 41    expression -> t_expression ASSIGN t_expression
+Rule 42    t_expression -> g_expression
+Rule 43    t_expression -> g_expression boolean_operator g_expression
+Rule 44    g_expression -> m_expression
+Rule 45    g_expression -> m_expression comparison_operator m_expression
+Rule 46    m_expression -> term
+Rule 47    m_expression -> term addition_operator term
+Rule 48    term -> factor
+Rule 49    term -> factor multiplication_operator factor
+Rule 50    factor -> variable
+Rule 51    factor -> cte
+Rule 52    factor -> LPAREN expression RPAREN
+Rule 53    factor -> invocation
+Rule 54    comparison_operator -> LESS
+Rule 55    comparison_operator -> GREATER
+Rule 56    comparison_operator -> EQUALS
+Rule 57    comparison_operator -> NOTEQUAL
+Rule 58    addition_operator -> PLUS
+Rule 59    addition_operator -> MINUS
+Rule 60    boolean_operator -> AND
+Rule 61    boolean_operator -> OR
+Rule 62    multiplication_operator -> TIMES
+Rule 63    multiplication_operator -> DIVIDE
+Rule 64    simple_type -> INT
+Rule 65    simple_type -> FLOAT
+Rule 66    simple_type -> CHAR
+Rule 67    simple_type -> STRING
+Rule 68    simple_type -> BOOLEAN
+Rule 69    cte -> CTEI
+Rule 70    cte -> CTEF
+Rule 71    cte -> CTEC
+Rule 72    cte -> CTES
+Rule 73    cte -> CTEB
+Rule 74    empty -> <empty>
 
 Terminals, with rules where they appear
 
-AND                  : 53
-ASSIGN               : 29 35
-BOOLEAN              : 61
-CHAR                 : 59
+AND                  : 60
+ASSIGN               : 35 41
+BOOLEAN              : 68
+CHAR                 : 66
 COLON                : 
-COMMA                : 6 16 31
+COMMA                : 6 16 37
 COMMENT              : 
-CTEB                 : 66
-CTEC                 : 64
-CTEF                 : 63
-CTEI                 : 62
-CTES                 : 65
-DIVIDE               : 56
-ELSE                 : 
+CTEB                 : 73
+CTEC                 : 71
+CTEF                 : 70
+CTEI                 : 69
+CTES                 : 30 72
+DIVIDE               : 63
+ELSE                 : 32
 END                  : 1
-EQUALS               : 49
+EQUALS               : 56
 FALSE                : 
-FLOAT                : 58
+FLOAT                : 65
 FUNCTION             : 14 15
-GREATER              : 48
-ID                   : 1 8 9 10 14 15 19 30
-IF                   : 
-INT                  : 57
-LBRACE               : 1 14 15
+GREATER              : 55
+ID                   : 1 8 9 10 14 15 19 36
+IF                   : 31 32
+INT                  : 64
+LBRACE               : 1 14 15 31 32 32
 LBRACK               : 9 10 10
-LESS                 : 47
-LPAREN               : 1 14 15 28 30 46
+LESS                 : 54
+LPAREN               : 1 14 15 29 30 31 32 34 36 52
 MAIN                 : 1
-MINUS                : 52
-NOTEQUAL             : 50
-OR                   : 54
-PLUS                 : 51
-PRINT                : 
+MINUS                : 59
+NOTEQUAL             : 57
+OR                   : 61
+PLUS                 : 58
+PRINT                : 29 30
 PROGRAM              : 1
-RBRACE               : 1 14 15
+RBRACE               : 1 14 15 31 32 32
 RBRACK               : 9 10 10
-READ                 : 28
-RETURN               : 27
-RPAREN               : 1 14 15 28 30 46
-SEMICOLON            : 1 5 27 28 29 30
-STRING               : 60
+READ                 : 34
+RETURN               : 33
+RPAREN               : 1 14 15 29 30 31 32 34 36 52
+SEMICOLON            : 1 5 29 30 33 34 35 36
+STRING               : 67
 THEN                 : 
-TIMES                : 55
+TIMES                : 62
 TRUE                 : 
 VARIABLE             : 5
 VOID                 : 15
@@ -136,34 +140,36 @@ error                :
 
 Nonterminals, with rules where they appear
 
-addition_operator    : 41
+addition_operator    : 47
 assingation          : 23
-boolean_operator     : 37
-comparison_operator  : 39
-cte                  : 45
-empty                : 4 13 18 22 33
-expression           : 9 10 10 27 29 31 32 46
-expressions          : 30 31
-factor               : 42 43 43
+boolean_operator     : 43
+comparison_operator  : 45
+cte                  : 51
+empty                : 4 13 18 22 39
+expression           : 9 10 10 29 31 32 33 35 37 38 52
+expressions          : 36 37
+factor               : 48 49 49
 function             : 11 12
 functions            : 1 11
-g_expression         : 36 37 37
-invocation           : 24
-m_expression         : 38 39 39
-multiplication_operator : 43
+g_expression         : 42 43 43
+if                   : 25
+invocation           : 24 53
+m_expression         : 44 45 45
+multiplication_operator : 49
 parameter            : 16 17
 parameters           : 14 15 16
+print                : 28
 program              : 0
-read                 : 25
-return               : 26
+read                 : 26
+return               : 27
 simple_type          : 5 14 19
 statement            : 14 20 21
-statements           : 1 14 15 20
-t_expression         : 34 35 35
-term                 : 40 41 41
+statements           : 1 14 15 20 31 32 32
+t_expression         : 40 41 41
+term                 : 46 47 47
 var_declaration      : 2 3
 var_declarations     : 1 1 2 14 15
-variable             : 6 7 28 29 44
+variable             : 6 7 34 35 50
 variables            : 5 6
 
 Parsing method: LALR
@@ -204,14 +210,14 @@ state 4
     (3) var_declarations -> . var_declaration
     (4) var_declarations -> . empty
     (5) var_declaration -> . VARIABLE simple_type variables SEMICOLON
-    (67) empty -> .
+    (74) empty -> .
 
   ! shift/reduce conflict for VARIABLE resolved as shift
     VARIABLE        shift and go to state 8
-    FUNCTION        reduce using rule 67 (empty -> .)
-    MAIN            reduce using rule 67 (empty -> .)
+    FUNCTION        reduce using rule 74 (empty -> .)
+    MAIN            reduce using rule 74 (empty -> .)
 
-  ! VARIABLE        [ reduce using rule 67 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 74 (empty -> .) ]
 
     var_declarations               shift and go to state 5
     var_declaration                shift and go to state 6
@@ -227,14 +233,14 @@ state 5
     (5) var_declaration -> . VARIABLE simple_type variables SEMICOLON
     (14) function -> . FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations LBRACE statements statement RBRACE
     (15) function -> . FUNCTION VOID ID LPAREN parameters RPAREN var_declarations LBRACE statements RBRACE
-    (67) empty -> .
+    (74) empty -> .
 
   ! shift/reduce conflict for FUNCTION resolved as shift
     VARIABLE        shift and go to state 8
     FUNCTION        shift and go to state 13
-    MAIN            reduce using rule 67 (empty -> .)
+    MAIN            reduce using rule 74 (empty -> .)
 
-  ! FUNCTION        [ reduce using rule 67 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 74 (empty -> .) ]
 
     functions                      shift and go to state 9
     var_declaration                shift and go to state 10
@@ -264,11 +270,11 @@ state 7
 state 8
 
     (5) var_declaration -> VARIABLE . simple_type variables SEMICOLON
-    (57) simple_type -> . INT
-    (58) simple_type -> . FLOAT
-    (59) simple_type -> . CHAR
-    (60) simple_type -> . STRING
-    (61) simple_type -> . BOOLEAN
+    (64) simple_type -> . INT
+    (65) simple_type -> . FLOAT
+    (66) simple_type -> . CHAR
+    (67) simple_type -> . STRING
+    (68) simple_type -> . BOOLEAN
 
     INT             shift and go to state 15
     FLOAT           shift and go to state 16
@@ -320,11 +326,11 @@ state 13
 
     (14) function -> FUNCTION . simple_type ID LPAREN parameters RPAREN var_declarations LBRACE statements statement RBRACE
     (15) function -> FUNCTION . VOID ID LPAREN parameters RPAREN var_declarations LBRACE statements RBRACE
-    (57) simple_type -> . INT
-    (58) simple_type -> . FLOAT
-    (59) simple_type -> . CHAR
-    (60) simple_type -> . STRING
-    (61) simple_type -> . BOOLEAN
+    (64) simple_type -> . INT
+    (65) simple_type -> . FLOAT
+    (66) simple_type -> . CHAR
+    (67) simple_type -> . STRING
+    (68) simple_type -> . BOOLEAN
 
     VOID            shift and go to state 23
     INT             shift and go to state 15
@@ -351,37 +357,37 @@ state 14
 
 state 15
 
-    (57) simple_type -> INT .
+    (64) simple_type -> INT .
 
-    ID              reduce using rule 57 (simple_type -> INT .)
+    ID              reduce using rule 64 (simple_type -> INT .)
 
 
 state 16
 
-    (58) simple_type -> FLOAT .
+    (65) simple_type -> FLOAT .
 
-    ID              reduce using rule 58 (simple_type -> FLOAT .)
+    ID              reduce using rule 65 (simple_type -> FLOAT .)
 
 
 state 17
 
-    (59) simple_type -> CHAR .
+    (66) simple_type -> CHAR .
 
-    ID              reduce using rule 59 (simple_type -> CHAR .)
+    ID              reduce using rule 66 (simple_type -> CHAR .)
 
 
 state 18
 
-    (60) simple_type -> STRING .
+    (67) simple_type -> STRING .
 
-    ID              reduce using rule 60 (simple_type -> STRING .)
+    ID              reduce using rule 67 (simple_type -> STRING .)
 
 
 state 19
 
-    (61) simple_type -> BOOLEAN .
+    (68) simple_type -> BOOLEAN .
 
-    ID              reduce using rule 61 (simple_type -> BOOLEAN .)
+    ID              reduce using rule 68 (simple_type -> BOOLEAN .)
 
 
 state 20
@@ -438,18 +444,6 @@ state 26
 
     SEMICOLON       reduce using rule 8 (variable -> ID .)
     COMMA           reduce using rule 8 (variable -> ID .)
-    TIMES           reduce using rule 8 (variable -> ID .)
-    DIVIDE          reduce using rule 8 (variable -> ID .)
-    PLUS            reduce using rule 8 (variable -> ID .)
-    MINUS           reduce using rule 8 (variable -> ID .)
-    LESS            reduce using rule 8 (variable -> ID .)
-    GREATER         reduce using rule 8 (variable -> ID .)
-    EQUALS          reduce using rule 8 (variable -> ID .)
-    NOTEQUAL        reduce using rule 8 (variable -> ID .)
-    AND             reduce using rule 8 (variable -> ID .)
-    OR              reduce using rule 8 (variable -> ID .)
-    ASSIGN          reduce using rule 8 (variable -> ID .)
-    RBRACK          reduce using rule 8 (variable -> ID .)
     RPAREN          reduce using rule 8 (variable -> ID .)
     LBRACK          shift and go to state 32
 
@@ -500,44 +494,47 @@ state 32
 
     (9) variable -> ID LBRACK . expression RBRACK
     (10) variable -> ID LBRACK . expression RBRACK LBRACK expression RBRACK
-    (34) expression -> . t_expression
-    (35) expression -> . t_expression ASSIGN t_expression
-    (36) t_expression -> . g_expression
-    (37) t_expression -> . g_expression boolean_operator g_expression
-    (38) g_expression -> . m_expression
-    (39) g_expression -> . m_expression comparison_operator m_expression
-    (40) m_expression -> . term
-    (41) m_expression -> . term addition_operator term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
+    (40) expression -> . t_expression
+    (41) expression -> . t_expression ASSIGN t_expression
+    (42) t_expression -> . g_expression
+    (43) t_expression -> . g_expression boolean_operator g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
 
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
 
-    expression                     shift and go to state 37
-    t_expression                   shift and go to state 38
-    g_expression                   shift and go to state 39
-    m_expression                   shift and go to state 40
-    term                           shift and go to state 41
-    factor                         shift and go to state 42
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
+    expression                     shift and go to state 38
+    t_expression                   shift and go to state 39
+    g_expression                   shift and go to state 40
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
 
 state 33
 
@@ -546,15 +543,15 @@ state 33
     (3) var_declarations -> . var_declaration
     (4) var_declarations -> . empty
     (5) var_declaration -> . VARIABLE simple_type variables SEMICOLON
-    (67) empty -> .
+    (74) empty -> .
 
   ! shift/reduce conflict for VARIABLE resolved as shift
     VARIABLE        shift and go to state 8
-    LBRACE          reduce using rule 67 (empty -> .)
+    LBRACE          reduce using rule 74 (empty -> .)
 
-  ! VARIABLE        [ reduce using rule 67 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 74 (empty -> .) ]
 
-    var_declarations               shift and go to state 51
+    var_declarations               shift and go to state 53
     var_declaration                shift and go to state 6
     empty                          shift and go to state 7
 
@@ -565,25 +562,25 @@ state 34
     (17) parameters -> . parameter
     (18) parameters -> . empty
     (19) parameter -> . simple_type ID
-    (67) empty -> .
-    (57) simple_type -> . INT
-    (58) simple_type -> . FLOAT
-    (59) simple_type -> . CHAR
-    (60) simple_type -> . STRING
-    (61) simple_type -> . BOOLEAN
+    (74) empty -> .
+    (64) simple_type -> . INT
+    (65) simple_type -> . FLOAT
+    (66) simple_type -> . CHAR
+    (67) simple_type -> . STRING
+    (68) simple_type -> . BOOLEAN
 
-    RPAREN          reduce using rule 67 (empty -> .)
-    COMMA           reduce using rule 67 (empty -> .)
+    RPAREN          reduce using rule 74 (empty -> .)
+    COMMA           reduce using rule 74 (empty -> .)
     INT             shift and go to state 15
     FLOAT           shift and go to state 16
     CHAR            shift and go to state 17
     STRING          shift and go to state 18
     BOOLEAN         shift and go to state 19
 
-    simple_type                    shift and go to state 52
-    parameters                     shift and go to state 53
-    parameter                      shift and go to state 54
-    empty                          shift and go to state 55
+    simple_type                    shift and go to state 54
+    parameters                     shift and go to state 55
+    parameter                      shift and go to state 56
+    empty                          shift and go to state 57
 
 state 35
 
@@ -592,25 +589,25 @@ state 35
     (17) parameters -> . parameter
     (18) parameters -> . empty
     (19) parameter -> . simple_type ID
-    (67) empty -> .
-    (57) simple_type -> . INT
-    (58) simple_type -> . FLOAT
-    (59) simple_type -> . CHAR
-    (60) simple_type -> . STRING
-    (61) simple_type -> . BOOLEAN
+    (74) empty -> .
+    (64) simple_type -> . INT
+    (65) simple_type -> . FLOAT
+    (66) simple_type -> . CHAR
+    (67) simple_type -> . STRING
+    (68) simple_type -> . BOOLEAN
 
-    RPAREN          reduce using rule 67 (empty -> .)
-    COMMA           reduce using rule 67 (empty -> .)
+    RPAREN          reduce using rule 74 (empty -> .)
+    COMMA           reduce using rule 74 (empty -> .)
     INT             shift and go to state 15
     FLOAT           shift and go to state 16
     CHAR            shift and go to state 17
     STRING          shift and go to state 18
     BOOLEAN         shift and go to state 19
 
-    parameters                     shift and go to state 56
-    parameter                      shift and go to state 54
-    empty                          shift and go to state 55
-    simple_type                    shift and go to state 52
+    parameters                     shift and go to state 58
+    parameter                      shift and go to state 56
+    empty                          shift and go to state 57
+    simple_type                    shift and go to state 54
 
 state 36
 
@@ -622,329 +619,379 @@ state 36
 
 state 37
 
-    (9) variable -> ID LBRACK expression . RBRACK
-    (10) variable -> ID LBRACK expression . RBRACK LBRACK expression RBRACK
+    (8) variable -> ID .
+    (9) variable -> ID . LBRACK expression RBRACK
+    (10) variable -> ID . LBRACK expression RBRACK LBRACK expression RBRACK
+    (36) invocation -> ID . LPAREN expressions RPAREN SEMICOLON
 
-    RBRACK          shift and go to state 57
+    TIMES           reduce using rule 8 (variable -> ID .)
+    DIVIDE          reduce using rule 8 (variable -> ID .)
+    PLUS            reduce using rule 8 (variable -> ID .)
+    MINUS           reduce using rule 8 (variable -> ID .)
+    LESS            reduce using rule 8 (variable -> ID .)
+    GREATER         reduce using rule 8 (variable -> ID .)
+    EQUALS          reduce using rule 8 (variable -> ID .)
+    NOTEQUAL        reduce using rule 8 (variable -> ID .)
+    AND             reduce using rule 8 (variable -> ID .)
+    OR              reduce using rule 8 (variable -> ID .)
+    ASSIGN          reduce using rule 8 (variable -> ID .)
+    RBRACK          reduce using rule 8 (variable -> ID .)
+    RPAREN          reduce using rule 8 (variable -> ID .)
+    COMMA           reduce using rule 8 (variable -> ID .)
+    SEMICOLON       reduce using rule 8 (variable -> ID .)
+    LBRACK          shift and go to state 32
+    LPAREN          shift and go to state 59
 
 
 state 38
 
-    (34) expression -> t_expression .
-    (35) expression -> t_expression . ASSIGN t_expression
+    (9) variable -> ID LBRACK expression . RBRACK
+    (10) variable -> ID LBRACK expression . RBRACK LBRACK expression RBRACK
 
-    RBRACK          reduce using rule 34 (expression -> t_expression .)
-    RPAREN          reduce using rule 34 (expression -> t_expression .)
-    SEMICOLON       reduce using rule 34 (expression -> t_expression .)
-    COMMA           reduce using rule 34 (expression -> t_expression .)
-    ASSIGN          shift and go to state 58
+    RBRACK          shift and go to state 60
 
 
 state 39
 
-    (36) t_expression -> g_expression .
-    (37) t_expression -> g_expression . boolean_operator g_expression
-    (53) boolean_operator -> . AND
-    (54) boolean_operator -> . OR
+    (40) expression -> t_expression .
+    (41) expression -> t_expression . ASSIGN t_expression
 
-    ASSIGN          reduce using rule 36 (t_expression -> g_expression .)
-    RBRACK          reduce using rule 36 (t_expression -> g_expression .)
-    RPAREN          reduce using rule 36 (t_expression -> g_expression .)
-    SEMICOLON       reduce using rule 36 (t_expression -> g_expression .)
-    COMMA           reduce using rule 36 (t_expression -> g_expression .)
-    AND             shift and go to state 60
-    OR              shift and go to state 61
+    RBRACK          reduce using rule 40 (expression -> t_expression .)
+    RPAREN          reduce using rule 40 (expression -> t_expression .)
+    COMMA           reduce using rule 40 (expression -> t_expression .)
+    SEMICOLON       reduce using rule 40 (expression -> t_expression .)
+    ASSIGN          shift and go to state 61
 
-    boolean_operator               shift and go to state 59
 
 state 40
 
-    (38) g_expression -> m_expression .
-    (39) g_expression -> m_expression . comparison_operator m_expression
-    (47) comparison_operator -> . LESS
-    (48) comparison_operator -> . GREATER
-    (49) comparison_operator -> . EQUALS
-    (50) comparison_operator -> . NOTEQUAL
+    (42) t_expression -> g_expression .
+    (43) t_expression -> g_expression . boolean_operator g_expression
+    (60) boolean_operator -> . AND
+    (61) boolean_operator -> . OR
 
-    AND             reduce using rule 38 (g_expression -> m_expression .)
-    OR              reduce using rule 38 (g_expression -> m_expression .)
-    ASSIGN          reduce using rule 38 (g_expression -> m_expression .)
-    RBRACK          reduce using rule 38 (g_expression -> m_expression .)
-    RPAREN          reduce using rule 38 (g_expression -> m_expression .)
-    SEMICOLON       reduce using rule 38 (g_expression -> m_expression .)
-    COMMA           reduce using rule 38 (g_expression -> m_expression .)
-    LESS            shift and go to state 63
-    GREATER         shift and go to state 64
-    EQUALS          shift and go to state 65
-    NOTEQUAL        shift and go to state 66
+    ASSIGN          reduce using rule 42 (t_expression -> g_expression .)
+    RBRACK          reduce using rule 42 (t_expression -> g_expression .)
+    RPAREN          reduce using rule 42 (t_expression -> g_expression .)
+    COMMA           reduce using rule 42 (t_expression -> g_expression .)
+    SEMICOLON       reduce using rule 42 (t_expression -> g_expression .)
+    AND             shift and go to state 63
+    OR              shift and go to state 64
 
-    comparison_operator            shift and go to state 62
+    boolean_operator               shift and go to state 62
 
 state 41
 
-    (40) m_expression -> term .
-    (41) m_expression -> term . addition_operator term
-    (51) addition_operator -> . PLUS
-    (52) addition_operator -> . MINUS
+    (44) g_expression -> m_expression .
+    (45) g_expression -> m_expression . comparison_operator m_expression
+    (54) comparison_operator -> . LESS
+    (55) comparison_operator -> . GREATER
+    (56) comparison_operator -> . EQUALS
+    (57) comparison_operator -> . NOTEQUAL
 
-    LESS            reduce using rule 40 (m_expression -> term .)
-    GREATER         reduce using rule 40 (m_expression -> term .)
-    EQUALS          reduce using rule 40 (m_expression -> term .)
-    NOTEQUAL        reduce using rule 40 (m_expression -> term .)
-    AND             reduce using rule 40 (m_expression -> term .)
-    OR              reduce using rule 40 (m_expression -> term .)
-    ASSIGN          reduce using rule 40 (m_expression -> term .)
-    RBRACK          reduce using rule 40 (m_expression -> term .)
-    RPAREN          reduce using rule 40 (m_expression -> term .)
-    SEMICOLON       reduce using rule 40 (m_expression -> term .)
-    COMMA           reduce using rule 40 (m_expression -> term .)
-    PLUS            shift and go to state 68
-    MINUS           shift and go to state 69
+    AND             reduce using rule 44 (g_expression -> m_expression .)
+    OR              reduce using rule 44 (g_expression -> m_expression .)
+    ASSIGN          reduce using rule 44 (g_expression -> m_expression .)
+    RBRACK          reduce using rule 44 (g_expression -> m_expression .)
+    RPAREN          reduce using rule 44 (g_expression -> m_expression .)
+    COMMA           reduce using rule 44 (g_expression -> m_expression .)
+    SEMICOLON       reduce using rule 44 (g_expression -> m_expression .)
+    LESS            shift and go to state 66
+    GREATER         shift and go to state 67
+    EQUALS          shift and go to state 68
+    NOTEQUAL        shift and go to state 69
 
-    addition_operator              shift and go to state 67
+    comparison_operator            shift and go to state 65
 
 state 42
 
-    (42) term -> factor .
-    (43) term -> factor . multiplication_operator factor
-    (55) multiplication_operator -> . TIMES
-    (56) multiplication_operator -> . DIVIDE
+    (46) m_expression -> term .
+    (47) m_expression -> term . addition_operator term
+    (58) addition_operator -> . PLUS
+    (59) addition_operator -> . MINUS
 
-    PLUS            reduce using rule 42 (term -> factor .)
-    MINUS           reduce using rule 42 (term -> factor .)
-    LESS            reduce using rule 42 (term -> factor .)
-    GREATER         reduce using rule 42 (term -> factor .)
-    EQUALS          reduce using rule 42 (term -> factor .)
-    NOTEQUAL        reduce using rule 42 (term -> factor .)
-    AND             reduce using rule 42 (term -> factor .)
-    OR              reduce using rule 42 (term -> factor .)
-    ASSIGN          reduce using rule 42 (term -> factor .)
-    RBRACK          reduce using rule 42 (term -> factor .)
-    RPAREN          reduce using rule 42 (term -> factor .)
-    SEMICOLON       reduce using rule 42 (term -> factor .)
-    COMMA           reduce using rule 42 (term -> factor .)
-    TIMES           shift and go to state 71
-    DIVIDE          shift and go to state 72
+    LESS            reduce using rule 46 (m_expression -> term .)
+    GREATER         reduce using rule 46 (m_expression -> term .)
+    EQUALS          reduce using rule 46 (m_expression -> term .)
+    NOTEQUAL        reduce using rule 46 (m_expression -> term .)
+    AND             reduce using rule 46 (m_expression -> term .)
+    OR              reduce using rule 46 (m_expression -> term .)
+    ASSIGN          reduce using rule 46 (m_expression -> term .)
+    RBRACK          reduce using rule 46 (m_expression -> term .)
+    RPAREN          reduce using rule 46 (m_expression -> term .)
+    COMMA           reduce using rule 46 (m_expression -> term .)
+    SEMICOLON       reduce using rule 46 (m_expression -> term .)
+    PLUS            shift and go to state 71
+    MINUS           shift and go to state 72
 
-    multiplication_operator        shift and go to state 70
+    addition_operator              shift and go to state 70
 
 state 43
 
-    (44) factor -> variable .
+    (48) term -> factor .
+    (49) term -> factor . multiplication_operator factor
+    (62) multiplication_operator -> . TIMES
+    (63) multiplication_operator -> . DIVIDE
 
-    TIMES           reduce using rule 44 (factor -> variable .)
-    DIVIDE          reduce using rule 44 (factor -> variable .)
-    PLUS            reduce using rule 44 (factor -> variable .)
-    MINUS           reduce using rule 44 (factor -> variable .)
-    LESS            reduce using rule 44 (factor -> variable .)
-    GREATER         reduce using rule 44 (factor -> variable .)
-    EQUALS          reduce using rule 44 (factor -> variable .)
-    NOTEQUAL        reduce using rule 44 (factor -> variable .)
-    AND             reduce using rule 44 (factor -> variable .)
-    OR              reduce using rule 44 (factor -> variable .)
-    ASSIGN          reduce using rule 44 (factor -> variable .)
-    RBRACK          reduce using rule 44 (factor -> variable .)
-    RPAREN          reduce using rule 44 (factor -> variable .)
-    SEMICOLON       reduce using rule 44 (factor -> variable .)
-    COMMA           reduce using rule 44 (factor -> variable .)
+    PLUS            reduce using rule 48 (term -> factor .)
+    MINUS           reduce using rule 48 (term -> factor .)
+    LESS            reduce using rule 48 (term -> factor .)
+    GREATER         reduce using rule 48 (term -> factor .)
+    EQUALS          reduce using rule 48 (term -> factor .)
+    NOTEQUAL        reduce using rule 48 (term -> factor .)
+    AND             reduce using rule 48 (term -> factor .)
+    OR              reduce using rule 48 (term -> factor .)
+    ASSIGN          reduce using rule 48 (term -> factor .)
+    RBRACK          reduce using rule 48 (term -> factor .)
+    RPAREN          reduce using rule 48 (term -> factor .)
+    COMMA           reduce using rule 48 (term -> factor .)
+    SEMICOLON       reduce using rule 48 (term -> factor .)
+    TIMES           shift and go to state 74
+    DIVIDE          shift and go to state 75
 
+    multiplication_operator        shift and go to state 73
 
 state 44
 
-    (45) factor -> cte .
+    (50) factor -> variable .
 
-    TIMES           reduce using rule 45 (factor -> cte .)
-    DIVIDE          reduce using rule 45 (factor -> cte .)
-    PLUS            reduce using rule 45 (factor -> cte .)
-    MINUS           reduce using rule 45 (factor -> cte .)
-    LESS            reduce using rule 45 (factor -> cte .)
-    GREATER         reduce using rule 45 (factor -> cte .)
-    EQUALS          reduce using rule 45 (factor -> cte .)
-    NOTEQUAL        reduce using rule 45 (factor -> cte .)
-    AND             reduce using rule 45 (factor -> cte .)
-    OR              reduce using rule 45 (factor -> cte .)
-    ASSIGN          reduce using rule 45 (factor -> cte .)
-    RBRACK          reduce using rule 45 (factor -> cte .)
-    RPAREN          reduce using rule 45 (factor -> cte .)
-    SEMICOLON       reduce using rule 45 (factor -> cte .)
-    COMMA           reduce using rule 45 (factor -> cte .)
+    TIMES           reduce using rule 50 (factor -> variable .)
+    DIVIDE          reduce using rule 50 (factor -> variable .)
+    PLUS            reduce using rule 50 (factor -> variable .)
+    MINUS           reduce using rule 50 (factor -> variable .)
+    LESS            reduce using rule 50 (factor -> variable .)
+    GREATER         reduce using rule 50 (factor -> variable .)
+    EQUALS          reduce using rule 50 (factor -> variable .)
+    NOTEQUAL        reduce using rule 50 (factor -> variable .)
+    AND             reduce using rule 50 (factor -> variable .)
+    OR              reduce using rule 50 (factor -> variable .)
+    ASSIGN          reduce using rule 50 (factor -> variable .)
+    RBRACK          reduce using rule 50 (factor -> variable .)
+    RPAREN          reduce using rule 50 (factor -> variable .)
+    COMMA           reduce using rule 50 (factor -> variable .)
+    SEMICOLON       reduce using rule 50 (factor -> variable .)
 
 
 state 45
 
-    (46) factor -> LPAREN . expression RPAREN
-    (34) expression -> . t_expression
-    (35) expression -> . t_expression ASSIGN t_expression
-    (36) t_expression -> . g_expression
-    (37) t_expression -> . g_expression boolean_operator g_expression
-    (38) g_expression -> . m_expression
-    (39) g_expression -> . m_expression comparison_operator m_expression
-    (40) m_expression -> . term
-    (41) m_expression -> . term addition_operator term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
-    (8) variable -> . ID
-    (9) variable -> . ID LBRACK expression RBRACK
-    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
+    (51) factor -> cte .
 
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
+    TIMES           reduce using rule 51 (factor -> cte .)
+    DIVIDE          reduce using rule 51 (factor -> cte .)
+    PLUS            reduce using rule 51 (factor -> cte .)
+    MINUS           reduce using rule 51 (factor -> cte .)
+    LESS            reduce using rule 51 (factor -> cte .)
+    GREATER         reduce using rule 51 (factor -> cte .)
+    EQUALS          reduce using rule 51 (factor -> cte .)
+    NOTEQUAL        reduce using rule 51 (factor -> cte .)
+    AND             reduce using rule 51 (factor -> cte .)
+    OR              reduce using rule 51 (factor -> cte .)
+    ASSIGN          reduce using rule 51 (factor -> cte .)
+    RBRACK          reduce using rule 51 (factor -> cte .)
+    RPAREN          reduce using rule 51 (factor -> cte .)
+    COMMA           reduce using rule 51 (factor -> cte .)
+    SEMICOLON       reduce using rule 51 (factor -> cte .)
 
-    expression                     shift and go to state 73
-    t_expression                   shift and go to state 38
-    g_expression                   shift and go to state 39
-    m_expression                   shift and go to state 40
-    term                           shift and go to state 41
-    factor                         shift and go to state 42
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
 
 state 46
 
-    (62) cte -> CTEI .
+    (52) factor -> LPAREN . expression RPAREN
+    (40) expression -> . t_expression
+    (41) expression -> . t_expression ASSIGN t_expression
+    (42) t_expression -> . g_expression
+    (43) t_expression -> . g_expression boolean_operator g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
 
-    TIMES           reduce using rule 62 (cte -> CTEI .)
-    DIVIDE          reduce using rule 62 (cte -> CTEI .)
-    PLUS            reduce using rule 62 (cte -> CTEI .)
-    MINUS           reduce using rule 62 (cte -> CTEI .)
-    LESS            reduce using rule 62 (cte -> CTEI .)
-    GREATER         reduce using rule 62 (cte -> CTEI .)
-    EQUALS          reduce using rule 62 (cte -> CTEI .)
-    NOTEQUAL        reduce using rule 62 (cte -> CTEI .)
-    AND             reduce using rule 62 (cte -> CTEI .)
-    OR              reduce using rule 62 (cte -> CTEI .)
-    ASSIGN          reduce using rule 62 (cte -> CTEI .)
-    RBRACK          reduce using rule 62 (cte -> CTEI .)
-    RPAREN          reduce using rule 62 (cte -> CTEI .)
-    SEMICOLON       reduce using rule 62 (cte -> CTEI .)
-    COMMA           reduce using rule 62 (cte -> CTEI .)
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
 
+    expression                     shift and go to state 76
+    t_expression                   shift and go to state 39
+    g_expression                   shift and go to state 40
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
 
 state 47
 
-    (63) cte -> CTEF .
+    (53) factor -> invocation .
 
-    TIMES           reduce using rule 63 (cte -> CTEF .)
-    DIVIDE          reduce using rule 63 (cte -> CTEF .)
-    PLUS            reduce using rule 63 (cte -> CTEF .)
-    MINUS           reduce using rule 63 (cte -> CTEF .)
-    LESS            reduce using rule 63 (cte -> CTEF .)
-    GREATER         reduce using rule 63 (cte -> CTEF .)
-    EQUALS          reduce using rule 63 (cte -> CTEF .)
-    NOTEQUAL        reduce using rule 63 (cte -> CTEF .)
-    AND             reduce using rule 63 (cte -> CTEF .)
-    OR              reduce using rule 63 (cte -> CTEF .)
-    ASSIGN          reduce using rule 63 (cte -> CTEF .)
-    RBRACK          reduce using rule 63 (cte -> CTEF .)
-    RPAREN          reduce using rule 63 (cte -> CTEF .)
-    SEMICOLON       reduce using rule 63 (cte -> CTEF .)
-    COMMA           reduce using rule 63 (cte -> CTEF .)
+    TIMES           reduce using rule 53 (factor -> invocation .)
+    DIVIDE          reduce using rule 53 (factor -> invocation .)
+    PLUS            reduce using rule 53 (factor -> invocation .)
+    MINUS           reduce using rule 53 (factor -> invocation .)
+    LESS            reduce using rule 53 (factor -> invocation .)
+    GREATER         reduce using rule 53 (factor -> invocation .)
+    EQUALS          reduce using rule 53 (factor -> invocation .)
+    NOTEQUAL        reduce using rule 53 (factor -> invocation .)
+    AND             reduce using rule 53 (factor -> invocation .)
+    OR              reduce using rule 53 (factor -> invocation .)
+    ASSIGN          reduce using rule 53 (factor -> invocation .)
+    RBRACK          reduce using rule 53 (factor -> invocation .)
+    RPAREN          reduce using rule 53 (factor -> invocation .)
+    COMMA           reduce using rule 53 (factor -> invocation .)
+    SEMICOLON       reduce using rule 53 (factor -> invocation .)
 
 
 state 48
 
-    (64) cte -> CTEC .
+    (69) cte -> CTEI .
 
-    TIMES           reduce using rule 64 (cte -> CTEC .)
-    DIVIDE          reduce using rule 64 (cte -> CTEC .)
-    PLUS            reduce using rule 64 (cte -> CTEC .)
-    MINUS           reduce using rule 64 (cte -> CTEC .)
-    LESS            reduce using rule 64 (cte -> CTEC .)
-    GREATER         reduce using rule 64 (cte -> CTEC .)
-    EQUALS          reduce using rule 64 (cte -> CTEC .)
-    NOTEQUAL        reduce using rule 64 (cte -> CTEC .)
-    AND             reduce using rule 64 (cte -> CTEC .)
-    OR              reduce using rule 64 (cte -> CTEC .)
-    ASSIGN          reduce using rule 64 (cte -> CTEC .)
-    RBRACK          reduce using rule 64 (cte -> CTEC .)
-    RPAREN          reduce using rule 64 (cte -> CTEC .)
-    SEMICOLON       reduce using rule 64 (cte -> CTEC .)
-    COMMA           reduce using rule 64 (cte -> CTEC .)
+    TIMES           reduce using rule 69 (cte -> CTEI .)
+    DIVIDE          reduce using rule 69 (cte -> CTEI .)
+    PLUS            reduce using rule 69 (cte -> CTEI .)
+    MINUS           reduce using rule 69 (cte -> CTEI .)
+    LESS            reduce using rule 69 (cte -> CTEI .)
+    GREATER         reduce using rule 69 (cte -> CTEI .)
+    EQUALS          reduce using rule 69 (cte -> CTEI .)
+    NOTEQUAL        reduce using rule 69 (cte -> CTEI .)
+    AND             reduce using rule 69 (cte -> CTEI .)
+    OR              reduce using rule 69 (cte -> CTEI .)
+    ASSIGN          reduce using rule 69 (cte -> CTEI .)
+    RBRACK          reduce using rule 69 (cte -> CTEI .)
+    RPAREN          reduce using rule 69 (cte -> CTEI .)
+    COMMA           reduce using rule 69 (cte -> CTEI .)
+    SEMICOLON       reduce using rule 69 (cte -> CTEI .)
 
 
 state 49
 
-    (65) cte -> CTES .
+    (70) cte -> CTEF .
 
-    TIMES           reduce using rule 65 (cte -> CTES .)
-    DIVIDE          reduce using rule 65 (cte -> CTES .)
-    PLUS            reduce using rule 65 (cte -> CTES .)
-    MINUS           reduce using rule 65 (cte -> CTES .)
-    LESS            reduce using rule 65 (cte -> CTES .)
-    GREATER         reduce using rule 65 (cte -> CTES .)
-    EQUALS          reduce using rule 65 (cte -> CTES .)
-    NOTEQUAL        reduce using rule 65 (cte -> CTES .)
-    AND             reduce using rule 65 (cte -> CTES .)
-    OR              reduce using rule 65 (cte -> CTES .)
-    ASSIGN          reduce using rule 65 (cte -> CTES .)
-    RBRACK          reduce using rule 65 (cte -> CTES .)
-    RPAREN          reduce using rule 65 (cte -> CTES .)
-    SEMICOLON       reduce using rule 65 (cte -> CTES .)
-    COMMA           reduce using rule 65 (cte -> CTES .)
+    TIMES           reduce using rule 70 (cte -> CTEF .)
+    DIVIDE          reduce using rule 70 (cte -> CTEF .)
+    PLUS            reduce using rule 70 (cte -> CTEF .)
+    MINUS           reduce using rule 70 (cte -> CTEF .)
+    LESS            reduce using rule 70 (cte -> CTEF .)
+    GREATER         reduce using rule 70 (cte -> CTEF .)
+    EQUALS          reduce using rule 70 (cte -> CTEF .)
+    NOTEQUAL        reduce using rule 70 (cte -> CTEF .)
+    AND             reduce using rule 70 (cte -> CTEF .)
+    OR              reduce using rule 70 (cte -> CTEF .)
+    ASSIGN          reduce using rule 70 (cte -> CTEF .)
+    RBRACK          reduce using rule 70 (cte -> CTEF .)
+    RPAREN          reduce using rule 70 (cte -> CTEF .)
+    COMMA           reduce using rule 70 (cte -> CTEF .)
+    SEMICOLON       reduce using rule 70 (cte -> CTEF .)
 
 
 state 50
 
-    (66) cte -> CTEB .
+    (71) cte -> CTEC .
 
-    TIMES           reduce using rule 66 (cte -> CTEB .)
-    DIVIDE          reduce using rule 66 (cte -> CTEB .)
-    PLUS            reduce using rule 66 (cte -> CTEB .)
-    MINUS           reduce using rule 66 (cte -> CTEB .)
-    LESS            reduce using rule 66 (cte -> CTEB .)
-    GREATER         reduce using rule 66 (cte -> CTEB .)
-    EQUALS          reduce using rule 66 (cte -> CTEB .)
-    NOTEQUAL        reduce using rule 66 (cte -> CTEB .)
-    AND             reduce using rule 66 (cte -> CTEB .)
-    OR              reduce using rule 66 (cte -> CTEB .)
-    ASSIGN          reduce using rule 66 (cte -> CTEB .)
-    RBRACK          reduce using rule 66 (cte -> CTEB .)
-    RPAREN          reduce using rule 66 (cte -> CTEB .)
-    SEMICOLON       reduce using rule 66 (cte -> CTEB .)
-    COMMA           reduce using rule 66 (cte -> CTEB .)
+    TIMES           reduce using rule 71 (cte -> CTEC .)
+    DIVIDE          reduce using rule 71 (cte -> CTEC .)
+    PLUS            reduce using rule 71 (cte -> CTEC .)
+    MINUS           reduce using rule 71 (cte -> CTEC .)
+    LESS            reduce using rule 71 (cte -> CTEC .)
+    GREATER         reduce using rule 71 (cte -> CTEC .)
+    EQUALS          reduce using rule 71 (cte -> CTEC .)
+    NOTEQUAL        reduce using rule 71 (cte -> CTEC .)
+    AND             reduce using rule 71 (cte -> CTEC .)
+    OR              reduce using rule 71 (cte -> CTEC .)
+    ASSIGN          reduce using rule 71 (cte -> CTEC .)
+    RBRACK          reduce using rule 71 (cte -> CTEC .)
+    RPAREN          reduce using rule 71 (cte -> CTEC .)
+    COMMA           reduce using rule 71 (cte -> CTEC .)
+    SEMICOLON       reduce using rule 71 (cte -> CTEC .)
 
 
 state 51
+
+    (72) cte -> CTES .
+
+    TIMES           reduce using rule 72 (cte -> CTES .)
+    DIVIDE          reduce using rule 72 (cte -> CTES .)
+    PLUS            reduce using rule 72 (cte -> CTES .)
+    MINUS           reduce using rule 72 (cte -> CTES .)
+    LESS            reduce using rule 72 (cte -> CTES .)
+    GREATER         reduce using rule 72 (cte -> CTES .)
+    EQUALS          reduce using rule 72 (cte -> CTES .)
+    NOTEQUAL        reduce using rule 72 (cte -> CTES .)
+    AND             reduce using rule 72 (cte -> CTES .)
+    OR              reduce using rule 72 (cte -> CTES .)
+    ASSIGN          reduce using rule 72 (cte -> CTES .)
+    RBRACK          reduce using rule 72 (cte -> CTES .)
+    RPAREN          reduce using rule 72 (cte -> CTES .)
+    COMMA           reduce using rule 72 (cte -> CTES .)
+    SEMICOLON       reduce using rule 72 (cte -> CTES .)
+
+
+state 52
+
+    (73) cte -> CTEB .
+
+    TIMES           reduce using rule 73 (cte -> CTEB .)
+    DIVIDE          reduce using rule 73 (cte -> CTEB .)
+    PLUS            reduce using rule 73 (cte -> CTEB .)
+    MINUS           reduce using rule 73 (cte -> CTEB .)
+    LESS            reduce using rule 73 (cte -> CTEB .)
+    GREATER         reduce using rule 73 (cte -> CTEB .)
+    EQUALS          reduce using rule 73 (cte -> CTEB .)
+    NOTEQUAL        reduce using rule 73 (cte -> CTEB .)
+    AND             reduce using rule 73 (cte -> CTEB .)
+    OR              reduce using rule 73 (cte -> CTEB .)
+    ASSIGN          reduce using rule 73 (cte -> CTEB .)
+    RBRACK          reduce using rule 73 (cte -> CTEB .)
+    RPAREN          reduce using rule 73 (cte -> CTEB .)
+    COMMA           reduce using rule 73 (cte -> CTEB .)
+    SEMICOLON       reduce using rule 73 (cte -> CTEB .)
+
+
+state 53
 
     (1) program -> PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations . LBRACE statements RBRACE END
     (2) var_declarations -> var_declarations . var_declaration
     (5) var_declaration -> . VARIABLE simple_type variables SEMICOLON
 
-    LBRACE          shift and go to state 74
+    LBRACE          shift and go to state 77
     VARIABLE        shift and go to state 8
 
     var_declaration                shift and go to state 10
 
-state 52
+state 54
 
     (19) parameter -> simple_type . ID
 
-    ID              shift and go to state 75
+    ID              shift and go to state 78
 
 
-state 53
+state 55
 
     (14) function -> FUNCTION simple_type ID LPAREN parameters . RPAREN var_declarations LBRACE statements statement RBRACE
     (16) parameters -> parameters . COMMA parameter
 
-    RPAREN          shift and go to state 76
-    COMMA           shift and go to state 77
+    RPAREN          shift and go to state 79
+    COMMA           shift and go to state 80
 
 
-state 54
+state 56
 
     (17) parameters -> parameter .
 
@@ -952,7 +999,7 @@ state 54
     COMMA           reduce using rule 17 (parameters -> parameter .)
 
 
-state 55
+state 57
 
     (18) parameters -> empty .
 
@@ -960,16 +1007,69 @@ state 55
     COMMA           reduce using rule 18 (parameters -> empty .)
 
 
-state 56
+state 58
 
     (15) function -> FUNCTION VOID ID LPAREN parameters . RPAREN var_declarations LBRACE statements RBRACE
     (16) parameters -> parameters . COMMA parameter
 
-    RPAREN          shift and go to state 78
-    COMMA           shift and go to state 77
+    RPAREN          shift and go to state 81
+    COMMA           shift and go to state 80
 
 
-state 57
+state 59
+
+    (36) invocation -> ID LPAREN . expressions RPAREN SEMICOLON
+    (37) expressions -> . expressions COMMA expression
+    (38) expressions -> . expression
+    (39) expressions -> . empty
+    (40) expression -> . t_expression
+    (41) expression -> . t_expression ASSIGN t_expression
+    (74) empty -> .
+    (42) t_expression -> . g_expression
+    (43) t_expression -> . g_expression boolean_operator g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+
+    RPAREN          reduce using rule 74 (empty -> .)
+    COMMA           reduce using rule 74 (empty -> .)
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
+
+    expressions                    shift and go to state 82
+    expression                     shift and go to state 83
+    empty                          shift and go to state 84
+    t_expression                   shift and go to state 39
+    g_expression                   shift and go to state 40
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
+
+state 60
 
     (9) variable -> ID LBRACK expression RBRACK .
     (10) variable -> ID LBRACK expression RBRACK . LBRACK expression RBRACK
@@ -989,312 +1089,327 @@ state 57
     ASSIGN          reduce using rule 9 (variable -> ID LBRACK expression RBRACK .)
     RBRACK          reduce using rule 9 (variable -> ID LBRACK expression RBRACK .)
     RPAREN          reduce using rule 9 (variable -> ID LBRACK expression RBRACK .)
-    LBRACK          shift and go to state 79
-
-
-state 58
-
-    (35) expression -> t_expression ASSIGN . t_expression
-    (36) t_expression -> . g_expression
-    (37) t_expression -> . g_expression boolean_operator g_expression
-    (38) g_expression -> . m_expression
-    (39) g_expression -> . m_expression comparison_operator m_expression
-    (40) m_expression -> . term
-    (41) m_expression -> . term addition_operator term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
-    (8) variable -> . ID
-    (9) variable -> . ID LBRACK expression RBRACK
-    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
-
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
-
-    t_expression                   shift and go to state 80
-    g_expression                   shift and go to state 39
-    m_expression                   shift and go to state 40
-    term                           shift and go to state 41
-    factor                         shift and go to state 42
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
-
-state 59
-
-    (37) t_expression -> g_expression boolean_operator . g_expression
-    (38) g_expression -> . m_expression
-    (39) g_expression -> . m_expression comparison_operator m_expression
-    (40) m_expression -> . term
-    (41) m_expression -> . term addition_operator term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
-    (8) variable -> . ID
-    (9) variable -> . ID LBRACK expression RBRACK
-    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
-
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
-
-    g_expression                   shift and go to state 81
-    m_expression                   shift and go to state 40
-    term                           shift and go to state 41
-    factor                         shift and go to state 42
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
-
-state 60
-
-    (53) boolean_operator -> AND .
-
-    LPAREN          reduce using rule 53 (boolean_operator -> AND .)
-    ID              reduce using rule 53 (boolean_operator -> AND .)
-    CTEI            reduce using rule 53 (boolean_operator -> AND .)
-    CTEF            reduce using rule 53 (boolean_operator -> AND .)
-    CTEC            reduce using rule 53 (boolean_operator -> AND .)
-    CTES            reduce using rule 53 (boolean_operator -> AND .)
-    CTEB            reduce using rule 53 (boolean_operator -> AND .)
+    LBRACK          shift and go to state 85
 
 
 state 61
 
-    (54) boolean_operator -> OR .
-
-    LPAREN          reduce using rule 54 (boolean_operator -> OR .)
-    ID              reduce using rule 54 (boolean_operator -> OR .)
-    CTEI            reduce using rule 54 (boolean_operator -> OR .)
-    CTEF            reduce using rule 54 (boolean_operator -> OR .)
-    CTEC            reduce using rule 54 (boolean_operator -> OR .)
-    CTES            reduce using rule 54 (boolean_operator -> OR .)
-    CTEB            reduce using rule 54 (boolean_operator -> OR .)
-
-
-state 62
-
-    (39) g_expression -> m_expression comparison_operator . m_expression
-    (40) m_expression -> . term
-    (41) m_expression -> . term addition_operator term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
+    (41) expression -> t_expression ASSIGN . t_expression
+    (42) t_expression -> . g_expression
+    (43) t_expression -> . g_expression boolean_operator g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
 
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
 
-    m_expression                   shift and go to state 82
-    term                           shift and go to state 41
-    factor                         shift and go to state 42
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
+    t_expression                   shift and go to state 86
+    g_expression                   shift and go to state 40
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
+
+state 62
+
+    (43) t_expression -> g_expression boolean_operator . g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
+
+    g_expression                   shift and go to state 87
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
 
 state 63
 
-    (47) comparison_operator -> LESS .
+    (60) boolean_operator -> AND .
 
-    LPAREN          reduce using rule 47 (comparison_operator -> LESS .)
-    ID              reduce using rule 47 (comparison_operator -> LESS .)
-    CTEI            reduce using rule 47 (comparison_operator -> LESS .)
-    CTEF            reduce using rule 47 (comparison_operator -> LESS .)
-    CTEC            reduce using rule 47 (comparison_operator -> LESS .)
-    CTES            reduce using rule 47 (comparison_operator -> LESS .)
-    CTEB            reduce using rule 47 (comparison_operator -> LESS .)
+    LPAREN          reduce using rule 60 (boolean_operator -> AND .)
+    ID              reduce using rule 60 (boolean_operator -> AND .)
+    CTEI            reduce using rule 60 (boolean_operator -> AND .)
+    CTEF            reduce using rule 60 (boolean_operator -> AND .)
+    CTEC            reduce using rule 60 (boolean_operator -> AND .)
+    CTES            reduce using rule 60 (boolean_operator -> AND .)
+    CTEB            reduce using rule 60 (boolean_operator -> AND .)
 
 
 state 64
 
-    (48) comparison_operator -> GREATER .
+    (61) boolean_operator -> OR .
 
-    LPAREN          reduce using rule 48 (comparison_operator -> GREATER .)
-    ID              reduce using rule 48 (comparison_operator -> GREATER .)
-    CTEI            reduce using rule 48 (comparison_operator -> GREATER .)
-    CTEF            reduce using rule 48 (comparison_operator -> GREATER .)
-    CTEC            reduce using rule 48 (comparison_operator -> GREATER .)
-    CTES            reduce using rule 48 (comparison_operator -> GREATER .)
-    CTEB            reduce using rule 48 (comparison_operator -> GREATER .)
+    LPAREN          reduce using rule 61 (boolean_operator -> OR .)
+    ID              reduce using rule 61 (boolean_operator -> OR .)
+    CTEI            reduce using rule 61 (boolean_operator -> OR .)
+    CTEF            reduce using rule 61 (boolean_operator -> OR .)
+    CTEC            reduce using rule 61 (boolean_operator -> OR .)
+    CTES            reduce using rule 61 (boolean_operator -> OR .)
+    CTEB            reduce using rule 61 (boolean_operator -> OR .)
 
 
 state 65
 
-    (49) comparison_operator -> EQUALS .
+    (45) g_expression -> m_expression comparison_operator . m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
 
-    LPAREN          reduce using rule 49 (comparison_operator -> EQUALS .)
-    ID              reduce using rule 49 (comparison_operator -> EQUALS .)
-    CTEI            reduce using rule 49 (comparison_operator -> EQUALS .)
-    CTEF            reduce using rule 49 (comparison_operator -> EQUALS .)
-    CTEC            reduce using rule 49 (comparison_operator -> EQUALS .)
-    CTES            reduce using rule 49 (comparison_operator -> EQUALS .)
-    CTEB            reduce using rule 49 (comparison_operator -> EQUALS .)
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
 
+    m_expression                   shift and go to state 88
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
 
 state 66
 
-    (50) comparison_operator -> NOTEQUAL .
+    (54) comparison_operator -> LESS .
 
-    LPAREN          reduce using rule 50 (comparison_operator -> NOTEQUAL .)
-    ID              reduce using rule 50 (comparison_operator -> NOTEQUAL .)
-    CTEI            reduce using rule 50 (comparison_operator -> NOTEQUAL .)
-    CTEF            reduce using rule 50 (comparison_operator -> NOTEQUAL .)
-    CTEC            reduce using rule 50 (comparison_operator -> NOTEQUAL .)
-    CTES            reduce using rule 50 (comparison_operator -> NOTEQUAL .)
-    CTEB            reduce using rule 50 (comparison_operator -> NOTEQUAL .)
+    LPAREN          reduce using rule 54 (comparison_operator -> LESS .)
+    ID              reduce using rule 54 (comparison_operator -> LESS .)
+    CTEI            reduce using rule 54 (comparison_operator -> LESS .)
+    CTEF            reduce using rule 54 (comparison_operator -> LESS .)
+    CTEC            reduce using rule 54 (comparison_operator -> LESS .)
+    CTES            reduce using rule 54 (comparison_operator -> LESS .)
+    CTEB            reduce using rule 54 (comparison_operator -> LESS .)
 
 
 state 67
 
-    (41) m_expression -> term addition_operator . term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
-    (8) variable -> . ID
-    (9) variable -> . ID LBRACK expression RBRACK
-    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
+    (55) comparison_operator -> GREATER .
 
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
+    LPAREN          reduce using rule 55 (comparison_operator -> GREATER .)
+    ID              reduce using rule 55 (comparison_operator -> GREATER .)
+    CTEI            reduce using rule 55 (comparison_operator -> GREATER .)
+    CTEF            reduce using rule 55 (comparison_operator -> GREATER .)
+    CTEC            reduce using rule 55 (comparison_operator -> GREATER .)
+    CTES            reduce using rule 55 (comparison_operator -> GREATER .)
+    CTEB            reduce using rule 55 (comparison_operator -> GREATER .)
 
-    term                           shift and go to state 83
-    factor                         shift and go to state 42
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
 
 state 68
 
-    (51) addition_operator -> PLUS .
+    (56) comparison_operator -> EQUALS .
 
-    LPAREN          reduce using rule 51 (addition_operator -> PLUS .)
-    ID              reduce using rule 51 (addition_operator -> PLUS .)
-    CTEI            reduce using rule 51 (addition_operator -> PLUS .)
-    CTEF            reduce using rule 51 (addition_operator -> PLUS .)
-    CTEC            reduce using rule 51 (addition_operator -> PLUS .)
-    CTES            reduce using rule 51 (addition_operator -> PLUS .)
-    CTEB            reduce using rule 51 (addition_operator -> PLUS .)
+    LPAREN          reduce using rule 56 (comparison_operator -> EQUALS .)
+    ID              reduce using rule 56 (comparison_operator -> EQUALS .)
+    CTEI            reduce using rule 56 (comparison_operator -> EQUALS .)
+    CTEF            reduce using rule 56 (comparison_operator -> EQUALS .)
+    CTEC            reduce using rule 56 (comparison_operator -> EQUALS .)
+    CTES            reduce using rule 56 (comparison_operator -> EQUALS .)
+    CTEB            reduce using rule 56 (comparison_operator -> EQUALS .)
 
 
 state 69
 
-    (52) addition_operator -> MINUS .
+    (57) comparison_operator -> NOTEQUAL .
 
-    LPAREN          reduce using rule 52 (addition_operator -> MINUS .)
-    ID              reduce using rule 52 (addition_operator -> MINUS .)
-    CTEI            reduce using rule 52 (addition_operator -> MINUS .)
-    CTEF            reduce using rule 52 (addition_operator -> MINUS .)
-    CTEC            reduce using rule 52 (addition_operator -> MINUS .)
-    CTES            reduce using rule 52 (addition_operator -> MINUS .)
-    CTEB            reduce using rule 52 (addition_operator -> MINUS .)
+    LPAREN          reduce using rule 57 (comparison_operator -> NOTEQUAL .)
+    ID              reduce using rule 57 (comparison_operator -> NOTEQUAL .)
+    CTEI            reduce using rule 57 (comparison_operator -> NOTEQUAL .)
+    CTEF            reduce using rule 57 (comparison_operator -> NOTEQUAL .)
+    CTEC            reduce using rule 57 (comparison_operator -> NOTEQUAL .)
+    CTES            reduce using rule 57 (comparison_operator -> NOTEQUAL .)
+    CTEB            reduce using rule 57 (comparison_operator -> NOTEQUAL .)
 
 
 state 70
 
-    (43) term -> factor multiplication_operator . factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
+    (47) m_expression -> term addition_operator . term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
 
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
 
-    factor                         shift and go to state 84
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
+    term                           shift and go to state 89
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
 
 state 71
 
-    (55) multiplication_operator -> TIMES .
+    (58) addition_operator -> PLUS .
 
-    LPAREN          reduce using rule 55 (multiplication_operator -> TIMES .)
-    ID              reduce using rule 55 (multiplication_operator -> TIMES .)
-    CTEI            reduce using rule 55 (multiplication_operator -> TIMES .)
-    CTEF            reduce using rule 55 (multiplication_operator -> TIMES .)
-    CTEC            reduce using rule 55 (multiplication_operator -> TIMES .)
-    CTES            reduce using rule 55 (multiplication_operator -> TIMES .)
-    CTEB            reduce using rule 55 (multiplication_operator -> TIMES .)
+    LPAREN          reduce using rule 58 (addition_operator -> PLUS .)
+    ID              reduce using rule 58 (addition_operator -> PLUS .)
+    CTEI            reduce using rule 58 (addition_operator -> PLUS .)
+    CTEF            reduce using rule 58 (addition_operator -> PLUS .)
+    CTEC            reduce using rule 58 (addition_operator -> PLUS .)
+    CTES            reduce using rule 58 (addition_operator -> PLUS .)
+    CTEB            reduce using rule 58 (addition_operator -> PLUS .)
 
 
 state 72
 
-    (56) multiplication_operator -> DIVIDE .
+    (59) addition_operator -> MINUS .
 
-    LPAREN          reduce using rule 56 (multiplication_operator -> DIVIDE .)
-    ID              reduce using rule 56 (multiplication_operator -> DIVIDE .)
-    CTEI            reduce using rule 56 (multiplication_operator -> DIVIDE .)
-    CTEF            reduce using rule 56 (multiplication_operator -> DIVIDE .)
-    CTEC            reduce using rule 56 (multiplication_operator -> DIVIDE .)
-    CTES            reduce using rule 56 (multiplication_operator -> DIVIDE .)
-    CTEB            reduce using rule 56 (multiplication_operator -> DIVIDE .)
+    LPAREN          reduce using rule 59 (addition_operator -> MINUS .)
+    ID              reduce using rule 59 (addition_operator -> MINUS .)
+    CTEI            reduce using rule 59 (addition_operator -> MINUS .)
+    CTEF            reduce using rule 59 (addition_operator -> MINUS .)
+    CTEC            reduce using rule 59 (addition_operator -> MINUS .)
+    CTES            reduce using rule 59 (addition_operator -> MINUS .)
+    CTEB            reduce using rule 59 (addition_operator -> MINUS .)
 
 
 state 73
 
-    (46) factor -> LPAREN expression . RPAREN
+    (49) term -> factor multiplication_operator . factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
 
-    RPAREN          shift and go to state 85
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
 
+    factor                         shift and go to state 90
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
 
 state 74
+
+    (62) multiplication_operator -> TIMES .
+
+    LPAREN          reduce using rule 62 (multiplication_operator -> TIMES .)
+    ID              reduce using rule 62 (multiplication_operator -> TIMES .)
+    CTEI            reduce using rule 62 (multiplication_operator -> TIMES .)
+    CTEF            reduce using rule 62 (multiplication_operator -> TIMES .)
+    CTEC            reduce using rule 62 (multiplication_operator -> TIMES .)
+    CTES            reduce using rule 62 (multiplication_operator -> TIMES .)
+    CTEB            reduce using rule 62 (multiplication_operator -> TIMES .)
+
+
+state 75
+
+    (63) multiplication_operator -> DIVIDE .
+
+    LPAREN          reduce using rule 63 (multiplication_operator -> DIVIDE .)
+    ID              reduce using rule 63 (multiplication_operator -> DIVIDE .)
+    CTEI            reduce using rule 63 (multiplication_operator -> DIVIDE .)
+    CTEF            reduce using rule 63 (multiplication_operator -> DIVIDE .)
+    CTEC            reduce using rule 63 (multiplication_operator -> DIVIDE .)
+    CTES            reduce using rule 63 (multiplication_operator -> DIVIDE .)
+    CTEB            reduce using rule 63 (multiplication_operator -> DIVIDE .)
+
+
+state 76
+
+    (52) factor -> LPAREN expression . RPAREN
+
+    RPAREN          shift and go to state 91
+
+
+state 77
 
     (1) program -> PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations LBRACE . statements RBRACE END
     (20) statements -> . statements statement
@@ -1302,39 +1417,53 @@ state 74
     (22) statements -> . empty
     (23) statement -> . assingation
     (24) statement -> . invocation
-    (25) statement -> . read
-    (26) statement -> . return
-    (67) empty -> .
-    (29) assingation -> . variable ASSIGN expression SEMICOLON
-    (30) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
-    (28) read -> . READ LPAREN variable RPAREN SEMICOLON
-    (27) return -> . RETURN expression SEMICOLON
+    (25) statement -> . if
+    (26) statement -> . read
+    (27) statement -> . return
+    (28) statement -> . print
+    (74) empty -> .
+    (35) assingation -> . variable ASSIGN expression SEMICOLON
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (31) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (34) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (33) return -> . RETURN expression SEMICOLON
+    (29) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (30) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
   ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
   ! shift/reduce conflict for READ resolved as shift
   ! shift/reduce conflict for RETURN resolved as shift
-    RBRACE          reduce using rule 67 (empty -> .)
-    ID              shift and go to state 86
-    READ            shift and go to state 95
-    RETURN          shift and go to state 96
+  ! shift/reduce conflict for PRINT resolved as shift
+    RBRACE          reduce using rule 74 (empty -> .)
+    ID              shift and go to state 92
+    IF              shift and go to state 103
+    READ            shift and go to state 104
+    RETURN          shift and go to state 105
+    PRINT           shift and go to state 106
 
-  ! ID              [ reduce using rule 67 (empty -> .) ]
-  ! READ            [ reduce using rule 67 (empty -> .) ]
-  ! RETURN          [ reduce using rule 67 (empty -> .) ]
+  ! ID              [ reduce using rule 74 (empty -> .) ]
+  ! IF              [ reduce using rule 74 (empty -> .) ]
+  ! READ            [ reduce using rule 74 (empty -> .) ]
+  ! RETURN          [ reduce using rule 74 (empty -> .) ]
+  ! PRINT           [ reduce using rule 74 (empty -> .) ]
 
-    statements                     shift and go to state 87
-    statement                      shift and go to state 88
-    empty                          shift and go to state 89
-    assingation                    shift and go to state 90
-    invocation                     shift and go to state 91
-    read                           shift and go to state 92
-    return                         shift and go to state 93
-    variable                       shift and go to state 94
+    statements                     shift and go to state 93
+    statement                      shift and go to state 94
+    empty                          shift and go to state 95
+    assingation                    shift and go to state 96
+    invocation                     shift and go to state 97
+    if                             shift and go to state 98
+    read                           shift and go to state 99
+    return                         shift and go to state 100
+    print                          shift and go to state 101
+    variable                       shift and go to state 102
 
-state 75
+state 78
 
     (19) parameter -> simple_type ID .
 
@@ -1342,34 +1471,34 @@ state 75
     COMMA           reduce using rule 19 (parameter -> simple_type ID .)
 
 
-state 76
+state 79
 
     (14) function -> FUNCTION simple_type ID LPAREN parameters RPAREN . var_declarations LBRACE statements statement RBRACE
     (2) var_declarations -> . var_declarations var_declaration
     (3) var_declarations -> . var_declaration
     (4) var_declarations -> . empty
     (5) var_declaration -> . VARIABLE simple_type variables SEMICOLON
-    (67) empty -> .
+    (74) empty -> .
 
   ! shift/reduce conflict for VARIABLE resolved as shift
     VARIABLE        shift and go to state 8
-    LBRACE          reduce using rule 67 (empty -> .)
+    LBRACE          reduce using rule 74 (empty -> .)
 
-  ! VARIABLE        [ reduce using rule 67 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 74 (empty -> .) ]
 
-    var_declarations               shift and go to state 97
+    var_declarations               shift and go to state 107
     var_declaration                shift and go to state 6
     empty                          shift and go to state 7
 
-state 77
+state 80
 
     (16) parameters -> parameters COMMA . parameter
     (19) parameter -> . simple_type ID
-    (57) simple_type -> . INT
-    (58) simple_type -> . FLOAT
-    (59) simple_type -> . CHAR
-    (60) simple_type -> . STRING
-    (61) simple_type -> . BOOLEAN
+    (64) simple_type -> . INT
+    (65) simple_type -> . FLOAT
+    (66) simple_type -> . CHAR
+    (67) simple_type -> . STRING
+    (68) simple_type -> . BOOLEAN
 
     INT             shift and go to state 15
     FLOAT           shift and go to state 16
@@ -1377,329 +1506,422 @@ state 77
     STRING          shift and go to state 18
     BOOLEAN         shift and go to state 19
 
-    parameter                      shift and go to state 98
-    simple_type                    shift and go to state 52
+    parameter                      shift and go to state 108
+    simple_type                    shift and go to state 54
 
-state 78
+state 81
 
     (15) function -> FUNCTION VOID ID LPAREN parameters RPAREN . var_declarations LBRACE statements RBRACE
     (2) var_declarations -> . var_declarations var_declaration
     (3) var_declarations -> . var_declaration
     (4) var_declarations -> . empty
     (5) var_declaration -> . VARIABLE simple_type variables SEMICOLON
-    (67) empty -> .
+    (74) empty -> .
 
   ! shift/reduce conflict for VARIABLE resolved as shift
     VARIABLE        shift and go to state 8
-    LBRACE          reduce using rule 67 (empty -> .)
+    LBRACE          reduce using rule 74 (empty -> .)
 
-  ! VARIABLE        [ reduce using rule 67 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 74 (empty -> .) ]
 
-    var_declarations               shift and go to state 99
+    var_declarations               shift and go to state 109
     var_declaration                shift and go to state 6
     empty                          shift and go to state 7
 
-state 79
-
-    (10) variable -> ID LBRACK expression RBRACK LBRACK . expression RBRACK
-    (34) expression -> . t_expression
-    (35) expression -> . t_expression ASSIGN t_expression
-    (36) t_expression -> . g_expression
-    (37) t_expression -> . g_expression boolean_operator g_expression
-    (38) g_expression -> . m_expression
-    (39) g_expression -> . m_expression comparison_operator m_expression
-    (40) m_expression -> . term
-    (41) m_expression -> . term addition_operator term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
-    (8) variable -> . ID
-    (9) variable -> . ID LBRACK expression RBRACK
-    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
-
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
-
-    expression                     shift and go to state 100
-    t_expression                   shift and go to state 38
-    g_expression                   shift and go to state 39
-    m_expression                   shift and go to state 40
-    term                           shift and go to state 41
-    factor                         shift and go to state 42
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
-
-state 80
-
-    (35) expression -> t_expression ASSIGN t_expression .
-
-    RBRACK          reduce using rule 35 (expression -> t_expression ASSIGN t_expression .)
-    RPAREN          reduce using rule 35 (expression -> t_expression ASSIGN t_expression .)
-    SEMICOLON       reduce using rule 35 (expression -> t_expression ASSIGN t_expression .)
-    COMMA           reduce using rule 35 (expression -> t_expression ASSIGN t_expression .)
-
-
-state 81
-
-    (37) t_expression -> g_expression boolean_operator g_expression .
-
-    ASSIGN          reduce using rule 37 (t_expression -> g_expression boolean_operator g_expression .)
-    RBRACK          reduce using rule 37 (t_expression -> g_expression boolean_operator g_expression .)
-    RPAREN          reduce using rule 37 (t_expression -> g_expression boolean_operator g_expression .)
-    SEMICOLON       reduce using rule 37 (t_expression -> g_expression boolean_operator g_expression .)
-    COMMA           reduce using rule 37 (t_expression -> g_expression boolean_operator g_expression .)
-
-
 state 82
 
-    (39) g_expression -> m_expression comparison_operator m_expression .
+    (36) invocation -> ID LPAREN expressions . RPAREN SEMICOLON
+    (37) expressions -> expressions . COMMA expression
 
-    AND             reduce using rule 39 (g_expression -> m_expression comparison_operator m_expression .)
-    OR              reduce using rule 39 (g_expression -> m_expression comparison_operator m_expression .)
-    ASSIGN          reduce using rule 39 (g_expression -> m_expression comparison_operator m_expression .)
-    RBRACK          reduce using rule 39 (g_expression -> m_expression comparison_operator m_expression .)
-    RPAREN          reduce using rule 39 (g_expression -> m_expression comparison_operator m_expression .)
-    SEMICOLON       reduce using rule 39 (g_expression -> m_expression comparison_operator m_expression .)
-    COMMA           reduce using rule 39 (g_expression -> m_expression comparison_operator m_expression .)
+    RPAREN          shift and go to state 110
+    COMMA           shift and go to state 111
 
 
 state 83
 
-    (41) m_expression -> term addition_operator term .
+    (38) expressions -> expression .
 
-    LESS            reduce using rule 41 (m_expression -> term addition_operator term .)
-    GREATER         reduce using rule 41 (m_expression -> term addition_operator term .)
-    EQUALS          reduce using rule 41 (m_expression -> term addition_operator term .)
-    NOTEQUAL        reduce using rule 41 (m_expression -> term addition_operator term .)
-    AND             reduce using rule 41 (m_expression -> term addition_operator term .)
-    OR              reduce using rule 41 (m_expression -> term addition_operator term .)
-    ASSIGN          reduce using rule 41 (m_expression -> term addition_operator term .)
-    RBRACK          reduce using rule 41 (m_expression -> term addition_operator term .)
-    RPAREN          reduce using rule 41 (m_expression -> term addition_operator term .)
-    SEMICOLON       reduce using rule 41 (m_expression -> term addition_operator term .)
-    COMMA           reduce using rule 41 (m_expression -> term addition_operator term .)
+    RPAREN          reduce using rule 38 (expressions -> expression .)
+    COMMA           reduce using rule 38 (expressions -> expression .)
 
 
 state 84
 
-    (43) term -> factor multiplication_operator factor .
+    (39) expressions -> empty .
 
-    PLUS            reduce using rule 43 (term -> factor multiplication_operator factor .)
-    MINUS           reduce using rule 43 (term -> factor multiplication_operator factor .)
-    LESS            reduce using rule 43 (term -> factor multiplication_operator factor .)
-    GREATER         reduce using rule 43 (term -> factor multiplication_operator factor .)
-    EQUALS          reduce using rule 43 (term -> factor multiplication_operator factor .)
-    NOTEQUAL        reduce using rule 43 (term -> factor multiplication_operator factor .)
-    AND             reduce using rule 43 (term -> factor multiplication_operator factor .)
-    OR              reduce using rule 43 (term -> factor multiplication_operator factor .)
-    ASSIGN          reduce using rule 43 (term -> factor multiplication_operator factor .)
-    RBRACK          reduce using rule 43 (term -> factor multiplication_operator factor .)
-    RPAREN          reduce using rule 43 (term -> factor multiplication_operator factor .)
-    SEMICOLON       reduce using rule 43 (term -> factor multiplication_operator factor .)
-    COMMA           reduce using rule 43 (term -> factor multiplication_operator factor .)
+    RPAREN          reduce using rule 39 (expressions -> empty .)
+    COMMA           reduce using rule 39 (expressions -> empty .)
 
 
 state 85
 
-    (46) factor -> LPAREN expression RPAREN .
+    (10) variable -> ID LBRACK expression RBRACK LBRACK . expression RBRACK
+    (40) expression -> . t_expression
+    (41) expression -> . t_expression ASSIGN t_expression
+    (42) t_expression -> . g_expression
+    (43) t_expression -> . g_expression boolean_operator g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
 
-    TIMES           reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    LESS            reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    GREATER         reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    EQUALS          reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    NOTEQUAL        reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    AND             reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    OR              reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    ASSIGN          reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    RBRACK          reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    SEMICOLON       reduce using rule 46 (factor -> LPAREN expression RPAREN .)
-    COMMA           reduce using rule 46 (factor -> LPAREN expression RPAREN .)
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
 
+    expression                     shift and go to state 112
+    t_expression                   shift and go to state 39
+    g_expression                   shift and go to state 40
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
 
 state 86
 
-    (30) invocation -> ID . LPAREN expressions RPAREN SEMICOLON
+    (41) expression -> t_expression ASSIGN t_expression .
+
+    RBRACK          reduce using rule 41 (expression -> t_expression ASSIGN t_expression .)
+    RPAREN          reduce using rule 41 (expression -> t_expression ASSIGN t_expression .)
+    COMMA           reduce using rule 41 (expression -> t_expression ASSIGN t_expression .)
+    SEMICOLON       reduce using rule 41 (expression -> t_expression ASSIGN t_expression .)
+
+
+state 87
+
+    (43) t_expression -> g_expression boolean_operator g_expression .
+
+    ASSIGN          reduce using rule 43 (t_expression -> g_expression boolean_operator g_expression .)
+    RBRACK          reduce using rule 43 (t_expression -> g_expression boolean_operator g_expression .)
+    RPAREN          reduce using rule 43 (t_expression -> g_expression boolean_operator g_expression .)
+    COMMA           reduce using rule 43 (t_expression -> g_expression boolean_operator g_expression .)
+    SEMICOLON       reduce using rule 43 (t_expression -> g_expression boolean_operator g_expression .)
+
+
+state 88
+
+    (45) g_expression -> m_expression comparison_operator m_expression .
+
+    AND             reduce using rule 45 (g_expression -> m_expression comparison_operator m_expression .)
+    OR              reduce using rule 45 (g_expression -> m_expression comparison_operator m_expression .)
+    ASSIGN          reduce using rule 45 (g_expression -> m_expression comparison_operator m_expression .)
+    RBRACK          reduce using rule 45 (g_expression -> m_expression comparison_operator m_expression .)
+    RPAREN          reduce using rule 45 (g_expression -> m_expression comparison_operator m_expression .)
+    COMMA           reduce using rule 45 (g_expression -> m_expression comparison_operator m_expression .)
+    SEMICOLON       reduce using rule 45 (g_expression -> m_expression comparison_operator m_expression .)
+
+
+state 89
+
+    (47) m_expression -> term addition_operator term .
+
+    LESS            reduce using rule 47 (m_expression -> term addition_operator term .)
+    GREATER         reduce using rule 47 (m_expression -> term addition_operator term .)
+    EQUALS          reduce using rule 47 (m_expression -> term addition_operator term .)
+    NOTEQUAL        reduce using rule 47 (m_expression -> term addition_operator term .)
+    AND             reduce using rule 47 (m_expression -> term addition_operator term .)
+    OR              reduce using rule 47 (m_expression -> term addition_operator term .)
+    ASSIGN          reduce using rule 47 (m_expression -> term addition_operator term .)
+    RBRACK          reduce using rule 47 (m_expression -> term addition_operator term .)
+    RPAREN          reduce using rule 47 (m_expression -> term addition_operator term .)
+    COMMA           reduce using rule 47 (m_expression -> term addition_operator term .)
+    SEMICOLON       reduce using rule 47 (m_expression -> term addition_operator term .)
+
+
+state 90
+
+    (49) term -> factor multiplication_operator factor .
+
+    PLUS            reduce using rule 49 (term -> factor multiplication_operator factor .)
+    MINUS           reduce using rule 49 (term -> factor multiplication_operator factor .)
+    LESS            reduce using rule 49 (term -> factor multiplication_operator factor .)
+    GREATER         reduce using rule 49 (term -> factor multiplication_operator factor .)
+    EQUALS          reduce using rule 49 (term -> factor multiplication_operator factor .)
+    NOTEQUAL        reduce using rule 49 (term -> factor multiplication_operator factor .)
+    AND             reduce using rule 49 (term -> factor multiplication_operator factor .)
+    OR              reduce using rule 49 (term -> factor multiplication_operator factor .)
+    ASSIGN          reduce using rule 49 (term -> factor multiplication_operator factor .)
+    RBRACK          reduce using rule 49 (term -> factor multiplication_operator factor .)
+    RPAREN          reduce using rule 49 (term -> factor multiplication_operator factor .)
+    COMMA           reduce using rule 49 (term -> factor multiplication_operator factor .)
+    SEMICOLON       reduce using rule 49 (term -> factor multiplication_operator factor .)
+
+
+state 91
+
+    (52) factor -> LPAREN expression RPAREN .
+
+    TIMES           reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    LESS            reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    GREATER         reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    EQUALS          reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    NOTEQUAL        reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    AND             reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    OR              reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    ASSIGN          reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    RBRACK          reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 52 (factor -> LPAREN expression RPAREN .)
+
+
+state 92
+
+    (36) invocation -> ID . LPAREN expressions RPAREN SEMICOLON
     (8) variable -> ID .
     (9) variable -> ID . LBRACK expression RBRACK
     (10) variable -> ID . LBRACK expression RBRACK LBRACK expression RBRACK
 
-    LPAREN          shift and go to state 101
+    LPAREN          shift and go to state 59
     ASSIGN          reduce using rule 8 (variable -> ID .)
     LBRACK          shift and go to state 32
 
 
-state 87
+state 93
 
     (1) program -> PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations LBRACE statements . RBRACE END
     (20) statements -> statements . statement
     (23) statement -> . assingation
     (24) statement -> . invocation
-    (25) statement -> . read
-    (26) statement -> . return
-    (29) assingation -> . variable ASSIGN expression SEMICOLON
-    (30) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
-    (28) read -> . READ LPAREN variable RPAREN SEMICOLON
-    (27) return -> . RETURN expression SEMICOLON
+    (25) statement -> . if
+    (26) statement -> . read
+    (27) statement -> . return
+    (28) statement -> . print
+    (35) assingation -> . variable ASSIGN expression SEMICOLON
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (31) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (34) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (33) return -> . RETURN expression SEMICOLON
+    (29) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (30) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
-    RBRACE          shift and go to state 102
-    ID              shift and go to state 86
-    READ            shift and go to state 95
-    RETURN          shift and go to state 96
+    RBRACE          shift and go to state 113
+    ID              shift and go to state 92
+    IF              shift and go to state 103
+    READ            shift and go to state 104
+    RETURN          shift and go to state 105
+    PRINT           shift and go to state 106
 
-    statement                      shift and go to state 103
-    assingation                    shift and go to state 90
-    invocation                     shift and go to state 91
-    read                           shift and go to state 92
-    return                         shift and go to state 93
-    variable                       shift and go to state 94
+    statement                      shift and go to state 114
+    assingation                    shift and go to state 96
+    invocation                     shift and go to state 97
+    if                             shift and go to state 98
+    read                           shift and go to state 99
+    return                         shift and go to state 100
+    print                          shift and go to state 101
+    variable                       shift and go to state 102
 
-state 88
+state 94
 
     (21) statements -> statement .
 
     RBRACE          reduce using rule 21 (statements -> statement .)
     ID              reduce using rule 21 (statements -> statement .)
+    IF              reduce using rule 21 (statements -> statement .)
     READ            reduce using rule 21 (statements -> statement .)
     RETURN          reduce using rule 21 (statements -> statement .)
+    PRINT           reduce using rule 21 (statements -> statement .)
 
 
-state 89
+state 95
 
     (22) statements -> empty .
 
     RBRACE          reduce using rule 22 (statements -> empty .)
     ID              reduce using rule 22 (statements -> empty .)
+    IF              reduce using rule 22 (statements -> empty .)
     READ            reduce using rule 22 (statements -> empty .)
     RETURN          reduce using rule 22 (statements -> empty .)
+    PRINT           reduce using rule 22 (statements -> empty .)
 
 
-state 90
+state 96
 
     (23) statement -> assingation .
 
     RBRACE          reduce using rule 23 (statement -> assingation .)
     ID              reduce using rule 23 (statement -> assingation .)
+    IF              reduce using rule 23 (statement -> assingation .)
     READ            reduce using rule 23 (statement -> assingation .)
     RETURN          reduce using rule 23 (statement -> assingation .)
+    PRINT           reduce using rule 23 (statement -> assingation .)
 
 
-state 91
+state 97
 
     (24) statement -> invocation .
 
     RBRACE          reduce using rule 24 (statement -> invocation .)
     ID              reduce using rule 24 (statement -> invocation .)
+    IF              reduce using rule 24 (statement -> invocation .)
     READ            reduce using rule 24 (statement -> invocation .)
     RETURN          reduce using rule 24 (statement -> invocation .)
+    PRINT           reduce using rule 24 (statement -> invocation .)
 
 
-state 92
+state 98
 
-    (25) statement -> read .
+    (25) statement -> if .
 
-    RBRACE          reduce using rule 25 (statement -> read .)
-    ID              reduce using rule 25 (statement -> read .)
-    READ            reduce using rule 25 (statement -> read .)
-    RETURN          reduce using rule 25 (statement -> read .)
-
-
-state 93
-
-    (26) statement -> return .
-
-    RBRACE          reduce using rule 26 (statement -> return .)
-    ID              reduce using rule 26 (statement -> return .)
-    READ            reduce using rule 26 (statement -> return .)
-    RETURN          reduce using rule 26 (statement -> return .)
+    RBRACE          reduce using rule 25 (statement -> if .)
+    ID              reduce using rule 25 (statement -> if .)
+    IF              reduce using rule 25 (statement -> if .)
+    READ            reduce using rule 25 (statement -> if .)
+    RETURN          reduce using rule 25 (statement -> if .)
+    PRINT           reduce using rule 25 (statement -> if .)
 
 
-state 94
+state 99
 
-    (29) assingation -> variable . ASSIGN expression SEMICOLON
+    (26) statement -> read .
 
-    ASSIGN          shift and go to state 104
-
-
-state 95
-
-    (28) read -> READ . LPAREN variable RPAREN SEMICOLON
-
-    LPAREN          shift and go to state 105
+    RBRACE          reduce using rule 26 (statement -> read .)
+    ID              reduce using rule 26 (statement -> read .)
+    IF              reduce using rule 26 (statement -> read .)
+    READ            reduce using rule 26 (statement -> read .)
+    RETURN          reduce using rule 26 (statement -> read .)
+    PRINT           reduce using rule 26 (statement -> read .)
 
 
-state 96
+state 100
 
-    (27) return -> RETURN . expression SEMICOLON
-    (34) expression -> . t_expression
-    (35) expression -> . t_expression ASSIGN t_expression
-    (36) t_expression -> . g_expression
-    (37) t_expression -> . g_expression boolean_operator g_expression
-    (38) g_expression -> . m_expression
-    (39) g_expression -> . m_expression comparison_operator m_expression
-    (40) m_expression -> . term
-    (41) m_expression -> . term addition_operator term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
+    (27) statement -> return .
+
+    RBRACE          reduce using rule 27 (statement -> return .)
+    ID              reduce using rule 27 (statement -> return .)
+    IF              reduce using rule 27 (statement -> return .)
+    READ            reduce using rule 27 (statement -> return .)
+    RETURN          reduce using rule 27 (statement -> return .)
+    PRINT           reduce using rule 27 (statement -> return .)
+
+
+state 101
+
+    (28) statement -> print .
+
+    RBRACE          reduce using rule 28 (statement -> print .)
+    ID              reduce using rule 28 (statement -> print .)
+    IF              reduce using rule 28 (statement -> print .)
+    READ            reduce using rule 28 (statement -> print .)
+    RETURN          reduce using rule 28 (statement -> print .)
+    PRINT           reduce using rule 28 (statement -> print .)
+
+
+state 102
+
+    (35) assingation -> variable . ASSIGN expression SEMICOLON
+
+    ASSIGN          shift and go to state 115
+
+
+state 103
+
+    (31) if -> IF . LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> IF . LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+
+    LPAREN          shift and go to state 116
+
+
+state 104
+
+    (34) read -> READ . LPAREN variable RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 117
+
+
+state 105
+
+    (33) return -> RETURN . expression SEMICOLON
+    (40) expression -> . t_expression
+    (41) expression -> . t_expression ASSIGN t_expression
+    (42) t_expression -> . g_expression
+    (43) t_expression -> . g_expression boolean_operator g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
 
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
 
-    expression                     shift and go to state 106
-    t_expression                   shift and go to state 38
-    g_expression                   shift and go to state 39
-    m_expression                   shift and go to state 40
-    term                           shift and go to state 41
-    factor                         shift and go to state 42
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
+    expression                     shift and go to state 118
+    t_expression                   shift and go to state 39
+    g_expression                   shift and go to state 40
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
 
-state 97
+state 106
+
+    (29) print -> PRINT . LPAREN expression RPAREN SEMICOLON
+    (30) print -> PRINT . LPAREN CTES RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 119
+
+
+state 107
 
     (14) function -> FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations . LBRACE statements statement RBRACE
     (2) var_declarations -> var_declarations . var_declaration
     (5) var_declaration -> . VARIABLE simple_type variables SEMICOLON
 
-    LBRACE          shift and go to state 107
+    LBRACE          shift and go to state 120
     VARIABLE        shift and go to state 8
 
     var_declaration                shift and go to state 10
 
-state 98
+state 108
 
     (16) parameters -> parameters COMMA parameter .
 
@@ -1707,152 +1929,251 @@ state 98
     COMMA           reduce using rule 16 (parameters -> parameters COMMA parameter .)
 
 
-state 99
+state 109
 
     (15) function -> FUNCTION VOID ID LPAREN parameters RPAREN var_declarations . LBRACE statements RBRACE
     (2) var_declarations -> var_declarations . var_declaration
     (5) var_declaration -> . VARIABLE simple_type variables SEMICOLON
 
-    LBRACE          shift and go to state 108
+    LBRACE          shift and go to state 121
     VARIABLE        shift and go to state 8
 
     var_declaration                shift and go to state 10
 
-state 100
+state 110
 
-    (10) variable -> ID LBRACK expression RBRACK LBRACK expression . RBRACK
+    (36) invocation -> ID LPAREN expressions RPAREN . SEMICOLON
 
-    RBRACK          shift and go to state 109
+    SEMICOLON       shift and go to state 122
 
 
-state 101
+state 111
 
-    (30) invocation -> ID LPAREN . expressions RPAREN SEMICOLON
-    (31) expressions -> . expressions COMMA expression
-    (32) expressions -> . expression
-    (33) expressions -> . empty
-    (34) expression -> . t_expression
-    (35) expression -> . t_expression ASSIGN t_expression
-    (67) empty -> .
-    (36) t_expression -> . g_expression
-    (37) t_expression -> . g_expression boolean_operator g_expression
-    (38) g_expression -> . m_expression
-    (39) g_expression -> . m_expression comparison_operator m_expression
-    (40) m_expression -> . term
-    (41) m_expression -> . term addition_operator term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
+    (37) expressions -> expressions COMMA . expression
+    (40) expression -> . t_expression
+    (41) expression -> . t_expression ASSIGN t_expression
+    (42) t_expression -> . g_expression
+    (43) t_expression -> . g_expression boolean_operator g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
 
-    RPAREN          reduce using rule 67 (empty -> .)
-    COMMA           reduce using rule 67 (empty -> .)
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
 
-    expressions                    shift and go to state 110
-    expression                     shift and go to state 111
-    empty                          shift and go to state 112
-    t_expression                   shift and go to state 38
-    g_expression                   shift and go to state 39
-    m_expression                   shift and go to state 40
-    term                           shift and go to state 41
-    factor                         shift and go to state 42
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
+    expression                     shift and go to state 123
+    t_expression                   shift and go to state 39
+    g_expression                   shift and go to state 40
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
 
-state 102
+state 112
+
+    (10) variable -> ID LBRACK expression RBRACK LBRACK expression . RBRACK
+
+    RBRACK          shift and go to state 124
+
+
+state 113
 
     (1) program -> PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations LBRACE statements RBRACE . END
 
-    END             shift and go to state 113
+    END             shift and go to state 125
 
 
-state 103
+state 114
 
     (20) statements -> statements statement .
 
     RBRACE          reduce using rule 20 (statements -> statements statement .)
     ID              reduce using rule 20 (statements -> statements statement .)
+    IF              reduce using rule 20 (statements -> statements statement .)
     READ            reduce using rule 20 (statements -> statements statement .)
     RETURN          reduce using rule 20 (statements -> statements statement .)
+    PRINT           reduce using rule 20 (statements -> statements statement .)
 
 
-state 104
+state 115
 
-    (29) assingation -> variable ASSIGN . expression SEMICOLON
-    (34) expression -> . t_expression
-    (35) expression -> . t_expression ASSIGN t_expression
-    (36) t_expression -> . g_expression
-    (37) t_expression -> . g_expression boolean_operator g_expression
-    (38) g_expression -> . m_expression
-    (39) g_expression -> . m_expression comparison_operator m_expression
-    (40) m_expression -> . term
-    (41) m_expression -> . term addition_operator term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
+    (35) assingation -> variable ASSIGN . expression SEMICOLON
+    (40) expression -> . t_expression
+    (41) expression -> . t_expression ASSIGN t_expression
+    (42) t_expression -> . g_expression
+    (43) t_expression -> . g_expression boolean_operator g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
 
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
 
-    variable                       shift and go to state 43
-    expression                     shift and go to state 114
-    t_expression                   shift and go to state 38
-    g_expression                   shift and go to state 39
-    m_expression                   shift and go to state 40
-    term                           shift and go to state 41
-    factor                         shift and go to state 42
-    cte                            shift and go to state 44
+    variable                       shift and go to state 44
+    expression                     shift and go to state 126
+    t_expression                   shift and go to state 39
+    g_expression                   shift and go to state 40
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
 
-state 105
+state 116
 
-    (28) read -> READ LPAREN . variable RPAREN SEMICOLON
+    (31) if -> IF LPAREN . expression RPAREN LBRACE statements RBRACE
+    (32) if -> IF LPAREN . expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (40) expression -> . t_expression
+    (41) expression -> . t_expression ASSIGN t_expression
+    (42) t_expression -> . g_expression
+    (43) t_expression -> . g_expression boolean_operator g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTES            shift and go to state 51
+    CTEB            shift and go to state 52
+
+    expression                     shift and go to state 127
+    t_expression                   shift and go to state 39
+    g_expression                   shift and go to state 40
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
+
+state 117
+
+    (34) read -> READ LPAREN . variable RPAREN SEMICOLON
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
     ID              shift and go to state 26
 
-    variable                       shift and go to state 115
+    variable                       shift and go to state 128
 
-state 106
+state 118
 
-    (27) return -> RETURN expression . SEMICOLON
+    (33) return -> RETURN expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 116
+    SEMICOLON       shift and go to state 129
 
 
-state 107
+state 119
+
+    (29) print -> PRINT LPAREN . expression RPAREN SEMICOLON
+    (30) print -> PRINT LPAREN . CTES RPAREN SEMICOLON
+    (40) expression -> . t_expression
+    (41) expression -> . t_expression ASSIGN t_expression
+    (42) t_expression -> . g_expression
+    (43) t_expression -> . g_expression boolean_operator g_expression
+    (44) g_expression -> . m_expression
+    (45) g_expression -> . m_expression comparison_operator m_expression
+    (46) m_expression -> . term
+    (47) m_expression -> . term addition_operator term
+    (48) term -> . factor
+    (49) term -> . factor multiplication_operator factor
+    (50) factor -> . variable
+    (51) factor -> . cte
+    (52) factor -> . LPAREN expression RPAREN
+    (53) factor -> . invocation
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (69) cte -> . CTEI
+    (70) cte -> . CTEF
+    (71) cte -> . CTEC
+    (72) cte -> . CTES
+    (73) cte -> . CTEB
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+
+    CTES            shift and go to state 131
+    LPAREN          shift and go to state 46
+    ID              shift and go to state 37
+    CTEI            shift and go to state 48
+    CTEF            shift and go to state 49
+    CTEC            shift and go to state 50
+    CTEB            shift and go to state 52
+
+    expression                     shift and go to state 130
+    t_expression                   shift and go to state 39
+    g_expression                   shift and go to state 40
+    m_expression                   shift and go to state 41
+    term                           shift and go to state 42
+    factor                         shift and go to state 43
+    variable                       shift and go to state 44
+    cte                            shift and go to state 45
+    invocation                     shift and go to state 47
+
+state 120
 
     (14) function -> FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations LBRACE . statements statement RBRACE
     (20) statements -> . statements statement
@@ -1860,38 +2181,52 @@ state 107
     (22) statements -> . empty
     (23) statement -> . assingation
     (24) statement -> . invocation
-    (25) statement -> . read
-    (26) statement -> . return
-    (67) empty -> .
-    (29) assingation -> . variable ASSIGN expression SEMICOLON
-    (30) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
-    (28) read -> . READ LPAREN variable RPAREN SEMICOLON
-    (27) return -> . RETURN expression SEMICOLON
+    (25) statement -> . if
+    (26) statement -> . read
+    (27) statement -> . return
+    (28) statement -> . print
+    (74) empty -> .
+    (35) assingation -> . variable ASSIGN expression SEMICOLON
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (31) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (34) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (33) return -> . RETURN expression SEMICOLON
+    (29) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (30) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
   ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
   ! shift/reduce conflict for READ resolved as shift
   ! shift/reduce conflict for RETURN resolved as shift
-    ID              shift and go to state 86
-    READ            shift and go to state 95
-    RETURN          shift and go to state 96
+  ! shift/reduce conflict for PRINT resolved as shift
+    ID              shift and go to state 92
+    IF              shift and go to state 103
+    READ            shift and go to state 104
+    RETURN          shift and go to state 105
+    PRINT           shift and go to state 106
 
-  ! ID              [ reduce using rule 67 (empty -> .) ]
-  ! READ            [ reduce using rule 67 (empty -> .) ]
-  ! RETURN          [ reduce using rule 67 (empty -> .) ]
+  ! ID              [ reduce using rule 74 (empty -> .) ]
+  ! IF              [ reduce using rule 74 (empty -> .) ]
+  ! READ            [ reduce using rule 74 (empty -> .) ]
+  ! RETURN          [ reduce using rule 74 (empty -> .) ]
+  ! PRINT           [ reduce using rule 74 (empty -> .) ]
 
-    statements                     shift and go to state 117
-    statement                      shift and go to state 88
-    empty                          shift and go to state 89
-    assingation                    shift and go to state 90
-    invocation                     shift and go to state 91
-    read                           shift and go to state 92
-    return                         shift and go to state 93
-    variable                       shift and go to state 94
+    statements                     shift and go to state 132
+    statement                      shift and go to state 94
+    empty                          shift and go to state 95
+    assingation                    shift and go to state 96
+    invocation                     shift and go to state 97
+    if                             shift and go to state 98
+    read                           shift and go to state 99
+    return                         shift and go to state 100
+    print                          shift and go to state 101
+    variable                       shift and go to state 102
 
-state 108
+state 121
 
     (15) function -> FUNCTION VOID ID LPAREN parameters RPAREN var_declarations LBRACE . statements RBRACE
     (20) statements -> . statements statement
@@ -1899,39 +2234,88 @@ state 108
     (22) statements -> . empty
     (23) statement -> . assingation
     (24) statement -> . invocation
-    (25) statement -> . read
-    (26) statement -> . return
-    (67) empty -> .
-    (29) assingation -> . variable ASSIGN expression SEMICOLON
-    (30) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
-    (28) read -> . READ LPAREN variable RPAREN SEMICOLON
-    (27) return -> . RETURN expression SEMICOLON
+    (25) statement -> . if
+    (26) statement -> . read
+    (27) statement -> . return
+    (28) statement -> . print
+    (74) empty -> .
+    (35) assingation -> . variable ASSIGN expression SEMICOLON
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (31) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (34) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (33) return -> . RETURN expression SEMICOLON
+    (29) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (30) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
   ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
   ! shift/reduce conflict for READ resolved as shift
   ! shift/reduce conflict for RETURN resolved as shift
-    RBRACE          reduce using rule 67 (empty -> .)
-    ID              shift and go to state 86
-    READ            shift and go to state 95
-    RETURN          shift and go to state 96
+  ! shift/reduce conflict for PRINT resolved as shift
+    RBRACE          reduce using rule 74 (empty -> .)
+    ID              shift and go to state 92
+    IF              shift and go to state 103
+    READ            shift and go to state 104
+    RETURN          shift and go to state 105
+    PRINT           shift and go to state 106
 
-  ! ID              [ reduce using rule 67 (empty -> .) ]
-  ! READ            [ reduce using rule 67 (empty -> .) ]
-  ! RETURN          [ reduce using rule 67 (empty -> .) ]
+  ! ID              [ reduce using rule 74 (empty -> .) ]
+  ! IF              [ reduce using rule 74 (empty -> .) ]
+  ! READ            [ reduce using rule 74 (empty -> .) ]
+  ! RETURN          [ reduce using rule 74 (empty -> .) ]
+  ! PRINT           [ reduce using rule 74 (empty -> .) ]
 
-    statements                     shift and go to state 118
-    statement                      shift and go to state 88
-    empty                          shift and go to state 89
-    assingation                    shift and go to state 90
-    invocation                     shift and go to state 91
-    read                           shift and go to state 92
-    return                         shift and go to state 93
-    variable                       shift and go to state 94
+    statements                     shift and go to state 133
+    statement                      shift and go to state 94
+    empty                          shift and go to state 95
+    assingation                    shift and go to state 96
+    invocation                     shift and go to state 97
+    if                             shift and go to state 98
+    read                           shift and go to state 99
+    return                         shift and go to state 100
+    print                          shift and go to state 101
+    variable                       shift and go to state 102
 
-state 109
+state 122
+
+    (36) invocation -> ID LPAREN expressions RPAREN SEMICOLON .
+
+    TIMES           reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    DIVIDE          reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    PLUS            reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    MINUS           reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    LESS            reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    GREATER         reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    EQUALS          reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    NOTEQUAL        reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    AND             reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    OR              reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    ASSIGN          reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    RBRACK          reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    RPAREN          reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    COMMA           reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    SEMICOLON       reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    RBRACE          reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    ID              reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    IF              reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    READ            reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    RETURN          reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+    PRINT           reduce using rule 36 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+
+
+state 123
+
+    (37) expressions -> expressions COMMA expression .
+
+    RPAREN          reduce using rule 37 (expressions -> expressions COMMA expression .)
+    COMMA           reduce using rule 37 (expressions -> expressions COMMA expression .)
+
+
+state 124
 
     (10) variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .
 
@@ -1952,195 +2336,206 @@ state 109
     RPAREN          reduce using rule 10 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
 
 
-state 110
-
-    (30) invocation -> ID LPAREN expressions . RPAREN SEMICOLON
-    (31) expressions -> expressions . COMMA expression
-
-    RPAREN          shift and go to state 119
-    COMMA           shift and go to state 120
-
-
-state 111
-
-    (32) expressions -> expression .
-
-    RPAREN          reduce using rule 32 (expressions -> expression .)
-    COMMA           reduce using rule 32 (expressions -> expression .)
-
-
-state 112
-
-    (33) expressions -> empty .
-
-    RPAREN          reduce using rule 33 (expressions -> empty .)
-    COMMA           reduce using rule 33 (expressions -> empty .)
-
-
-state 113
+state 125
 
     (1) program -> PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations LBRACE statements RBRACE END .
 
     $end            reduce using rule 1 (program -> PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations LBRACE statements RBRACE END .)
 
 
-state 114
+state 126
 
-    (29) assingation -> variable ASSIGN expression . SEMICOLON
+    (35) assingation -> variable ASSIGN expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 121
-
-
-state 115
-
-    (28) read -> READ LPAREN variable . RPAREN SEMICOLON
-
-    RPAREN          shift and go to state 122
+    SEMICOLON       shift and go to state 134
 
 
-state 116
+state 127
 
-    (27) return -> RETURN expression SEMICOLON .
+    (31) if -> IF LPAREN expression . RPAREN LBRACE statements RBRACE
+    (32) if -> IF LPAREN expression . RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
 
-    RBRACE          reduce using rule 27 (return -> RETURN expression SEMICOLON .)
-    ID              reduce using rule 27 (return -> RETURN expression SEMICOLON .)
-    READ            reduce using rule 27 (return -> RETURN expression SEMICOLON .)
-    RETURN          reduce using rule 27 (return -> RETURN expression SEMICOLON .)
+    RPAREN          shift and go to state 135
 
 
-state 117
+state 128
+
+    (34) read -> READ LPAREN variable . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 136
+
+
+state 129
+
+    (33) return -> RETURN expression SEMICOLON .
+
+    RBRACE          reduce using rule 33 (return -> RETURN expression SEMICOLON .)
+    ID              reduce using rule 33 (return -> RETURN expression SEMICOLON .)
+    IF              reduce using rule 33 (return -> RETURN expression SEMICOLON .)
+    READ            reduce using rule 33 (return -> RETURN expression SEMICOLON .)
+    RETURN          reduce using rule 33 (return -> RETURN expression SEMICOLON .)
+    PRINT           reduce using rule 33 (return -> RETURN expression SEMICOLON .)
+
+
+state 130
+
+    (29) print -> PRINT LPAREN expression . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 137
+
+
+state 131
+
+    (30) print -> PRINT LPAREN CTES . RPAREN SEMICOLON
+    (72) cte -> CTES .
+
+  ! shift/reduce conflict for RPAREN resolved as shift
+    RPAREN          shift and go to state 138
+    TIMES           reduce using rule 72 (cte -> CTES .)
+    DIVIDE          reduce using rule 72 (cte -> CTES .)
+    PLUS            reduce using rule 72 (cte -> CTES .)
+    MINUS           reduce using rule 72 (cte -> CTES .)
+    LESS            reduce using rule 72 (cte -> CTES .)
+    GREATER         reduce using rule 72 (cte -> CTES .)
+    EQUALS          reduce using rule 72 (cte -> CTES .)
+    NOTEQUAL        reduce using rule 72 (cte -> CTES .)
+    AND             reduce using rule 72 (cte -> CTES .)
+    OR              reduce using rule 72 (cte -> CTES .)
+    ASSIGN          reduce using rule 72 (cte -> CTES .)
+
+  ! RPAREN          [ reduce using rule 72 (cte -> CTES .) ]
+
+
+state 132
 
     (14) function -> FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations LBRACE statements . statement RBRACE
     (20) statements -> statements . statement
     (23) statement -> . assingation
     (24) statement -> . invocation
-    (25) statement -> . read
-    (26) statement -> . return
-    (29) assingation -> . variable ASSIGN expression SEMICOLON
-    (30) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
-    (28) read -> . READ LPAREN variable RPAREN SEMICOLON
-    (27) return -> . RETURN expression SEMICOLON
+    (25) statement -> . if
+    (26) statement -> . read
+    (27) statement -> . return
+    (28) statement -> . print
+    (35) assingation -> . variable ASSIGN expression SEMICOLON
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (31) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (34) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (33) return -> . RETURN expression SEMICOLON
+    (29) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (30) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
-    ID              shift and go to state 86
-    READ            shift and go to state 95
-    RETURN          shift and go to state 96
+    ID              shift and go to state 92
+    IF              shift and go to state 103
+    READ            shift and go to state 104
+    RETURN          shift and go to state 105
+    PRINT           shift and go to state 106
 
-    statement                      shift and go to state 123
-    assingation                    shift and go to state 90
-    invocation                     shift and go to state 91
-    read                           shift and go to state 92
-    return                         shift and go to state 93
-    variable                       shift and go to state 94
+    statement                      shift and go to state 139
+    assingation                    shift and go to state 96
+    invocation                     shift and go to state 97
+    if                             shift and go to state 98
+    read                           shift and go to state 99
+    return                         shift and go to state 100
+    print                          shift and go to state 101
+    variable                       shift and go to state 102
 
-state 118
+state 133
 
     (15) function -> FUNCTION VOID ID LPAREN parameters RPAREN var_declarations LBRACE statements . RBRACE
     (20) statements -> statements . statement
     (23) statement -> . assingation
     (24) statement -> . invocation
-    (25) statement -> . read
-    (26) statement -> . return
-    (29) assingation -> . variable ASSIGN expression SEMICOLON
-    (30) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
-    (28) read -> . READ LPAREN variable RPAREN SEMICOLON
-    (27) return -> . RETURN expression SEMICOLON
+    (25) statement -> . if
+    (26) statement -> . read
+    (27) statement -> . return
+    (28) statement -> . print
+    (35) assingation -> . variable ASSIGN expression SEMICOLON
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (31) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (34) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (33) return -> . RETURN expression SEMICOLON
+    (29) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (30) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
-    RBRACE          shift and go to state 124
-    ID              shift and go to state 86
-    READ            shift and go to state 95
-    RETURN          shift and go to state 96
+    RBRACE          shift and go to state 140
+    ID              shift and go to state 92
+    IF              shift and go to state 103
+    READ            shift and go to state 104
+    RETURN          shift and go to state 105
+    PRINT           shift and go to state 106
 
-    statement                      shift and go to state 103
-    assingation                    shift and go to state 90
-    invocation                     shift and go to state 91
-    read                           shift and go to state 92
-    return                         shift and go to state 93
-    variable                       shift and go to state 94
+    statement                      shift and go to state 114
+    assingation                    shift and go to state 96
+    invocation                     shift and go to state 97
+    if                             shift and go to state 98
+    read                           shift and go to state 99
+    return                         shift and go to state 100
+    print                          shift and go to state 101
+    variable                       shift and go to state 102
 
-state 119
+state 134
 
-    (30) invocation -> ID LPAREN expressions RPAREN . SEMICOLON
+    (35) assingation -> variable ASSIGN expression SEMICOLON .
 
-    SEMICOLON       shift and go to state 125
-
-
-state 120
-
-    (31) expressions -> expressions COMMA . expression
-    (34) expression -> . t_expression
-    (35) expression -> . t_expression ASSIGN t_expression
-    (36) t_expression -> . g_expression
-    (37) t_expression -> . g_expression boolean_operator g_expression
-    (38) g_expression -> . m_expression
-    (39) g_expression -> . m_expression comparison_operator m_expression
-    (40) m_expression -> . term
-    (41) m_expression -> . term addition_operator term
-    (42) term -> . factor
-    (43) term -> . factor multiplication_operator factor
-    (44) factor -> . variable
-    (45) factor -> . cte
-    (46) factor -> . LPAREN expression RPAREN
-    (8) variable -> . ID
-    (9) variable -> . ID LBRACK expression RBRACK
-    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (62) cte -> . CTEI
-    (63) cte -> . CTEF
-    (64) cte -> . CTEC
-    (65) cte -> . CTES
-    (66) cte -> . CTEB
-
-    LPAREN          shift and go to state 45
-    ID              shift and go to state 26
-    CTEI            shift and go to state 46
-    CTEF            shift and go to state 47
-    CTEC            shift and go to state 48
-    CTES            shift and go to state 49
-    CTEB            shift and go to state 50
-
-    expression                     shift and go to state 126
-    t_expression                   shift and go to state 38
-    g_expression                   shift and go to state 39
-    m_expression                   shift and go to state 40
-    term                           shift and go to state 41
-    factor                         shift and go to state 42
-    variable                       shift and go to state 43
-    cte                            shift and go to state 44
-
-state 121
-
-    (29) assingation -> variable ASSIGN expression SEMICOLON .
-
-    RBRACE          reduce using rule 29 (assingation -> variable ASSIGN expression SEMICOLON .)
-    ID              reduce using rule 29 (assingation -> variable ASSIGN expression SEMICOLON .)
-    READ            reduce using rule 29 (assingation -> variable ASSIGN expression SEMICOLON .)
-    RETURN          reduce using rule 29 (assingation -> variable ASSIGN expression SEMICOLON .)
+    RBRACE          reduce using rule 35 (assingation -> variable ASSIGN expression SEMICOLON .)
+    ID              reduce using rule 35 (assingation -> variable ASSIGN expression SEMICOLON .)
+    IF              reduce using rule 35 (assingation -> variable ASSIGN expression SEMICOLON .)
+    READ            reduce using rule 35 (assingation -> variable ASSIGN expression SEMICOLON .)
+    RETURN          reduce using rule 35 (assingation -> variable ASSIGN expression SEMICOLON .)
+    PRINT           reduce using rule 35 (assingation -> variable ASSIGN expression SEMICOLON .)
 
 
-state 122
+state 135
 
-    (28) read -> READ LPAREN variable RPAREN . SEMICOLON
+    (31) if -> IF LPAREN expression RPAREN . LBRACE statements RBRACE
+    (32) if -> IF LPAREN expression RPAREN . LBRACE statements RBRACE ELSE LBRACE statements RBRACE
 
-    SEMICOLON       shift and go to state 127
+    LBRACE          shift and go to state 141
 
 
-state 123
+state 136
+
+    (34) read -> READ LPAREN variable RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 142
+
+
+state 137
+
+    (29) print -> PRINT LPAREN expression RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 143
+
+
+state 138
+
+    (30) print -> PRINT LPAREN CTES RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 144
+
+
+state 139
 
     (14) function -> FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations LBRACE statements statement . RBRACE
     (20) statements -> statements statement .
 
-    RBRACE          shift and go to state 128
+    RBRACE          shift and go to state 145
     ID              reduce using rule 20 (statements -> statements statement .)
+    IF              reduce using rule 20 (statements -> statements statement .)
     READ            reduce using rule 20 (statements -> statements statement .)
     RETURN          reduce using rule 20 (statements -> statements statement .)
+    PRINT           reduce using rule 20 (statements -> statements statement .)
 
 
-state 124
+state 140
 
     (15) function -> FUNCTION VOID ID LPAREN parameters RPAREN var_declarations LBRACE statements RBRACE .
 
@@ -2148,40 +2543,267 @@ state 124
     FUNCTION        reduce using rule 15 (function -> FUNCTION VOID ID LPAREN parameters RPAREN var_declarations LBRACE statements RBRACE .)
 
 
-state 125
+state 141
 
-    (30) invocation -> ID LPAREN expressions RPAREN SEMICOLON .
+    (31) if -> IF LPAREN expression RPAREN LBRACE . statements RBRACE
+    (32) if -> IF LPAREN expression RPAREN LBRACE . statements RBRACE ELSE LBRACE statements RBRACE
+    (20) statements -> . statements statement
+    (21) statements -> . statement
+    (22) statements -> . empty
+    (23) statement -> . assingation
+    (24) statement -> . invocation
+    (25) statement -> . if
+    (26) statement -> . read
+    (27) statement -> . return
+    (28) statement -> . print
+    (74) empty -> .
+    (35) assingation -> . variable ASSIGN expression SEMICOLON
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (31) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (34) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (33) return -> . RETURN expression SEMICOLON
+    (29) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (30) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
-    RBRACE          reduce using rule 30 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
-    ID              reduce using rule 30 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
-    READ            reduce using rule 30 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
-    RETURN          reduce using rule 30 (invocation -> ID LPAREN expressions RPAREN SEMICOLON .)
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+    RBRACE          reduce using rule 74 (empty -> .)
+    ID              shift and go to state 92
+    IF              shift and go to state 103
+    READ            shift and go to state 104
+    RETURN          shift and go to state 105
+    PRINT           shift and go to state 106
+
+  ! ID              [ reduce using rule 74 (empty -> .) ]
+  ! IF              [ reduce using rule 74 (empty -> .) ]
+  ! READ            [ reduce using rule 74 (empty -> .) ]
+  ! RETURN          [ reduce using rule 74 (empty -> .) ]
+  ! PRINT           [ reduce using rule 74 (empty -> .) ]
+
+    statements                     shift and go to state 146
+    statement                      shift and go to state 94
+    empty                          shift and go to state 95
+    assingation                    shift and go to state 96
+    invocation                     shift and go to state 97
+    if                             shift and go to state 98
+    read                           shift and go to state 99
+    return                         shift and go to state 100
+    print                          shift and go to state 101
+    variable                       shift and go to state 102
+
+state 142
+
+    (34) read -> READ LPAREN variable RPAREN SEMICOLON .
+
+    RBRACE          reduce using rule 34 (read -> READ LPAREN variable RPAREN SEMICOLON .)
+    ID              reduce using rule 34 (read -> READ LPAREN variable RPAREN SEMICOLON .)
+    IF              reduce using rule 34 (read -> READ LPAREN variable RPAREN SEMICOLON .)
+    READ            reduce using rule 34 (read -> READ LPAREN variable RPAREN SEMICOLON .)
+    RETURN          reduce using rule 34 (read -> READ LPAREN variable RPAREN SEMICOLON .)
+    PRINT           reduce using rule 34 (read -> READ LPAREN variable RPAREN SEMICOLON .)
 
 
-state 126
+state 143
 
-    (31) expressions -> expressions COMMA expression .
+    (29) print -> PRINT LPAREN expression RPAREN SEMICOLON .
 
-    RPAREN          reduce using rule 31 (expressions -> expressions COMMA expression .)
-    COMMA           reduce using rule 31 (expressions -> expressions COMMA expression .)
-
-
-state 127
-
-    (28) read -> READ LPAREN variable RPAREN SEMICOLON .
-
-    RBRACE          reduce using rule 28 (read -> READ LPAREN variable RPAREN SEMICOLON .)
-    ID              reduce using rule 28 (read -> READ LPAREN variable RPAREN SEMICOLON .)
-    READ            reduce using rule 28 (read -> READ LPAREN variable RPAREN SEMICOLON .)
-    RETURN          reduce using rule 28 (read -> READ LPAREN variable RPAREN SEMICOLON .)
+    RBRACE          reduce using rule 29 (print -> PRINT LPAREN expression RPAREN SEMICOLON .)
+    ID              reduce using rule 29 (print -> PRINT LPAREN expression RPAREN SEMICOLON .)
+    IF              reduce using rule 29 (print -> PRINT LPAREN expression RPAREN SEMICOLON .)
+    READ            reduce using rule 29 (print -> PRINT LPAREN expression RPAREN SEMICOLON .)
+    RETURN          reduce using rule 29 (print -> PRINT LPAREN expression RPAREN SEMICOLON .)
+    PRINT           reduce using rule 29 (print -> PRINT LPAREN expression RPAREN SEMICOLON .)
 
 
-state 128
+state 144
+
+    (30) print -> PRINT LPAREN CTES RPAREN SEMICOLON .
+
+    RBRACE          reduce using rule 30 (print -> PRINT LPAREN CTES RPAREN SEMICOLON .)
+    ID              reduce using rule 30 (print -> PRINT LPAREN CTES RPAREN SEMICOLON .)
+    IF              reduce using rule 30 (print -> PRINT LPAREN CTES RPAREN SEMICOLON .)
+    READ            reduce using rule 30 (print -> PRINT LPAREN CTES RPAREN SEMICOLON .)
+    RETURN          reduce using rule 30 (print -> PRINT LPAREN CTES RPAREN SEMICOLON .)
+    PRINT           reduce using rule 30 (print -> PRINT LPAREN CTES RPAREN SEMICOLON .)
+
+
+state 145
 
     (14) function -> FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations LBRACE statements statement RBRACE .
 
     MAIN            reduce using rule 14 (function -> FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations LBRACE statements statement RBRACE .)
     FUNCTION        reduce using rule 14 (function -> FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations LBRACE statements statement RBRACE .)
+
+
+state 146
+
+    (31) if -> IF LPAREN expression RPAREN LBRACE statements . RBRACE
+    (32) if -> IF LPAREN expression RPAREN LBRACE statements . RBRACE ELSE LBRACE statements RBRACE
+    (20) statements -> statements . statement
+    (23) statement -> . assingation
+    (24) statement -> . invocation
+    (25) statement -> . if
+    (26) statement -> . read
+    (27) statement -> . return
+    (28) statement -> . print
+    (35) assingation -> . variable ASSIGN expression SEMICOLON
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (31) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (34) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (33) return -> . RETURN expression SEMICOLON
+    (29) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (30) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+
+    RBRACE          shift and go to state 147
+    ID              shift and go to state 92
+    IF              shift and go to state 103
+    READ            shift and go to state 104
+    RETURN          shift and go to state 105
+    PRINT           shift and go to state 106
+
+    statement                      shift and go to state 114
+    assingation                    shift and go to state 96
+    invocation                     shift and go to state 97
+    if                             shift and go to state 98
+    read                           shift and go to state 99
+    return                         shift and go to state 100
+    print                          shift and go to state 101
+    variable                       shift and go to state 102
+
+state 147
+
+    (31) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .
+    (32) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE . ELSE LBRACE statements RBRACE
+
+    RBRACE          reduce using rule 31 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    ID              reduce using rule 31 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    IF              reduce using rule 31 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    READ            reduce using rule 31 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    RETURN          reduce using rule 31 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    PRINT           reduce using rule 31 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    ELSE            shift and go to state 148
+
+
+state 148
+
+    (32) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE . LBRACE statements RBRACE
+
+    LBRACE          shift and go to state 149
+
+
+state 149
+
+    (32) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE . statements RBRACE
+    (20) statements -> . statements statement
+    (21) statements -> . statement
+    (22) statements -> . empty
+    (23) statement -> . assingation
+    (24) statement -> . invocation
+    (25) statement -> . if
+    (26) statement -> . read
+    (27) statement -> . return
+    (28) statement -> . print
+    (74) empty -> .
+    (35) assingation -> . variable ASSIGN expression SEMICOLON
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (31) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (34) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (33) return -> . RETURN expression SEMICOLON
+    (29) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (30) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+    RBRACE          reduce using rule 74 (empty -> .)
+    ID              shift and go to state 92
+    IF              shift and go to state 103
+    READ            shift and go to state 104
+    RETURN          shift and go to state 105
+    PRINT           shift and go to state 106
+
+  ! ID              [ reduce using rule 74 (empty -> .) ]
+  ! IF              [ reduce using rule 74 (empty -> .) ]
+  ! READ            [ reduce using rule 74 (empty -> .) ]
+  ! RETURN          [ reduce using rule 74 (empty -> .) ]
+  ! PRINT           [ reduce using rule 74 (empty -> .) ]
+
+    statements                     shift and go to state 150
+    statement                      shift and go to state 94
+    empty                          shift and go to state 95
+    assingation                    shift and go to state 96
+    invocation                     shift and go to state 97
+    if                             shift and go to state 98
+    read                           shift and go to state 99
+    return                         shift and go to state 100
+    print                          shift and go to state 101
+    variable                       shift and go to state 102
+
+state 150
+
+    (32) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements . RBRACE
+    (20) statements -> statements . statement
+    (23) statement -> . assingation
+    (24) statement -> . invocation
+    (25) statement -> . if
+    (26) statement -> . read
+    (27) statement -> . return
+    (28) statement -> . print
+    (35) assingation -> . variable ASSIGN expression SEMICOLON
+    (36) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (31) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (32) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (34) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (33) return -> . RETURN expression SEMICOLON
+    (29) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (30) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
+    (8) variable -> . ID
+    (9) variable -> . ID LBRACK expression RBRACK
+    (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+
+    RBRACE          shift and go to state 151
+    ID              shift and go to state 92
+    IF              shift and go to state 103
+    READ            shift and go to state 104
+    RETURN          shift and go to state 105
+    PRINT           shift and go to state 106
+
+    statement                      shift and go to state 114
+    assingation                    shift and go to state 96
+    invocation                     shift and go to state 97
+    if                             shift and go to state 98
+    read                           shift and go to state 99
+    return                         shift and go to state 100
+    print                          shift and go to state 101
+    variable                       shift and go to state 102
+
+state 151
+
+    (32) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .
+
+    RBRACE          reduce using rule 32 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    ID              reduce using rule 32 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    IF              reduce using rule 32 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    READ            reduce using rule 32 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    RETURN          reduce using rule 32 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    PRINT           reduce using rule 32 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
 
 WARNING: 
 WARNING: Conflicts:
@@ -2189,14 +2811,31 @@ WARNING:
 WARNING: shift/reduce conflict for VARIABLE in state 4 resolved as shift
 WARNING: shift/reduce conflict for FUNCTION in state 5 resolved as shift
 WARNING: shift/reduce conflict for VARIABLE in state 33 resolved as shift
-WARNING: shift/reduce conflict for ID in state 74 resolved as shift
-WARNING: shift/reduce conflict for READ in state 74 resolved as shift
-WARNING: shift/reduce conflict for RETURN in state 74 resolved as shift
-WARNING: shift/reduce conflict for VARIABLE in state 76 resolved as shift
-WARNING: shift/reduce conflict for VARIABLE in state 78 resolved as shift
-WARNING: shift/reduce conflict for ID in state 107 resolved as shift
-WARNING: shift/reduce conflict for READ in state 107 resolved as shift
-WARNING: shift/reduce conflict for RETURN in state 107 resolved as shift
-WARNING: shift/reduce conflict for ID in state 108 resolved as shift
-WARNING: shift/reduce conflict for READ in state 108 resolved as shift
-WARNING: shift/reduce conflict for RETURN in state 108 resolved as shift
+WARNING: shift/reduce conflict for ID in state 77 resolved as shift
+WARNING: shift/reduce conflict for IF in state 77 resolved as shift
+WARNING: shift/reduce conflict for READ in state 77 resolved as shift
+WARNING: shift/reduce conflict for RETURN in state 77 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 77 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 79 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 81 resolved as shift
+WARNING: shift/reduce conflict for ID in state 120 resolved as shift
+WARNING: shift/reduce conflict for IF in state 120 resolved as shift
+WARNING: shift/reduce conflict for READ in state 120 resolved as shift
+WARNING: shift/reduce conflict for RETURN in state 120 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 120 resolved as shift
+WARNING: shift/reduce conflict for ID in state 121 resolved as shift
+WARNING: shift/reduce conflict for IF in state 121 resolved as shift
+WARNING: shift/reduce conflict for READ in state 121 resolved as shift
+WARNING: shift/reduce conflict for RETURN in state 121 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 121 resolved as shift
+WARNING: shift/reduce conflict for RPAREN in state 131 resolved as shift
+WARNING: shift/reduce conflict for ID in state 141 resolved as shift
+WARNING: shift/reduce conflict for IF in state 141 resolved as shift
+WARNING: shift/reduce conflict for READ in state 141 resolved as shift
+WARNING: shift/reduce conflict for RETURN in state 141 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 141 resolved as shift
+WARNING: shift/reduce conflict for ID in state 149 resolved as shift
+WARNING: shift/reduce conflict for IF in state 149 resolved as shift
+WARNING: shift/reduce conflict for READ in state 149 resolved as shift
+WARNING: shift/reduce conflict for RETURN in state 149 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 149 resolved as shift
