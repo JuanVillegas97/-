@@ -1,5 +1,3 @@
-import ply.lex as lex
-
 # Tuple of reserved names.
 reserved = {
     'プログラム':'PROGRAM',
@@ -127,24 +125,3 @@ t_ignore  = ' \t'
 def t_error(t):
     print("Illegal character '{}' at: {}".format(t.value[0], t.lexer.lineno))
     t.lexer.skip(1)
-
-# Build the lexer
-lexer = lex.lex()
-
-# # Test it out
-# data = '''
-# 3.5
-# 2
-# "uwu"
-# 'u'
-# '''
-
-# # Give the lexer some input
-# lexer.input(data)
-
-# # Tokenize
-# while True:
-#     tok = lexer.token()
-#     if not tok: 
-#         break      # No more input
-#     print(tok)

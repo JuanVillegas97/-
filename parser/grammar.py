@@ -1,5 +1,4 @@
-import ply.yacc as yacc
-from my_lexer import tokens
+from lexer.tokens import tokens
 
 functions_directory = {}
 
@@ -259,13 +258,6 @@ def error(token):
 
 
 
-
-parser = yacc.yacc(debug=True)
-
-with open("input.txt", "r",encoding="utf-8") as file:
-    code = file.read()
-
-result = parser.parse(code)
 
 # for function_name, function_data in functions_directory.items():
 #     print(f"Function: {function_name}")
