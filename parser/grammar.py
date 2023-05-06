@@ -1,11 +1,16 @@
 from lexer.tokens import tokens
+from compiler.functions_directory import functionsDirectory
 
-functions_directory = {}
+directory = functionsDirectory()
+
 
 def p_program(p):
     '''
     program : PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations LBRACE statements RBRACE END
     '''
+    directory.current_function_name = p[2]  # Extract the function name from the parsed tokens
+    directory.add_function(directory.current_function_name , type)
+
     p[0] = "PROGRAM COMPILED"
 
 def p_var_declarations(p):
@@ -15,19 +20,25 @@ def p_var_declarations(p):
                     | empty
     '''
 
+
 def p_var_declaration(p):
     '''
     var_declaration : VARIABLE simple_type variables SEMICOLON
     '''
-    # implementation of variable_declaration function
+    # directory.has_variable_table(directory.current_variable_type)
+    print(directory.current_function_name)
+    # print(p[3])
 
 
 def p_variables(p):
     '''
-    variables : variables COMMA variable
+    variables : variable COMMA variables
             | variable
     '''
-    # implementation of variables function
+    p[0] = p[1]
+    # print(p[0])
+    # print(p)
+    
 
 def p_variable(p):
     '''
@@ -35,6 +46,8 @@ def p_variable(p):
             | ID LBRACK expression RBRACK
             | ID LBRACK expression RBRACK LBRACK expression RBRACK
     '''
+    p[0] = p[1]  # Assign the ID as the default value
+
 
 def p_functions(p):
     '''
@@ -44,31 +57,21 @@ def p_functions(p):
 
     '''
 
+
+
 def p_function(p):
     '''
     function : FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations LBRACE statements statement RBRACE
             |  FUNCTION VOID ID LPAREN parameters RPAREN var_declarations LBRACE statements RBRACE
     '''
+    directory.current_function_name = p[3]  # Extract the function name from the parsed tokens
+    type = p[2] if p[2] != "VOID" else None  # Extract the function type (None for void functions)
+    # Add the function to the directory
+    directory.add_function(directory.current_function_name , type)
 
-    if len(p) == 12:
-        # Function with a return type
-        functions_directory[p[3]] = {
-            'name': p[3],
-            'type': p[2],
-            'parameters': p[5],
-            'var_declarations': p[7],
-            'statements': p[9],
-            'return_statement': p[10]
-        }
-    else:
-        # Function without a return type (void)
-        functions_directory[p[3]]= {
-            'name': p[3],
-            'type': 'void',
-            'parameters': p[5],
-            'var_declarations': p[7],
-            'statements': p[9]
-        }
+
+
+
 
 def p_parameters(p):
     '''
@@ -187,6 +190,17 @@ def p_comparison_operator(p):
                         | NOTEQUAL
     '''
 
+
+precedence = (
+    ('left', 'OR'),
+    ('left', 'AND'),
+    ('nonassoc', 'EQUALS', 'NOTEQUAL'),
+    ('nonassoc', 'LESS', 'GREATER'),
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'TIMES', 'DIVIDE'),
+)
+
+
 def p_addition_operator(p):
     '''
     addition_operator : PLUS
@@ -213,8 +227,7 @@ def p_simple_type(p):
                 | STRING
                 | BOOLEAN
     '''
-    for element in p:
-        print (element)
+    p[0] = p[1]
     # implementation of simple_type function
 
 def p_cte(p):
@@ -246,12 +259,13 @@ def p_empty(p):
 #     '''
 
 
-
 def p_error(p):
     if p:
-        print("Syntax error at line %d, token=%s" % (p.lineno, p.type))
+        error_message = f"Syntax error at line {p.lineno}, token={p.type}"
+        raise SyntaxError(error_message)
     else:
-        print("Syntax error: unexpected end of input")
+        raise SyntaxError("Syntax error: unexpected end of input")
+
 
 def error(token):
     print(f"Syntax error: Unexpected token '{token.value}' at line {token.lineno}, column {token.lexpos}")
@@ -259,11 +273,3 @@ def error(token):
 
 
 
-# for function_name, function_data in functions_directory.items():
-#     print(f"Function: {function_name}")
-#     print(f"Type: {function_data['type']}")
-#     print("Parameters:", function_data['parameters'])
-#     print("Statements:", function_data['statements'])
-#     print("Variables:", function_data['var_declarations'])
-#     print("Return type:", function_data['return_statement'])
-#     print()

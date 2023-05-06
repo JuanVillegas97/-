@@ -1,6 +1,7 @@
+from compiler.sematnic_cube import SemanticCube
 from lexer.lexer import MyLexer
 from parser.parser import MyParser
-# Instantiate the lexer
+from parser.grammar import directory
 
 def _main():
     lexer = MyLexer()
@@ -14,8 +15,9 @@ def _main():
 
     # Tokenize the source code
     parser.parse(code)
-    # lexer.tokenize(tokens)
-
-
+    # for name, function in directory.function_dictionary.items():
+    #     print("Function Name:", name)
+    #     print("Function Type:", function["type"])
+    #     print()
 if __name__ == '__main__':
     _main()

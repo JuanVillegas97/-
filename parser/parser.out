@@ -17,7 +17,7 @@ Rule 2     var_declarations -> var_declarations var_declaration
 Rule 3     var_declarations -> var_declaration
 Rule 4     var_declarations -> empty
 Rule 5     var_declaration -> VARIABLE simple_type variables SEMICOLON
-Rule 6     variables -> variables COMMA variable
+Rule 6     variables -> variable COMMA variables
 Rule 7     variables -> variable
 Rule 8     variable -> ID
 Rule 9     variable -> ID LBRACK expression RBRACK
@@ -344,7 +344,7 @@ state 13
 state 14
 
     (5) var_declaration -> VARIABLE simple_type . variables SEMICOLON
-    (6) variables -> . variables COMMA variable
+    (6) variables -> . variable COMMA variables
     (7) variables -> . variable
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
@@ -422,18 +422,17 @@ state 23
 state 24
 
     (5) var_declaration -> VARIABLE simple_type variables . SEMICOLON
-    (6) variables -> variables . COMMA variable
 
     SEMICOLON       shift and go to state 30
-    COMMA           shift and go to state 31
 
 
 state 25
 
+    (6) variables -> variable . COMMA variables
     (7) variables -> variable .
 
+    COMMA           shift and go to state 31
     SEMICOLON       reduce using rule 7 (variables -> variable .)
-    COMMA           reduce using rule 7 (variables -> variable .)
 
 
 state 26
@@ -442,8 +441,8 @@ state 26
     (9) variable -> ID . LBRACK expression RBRACK
     (10) variable -> ID . LBRACK expression RBRACK LBRACK expression RBRACK
 
-    SEMICOLON       reduce using rule 8 (variable -> ID .)
     COMMA           reduce using rule 8 (variable -> ID .)
+    SEMICOLON       reduce using rule 8 (variable -> ID .)
     RPAREN          reduce using rule 8 (variable -> ID .)
     LBRACK          shift and go to state 32
 
@@ -481,14 +480,17 @@ state 30
 
 state 31
 
-    (6) variables -> variables COMMA . variable
+    (6) variables -> variable COMMA . variables
+    (6) variables -> . variable COMMA variables
+    (7) variables -> . variable
     (8) variable -> . ID
     (9) variable -> . ID LBRACK expression RBRACK
     (10) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
     ID              shift and go to state 26
 
-    variable                       shift and go to state 36
+    variable                       shift and go to state 25
+    variables                      shift and go to state 36
 
 state 32
 
@@ -611,10 +613,9 @@ state 35
 
 state 36
 
-    (6) variables -> variables COMMA variable .
+    (6) variables -> variable COMMA variables .
 
-    SEMICOLON       reduce using rule 6 (variables -> variables COMMA variable .)
-    COMMA           reduce using rule 6 (variables -> variables COMMA variable .)
+    SEMICOLON       reduce using rule 6 (variables -> variable COMMA variables .)
 
 
 state 37
@@ -1074,8 +1075,8 @@ state 60
     (9) variable -> ID LBRACK expression RBRACK .
     (10) variable -> ID LBRACK expression RBRACK . LBRACK expression RBRACK
 
-    SEMICOLON       reduce using rule 9 (variable -> ID LBRACK expression RBRACK .)
     COMMA           reduce using rule 9 (variable -> ID LBRACK expression RBRACK .)
+    SEMICOLON       reduce using rule 9 (variable -> ID LBRACK expression RBRACK .)
     TIMES           reduce using rule 9 (variable -> ID LBRACK expression RBRACK .)
     DIVIDE          reduce using rule 9 (variable -> ID LBRACK expression RBRACK .)
     PLUS            reduce using rule 9 (variable -> ID LBRACK expression RBRACK .)
@@ -2319,8 +2320,8 @@ state 124
 
     (10) variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .
 
-    SEMICOLON       reduce using rule 10 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
     COMMA           reduce using rule 10 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
+    SEMICOLON       reduce using rule 10 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
     TIMES           reduce using rule 10 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
     DIVIDE          reduce using rule 10 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
     PLUS            reduce using rule 10 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)

@@ -20,7 +20,7 @@
 
 }
 メイン()
-変数 文字 my_char;
+変数 文字 my_char2;
 {
     my_char = 'a';
     my_int = 1;
