@@ -1,33 +1,83 @@
 from lexer.tokens import tokens
 from compiler.functions_directory import functionsDirectory
 
-directory = functionsDirectory()
+# Because PLY is a bottom-up and cannot be converted to a top-down it's difficult to track stuff
+# The rules named with ..._scope are neural points to prepare the variable table
 
+directory = functionsDirectory()
 
 def p_program(p):
     '''
-    program : PROGRAM ID SEMICOLON var_declarations functions MAIN LPAREN RPAREN var_declarations LBRACE statements RBRACE END
+    program : PROGRAM ID SEMICOLON global_scope var_declarations functions main END
     '''
-    directory.current_function_name = p[2]  # Extract the function name from the parsed tokens
-    directory.add_function(directory.current_function_name , type)
-
     p[0] = "PROGRAM COMPILED"
+
+
+def p_global_scope(p):
+    '''
+    global_scope : 
+    '''
+    function_name = p[-2] 
+    function_type = "PROGRAM"
+    scope = "GLOBAL"
+    directory.set_current(function_name,function_type,scope)
+    directory.add_function()
+
+def p_functions(p):
+    '''
+    functions : functions function
+                    | function
+                    | empty
+    '''
+
+def p_function(p):
+    '''
+    function : FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE
+            |  FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE
+    '''
+
+def p_function_scope(p):
+    '''
+    function_scope : 
+    '''
+    function_name = p[-4] 
+    function_type = p[-5]
+    scope = "LOCAL"
+    directory.set_current(function_name,function_type,scope)
+    directory.add_function()
+
+def p_main(p):
+    '''
+    main : MAIN LPAREN RPAREN main_scope var_declarations LBRACE statements RBRACE
+    '''
+
+def p_main_scope(p):
+    '''
+    main_scope : 
+    '''
+    function_name = "MAIN"
+    function_type = "MAIN"
+    scope = "LOCAL"
+    directory.set_current(function_name,function_type,scope)
+    directory.add_function()
+
 
 def p_var_declarations(p):
     '''
-    var_declarations : var_declarations var_declaration 
+    var_declarations : var_declaration var_declarations 
                     | var_declaration
                     | empty
     '''
+    p[0] = p[1]
 
 
 def p_var_declaration(p):
     '''
     var_declaration : VARIABLE simple_type variables SEMICOLON
     '''
-    # directory.has_variable_table(directory.current_variable_type)
-    print(directory.current_function_name)
-    # print(p[3])
+    type = p[2]
+    ids = p[3]
+    directory.add_variable(ids,type)
 
 
 def p_variables(p):
@@ -35,10 +85,15 @@ def p_variables(p):
     variables : variable COMMA variables
             | variable
     '''
-    p[0] = p[1]
-    # print(p[0])
-    # print(p)
-    
+    if len(p) == 2:
+        # Only one variable was matched
+        p[0] = [p[1]]
+    else:
+        # Multiple variables were matched
+        p[3].insert(0, p[1])  # Add the current variable to the list
+        p[0] = p[3]
+
+
 
 def p_variable(p):
     '''
@@ -46,28 +101,7 @@ def p_variable(p):
             | ID LBRACK expression RBRACK
             | ID LBRACK expression RBRACK LBRACK expression RBRACK
     '''
-    p[0] = p[1]  # Assign the ID as the default value
-
-
-def p_functions(p):
-    '''
-    functions : functions function
-                    | function
-                    | empty
-
-    '''
-
-
-
-def p_function(p):
-    '''
-    function : FUNCTION simple_type ID LPAREN parameters RPAREN var_declarations LBRACE statements statement RBRACE
-            |  FUNCTION VOID ID LPAREN parameters RPAREN var_declarations LBRACE statements RBRACE
-    '''
-    directory.current_function_name = p[3]  # Extract the function name from the parsed tokens
-    type = p[2] if p[2] != "VOID" else None  # Extract the function type (None for void functions)
-    # Add the function to the directory
-    directory.add_function(directory.current_function_name , type)
+    p[0] = p[1]
 
 
 
@@ -189,17 +223,6 @@ def p_comparison_operator(p):
                         | EQUALS
                         | NOTEQUAL
     '''
-
-
-precedence = (
-    ('left', 'OR'),
-    ('left', 'AND'),
-    ('nonassoc', 'EQUALS', 'NOTEQUAL'),
-    ('nonassoc', 'LESS', 'GREATER'),
-    ('left', 'PLUS', 'MINUS'),
-    ('left', 'TIMES', 'DIVIDE'),
-)
-
 
 def p_addition_operator(p):
     '''
