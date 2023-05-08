@@ -129,7 +129,6 @@ function verifyPassword(password: string, hashedPassword: string): boolean {
 function generateIV(): string {
   // implementation here
 }
-
 ```
 ## First commit
 The only notable mention is the one for the ID  that matches any sequence of one or more characters that are either Katakana, Hiragana, or Kanji.
@@ -149,5 +148,7 @@ Well, I changed the regular expression of ID to a mix of Japanese and English wo
 I focused in the diagrams in this commit and my proposal so it took me time of no coding
 ### LEFT THINGS TO DO
 In `p_variable_declaration`, I need to add `p_complex_type`
-I need to recheck myd iagrams some of my statements might by missing semicolons
-I still need ot implement the while, for, do-while, and also check the print function to print strings 
+- Recheck my diagrams, missing statemtns and made some changes in the grammar.py in order to be able to perform certain behaviors
+- I still need ot implement the while, for, do-while, and also check the print function to print strings 
+- In SymbolTables.pdf check the neural point number 6 to delete directory
+- CURRENTLY WORKING IN THE PARAMETERS TO PUT THE IDS IN THE VARIABLE TABLE

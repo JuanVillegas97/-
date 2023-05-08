@@ -17,8 +17,8 @@ Rule 2     global_scope -> <empty>
 Rule 3     functions -> functions function
 Rule 4     functions -> function
 Rule 5     functions -> empty
-Rule 6     function -> FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE
-Rule 7     function -> FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE
+Rule 6     function -> FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
+Rule 7     function -> FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
 Rule 8     function_scope -> <empty>
 Rule 9     main -> MAIN LPAREN RPAREN main_scope var_declarations LBRACE statements RBRACE
 Rule 10    main_scope -> <empty>
@@ -171,7 +171,7 @@ program              : 0
 read                 : 30
 return               : 31
 simple_type          : 6 14 23
-statement            : 6 24 25
+statement            : 24 25
 statements           : 6 7 9 24 35 36 36
 t_expression         : 44 45 45
 term                 : 50 51 51
@@ -245,8 +245,8 @@ state 6
     (3) functions -> . functions function
     (4) functions -> . function
     (5) functions -> . empty
-    (6) function -> . FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE
-    (7) function -> . FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE
+    (6) function -> . FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
+    (7) function -> . FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
     (78) empty -> .
 
   ! shift/reduce conflict for FUNCTION resolved as shift
@@ -316,8 +316,8 @@ state 10
     (1) program -> PROGRAM ID SEMICOLON global_scope var_declarations functions . main END
     (3) functions -> functions . function
     (9) main -> . MAIN LPAREN RPAREN main_scope var_declarations LBRACE statements RBRACE
-    (6) function -> . FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE
-    (7) function -> . FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE
+    (6) function -> . FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
+    (7) function -> . FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
 
     MAIN            shift and go to state 23
     FUNCTION        shift and go to state 13
@@ -343,8 +343,8 @@ state 12
 
 state 13
 
-    (6) function -> FUNCTION . simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE
-    (7) function -> FUNCTION . VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE
+    (6) function -> FUNCTION . simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
+    (7) function -> FUNCTION . VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
     (68) simple_type -> . INT
     (69) simple_type -> . FLOAT
     (70) simple_type -> . CHAR
@@ -442,14 +442,14 @@ state 23
 
 state 24
 
-    (6) function -> FUNCTION simple_type . ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE
+    (6) function -> FUNCTION simple_type . ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
 
     ID              shift and go to state 31
 
 
 state 25
 
-    (7) function -> FUNCTION VOID . ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE
+    (7) function -> FUNCTION VOID . ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
 
     ID              shift and go to state 32
 
@@ -498,14 +498,14 @@ state 30
 
 state 31
 
-    (6) function -> FUNCTION simple_type ID . LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE
+    (6) function -> FUNCTION simple_type ID . LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
 
     LPAREN          shift and go to state 37
 
 
 state 32
 
-    (7) function -> FUNCTION VOID ID . LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE
+    (7) function -> FUNCTION VOID ID . LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
 
     LPAREN          shift and go to state 38
 
@@ -592,57 +592,33 @@ state 36
 
 state 37
 
-    (6) function -> FUNCTION simple_type ID LPAREN . parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE
-    (20) parameters -> . parameters COMMA parameter
-    (21) parameters -> . parameter
-    (22) parameters -> . empty
-    (23) parameter -> . simple_type ID
-    (78) empty -> .
-    (68) simple_type -> . INT
-    (69) simple_type -> . FLOAT
-    (70) simple_type -> . CHAR
-    (71) simple_type -> . STRING
-    (72) simple_type -> . BOOLEAN
+    (6) function -> FUNCTION simple_type ID LPAREN . function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
+    (8) function_scope -> .
 
-    RPAREN          reduce using rule 78 (empty -> .)
-    COMMA           reduce using rule 78 (empty -> .)
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    CHAR            shift and go to state 18
-    STRING          shift and go to state 19
-    BOOLEAN         shift and go to state 20
+    INT             reduce using rule 8 (function_scope -> .)
+    FLOAT           reduce using rule 8 (function_scope -> .)
+    CHAR            reduce using rule 8 (function_scope -> .)
+    STRING          reduce using rule 8 (function_scope -> .)
+    BOOLEAN         reduce using rule 8 (function_scope -> .)
+    RPAREN          reduce using rule 8 (function_scope -> .)
+    COMMA           reduce using rule 8 (function_scope -> .)
 
-    simple_type                    shift and go to state 57
-    parameters                     shift and go to state 58
-    parameter                      shift and go to state 59
-    empty                          shift and go to state 60
+    function_scope                 shift and go to state 57
 
 state 38
 
-    (7) function -> FUNCTION VOID ID LPAREN . parameters RPAREN function_scope var_declarations LBRACE statements RBRACE
-    (20) parameters -> . parameters COMMA parameter
-    (21) parameters -> . parameter
-    (22) parameters -> . empty
-    (23) parameter -> . simple_type ID
-    (78) empty -> .
-    (68) simple_type -> . INT
-    (69) simple_type -> . FLOAT
-    (70) simple_type -> . CHAR
-    (71) simple_type -> . STRING
-    (72) simple_type -> . BOOLEAN
+    (7) function -> FUNCTION VOID ID LPAREN . function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
+    (8) function_scope -> .
 
-    RPAREN          reduce using rule 78 (empty -> .)
-    COMMA           reduce using rule 78 (empty -> .)
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    CHAR            shift and go to state 18
-    STRING          shift and go to state 19
-    BOOLEAN         shift and go to state 20
+    INT             reduce using rule 8 (function_scope -> .)
+    FLOAT           reduce using rule 8 (function_scope -> .)
+    CHAR            reduce using rule 8 (function_scope -> .)
+    STRING          reduce using rule 8 (function_scope -> .)
+    BOOLEAN         reduce using rule 8 (function_scope -> .)
+    RPAREN          reduce using rule 8 (function_scope -> .)
+    COMMA           reduce using rule 8 (function_scope -> .)
 
-    parameters                     shift and go to state 61
-    parameter                      shift and go to state 59
-    empty                          shift and go to state 60
-    simple_type                    shift and go to state 57
+    function_scope                 shift and go to state 58
 
 state 39
 
@@ -674,7 +650,7 @@ state 40
     COMMA           reduce using rule 17 (variable -> ID .)
     SEMICOLON       reduce using rule 17 (variable -> ID .)
     LBRACK          shift and go to state 35
-    LPAREN          shift and go to state 62
+    LPAREN          shift and go to state 59
 
 
 state 41
@@ -682,7 +658,7 @@ state 41
     (18) variable -> ID LBRACK expression . RBRACK
     (19) variable -> ID LBRACK expression . RBRACK LBRACK expression RBRACK
 
-    RBRACK          shift and go to state 63
+    RBRACK          shift and go to state 60
 
 
 state 42
@@ -694,7 +670,7 @@ state 42
     RPAREN          reduce using rule 44 (expression -> t_expression .)
     COMMA           reduce using rule 44 (expression -> t_expression .)
     SEMICOLON       reduce using rule 44 (expression -> t_expression .)
-    ASSIGN          shift and go to state 64
+    ASSIGN          shift and go to state 61
 
 
 state 43
@@ -709,10 +685,10 @@ state 43
     RPAREN          reduce using rule 46 (t_expression -> g_expression .)
     COMMA           reduce using rule 46 (t_expression -> g_expression .)
     SEMICOLON       reduce using rule 46 (t_expression -> g_expression .)
-    AND             shift and go to state 66
-    OR              shift and go to state 67
+    AND             shift and go to state 63
+    OR              shift and go to state 64
 
-    boolean_operator               shift and go to state 65
+    boolean_operator               shift and go to state 62
 
 state 44
 
@@ -730,12 +706,12 @@ state 44
     RPAREN          reduce using rule 48 (g_expression -> m_expression .)
     COMMA           reduce using rule 48 (g_expression -> m_expression .)
     SEMICOLON       reduce using rule 48 (g_expression -> m_expression .)
-    LESS            shift and go to state 69
-    GREATER         shift and go to state 70
-    EQUALS          shift and go to state 71
-    NOTEQUAL        shift and go to state 72
+    LESS            shift and go to state 66
+    GREATER         shift and go to state 67
+    EQUALS          shift and go to state 68
+    NOTEQUAL        shift and go to state 69
 
-    comparison_operator            shift and go to state 68
+    comparison_operator            shift and go to state 65
 
 state 45
 
@@ -755,10 +731,10 @@ state 45
     RPAREN          reduce using rule 50 (m_expression -> term .)
     COMMA           reduce using rule 50 (m_expression -> term .)
     SEMICOLON       reduce using rule 50 (m_expression -> term .)
-    PLUS            shift and go to state 74
-    MINUS           shift and go to state 75
+    PLUS            shift and go to state 71
+    MINUS           shift and go to state 72
 
-    addition_operator              shift and go to state 73
+    addition_operator              shift and go to state 70
 
 state 46
 
@@ -780,10 +756,10 @@ state 46
     RPAREN          reduce using rule 52 (term -> factor .)
     COMMA           reduce using rule 52 (term -> factor .)
     SEMICOLON       reduce using rule 52 (term -> factor .)
-    TIMES           shift and go to state 77
-    DIVIDE          shift and go to state 78
+    TIMES           shift and go to state 74
+    DIVIDE          shift and go to state 75
 
-    multiplication_operator        shift and go to state 76
+    multiplication_operator        shift and go to state 73
 
 state 47
 
@@ -862,7 +838,7 @@ state 49
     CTES            shift and go to state 54
     CTEB            shift and go to state 55
 
-    expression                     shift and go to state 79
+    expression                     shift and go to state 76
     t_expression                   shift and go to state 42
     g_expression                   shift and go to state 43
     m_expression                   shift and go to state 44
@@ -1010,52 +986,65 @@ state 56
     VARIABLE        shift and go to state 9
     LBRACE          reduce using rule 78 (empty -> .)
 
-    var_declarations               shift and go to state 80
+    var_declarations               shift and go to state 77
     var_declaration                shift and go to state 7
     empty                          shift and go to state 8
 
 state 57
 
-    (23) parameter -> simple_type . ID
+    (6) function -> FUNCTION simple_type ID LPAREN function_scope . parameters RPAREN var_declarations LBRACE statements RBRACE
+    (20) parameters -> . parameters COMMA parameter
+    (21) parameters -> . parameter
+    (22) parameters -> . empty
+    (23) parameter -> . simple_type ID
+    (78) empty -> .
+    (68) simple_type -> . INT
+    (69) simple_type -> . FLOAT
+    (70) simple_type -> . CHAR
+    (71) simple_type -> . STRING
+    (72) simple_type -> . BOOLEAN
 
-    ID              shift and go to state 81
+    RPAREN          reduce using rule 78 (empty -> .)
+    COMMA           reduce using rule 78 (empty -> .)
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+    CHAR            shift and go to state 18
+    STRING          shift and go to state 19
+    BOOLEAN         shift and go to state 20
 
+    simple_type                    shift and go to state 78
+    parameters                     shift and go to state 79
+    parameter                      shift and go to state 80
+    empty                          shift and go to state 81
 
 state 58
 
-    (6) function -> FUNCTION simple_type ID LPAREN parameters . RPAREN function_scope var_declarations LBRACE statements statement RBRACE
-    (20) parameters -> parameters . COMMA parameter
+    (7) function -> FUNCTION VOID ID LPAREN function_scope . parameters RPAREN var_declarations LBRACE statements RBRACE
+    (20) parameters -> . parameters COMMA parameter
+    (21) parameters -> . parameter
+    (22) parameters -> . empty
+    (23) parameter -> . simple_type ID
+    (78) empty -> .
+    (68) simple_type -> . INT
+    (69) simple_type -> . FLOAT
+    (70) simple_type -> . CHAR
+    (71) simple_type -> . STRING
+    (72) simple_type -> . BOOLEAN
 
-    RPAREN          shift and go to state 82
-    COMMA           shift and go to state 83
+    RPAREN          reduce using rule 78 (empty -> .)
+    COMMA           reduce using rule 78 (empty -> .)
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+    CHAR            shift and go to state 18
+    STRING          shift and go to state 19
+    BOOLEAN         shift and go to state 20
 
+    parameters                     shift and go to state 82
+    parameter                      shift and go to state 80
+    empty                          shift and go to state 81
+    simple_type                    shift and go to state 78
 
 state 59
-
-    (21) parameters -> parameter .
-
-    RPAREN          reduce using rule 21 (parameters -> parameter .)
-    COMMA           reduce using rule 21 (parameters -> parameter .)
-
-
-state 60
-
-    (22) parameters -> empty .
-
-    RPAREN          reduce using rule 22 (parameters -> empty .)
-    COMMA           reduce using rule 22 (parameters -> empty .)
-
-
-state 61
-
-    (7) function -> FUNCTION VOID ID LPAREN parameters . RPAREN function_scope var_declarations LBRACE statements RBRACE
-    (20) parameters -> parameters . COMMA parameter
-
-    RPAREN          shift and go to state 84
-    COMMA           shift and go to state 83
-
-
-state 62
 
     (40) invocation -> ID LPAREN . expressions RPAREN SEMICOLON
     (41) expressions -> . expressions COMMA expression
@@ -1096,9 +1085,9 @@ state 62
     CTES            shift and go to state 54
     CTEB            shift and go to state 55
 
-    expressions                    shift and go to state 85
-    expression                     shift and go to state 86
-    empty                          shift and go to state 87
+    expressions                    shift and go to state 83
+    expression                     shift and go to state 84
+    empty                          shift and go to state 85
     t_expression                   shift and go to state 42
     g_expression                   shift and go to state 43
     m_expression                   shift and go to state 44
@@ -1108,7 +1097,7 @@ state 62
     cte                            shift and go to state 48
     invocation                     shift and go to state 50
 
-state 63
+state 60
 
     (18) variable -> ID LBRACK expression RBRACK .
     (19) variable -> ID LBRACK expression RBRACK . LBRACK expression RBRACK
@@ -1128,10 +1117,10 @@ state 63
     ASSIGN          reduce using rule 18 (variable -> ID LBRACK expression RBRACK .)
     RBRACK          reduce using rule 18 (variable -> ID LBRACK expression RBRACK .)
     RPAREN          reduce using rule 18 (variable -> ID LBRACK expression RBRACK .)
-    LBRACK          shift and go to state 88
+    LBRACK          shift and go to state 86
 
 
-state 64
+state 61
 
     (45) expression -> t_expression ASSIGN . t_expression
     (46) t_expression -> . g_expression
@@ -1164,7 +1153,7 @@ state 64
     CTES            shift and go to state 54
     CTEB            shift and go to state 55
 
-    t_expression                   shift and go to state 89
+    t_expression                   shift and go to state 87
     g_expression                   shift and go to state 43
     m_expression                   shift and go to state 44
     term                           shift and go to state 45
@@ -1173,7 +1162,7 @@ state 64
     cte                            shift and go to state 48
     invocation                     shift and go to state 50
 
-state 65
+state 62
 
     (47) t_expression -> g_expression boolean_operator . g_expression
     (48) g_expression -> . m_expression
@@ -1204,7 +1193,7 @@ state 65
     CTES            shift and go to state 54
     CTEB            shift and go to state 55
 
-    g_expression                   shift and go to state 90
+    g_expression                   shift and go to state 88
     m_expression                   shift and go to state 44
     term                           shift and go to state 45
     factor                         shift and go to state 46
@@ -1212,7 +1201,7 @@ state 65
     cte                            shift and go to state 48
     invocation                     shift and go to state 50
 
-state 66
+state 63
 
     (64) boolean_operator -> AND .
 
@@ -1225,7 +1214,7 @@ state 66
     CTEB            reduce using rule 64 (boolean_operator -> AND .)
 
 
-state 67
+state 64
 
     (65) boolean_operator -> OR .
 
@@ -1238,7 +1227,7 @@ state 67
     CTEB            reduce using rule 65 (boolean_operator -> OR .)
 
 
-state 68
+state 65
 
     (49) g_expression -> m_expression comparison_operator . m_expression
     (50) m_expression -> . term
@@ -1267,14 +1256,14 @@ state 68
     CTES            shift and go to state 54
     CTEB            shift and go to state 55
 
-    m_expression                   shift and go to state 91
+    m_expression                   shift and go to state 89
     term                           shift and go to state 45
     factor                         shift and go to state 46
     variable                       shift and go to state 47
     cte                            shift and go to state 48
     invocation                     shift and go to state 50
 
-state 69
+state 66
 
     (58) comparison_operator -> LESS .
 
@@ -1287,7 +1276,7 @@ state 69
     CTEB            reduce using rule 58 (comparison_operator -> LESS .)
 
 
-state 70
+state 67
 
     (59) comparison_operator -> GREATER .
 
@@ -1300,7 +1289,7 @@ state 70
     CTEB            reduce using rule 59 (comparison_operator -> GREATER .)
 
 
-state 71
+state 68
 
     (60) comparison_operator -> EQUALS .
 
@@ -1313,7 +1302,7 @@ state 71
     CTEB            reduce using rule 60 (comparison_operator -> EQUALS .)
 
 
-state 72
+state 69
 
     (61) comparison_operator -> NOTEQUAL .
 
@@ -1326,7 +1315,7 @@ state 72
     CTEB            reduce using rule 61 (comparison_operator -> NOTEQUAL .)
 
 
-state 73
+state 70
 
     (51) m_expression -> term addition_operator . term
     (52) term -> . factor
@@ -1353,13 +1342,13 @@ state 73
     CTES            shift and go to state 54
     CTEB            shift and go to state 55
 
-    term                           shift and go to state 92
+    term                           shift and go to state 90
     factor                         shift and go to state 46
     variable                       shift and go to state 47
     cte                            shift and go to state 48
     invocation                     shift and go to state 50
 
-state 74
+state 71
 
     (62) addition_operator -> PLUS .
 
@@ -1372,7 +1361,7 @@ state 74
     CTEB            reduce using rule 62 (addition_operator -> PLUS .)
 
 
-state 75
+state 72
 
     (63) addition_operator -> MINUS .
 
@@ -1385,7 +1374,7 @@ state 75
     CTEB            reduce using rule 63 (addition_operator -> MINUS .)
 
 
-state 76
+state 73
 
     (53) term -> factor multiplication_operator . factor
     (54) factor -> . variable
@@ -1410,12 +1399,12 @@ state 76
     CTES            shift and go to state 54
     CTEB            shift and go to state 55
 
-    factor                         shift and go to state 93
+    factor                         shift and go to state 91
     variable                       shift and go to state 47
     cte                            shift and go to state 48
     invocation                     shift and go to state 50
 
-state 77
+state 74
 
     (66) multiplication_operator -> TIMES .
 
@@ -1428,7 +1417,7 @@ state 77
     CTEB            reduce using rule 66 (multiplication_operator -> TIMES .)
 
 
-state 78
+state 75
 
     (67) multiplication_operator -> DIVIDE .
 
@@ -1441,77 +1430,71 @@ state 78
     CTEB            reduce using rule 67 (multiplication_operator -> DIVIDE .)
 
 
-state 79
+state 76
 
     (56) factor -> LPAREN expression . RPAREN
 
-    RPAREN          shift and go to state 94
+    RPAREN          shift and go to state 92
+
+
+state 77
+
+    (9) main -> MAIN LPAREN RPAREN main_scope var_declarations . LBRACE statements RBRACE
+
+    LBRACE          shift and go to state 93
+
+
+state 78
+
+    (23) parameter -> simple_type . ID
+
+    ID              shift and go to state 94
+
+
+state 79
+
+    (6) function -> FUNCTION simple_type ID LPAREN function_scope parameters . RPAREN var_declarations LBRACE statements RBRACE
+    (20) parameters -> parameters . COMMA parameter
+
+    RPAREN          shift and go to state 95
+    COMMA           shift and go to state 96
 
 
 state 80
 
-    (9) main -> MAIN LPAREN RPAREN main_scope var_declarations . LBRACE statements RBRACE
+    (21) parameters -> parameter .
 
-    LBRACE          shift and go to state 95
+    RPAREN          reduce using rule 21 (parameters -> parameter .)
+    COMMA           reduce using rule 21 (parameters -> parameter .)
 
 
 state 81
 
-    (23) parameter -> simple_type ID .
+    (22) parameters -> empty .
 
-    RPAREN          reduce using rule 23 (parameter -> simple_type ID .)
-    COMMA           reduce using rule 23 (parameter -> simple_type ID .)
+    RPAREN          reduce using rule 22 (parameters -> empty .)
+    COMMA           reduce using rule 22 (parameters -> empty .)
 
 
 state 82
 
-    (6) function -> FUNCTION simple_type ID LPAREN parameters RPAREN . function_scope var_declarations LBRACE statements statement RBRACE
-    (8) function_scope -> .
+    (7) function -> FUNCTION VOID ID LPAREN function_scope parameters . RPAREN var_declarations LBRACE statements RBRACE
+    (20) parameters -> parameters . COMMA parameter
 
-    VARIABLE        reduce using rule 8 (function_scope -> .)
-    LBRACE          reduce using rule 8 (function_scope -> .)
+    RPAREN          shift and go to state 97
+    COMMA           shift and go to state 96
 
-    function_scope                 shift and go to state 96
 
 state 83
-
-    (20) parameters -> parameters COMMA . parameter
-    (23) parameter -> . simple_type ID
-    (68) simple_type -> . INT
-    (69) simple_type -> . FLOAT
-    (70) simple_type -> . CHAR
-    (71) simple_type -> . STRING
-    (72) simple_type -> . BOOLEAN
-
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    CHAR            shift and go to state 18
-    STRING          shift and go to state 19
-    BOOLEAN         shift and go to state 20
-
-    parameter                      shift and go to state 97
-    simple_type                    shift and go to state 57
-
-state 84
-
-    (7) function -> FUNCTION VOID ID LPAREN parameters RPAREN . function_scope var_declarations LBRACE statements RBRACE
-    (8) function_scope -> .
-
-    VARIABLE        reduce using rule 8 (function_scope -> .)
-    LBRACE          reduce using rule 8 (function_scope -> .)
-
-    function_scope                 shift and go to state 98
-
-state 85
 
     (40) invocation -> ID LPAREN expressions . RPAREN SEMICOLON
     (41) expressions -> expressions . COMMA expression
 
-    RPAREN          shift and go to state 99
-    COMMA           shift and go to state 100
+    RPAREN          shift and go to state 98
+    COMMA           shift and go to state 99
 
 
-state 86
+state 84
 
     (42) expressions -> expression .
 
@@ -1519,7 +1502,7 @@ state 86
     COMMA           reduce using rule 42 (expressions -> expression .)
 
 
-state 87
+state 85
 
     (43) expressions -> empty .
 
@@ -1527,7 +1510,7 @@ state 87
     COMMA           reduce using rule 43 (expressions -> empty .)
 
 
-state 88
+state 86
 
     (19) variable -> ID LBRACK expression RBRACK LBRACK . expression RBRACK
     (44) expression -> . t_expression
@@ -1562,7 +1545,7 @@ state 88
     CTES            shift and go to state 54
     CTEB            shift and go to state 55
 
-    expression                     shift and go to state 101
+    expression                     shift and go to state 100
     t_expression                   shift and go to state 42
     g_expression                   shift and go to state 43
     m_expression                   shift and go to state 44
@@ -1572,7 +1555,7 @@ state 88
     cte                            shift and go to state 48
     invocation                     shift and go to state 50
 
-state 89
+state 87
 
     (45) expression -> t_expression ASSIGN t_expression .
 
@@ -1582,7 +1565,7 @@ state 89
     SEMICOLON       reduce using rule 45 (expression -> t_expression ASSIGN t_expression .)
 
 
-state 90
+state 88
 
     (47) t_expression -> g_expression boolean_operator g_expression .
 
@@ -1593,7 +1576,7 @@ state 90
     SEMICOLON       reduce using rule 47 (t_expression -> g_expression boolean_operator g_expression .)
 
 
-state 91
+state 89
 
     (49) g_expression -> m_expression comparison_operator m_expression .
 
@@ -1606,7 +1589,7 @@ state 91
     SEMICOLON       reduce using rule 49 (g_expression -> m_expression comparison_operator m_expression .)
 
 
-state 92
+state 90
 
     (51) m_expression -> term addition_operator term .
 
@@ -1623,7 +1606,7 @@ state 92
     SEMICOLON       reduce using rule 51 (m_expression -> term addition_operator term .)
 
 
-state 93
+state 91
 
     (53) term -> factor multiplication_operator factor .
 
@@ -1642,7 +1625,7 @@ state 93
     SEMICOLON       reduce using rule 53 (term -> factor multiplication_operator factor .)
 
 
-state 94
+state 92
 
     (56) factor -> LPAREN expression RPAREN .
 
@@ -1663,7 +1646,7 @@ state 94
     SEMICOLON       reduce using rule 56 (factor -> LPAREN expression RPAREN .)
 
 
-state 95
+state 93
 
     (9) main -> MAIN LPAREN RPAREN main_scope var_declarations LBRACE . statements RBRACE
     (24) statements -> . statements statement
@@ -1694,11 +1677,11 @@ state 95
   ! shift/reduce conflict for RETURN resolved as shift
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 78 (empty -> .)
-    ID              shift and go to state 112
-    IF              shift and go to state 113
-    READ            shift and go to state 114
-    RETURN          shift and go to state 115
-    PRINT           shift and go to state 116
+    ID              shift and go to state 111
+    IF              shift and go to state 112
+    READ            shift and go to state 113
+    RETURN          shift and go to state 114
+    PRINT           shift and go to state 115
 
   ! ID              [ reduce using rule 78 (empty -> .) ]
   ! IF              [ reduce using rule 78 (empty -> .) ]
@@ -1706,20 +1689,28 @@ state 95
   ! RETURN          [ reduce using rule 78 (empty -> .) ]
   ! PRINT           [ reduce using rule 78 (empty -> .) ]
 
-    statements                     shift and go to state 102
-    statement                      shift and go to state 103
-    empty                          shift and go to state 104
-    assingation                    shift and go to state 105
-    invocation                     shift and go to state 106
-    if                             shift and go to state 107
-    read                           shift and go to state 108
-    return                         shift and go to state 109
-    print                          shift and go to state 110
-    variable                       shift and go to state 111
+    statements                     shift and go to state 101
+    statement                      shift and go to state 102
+    empty                          shift and go to state 103
+    assingation                    shift and go to state 104
+    invocation                     shift and go to state 105
+    if                             shift and go to state 106
+    read                           shift and go to state 107
+    return                         shift and go to state 108
+    print                          shift and go to state 109
+    variable                       shift and go to state 110
 
-state 96
+state 94
 
-    (6) function -> FUNCTION simple_type ID LPAREN parameters RPAREN function_scope . var_declarations LBRACE statements statement RBRACE
+    (23) parameter -> simple_type ID .
+
+    RPAREN          reduce using rule 23 (parameter -> simple_type ID .)
+    COMMA           reduce using rule 23 (parameter -> simple_type ID .)
+
+
+state 95
+
+    (6) function -> FUNCTION simple_type ID LPAREN function_scope parameters RPAREN . var_declarations LBRACE statements RBRACE
     (11) var_declarations -> . var_declaration var_declarations
     (12) var_declarations -> . var_declaration
     (13) var_declarations -> . empty
@@ -1729,21 +1720,32 @@ state 96
     VARIABLE        shift and go to state 9
     LBRACE          reduce using rule 78 (empty -> .)
 
-    var_declarations               shift and go to state 117
+    var_declarations               shift and go to state 116
     var_declaration                shift and go to state 7
     empty                          shift and go to state 8
 
+state 96
+
+    (20) parameters -> parameters COMMA . parameter
+    (23) parameter -> . simple_type ID
+    (68) simple_type -> . INT
+    (69) simple_type -> . FLOAT
+    (70) simple_type -> . CHAR
+    (71) simple_type -> . STRING
+    (72) simple_type -> . BOOLEAN
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+    CHAR            shift and go to state 18
+    STRING          shift and go to state 19
+    BOOLEAN         shift and go to state 20
+
+    parameter                      shift and go to state 117
+    simple_type                    shift and go to state 78
+
 state 97
 
-    (20) parameters -> parameters COMMA parameter .
-
-    RPAREN          reduce using rule 20 (parameters -> parameters COMMA parameter .)
-    COMMA           reduce using rule 20 (parameters -> parameters COMMA parameter .)
-
-
-state 98
-
-    (7) function -> FUNCTION VOID ID LPAREN parameters RPAREN function_scope . var_declarations LBRACE statements RBRACE
+    (7) function -> FUNCTION VOID ID LPAREN function_scope parameters RPAREN . var_declarations LBRACE statements RBRACE
     (11) var_declarations -> . var_declaration var_declarations
     (12) var_declarations -> . var_declaration
     (13) var_declarations -> . empty
@@ -1757,14 +1759,14 @@ state 98
     var_declaration                shift and go to state 7
     empty                          shift and go to state 8
 
-state 99
+state 98
 
     (40) invocation -> ID LPAREN expressions RPAREN . SEMICOLON
 
     SEMICOLON       shift and go to state 119
 
 
-state 100
+state 99
 
     (41) expressions -> expressions COMMA . expression
     (44) expression -> . t_expression
@@ -1809,14 +1811,14 @@ state 100
     cte                            shift and go to state 48
     invocation                     shift and go to state 50
 
-state 101
+state 100
 
     (19) variable -> ID LBRACK expression RBRACK LBRACK expression . RBRACK
 
     RBRACK          shift and go to state 121
 
 
-state 102
+state 101
 
     (9) main -> MAIN LPAREN RPAREN main_scope var_declarations LBRACE statements . RBRACE
     (24) statements -> statements . statement
@@ -1839,22 +1841,22 @@ state 102
     (19) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
     RBRACE          shift and go to state 122
-    ID              shift and go to state 112
-    IF              shift and go to state 113
-    READ            shift and go to state 114
-    RETURN          shift and go to state 115
-    PRINT           shift and go to state 116
+    ID              shift and go to state 111
+    IF              shift and go to state 112
+    READ            shift and go to state 113
+    RETURN          shift and go to state 114
+    PRINT           shift and go to state 115
 
     statement                      shift and go to state 123
-    assingation                    shift and go to state 105
-    invocation                     shift and go to state 106
-    if                             shift and go to state 107
-    read                           shift and go to state 108
-    return                         shift and go to state 109
-    print                          shift and go to state 110
-    variable                       shift and go to state 111
+    assingation                    shift and go to state 104
+    invocation                     shift and go to state 105
+    if                             shift and go to state 106
+    read                           shift and go to state 107
+    return                         shift and go to state 108
+    print                          shift and go to state 109
+    variable                       shift and go to state 110
 
-state 103
+state 102
 
     (25) statements -> statement .
 
@@ -1866,7 +1868,7 @@ state 103
     PRINT           reduce using rule 25 (statements -> statement .)
 
 
-state 104
+state 103
 
     (26) statements -> empty .
 
@@ -1878,7 +1880,7 @@ state 104
     PRINT           reduce using rule 26 (statements -> empty .)
 
 
-state 105
+state 104
 
     (27) statement -> assingation .
 
@@ -1890,7 +1892,7 @@ state 105
     PRINT           reduce using rule 27 (statement -> assingation .)
 
 
-state 106
+state 105
 
     (28) statement -> invocation .
 
@@ -1902,7 +1904,7 @@ state 106
     PRINT           reduce using rule 28 (statement -> invocation .)
 
 
-state 107
+state 106
 
     (29) statement -> if .
 
@@ -1914,7 +1916,7 @@ state 107
     PRINT           reduce using rule 29 (statement -> if .)
 
 
-state 108
+state 107
 
     (30) statement -> read .
 
@@ -1926,7 +1928,7 @@ state 108
     PRINT           reduce using rule 30 (statement -> read .)
 
 
-state 109
+state 108
 
     (31) statement -> return .
 
@@ -1938,7 +1940,7 @@ state 109
     PRINT           reduce using rule 31 (statement -> return .)
 
 
-state 110
+state 109
 
     (32) statement -> print .
 
@@ -1950,26 +1952,26 @@ state 110
     PRINT           reduce using rule 32 (statement -> print .)
 
 
-state 111
+state 110
 
     (39) assingation -> variable . ASSIGN expression SEMICOLON
 
     ASSIGN          shift and go to state 124
 
 
-state 112
+state 111
 
     (40) invocation -> ID . LPAREN expressions RPAREN SEMICOLON
     (17) variable -> ID .
     (18) variable -> ID . LBRACK expression RBRACK
     (19) variable -> ID . LBRACK expression RBRACK LBRACK expression RBRACK
 
-    LPAREN          shift and go to state 62
+    LPAREN          shift and go to state 59
     ASSIGN          reduce using rule 17 (variable -> ID .)
     LBRACK          shift and go to state 35
 
 
-state 113
+state 112
 
     (35) if -> IF . LPAREN expression RPAREN LBRACE statements RBRACE
     (36) if -> IF . LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
@@ -1977,14 +1979,14 @@ state 113
     LPAREN          shift and go to state 125
 
 
-state 114
+state 113
 
     (38) read -> READ . LPAREN variable RPAREN SEMICOLON
 
     LPAREN          shift and go to state 126
 
 
-state 115
+state 114
 
     (37) return -> RETURN . expression SEMICOLON
     (44) expression -> . t_expression
@@ -2029,7 +2031,7 @@ state 115
     cte                            shift and go to state 48
     invocation                     shift and go to state 50
 
-state 116
+state 115
 
     (33) print -> PRINT . LPAREN expression RPAREN SEMICOLON
     (34) print -> PRINT . LPAREN CTES RPAREN SEMICOLON
@@ -2037,16 +2039,24 @@ state 116
     LPAREN          shift and go to state 128
 
 
-state 117
+state 116
 
-    (6) function -> FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations . LBRACE statements statement RBRACE
+    (6) function -> FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations . LBRACE statements RBRACE
 
     LBRACE          shift and go to state 129
 
 
+state 117
+
+    (20) parameters -> parameters COMMA parameter .
+
+    RPAREN          reduce using rule 20 (parameters -> parameters COMMA parameter .)
+    COMMA           reduce using rule 20 (parameters -> parameters COMMA parameter .)
+
+
 state 118
 
-    (7) function -> FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations . LBRACE statements RBRACE
+    (7) function -> FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations . LBRACE statements RBRACE
 
     LBRACE          shift and go to state 130
 
@@ -2283,60 +2293,7 @@ state 128
 
 state 129
 
-    (6) function -> FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE . statements statement RBRACE
-    (24) statements -> . statements statement
-    (25) statements -> . statement
-    (26) statements -> . empty
-    (27) statement -> . assingation
-    (28) statement -> . invocation
-    (29) statement -> . if
-    (30) statement -> . read
-    (31) statement -> . return
-    (32) statement -> . print
-    (78) empty -> .
-    (39) assingation -> . variable ASSIGN expression SEMICOLON
-    (40) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
-    (35) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
-    (36) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
-    (38) read -> . READ LPAREN variable RPAREN SEMICOLON
-    (37) return -> . RETURN expression SEMICOLON
-    (33) print -> . PRINT LPAREN expression RPAREN SEMICOLON
-    (34) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
-    (17) variable -> . ID
-    (18) variable -> . ID LBRACK expression RBRACK
-    (19) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for READ resolved as shift
-  ! shift/reduce conflict for RETURN resolved as shift
-  ! shift/reduce conflict for PRINT resolved as shift
-    ID              shift and go to state 112
-    IF              shift and go to state 113
-    READ            shift and go to state 114
-    RETURN          shift and go to state 115
-    PRINT           shift and go to state 116
-
-  ! ID              [ reduce using rule 78 (empty -> .) ]
-  ! IF              [ reduce using rule 78 (empty -> .) ]
-  ! READ            [ reduce using rule 78 (empty -> .) ]
-  ! RETURN          [ reduce using rule 78 (empty -> .) ]
-  ! PRINT           [ reduce using rule 78 (empty -> .) ]
-
-    statements                     shift and go to state 137
-    statement                      shift and go to state 103
-    empty                          shift and go to state 104
-    assingation                    shift and go to state 105
-    invocation                     shift and go to state 106
-    if                             shift and go to state 107
-    read                           shift and go to state 108
-    return                         shift and go to state 109
-    print                          shift and go to state 110
-    variable                       shift and go to state 111
-
-state 130
-
-    (7) function -> FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE . statements RBRACE
+    (6) function -> FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE . statements RBRACE
     (24) statements -> . statements statement
     (25) statements -> . statement
     (26) statements -> . empty
@@ -2365,11 +2322,65 @@ state 130
   ! shift/reduce conflict for RETURN resolved as shift
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 78 (empty -> .)
-    ID              shift and go to state 112
-    IF              shift and go to state 113
-    READ            shift and go to state 114
-    RETURN          shift and go to state 115
-    PRINT           shift and go to state 116
+    ID              shift and go to state 111
+    IF              shift and go to state 112
+    READ            shift and go to state 113
+    RETURN          shift and go to state 114
+    PRINT           shift and go to state 115
+
+  ! ID              [ reduce using rule 78 (empty -> .) ]
+  ! IF              [ reduce using rule 78 (empty -> .) ]
+  ! READ            [ reduce using rule 78 (empty -> .) ]
+  ! RETURN          [ reduce using rule 78 (empty -> .) ]
+  ! PRINT           [ reduce using rule 78 (empty -> .) ]
+
+    statements                     shift and go to state 137
+    statement                      shift and go to state 102
+    empty                          shift and go to state 103
+    assingation                    shift and go to state 104
+    invocation                     shift and go to state 105
+    if                             shift and go to state 106
+    read                           shift and go to state 107
+    return                         shift and go to state 108
+    print                          shift and go to state 109
+    variable                       shift and go to state 110
+
+state 130
+
+    (7) function -> FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE . statements RBRACE
+    (24) statements -> . statements statement
+    (25) statements -> . statement
+    (26) statements -> . empty
+    (27) statement -> . assingation
+    (28) statement -> . invocation
+    (29) statement -> . if
+    (30) statement -> . read
+    (31) statement -> . return
+    (32) statement -> . print
+    (78) empty -> .
+    (39) assingation -> . variable ASSIGN expression SEMICOLON
+    (40) invocation -> . ID LPAREN expressions RPAREN SEMICOLON
+    (35) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (36) if -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (38) read -> . READ LPAREN variable RPAREN SEMICOLON
+    (37) return -> . RETURN expression SEMICOLON
+    (33) print -> . PRINT LPAREN expression RPAREN SEMICOLON
+    (34) print -> . PRINT LPAREN CTES RPAREN SEMICOLON
+    (17) variable -> . ID
+    (18) variable -> . ID LBRACK expression RBRACK
+    (19) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+    RBRACE          reduce using rule 78 (empty -> .)
+    ID              shift and go to state 111
+    IF              shift and go to state 112
+    READ            shift and go to state 113
+    RETURN          shift and go to state 114
+    PRINT           shift and go to state 115
 
   ! ID              [ reduce using rule 78 (empty -> .) ]
   ! IF              [ reduce using rule 78 (empty -> .) ]
@@ -2378,15 +2389,15 @@ state 130
   ! PRINT           [ reduce using rule 78 (empty -> .) ]
 
     statements                     shift and go to state 138
-    statement                      shift and go to state 103
-    empty                          shift and go to state 104
-    assingation                    shift and go to state 105
-    invocation                     shift and go to state 106
-    if                             shift and go to state 107
-    read                           shift and go to state 108
-    return                         shift and go to state 109
-    print                          shift and go to state 110
-    variable                       shift and go to state 111
+    statement                      shift and go to state 102
+    empty                          shift and go to state 103
+    assingation                    shift and go to state 104
+    invocation                     shift and go to state 105
+    if                             shift and go to state 106
+    read                           shift and go to state 107
+    return                         shift and go to state 108
+    print                          shift and go to state 109
+    variable                       shift and go to state 110
 
 state 131
 
@@ -2453,7 +2464,7 @@ state 136
 
 state 137
 
-    (6) function -> FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements . statement RBRACE
+    (6) function -> FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements . RBRACE
     (24) statements -> statements . statement
     (27) statement -> . assingation
     (28) statement -> . invocation
@@ -2473,24 +2484,25 @@ state 137
     (18) variable -> . ID LBRACK expression RBRACK
     (19) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
-    ID              shift and go to state 112
-    IF              shift and go to state 113
-    READ            shift and go to state 114
-    RETURN          shift and go to state 115
-    PRINT           shift and go to state 116
+    RBRACE          shift and go to state 144
+    ID              shift and go to state 111
+    IF              shift and go to state 112
+    READ            shift and go to state 113
+    RETURN          shift and go to state 114
+    PRINT           shift and go to state 115
 
-    statement                      shift and go to state 144
-    assingation                    shift and go to state 105
-    invocation                     shift and go to state 106
-    if                             shift and go to state 107
-    read                           shift and go to state 108
-    return                         shift and go to state 109
-    print                          shift and go to state 110
-    variable                       shift and go to state 111
+    statement                      shift and go to state 123
+    assingation                    shift and go to state 104
+    invocation                     shift and go to state 105
+    if                             shift and go to state 106
+    read                           shift and go to state 107
+    return                         shift and go to state 108
+    print                          shift and go to state 109
+    variable                       shift and go to state 110
 
 state 138
 
-    (7) function -> FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements . RBRACE
+    (7) function -> FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements . RBRACE
     (24) statements -> statements . statement
     (27) statement -> . assingation
     (28) statement -> . invocation
@@ -2511,20 +2523,20 @@ state 138
     (19) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
     RBRACE          shift and go to state 145
-    ID              shift and go to state 112
-    IF              shift and go to state 113
-    READ            shift and go to state 114
-    RETURN          shift and go to state 115
-    PRINT           shift and go to state 116
+    ID              shift and go to state 111
+    IF              shift and go to state 112
+    READ            shift and go to state 113
+    RETURN          shift and go to state 114
+    PRINT           shift and go to state 115
 
     statement                      shift and go to state 123
-    assingation                    shift and go to state 105
-    invocation                     shift and go to state 106
-    if                             shift and go to state 107
-    read                           shift and go to state 108
-    return                         shift and go to state 109
-    print                          shift and go to state 110
-    variable                       shift and go to state 111
+    assingation                    shift and go to state 104
+    invocation                     shift and go to state 105
+    if                             shift and go to state 106
+    read                           shift and go to state 107
+    return                         shift and go to state 108
+    print                          shift and go to state 109
+    variable                       shift and go to state 110
 
 state 139
 
@@ -2569,23 +2581,18 @@ state 143
 
 state 144
 
-    (6) function -> FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement . RBRACE
-    (24) statements -> statements statement .
+    (6) function -> FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE .
 
-    RBRACE          shift and go to state 150
-    ID              reduce using rule 24 (statements -> statements statement .)
-    IF              reduce using rule 24 (statements -> statements statement .)
-    READ            reduce using rule 24 (statements -> statements statement .)
-    RETURN          reduce using rule 24 (statements -> statements statement .)
-    PRINT           reduce using rule 24 (statements -> statements statement .)
+    MAIN            reduce using rule 6 (function -> FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE .)
+    FUNCTION        reduce using rule 6 (function -> FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE .)
 
 
 state 145
 
-    (7) function -> FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE .
+    (7) function -> FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE .
 
-    MAIN            reduce using rule 7 (function -> FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE .)
-    FUNCTION        reduce using rule 7 (function -> FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE .)
+    MAIN            reduce using rule 7 (function -> FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE .)
+    FUNCTION        reduce using rule 7 (function -> FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE .)
 
 
 state 146
@@ -2620,11 +2627,11 @@ state 146
   ! shift/reduce conflict for RETURN resolved as shift
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 78 (empty -> .)
-    ID              shift and go to state 112
-    IF              shift and go to state 113
-    READ            shift and go to state 114
-    RETURN          shift and go to state 115
-    PRINT           shift and go to state 116
+    ID              shift and go to state 111
+    IF              shift and go to state 112
+    READ            shift and go to state 113
+    RETURN          shift and go to state 114
+    PRINT           shift and go to state 115
 
   ! ID              [ reduce using rule 78 (empty -> .) ]
   ! IF              [ reduce using rule 78 (empty -> .) ]
@@ -2632,16 +2639,16 @@ state 146
   ! RETURN          [ reduce using rule 78 (empty -> .) ]
   ! PRINT           [ reduce using rule 78 (empty -> .) ]
 
-    statements                     shift and go to state 151
-    statement                      shift and go to state 103
-    empty                          shift and go to state 104
-    assingation                    shift and go to state 105
-    invocation                     shift and go to state 106
-    if                             shift and go to state 107
-    read                           shift and go to state 108
-    return                         shift and go to state 109
-    print                          shift and go to state 110
-    variable                       shift and go to state 111
+    statements                     shift and go to state 150
+    statement                      shift and go to state 102
+    empty                          shift and go to state 103
+    assingation                    shift and go to state 104
+    invocation                     shift and go to state 105
+    if                             shift and go to state 106
+    read                           shift and go to state 107
+    return                         shift and go to state 108
+    print                          shift and go to state 109
+    variable                       shift and go to state 110
 
 state 147
 
@@ -2681,14 +2688,6 @@ state 149
 
 state 150
 
-    (6) function -> FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE .
-
-    MAIN            reduce using rule 6 (function -> FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE .)
-    FUNCTION        reduce using rule 6 (function -> FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE .)
-
-
-state 151
-
     (35) if -> IF LPAREN expression RPAREN LBRACE statements . RBRACE
     (36) if -> IF LPAREN expression RPAREN LBRACE statements . RBRACE ELSE LBRACE statements RBRACE
     (24) statements -> statements . statement
@@ -2710,23 +2709,23 @@ state 151
     (18) variable -> . ID LBRACK expression RBRACK
     (19) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
-    RBRACE          shift and go to state 152
-    ID              shift and go to state 112
-    IF              shift and go to state 113
-    READ            shift and go to state 114
-    RETURN          shift and go to state 115
-    PRINT           shift and go to state 116
+    RBRACE          shift and go to state 151
+    ID              shift and go to state 111
+    IF              shift and go to state 112
+    READ            shift and go to state 113
+    RETURN          shift and go to state 114
+    PRINT           shift and go to state 115
 
     statement                      shift and go to state 123
-    assingation                    shift and go to state 105
-    invocation                     shift and go to state 106
-    if                             shift and go to state 107
-    read                           shift and go to state 108
-    return                         shift and go to state 109
-    print                          shift and go to state 110
-    variable                       shift and go to state 111
+    assingation                    shift and go to state 104
+    invocation                     shift and go to state 105
+    if                             shift and go to state 106
+    read                           shift and go to state 107
+    return                         shift and go to state 108
+    print                          shift and go to state 109
+    variable                       shift and go to state 110
 
-state 152
+state 151
 
     (35) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .
     (36) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE . ELSE LBRACE statements RBRACE
@@ -2737,17 +2736,17 @@ state 152
     READ            reduce using rule 35 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
     RETURN          reduce using rule 35 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
     PRINT           reduce using rule 35 (if -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
-    ELSE            shift and go to state 153
+    ELSE            shift and go to state 152
 
 
-state 153
+state 152
 
     (36) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE . LBRACE statements RBRACE
 
-    LBRACE          shift and go to state 154
+    LBRACE          shift and go to state 153
 
 
-state 154
+state 153
 
     (36) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE . statements RBRACE
     (24) statements -> . statements statement
@@ -2778,11 +2777,11 @@ state 154
   ! shift/reduce conflict for RETURN resolved as shift
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 78 (empty -> .)
-    ID              shift and go to state 112
-    IF              shift and go to state 113
-    READ            shift and go to state 114
-    RETURN          shift and go to state 115
-    PRINT           shift and go to state 116
+    ID              shift and go to state 111
+    IF              shift and go to state 112
+    READ            shift and go to state 113
+    RETURN          shift and go to state 114
+    PRINT           shift and go to state 115
 
   ! ID              [ reduce using rule 78 (empty -> .) ]
   ! IF              [ reduce using rule 78 (empty -> .) ]
@@ -2790,18 +2789,18 @@ state 154
   ! RETURN          [ reduce using rule 78 (empty -> .) ]
   ! PRINT           [ reduce using rule 78 (empty -> .) ]
 
-    statements                     shift and go to state 155
-    statement                      shift and go to state 103
-    empty                          shift and go to state 104
-    assingation                    shift and go to state 105
-    invocation                     shift and go to state 106
-    if                             shift and go to state 107
-    read                           shift and go to state 108
-    return                         shift and go to state 109
-    print                          shift and go to state 110
-    variable                       shift and go to state 111
+    statements                     shift and go to state 154
+    statement                      shift and go to state 102
+    empty                          shift and go to state 103
+    assingation                    shift and go to state 104
+    invocation                     shift and go to state 105
+    if                             shift and go to state 106
+    read                           shift and go to state 107
+    return                         shift and go to state 108
+    print                          shift and go to state 109
+    variable                       shift and go to state 110
 
-state 155
+state 154
 
     (36) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements . RBRACE
     (24) statements -> statements . statement
@@ -2823,23 +2822,23 @@ state 155
     (18) variable -> . ID LBRACK expression RBRACK
     (19) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
 
-    RBRACE          shift and go to state 156
-    ID              shift and go to state 112
-    IF              shift and go to state 113
-    READ            shift and go to state 114
-    RETURN          shift and go to state 115
-    PRINT           shift and go to state 116
+    RBRACE          shift and go to state 155
+    ID              shift and go to state 111
+    IF              shift and go to state 112
+    READ            shift and go to state 113
+    RETURN          shift and go to state 114
+    PRINT           shift and go to state 115
 
     statement                      shift and go to state 123
-    assingation                    shift and go to state 105
-    invocation                     shift and go to state 106
-    if                             shift and go to state 107
-    read                           shift and go to state 108
-    return                         shift and go to state 109
-    print                          shift and go to state 110
-    variable                       shift and go to state 111
+    assingation                    shift and go to state 104
+    invocation                     shift and go to state 105
+    if                             shift and go to state 106
+    read                           shift and go to state 107
+    return                         shift and go to state 108
+    print                          shift and go to state 109
+    variable                       shift and go to state 110
 
-state 156
+state 155
 
     (36) if -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .
 
@@ -2854,11 +2853,11 @@ WARNING:
 WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for FUNCTION in state 6 resolved as shift
-WARNING: shift/reduce conflict for ID in state 95 resolved as shift
-WARNING: shift/reduce conflict for IF in state 95 resolved as shift
-WARNING: shift/reduce conflict for READ in state 95 resolved as shift
-WARNING: shift/reduce conflict for RETURN in state 95 resolved as shift
-WARNING: shift/reduce conflict for PRINT in state 95 resolved as shift
+WARNING: shift/reduce conflict for ID in state 93 resolved as shift
+WARNING: shift/reduce conflict for IF in state 93 resolved as shift
+WARNING: shift/reduce conflict for READ in state 93 resolved as shift
+WARNING: shift/reduce conflict for RETURN in state 93 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 93 resolved as shift
 WARNING: shift/reduce conflict for ID in state 129 resolved as shift
 WARNING: shift/reduce conflict for IF in state 129 resolved as shift
 WARNING: shift/reduce conflict for READ in state 129 resolved as shift
@@ -2875,10 +2874,10 @@ WARNING: shift/reduce conflict for IF in state 146 resolved as shift
 WARNING: shift/reduce conflict for READ in state 146 resolved as shift
 WARNING: shift/reduce conflict for RETURN in state 146 resolved as shift
 WARNING: shift/reduce conflict for PRINT in state 146 resolved as shift
-WARNING: shift/reduce conflict for ID in state 154 resolved as shift
-WARNING: shift/reduce conflict for IF in state 154 resolved as shift
-WARNING: shift/reduce conflict for READ in state 154 resolved as shift
-WARNING: shift/reduce conflict for RETURN in state 154 resolved as shift
-WARNING: shift/reduce conflict for PRINT in state 154 resolved as shift
+WARNING: shift/reduce conflict for ID in state 153 resolved as shift
+WARNING: shift/reduce conflict for IF in state 153 resolved as shift
+WARNING: shift/reduce conflict for READ in state 153 resolved as shift
+WARNING: shift/reduce conflict for RETURN in state 153 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 153 resolved as shift
 WARNING: reduce/reduce conflict in state 7 resolved using rule (var_declarations -> var_declaration)
 WARNING: rejected rule (empty -> <empty>) in state 7

@@ -1,3 +1,5 @@
+from lexer.tokens import reserved
+
 class functionsDirectory:   
     def __init__(self):
         self.__function_dictionary = {}
@@ -20,6 +22,8 @@ class functionsDirectory:
         if self.__current_function_name in self.__function_dictionary:
             raise Exception("Function '{}' multiple declaration".format(self.__current_function_name))
         
+        if self.__current_function_type in reserved:
+            self.__current_function_type = reserved[self.__current_function_type]
         self.__function_dictionary[self.__current_function_name] = {
             "type": self.__current_function_type,
             "scope": self.__current_function_scope,
@@ -29,18 +33,20 @@ class functionsDirectory:
     def add_variable(self, ids,type):
         if self.__current_function_name is None:
             raise Exception("No function defined to add variable '{}'".format(id))
-        
+        if type in reserved:
+            type = reserved[type]
+
         for id in ids:
             if id in self.__function_dictionary[self.__current_function_name]["variable_table"]:
                 raise Exception("Variable '{}' multiple declaration".format(id))
             self.__function_dictionary[self.__current_function_name]["variable_table"][id] = type
     
     def print_function_dictionary(self):
-        for function_name, function_details in self.__function_dictionary.items():
-            print("Function Name: ", function_name)
-            print("Function Type: ", function_details["type"])
-            print("Function Scope: ", function_details["scope"])
-            print("Variable Table: ", function_details["variable_table"])
+            print("{:15} {:10} {:20} {}".format("Function Name", "Type", "Scope", "Variables"))
+            for name, function in self.__function_dictionary.items():
+                variable_table = ", ".join("{}:{}".format(var_name, var_type) for var_name, var_type in function["variable_table"].items())
+                print("{:15} {:10} {:20} {}".format(name, function["type"], function["scope"], variable_table))
+
 
 
     # other methods...

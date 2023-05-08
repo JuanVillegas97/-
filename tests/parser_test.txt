@@ -7,7 +7,7 @@
 
 }
 
-関数 整数 myFunc(整数 x, 整数 y)
+関数 整数 myFunc()
 変数 ブール boolean_4;
 変数 整数 int_4;
 {
@@ -15,14 +15,14 @@
     リターン x;
 }
 
-関数 文字 myFun_2(整数 x, 文字 y)
+関数 文字 myFun_2(整数 pFun2Int, 文字 pFun2Char)
 変数 文字 char_5;
 {
     y = 2 + a;
     リターン y;
 }
 
-関数 無効 my_void_2()
+関数 無効 my_void_2(整数 pVoid2Int)
 {
 
 }

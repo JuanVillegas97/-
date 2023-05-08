@@ -16,7 +16,6 @@ def _main():
     # Tokenize the source code
     parser.parse(code)
 
-    a = directory.get_function_dictionary()
-    print(a)
+    directory.print_function_dictionary()
 if __name__ == '__main__':
     _main()

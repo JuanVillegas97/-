@@ -32,16 +32,16 @@ def p_functions(p):
 
 def p_function(p):
     '''
-    function : FUNCTION simple_type ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements statement RBRACE
-            |  FUNCTION VOID ID LPAREN parameters RPAREN function_scope var_declarations LBRACE statements RBRACE
+    function : FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
+            |  FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
     '''
 
 def p_function_scope(p):
     '''
     function_scope : 
     '''
-    function_name = p[-4] 
-    function_type = p[-5]
+    function_name = p[-2] 
+    function_type = p[-3]
     scope = "LOCAL"
     directory.set_current(function_name,function_type,scope)
     directory.add_function()
@@ -105,8 +105,6 @@ def p_variable(p):
 
 
 
-
-
 def p_parameters(p):
     '''
     parameters : parameters  COMMA parameter
@@ -118,6 +116,10 @@ def p_parameter(p):
     '''
     parameter : simple_type ID 
     '''
+    type = p[1]
+    ids = p[2]
+    directory.add_variable([ids],type)
+    
 
 def p_statements(p):
     '''
