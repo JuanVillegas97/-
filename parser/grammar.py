@@ -1,11 +1,11 @@
 from lexer.tokens import tokens
 from compiler.functions_directory import functionsDirectory
-
+from compiler.intermidiate_representation import intermediateRepresentation
 # Because PLY is a bottom-up and cannot be converted to a top-down it's difficult to track stuff
 # The rules named with ..._scope are neural points to prepare the variable table
 
 directory = functionsDirectory()
-
+Inter_Rep = intermediateRepresentation()
 def p_program(p):
     '''
     program : PROGRAM ID SEMICOLON global_scope var_declarations functions main END
@@ -217,6 +217,7 @@ def p_factor(p):
             | LPAREN expression RPAREN 
             | invocation
     '''
+    
 
 def p_comparison_operator(p):
     '''
