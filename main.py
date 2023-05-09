@@ -5,7 +5,7 @@ from parser.grammar import directory
 
 def _main():
     quadruples  = "tests/quadruples.txt"
-    directory   = "tests/parser_test.txt"
+    functions   = "tests/parser_test.txt"
     lexer = MyLexer()
     # with open(file_name, "r",encoding="utf-8") as file:
     #     tokens = file.read()

@@ -21,17 +21,23 @@ class intermediateRepresentation:
             "jumps": []
         }
 
-        def push(self, stack_name, value):
-            if stack_name in self.__stacks:
-                self.__stacks[stack_name].append(value)
-            else:
-                raise ValueError(f"Invalid stack name: {stack_name}")
+    def push(self, stack_name, value):
+        if stack_name in self.__stacks:
+            if stack_name == "operators":
+                if value not in ["+", "-", "*", "/", "<", ">"]:
+                    raise ValueError("Invalid operator")
+            elif stack_name == "types":
+                if value not in ["BOOLEAN", "CHAR", "STRING", "FLOAT", "INT"]:
+                    raise ValueError("Invalid type")
+            self.__stacks[stack_name].append(value)
+        else:
+            raise ValueError(f"Invalid stack name: {stack_name}")
 
-        def pop(self, stack_name):
-            if stack_name in self.__stacks:
-                return self.__stacks[stack_name].pop()
-            else:
-                raise ValueError(f"Invalid stack name: {stack_name}")
+    def pop(self, stack_name):
+        if stack_name in self.__stacks:
+            return self.__stacks[stack_name].pop()
+        else:
+            raise ValueError(f"Invalid stack name: {stack_name}")
             
 
 

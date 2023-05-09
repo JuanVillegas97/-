@@ -30,9 +30,17 @@ class functionsDirectory:
             "variable_table": {}
         }
 
+    def search_variable(self, ids):
+        if self.__current_function_name is None:
+            raise Exception("No function defined to add variable '{}'".format(id))
+        for id in ids:
+                if id not in self.__function_dictionary[self.__current_function_name]["variable_table"]:
+                    raise Exception("Variable '{}' was not declared".format(id))
+
     def add_variable(self, ids,type):
         if self.__current_function_name is None:
             raise Exception("No function defined to add variable '{}'".format(id))
+        
         if type in reserved:
             type = reserved[type]
 

@@ -4,8 +4,15 @@ from compiler.intermidiate_representation import intermediateRepresentation
 # Because PLY is a bottom-up and cannot be converted to a top-down it's difficult to track stuff
 # The rules named with ..._scope are neural points to prepare the variable table
 
+precedence = (
+     ('nonassoc', 'LESS', 'GREATER', 'EQUALS', 'NOTEQUAL'),  # Nonassociative operators
+     ('left', 'PLUS', 'MINUS'),
+     ('left', 'TIMES', 'DIVIDE'),
+     ('right', 'ASSIGN')
+)
+
 directory = functionsDirectory()
-Inter_Rep = intermediateRepresentation()
+inter_rep = intermediateRepresentation()
 def p_program(p):
     '''
     program : PROGRAM ID SEMICOLON global_scope var_declarations functions main END
@@ -77,6 +84,7 @@ def p_var_declaration(p):
     '''
     type = p[2]
     ids = p[3]
+
     directory.add_variable(ids,type)
 
 
@@ -166,6 +174,8 @@ def p_assingation(p):
     '''
     assingation : variable ASSIGN expression SEMICOLON
     '''
+    variable = p[1]
+    directory.search_variable([variable])
 
 
 def p_invocation(p):
@@ -189,25 +199,25 @@ def p_expression(p):
 def p_t_expression(p):
     '''
     t_expression : g_expression 
-                | g_expression boolean_operator g_expression
+                | t_expression boolean_operator g_expression
     '''
 
 def p_g_expression(p):
     '''
     g_expression : m_expression 
-                | m_expression comparison_operator m_expression
+                | g_expression comparison_operator m_expression
     '''
 
 def p_m_expression(p):
     '''
     m_expression : term 
-                | term addition_operator term
+                | m_expression addition_operator term
     '''
 
 def p_term(p):
     '''
     term : factor 
-        | factor multiplication_operator factor
+        |  factor multiplication_operator term
     '''
 
 def p_factor(p):
@@ -217,6 +227,12 @@ def p_factor(p):
             | LPAREN expression RPAREN 
             | invocation
     '''
+    if len(p)>2:
+        print(p[2])
+        p[0] = p[2]
+    else:
+        p[0] = p[1]
+    # inter_rep.push("operatos")
     
 
 def p_comparison_operator(p):
@@ -264,6 +280,7 @@ def p_cte(p):
         | CTES
         | CTEB
     '''
+    p[0] = p[1]
     # implementation of cte function
 
 def p_empty(p):
@@ -271,18 +288,6 @@ def p_empty(p):
     empty :
     '''
     pass
-
-
-# def p_comment_opt(p):
-#     '''
-#     comment_opt : comment
-#                 | empty
-#     '''
-
-# def p_comment(p):
-#     '''
-#     comment : COMMENT
-#     '''
 
 
 def p_error(p):

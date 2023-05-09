@@ -1,6 +1,30 @@
 プログラム my_program;
-メイン()
+変数 整数 int_1, int_2, int_3;
+
+関数 無効 my_void()
+変数 整数 int_5;
 {
-    A*B/(C+D*F/G+H)-I>(A+B)*C-D
+
 }
+
+関数 整数 myFunc()
+変数 ブール boolean_4;
+変数 整数 int_4;
+{
+
+}
+
+関数 文字 myFun_2(整数 pFun2Int, 文字 pFun2Char)
+変数 文字 char_5;
+{
+
+}
+
+
+メイン()
+変数 整数 my_intUwU;
+{
+    my_intUwU = A+B*C+5/(5);
+}
+
 エンド
