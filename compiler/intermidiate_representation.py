@@ -63,15 +63,18 @@ class intermediateRepresentation:
         operator = self.__stacks[OPERATORS].pop()
         if operator == '=':
             last_operand = self.__stacks[OPERANDS].pop()
-            last_type = self.__stacks[TYPES].pop()
-            new_quadruple = Quadruple(operator, last_operand, "", last_type)
+            assignation_operand = self.__stacks[OPERANDS].pop()
+            last_type = self.__stacks[TYPES].pop()#!Still do not know what do with this one
+            new_quadruple = Quadruple(operator, assignation_operand, "\t", last_operand)
             self.__stacks[QUADRUPLES].append(new_quadruple)
         else:
-            right_operand = self.__stacks[OPERANDS].pop()
-            left_operand = self.__stacks[OPERANDS].pop()
-            right_type = self.__stacks[TYPES].pop()
-            left_type = self.__stacks[TYPES].pop()
-            
+            try:
+                right_operand = self.__stacks[OPERANDS].pop()
+                left_operand = self.__stacks[OPERANDS].pop()
+                right_type = self.__stacks[TYPES].pop()
+                left_type = self.__stacks[TYPES].pop()
+            except IndexError:
+                raise IndexError("Error: Pop from empty stack")
             result_type = self.__semantic_cube.get_type(left_type,right_type,operator)
             if result_type != "ERROR":
                 result = self.__generate_avail()

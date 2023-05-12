@@ -18,6 +18,6 @@ def _main():
     parser.parse(code)
     
     # directory.print_function_dictionary()
-    # inter_rep.print_stacks()
+    inter_rep.print_stacks()
 if __name__ == '__main__':
     _main()

@@ -190,13 +190,12 @@ def p_assingation(p): #! STILL NEED TO SEARCH EXPRESSIONS IF THE DO EXIST!
     assingation : variable ASSIGN expression SEMICOLON
     '''
     variable = p[1]
-    directory.search_variable([variable])
-    print(variable)
     operator = p[2]
+    directory.search_variable([variable])
+    inter_rep.push(OPERANDS,variable)
     inter_rep.push(OPERATORS,operator)
     inter_rep.print_stacks()
     inter_rep.create_quadruple()
-    # print(p[3])
     
 def p_expression(p): # instead of = it ahs to be not
     '''
