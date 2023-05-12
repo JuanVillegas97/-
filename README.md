@@ -36,25 +36,25 @@
 
 
 ## Semantic Table
-| left_op | right_op | +      | -     | *     | /     | > < AND OR       | !=   ==  |
-| ------- | -------- | ------ | ----- | ----- | ----- | ------- | -------- |
-| int     | int      | int    | int   | int   | float | boolean | boolean  |
-| int     | float    | float  | float | float | float | boolean | boolean  |
-| int     | char     | int    | int   | int   | int   | boolean | boolean  |
-| int     | boolean  | NaN    | NaN   | NaN   | NaN   | NaN     | NaN      |
-| int     | string   | string | NaN   | NaN   | NaN   | boolean | boolean  |
-| int     | vector   | NaN    | NaN   | NaN   | NaN   | NaN     | NaN      |
-| float   | float    | float  | float | float | float | boolean | boolean  |
-| float   | char     | string | NaN   | NaN   | NaN   | boolean | boolean  |
-| float   | boolean  | NaN    | NaN   | NaN   | NaN   | NaN     | NaN      |
-| float   | string   | NaN    | NaN   | NaN   | NaN   | boolean | boolean  |
-| float   | vector   | NaN    | NaN   | NaN   | NaN   | NaN     | NaN      |
-| char    | char     | int    | int   | int   | int   | boolean | boolean  |
-| char    | boolean  | NaN    | NaN   | NaN   | NaN   | NaN     | NaN      |
-| char    | string   | string | NaN   | NaN   | NaN   | boolean | boolean  |
-| boolean | boolean  | NaN    | NaN   | NaN   | NaN   | boolean | boolean  |
-| string  | string   | string | NaN   | NaN   | NaN   | NaN     | boolean  |
-| vector  | vector   | vector | NaN   | NaN   | NaN   | NaN     | boolean  |
+| left_op | right_op | +      | -     | *     | /     | AND OR NOT | > < <= >= != == | =       |
+| ------- | -------- | ------ | ----- | ----- | ----- | ---------- | --------------- | ------- |
+| int     | int      | int    | int   | int   | float | ERROR      | boolean         | int     |
+| int     | float    | float  | float | float | float | ERROR      | boolean         | float   |
+| int     | char     | int    | int   | int   | int   | ERROR      | boolean         | int     |
+| int     | boolean  | ERROR  | ERROR | ERROR | ERROR | ERROR      | ERROR           | ERROR   |
+| int     | string   | string | ERROR | ERROR | ERROR | ERROR      | boolean         | ERROR   |
+| int     | vector   | ERROR  | ERROR | ERROR | ERROR | ERROR      | ERROR           | ERROR   | 
+| float   | float    | float  | float | float | float | ERROR      | boolean         | float   |
+| float   | char     | string | ERROR | ERROR | ERROR | ERROR      | boolean         | ERROR   |
+| float   | boolean  | ERROR  | ERROR | ERROR | ERROR | ERROR      | ERROR           | ERROR   |
+| float   | string   | ERROR  | ERROR | ERROR | ERROR | ERROR      | boolean         | ERROR   |
+| float   | vector   | ERROR  | ERROR | ERROR | ERROR | ERROR      | ERROR           | ERROR   |
+| char    | char     | int    | int   | int   | int   | ERROR      | boolean         | char    |
+| char    | boolean  | ERROR  | ERROR | ERROR | ERROR | ERROR      | ERROR           | ERROR   |
+| char    | string   | string | ERROR | ERROR | ERROR | ERROR      | boolean         | ERROR   |
+| boolean | boolean  | ERROR  | ERROR | ERROR | ERROR | ERROR      | boolean         | boolean |
+| string  | string   | string | ERROR | ERROR | ERROR | ERROR      | boolean         | ERROR   |
+| vector  | vector   | vector | ERROR | ERROR | ERROR | ERROR      | boolean         | ERROR   |
 
 
 ## Reserved 
@@ -151,4 +151,4 @@ In `p_variable_declaration`, I need to add `p_complex_type`
 - Recheck my diagrams, missing statemtns and made some changes in the grammar.py in order to be able to perform certain behaviors
 - I still need ot implement the while, for, do-while, and also check the print function to print strings 
 - In SymbolTables.pdf check the neural point number 6 to delete directory
-- CURRENTLY WORKING IN THE PARAMETERS TO PUT THE IDS IN THE VARIABLE TABLE
+- In expression when a variables is declared check if the id exists

@@ -52,6 +52,9 @@ tokens = [
     'COMMENT',#Done
     'AND',#Done
     'OR',#Done
+    'GREATERTHAN',
+    'LESSTHAN',
+    'NOT'
 ]+ list(reserved.values())
 
 
@@ -64,6 +67,8 @@ t_ASSIGN  = r'='
 t_EQUALS  = r'=='
 t_NOTEQUAL= r'!='
 t_LESS    = r'<'
+t_LESSTHAN    = r'<='
+t_GREATERTHAN = r'>='
 t_GREATER = r'>'
 t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
@@ -74,6 +79,7 @@ t_RBRACK  = r'\]'
 t_SEMICOLON = r';'
 t_COLON     = r':'
 t_COMMA     = r','
+t_NOT= r'!'
 t_AND     = r'&&'
 t_OR = r'\|\|'
 

@@ -22,9 +22,11 @@
 
 
 メイン()
-変数 整数 my_intUwU;
+変数 整数 a;
+変数 整数 A, B, D, G, I;
+変数 浮動小数点数 C, F, H;
 {
-    my_intUwU = A+B*C+5/(5);
+    a = A*B/(C+D*F/G+H)-I>(A+B)*C-D;
 }
 
 エンド
