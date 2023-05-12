@@ -24,7 +24,7 @@ class intermediateRepresentation:
     def push(self, stack_name, value):
         if stack_name in self.__stacks:
             if stack_name == "operators":
-                if value not in ["+", "-", "*", "/", "<", ">"]:
+                if value not in ["+", "-", "*", "/", "<", ">","=","!","!="]:
                     raise ValueError("Invalid operator")
             elif stack_name == "types":
                 if value not in ["BOOLEAN", "CHAR", "STRING", "FLOAT", "INT"]:
@@ -57,30 +57,31 @@ class intermediateRepresentation:
     
     def reset_temporal_counter(self):
         self.__temporal_counter = 0
-        
+    
+    
     def create_quadruple(self):
-        self.__i += 1
-        print(self.__i)
         operator = self.__stacks[OPERATORS].pop()
-        right_operand = self.__stacks[OPERANDS].pop()
-        left_operand = self.__stacks[OPERANDS].pop()
-        right_type = self.__stacks[TYPES].pop()
-        left_type = self.__stacks[TYPES].pop()
-
-        result_type = self.__semantic_cube.get_type(left_type,right_type,operator)
-
-        if result_type != "ERROR":
-           if operator == "=":
-                result_type = left_operand
-                new_quadruple = Quadruple(operator, None, right_operand, result_type)
-           else:
-               result = self.__generate_avail()
-               new_quadruple = Quadruple(operator,left_operand,right_operand,result)
-               self.__stacks[QUADRUPLES].append(new_quadruple)
-               self.__stacks[OPERANDS].append(result)
-               self.__stacks[TYPES].append(result_type)
+        if operator == '=':
+            last_operand = self.__stacks[OPERANDS].pop()
+            last_type = self.__stacks[TYPES].pop()
+            new_quadruple = Quadruple(operator, last_operand, "", last_type)
+            self.__stacks[QUADRUPLES].append(new_quadruple)
         else:
-            raise TypeError(f"Type mismatch with: {left_type}{operator}{right_type}")
+            right_operand = self.__stacks[OPERANDS].pop()
+            left_operand = self.__stacks[OPERANDS].pop()
+            right_type = self.__stacks[TYPES].pop()
+            left_type = self.__stacks[TYPES].pop()
+            
+            result_type = self.__semantic_cube.get_type(left_type,right_type,operator)
+            if result_type != "ERROR":
+                result = self.__generate_avail()
+                new_quadruple = Quadruple(operator,left_operand,right_operand,result)
+                self.__stacks[QUADRUPLES].append(new_quadruple)
+                self.__stacks[OPERANDS].append(result)
+                self.__stacks[TYPES].append(result_type)
+            else:
+                raise TypeError(f"Type mismatch with: {left_type}{operator}{right_type}")
+
 
             
 

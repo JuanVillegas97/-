@@ -152,3 +152,4 @@ In `p_variable_declaration`, I need to add `p_complex_type`
 - I still need ot implement the while, for, do-while, and also check the print function to print strings 
 - In SymbolTables.pdf check the neural point number 6 to delete directory
 - In expression when a variables is declared check if the id exists
+- SUPER IMPORTANT CHECK IN ASSIGN WHY I CANT DO IT

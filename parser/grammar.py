@@ -163,8 +163,6 @@ def p_if(p):
         | IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE 
     '''
 
-
-
 def p_return(p):
     '''
     return : RETURN expression SEMICOLON
@@ -174,15 +172,6 @@ def p_read(p):
     '''
     read : READ LPAREN variable RPAREN SEMICOLON
     '''
-
-def p_assingation(p):
-    '''
-    assingation : variable ASSIGN expression SEMICOLON
-    '''
-    variable = p[1]
-    directory.search_variable([variable])
-    # print(p[3])
-
 
 def p_invocation(p):
     '''
@@ -196,16 +185,28 @@ def p_expressions(p):
                 | empty
     '''
 
-def p_expression(p):
+def p_assingation(p): #! STILL NEED TO SEARCH EXPRESSIONS IF THE DO EXIST!
+    '''
+    assingation : variable ASSIGN expression SEMICOLON
+    '''
+    variable = p[1]
+    directory.search_variable([variable])
+    print(variable)
+    operator = p[2]
+    inter_rep.push(OPERATORS,operator)
+    inter_rep.print_stacks()
+    inter_rep.create_quadruple()
+    # print(p[3])
+    
+def p_expression(p): # instead of = it ahs to be not
     '''
     expression : t_expression 
-                | expression ASSIGN t_expression
+                | expression NOT t_expression
     '''
-    print(p[1])
     if len(p) == 4: # push opeartor
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
-        inter_rep.print_stacks()
+        # inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
 def p_t_expression(p):
@@ -216,7 +217,7 @@ def p_t_expression(p):
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
-        inter_rep.print_stacks()
+        # inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
 
@@ -228,7 +229,7 @@ def p_g_expression(p):
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
-        inter_rep.print_stacks()
+        # inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
 def p_m_expression(p):
@@ -239,7 +240,7 @@ def p_m_expression(p):
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
-        inter_rep.print_stacks()
+        # inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
 
@@ -251,7 +252,7 @@ def p_term(p):
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
-        inter_rep.print_stacks()
+        # inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
 

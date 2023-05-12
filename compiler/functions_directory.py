@@ -1,5 +1,6 @@
 from lexer.tokens import reserved
 from compiler.variable import variable
+
 class functionsDirectory:   
     def __init__(self):
         self.__function_dictionary = {}

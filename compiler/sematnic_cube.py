@@ -28,35 +28,38 @@ ASSIGN = '='
 # Still missing the NOT
 class SemanticCube:
     def __init__(self):
-        self.cube = {
-            (INT, INT): [INT, INT, INT, FLOAT, ERROR, ERROR, BOOLEAN, BOOLEAN, INT],
-            (INT, FLOAT): [FLOAT, FLOAT, FLOAT, FLOAT, ERROR, ERROR, BOOLEAN, BOOLEAN, FLOAT],
-            (INT, CHAR): [INT, INT, INT, INT, ERROR, ERROR, BOOLEAN, BOOLEAN, INT],
-            (INT, STRING): [STRING, ERROR, ERROR, ERROR, ERROR, BOOLEAN, BOOLEAN, BOOLEAN, ERROR],
-            (INT, VECTOR): [VECTOR, ERROR, ERROR, ERROR, ERROR, ERROR, BOOLEAN, BOOLEAN, ERROR],
-            (FLOAT, FLOAT): [FLOAT, FLOAT, FLOAT, FLOAT, ERROR, ERROR, BOOLEAN, BOOLEAN, FLOAT],
-            (FLOAT, CHAR): [STRING, ERROR, ERROR, ERROR, ERROR, ERROR, BOOLEAN, BOOLEAN, ERROR],
-            (FLOAT, STRING): [STRING, ERROR, ERROR, ERROR, ERROR, BOOLEAN, BOOLEAN, BOOLEAN, ERROR],
-            (FLOAT, VECTOR): [VECTOR, ERROR, ERROR, ERROR, ERROR, ERROR, BOOLEAN, BOOLEAN, ERROR],
-            (CHAR, CHAR): [INT, INT, INT, INT, ERROR, ERROR, BOOLEAN, BOOLEAN, CHAR],
-            (CHAR, STRING): [STRING, ERROR, ERROR, ERROR, ERROR, BOOLEAN, BOOLEAN, BOOLEAN, ERROR],
-            (BOOLEAN, BOOLEAN): [ERROR, ERROR, ERROR, ERROR, BOOLEAN, BOOLEAN, ERROR, ERROR, BOOLEAN],
-            (STRING, STRING): [STRING, ERROR, ERROR, ERROR, ERROR, BOOLEAN, BOOLEAN, BOOLEAN, ERROR],
-            (VECTOR, VECTOR): [VECTOR, ERROR, ERROR, ERROR, ERROR, BOOLEAN, BOOLEAN, BOOLEAN, ERROR]
+        self.__cube = {
+            (INT, INT):        [INT   , INT  , INT  , FLOAT, ERROR, BOOLEAN,  INT    ],
+            (INT, FLOAT):      [FLOAT , FLOAT, FLOAT, FLOAT, ERROR, BOOLEAN,  FLOAT  ],
+            (INT, CHAR):       [INT   , INT  , INT  , INT  , ERROR, BOOLEAN,  INT    ],
+            (INT, BOOLEAN):    [ERROR , ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+            (INT, STRING):     [STRING, ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+            (INT, VECTOR):     [VECTOR, ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+            (FLOAT, FLOAT):    [FLOAT , FLOAT, FLOAT, FLOAT, ERROR, BOOLEAN,  FLOAT  ],
+            (FLOAT, CHAR):     [STRING, ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+            (FLOAT, BOOLEAN):  [ERROR , ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+            (FLOAT, STRING):   [STRING, ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+            (FLOAT, VECTOR):   [VECTOR, ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+            (CHAR, CHAR):      [INT   , INT  , INT  , INT  , ERROR, BOOLEAN,   CHAR  ],
+            (CHAR, BOOLEAN):   [ERROR , ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+            (CHAR, STRING):    [STRING, ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+            (BOOLEAN, BOOLEAN):[ERROR , ERROR, ERROR, ERROR, ERROR, BOOLEAN,  BOOLEAN],
+            (STRING, STRING):  [STRING, ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+            (VECTOR, VECTOR):  [VECTOR, ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
+        }
+        self.__operator_index= {
+            PLUS:0,MINUS:1,TIMES:2,DIVIDE: 3,
+            AND: 4, OR: 4, NOT: 4,
+            GREATER: 5, LESS: 5, GREATERTHAN: 5, LESSTHAN: 5, NOTEQUAL: 5, EQUALS:59,
+            ASSIGN: 6,
         }
     
     def get_type(self, left_op, right_op, operator):
-        operator_index = {
-            PLUS: 0, MINUS: 1, TIMES: 2, DIVIDE: 3,
-            AND: 6, OR: 7,
-            GREATER: 8, LESS: 8, GREATERTHAN: 8, LESSTHAN: 8, NOTEQUAL: 8, EQUALS: 8,
-            ASSIGN: 9
-        }.get(operator, None)
-        
-        if operator_index is not None:
-            types = self.cube.get((left_op, right_op), None)
+        result_type = self.__operator_index.get(operator, None)
+        if result_type is not None:
+            types = self.__cube.get((left_op, right_op), None)
             if not types:
-                types = self.cube.get((right_op, left_op), None)
+                types = self.__cube.get((right_op, left_op), None)
             if types:
-                return types[operator_index]
+                return types[result_type]
         return ERROR  # Invalid operation or operand types
