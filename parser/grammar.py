@@ -1,6 +1,7 @@
 from lexer.tokens import tokens
 from compiler.functions_directory import functionsDirectory
 from compiler.intermidiate_representation import intermediateRepresentation
+from compiler.quadruple import Quadruple
 # Because PLY is a bottom-up and cannot be converted to a top-down it's difficult to track stuff
 # The rules named with ..._scope are neural points to prepare the variable table
 
@@ -11,7 +12,7 @@ QUADRUPLES ="quadruples"
 JUMPS      ="jumps"
 
 precedence = (
-     ('nonassoc', 'LESS', 'GREATER', 'EQUALS', 'NOTEQUAL'),  # Nonassociative operators
+     ('nonassoc', 'LESS', 'GREATER', 'EQUALS', 'NOTEQUAL', 'LESSTHAN', 'GREATERTHAN'),  # Nonassociative operators
      ('left', 'PLUS', 'MINUS'),
      ('left', 'TIMES', 'DIVIDE'),
      ('right', 'ASSIGN')
@@ -143,18 +144,12 @@ def p_statements(p):
 
 def p_statement(p):
     '''
-    statement : assingation
+    statement : read 
     | invocation
     | if
-    | read
+    | assingation
     | return
     | print
-    '''
-
-def p_print(p):
-    '''
-    print : PRINT LPAREN expression RPAREN SEMICOLON
-    print : PRINT LPAREN CTES RPAREN SEMICOLON
     '''
 
 def p_if(p):
@@ -185,6 +180,18 @@ def p_expressions(p):
                 | empty
     '''
 
+def p_print(p): #! HERE MAYBE ADD COMMAS
+    '''
+    print : PRINT expression_parenthesis SEMICOLON
+        | PRINT LPAREN CTES RPAREN SEMICOLON
+    '''
+    print_operand = inter_rep.pop(OPERANDS)
+    new_quadruple = Quadruple("print","","",print_operand)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    inter_rep.print_stacks()
+    
+
+    
 def p_assingation(p): #! STILL NEED TO SEARCH EXPRESSIONS IF THE DO EXIST!
     '''
     assingation : variable ASSIGN expression SEMICOLON
@@ -192,6 +199,7 @@ def p_assingation(p): #! STILL NEED TO SEARCH EXPRESSIONS IF THE DO EXIST!
     variable = p[1]
     operator = p[2]
     directory.search_variable([variable])
+    
     inter_rep.push(OPERANDS,variable)
     inter_rep.push(OPERATORS,operator)
     inter_rep.print_stacks()
@@ -200,12 +208,12 @@ def p_assingation(p): #! STILL NEED TO SEARCH EXPRESSIONS IF THE DO EXIST!
 def p_expression(p): # instead of = it ahs to be not
     '''
     expression : t_expression 
-                | expression NOT t_expression
+                | NOT t_expression
     '''
     if len(p) == 4: # push opeartor
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
-        # inter_rep.print_stacks()
+        inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
 def p_t_expression(p):
@@ -216,7 +224,7 @@ def p_t_expression(p):
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
-        # inter_rep.print_stacks()
+        inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
 
@@ -228,7 +236,7 @@ def p_g_expression(p):
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
-        # inter_rep.print_stacks()
+        inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
 def p_m_expression(p):
@@ -239,7 +247,7 @@ def p_m_expression(p):
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
-        # inter_rep.print_stacks()
+        inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
 
@@ -251,7 +259,7 @@ def p_term(p):
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
-        # inter_rep.print_stacks()
+        inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
 
@@ -284,6 +292,8 @@ def p_comparison_operator(p):
                         | GREATER
                         | EQUALS
                         | NOTEQUAL
+                        | GREATERTHAN
+                        | LESSTHAN
     '''
     p[0] = p[1]
 
@@ -341,7 +351,7 @@ def p_empty(p):
 
 def p_error(p):
     if p:
-        error_message = f"Syntax error at line {p.lineno}, token={p.type}"
+        error_message = f"Syntax error at line {p.lineno}, token={p.type}, value={p.value}, "
         raise SyntaxError(error_message)
     else:
         raise SyntaxError("Syntax error: unexpected end of input")
