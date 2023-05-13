@@ -96,8 +96,8 @@ def p_var_declaration(p):
 
 def p_variables(p):
     '''
-    variables : variable COMMA variables
-            | variable
+    variables : variable 
+            | variable COMMA variables
     '''
     if len(p) == 2:
         # Only one variable was matched
@@ -165,9 +165,24 @@ def p_return(p):
 
 def p_read(p):
     '''
-    read : READ LPAREN variable RPAREN SEMICOLON
+    read : READ LPAREN variable_list RPAREN SEMICOLON
     '''
+    variables = p[3]
+    for variable in variables:
+        new_quadruple = Quadruple("read","","",variable)
+        inter_rep.push(QUADRUPLES,new_quadruple)
 
+def p_variable_list(p):
+    '''
+    variable_list : variable
+                  | variable_list COMMA variable
+    '''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[1].append(p[3])
+        p[0] = p[1]
+        
 def p_invocation(p):
     '''
     invocation : ID LPAREN expressions RPAREN SEMICOLON
