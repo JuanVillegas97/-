@@ -20,7 +20,6 @@ class intermediateRepresentation:
         self.__temporal_counter = 0
         self.__i=0
     
-        
     def push(self, stack_name, value):
         if stack_name in self.__stacks:
             if stack_name == "operators":
@@ -65,7 +64,7 @@ class intermediateRepresentation:
             last_operand = self.__stacks[OPERANDS].pop()
             assignation_operand = self.__stacks[OPERANDS].pop()
             last_type = self.__stacks[TYPES].pop()#!Still do not know what do with this one
-            new_quadruple = Quadruple(operator, assignation_operand, "\t", last_operand)
+            new_quadruple = Quadruple(operator, assignation_operand, "", last_operand)
             self.__stacks[QUADRUPLES].append(new_quadruple)
         else:
             try:
