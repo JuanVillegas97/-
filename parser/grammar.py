@@ -180,18 +180,44 @@ def p_expressions(p):
                 | empty
     '''
 
-def p_print(p): #! HERE MAYBE ADD COMMAS
+
+    
+def p_print(p):
     '''
-    print : PRINT expression_parenthesis SEMICOLON
-        | PRINT LPAREN CTES RPAREN SEMICOLON
+    print : PRINT LPAREN print_arguments RPAREN SEMICOLON
     '''
-    print_operand = inter_rep.pop(OPERANDS)
-    new_quadruple = Quadruple("print","","",print_operand)
+    
+def p_print_arguments(p):
+    '''
+    print_arguments : print_argument
+                    | print_arguments COMMA print_argument
+    '''
+    p[0] = p[1]
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[1].append(p[3])
+        p[0] = p[1]
+
+    
+def p_print_argument(p):
+    '''
+    print_argument : CTES
+                   | expression
+    '''
+    if p[1] == None: #Means it is an expression therefore I gotta create a new quadruple with print statement
+        print_operand = inter_rep.pop(OPERANDS)
+        new_quadruple = Quadruple("print","","",print_operand)
+    else: #Means it's a string therfore I gotta create anew quadruple with print statement
+        new_quadruple = Quadruple("print","","",p[1])
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.print_stacks()
     
-
+        
     
+
+
+
 def p_assingation(p): #! STILL NEED TO SEARCH EXPRESSIONS IF THE DO EXIST!
     '''
     assingation : variable ASSIGN expression SEMICOLON
@@ -278,14 +304,13 @@ def p_factor(p):
         inter_rep.push(OPERANDS,current_variable.id)
         inter_rep.push(TYPES,current_variable.type)
 
-
-
 def p_expression_parenthesis(p):
     '''
     expression_parenthesis : LPAREN expression RPAREN 
     '''
     p[0] = p[2]
-
+    
+    
 def p_comparison_operator(p):
     '''
     comparison_operator : LESS
