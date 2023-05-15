@@ -16,3 +16,6 @@ class Quadruple:
     
     def get_avail(self):
         return self.__avail
+    
+    def set_avail(self,new_avail):
+        self.__avail = new_avail

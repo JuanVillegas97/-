@@ -4,7 +4,7 @@ from parser.parser import MyParser
 from parser.grammar import directory
 from parser.grammar import inter_rep
 def _main():
-    quadruples  = "tests/quadruples.txt"
+    quadruples  = "tests/if_test.txt"
     functions   = "tests/parser_test.txt"
     lexer = MyLexer()
     # with open(file_name, "r",encoding="utf-8") as file:

@@ -1,15 +1,12 @@
 from lexer.tokens import tokens
+from constants.constants import *
 from compiler.functions_directory import functionsDirectory
 from compiler.intermidiate_representation import intermediateRepresentation
 from compiler.quadruple import Quadruple
 # Because PLY is a bottom-up and cannot be converted to a top-down it's difficult to track stuff
 # The rules named with ..._scope are neural points to prepare the variable table
 
-OPERATORS  ="operators"
-TYPES      ="types"
-OPERANDS   ="operands"
-QUADRUPLES ="quadruples"
-JUMPS      ="jumps"
+
 
 precedence = (
      ('nonassoc', 'LESS', 'GREATER', 'EQUALS', 'NOTEQUAL', 'LESSTHAN', 'GREATERTHAN'),  # Nonassociative operators
@@ -154,10 +151,18 @@ def p_statement(p):
 
 def p_if(p):
     '''
-    if : IF LPAREN expression RPAREN LBRACE statements RBRACE 
-        | IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE 
+    if : IF LPAREN expression RPAREN gotof LBRACE statements RBRACE 
     '''
+    inter_rep.fill()
+    
+    
+def p_gotof(p):
+    '''
+    gotof : empty
+    '''
+    inter_rep.gotof_if()
 
+    
 def p_return(p):
     '''
     return : RETURN expression SEMICOLON

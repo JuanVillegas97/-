@@ -1,11 +1,6 @@
 from compiler.sematnic_cube import SemanticCube
 from compiler.quadruple import Quadruple
-OPERATORS  ="operators"
-TYPES      ="types"
-OPERANDS   ="operands"
-QUADRUPLES ="quadruples"
-JUMPS      ="jumps"
-
+from constants.constants import *
 
 class intermediateRepresentation:
     def __init__(self):
@@ -32,6 +27,12 @@ class intermediateRepresentation:
         else:
             raise ValueError(f"Invalid stack name: {stack_name}")
 
+    def top(self, stack_name):
+        if stack_name in self.__stacks:
+            return self.__stacks[stack_name][-1]
+        else:
+            raise ValueError(f"Invalid stack name: {stack_name}")
+        
     def pop(self, stack_name):
         if stack_name in self.__stacks:
             return self.__stacks[stack_name].pop()
@@ -43,10 +44,10 @@ class intermediateRepresentation:
         print("Operators stack:", self.__stacks["operators"])
         print("Types stack:", self.__stacks["types"])
         print("Operands stack:", self.__stacks["operands"])
+        print("Jumps stack:", self.__stacks["jumps"])
         print("Quadruples stack:")
         for i, quad in enumerate(self.__stacks["quadruples"]):
-            print(f"  {i}: {quad.get_operator()} {quad.get_left_operand()} {quad.get_right_operand()} {quad.get_avail()}")
-        # print("Jumps stack:", self.__stacks["jumps"])
+            print(f"  {i+1}: {quad.get_operator()} {quad.get_left_operand()} {quad.get_right_operand()} {quad.get_avail()}")
         print('-' * 50)
         print('\n')
     
@@ -63,7 +64,7 @@ class intermediateRepresentation:
         if operator == '=':
             last_operand = self.__stacks[OPERANDS].pop()
             assignation_operand = self.__stacks[OPERANDS].pop()
-            last_type = self.__stacks[TYPES].pop()#!Still do not know what do with this one
+            last_type = self.__stacks[TYPES].pop()#!Still do not know what do with this one, maybe I gotta update it in the var table (TYPE)
             new_quadruple = Quadruple(operator, assignation_operand, "", last_operand)
             self.__stacks[QUADRUPLES].append(new_quadruple)
         else:
@@ -83,6 +84,19 @@ class intermediateRepresentation:
                 self.__stacks[TYPES].append(result_type)
             else:
                 raise TypeError(f"Type mismatch with: {left_type}{operator}{right_type}")
+    
+    def gotof_if(self):
+            conditional_element = self.__stacks[OPERANDS].pop()
+            type_conditional = self.__stacks[TYPES].pop()
+            if type_conditional != BOOLEAN:
+                raise TypeError(f"Type mismatch")
+            new_quadruple = Quadruple(GOTOF,"",conditional_element,'_')
+            self.__stacks[JUMPS].append(self.__temporal_counter+1)
+            self.__stacks[QUADRUPLES].append(new_quadruple)
+    
+    def fill(self):
+        end = self.__stacks[JUMPS].pop()-1
+        print(self.__stacks[QUADRUPLES][end].set_avail(self.__temporal_counter+3))
 
 
             
