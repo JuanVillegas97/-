@@ -4,7 +4,7 @@ from parser.parser import MyParser
 from parser.grammar import directory
 from parser.grammar import inter_rep
 def _main():
-    quadruples  = "tests/if_test.txt"
+    file  = "tests/ifelse_test.txt"
     functions   = "tests/parser_test.txt"
     lexer = MyLexer()
     # with open(file_name, "r",encoding="utf-8") as file:
@@ -12,7 +12,7 @@ def _main():
     # lexer.tokenize(tokens)
 
     parser = MyParser()
-    with open(quadruples, "r",encoding="utf-8") as file:
+    with open(file, "r",encoding="utf-8") as file:
         code = file.read()
 
     parser.parse(code)

@@ -13,7 +13,6 @@ class intermediateRepresentation:
             "jumps": []
         }
         self.__temporal_counter = 0
-        self.__i=0
     
     def push(self, stack_name, value):
         if stack_name in self.__stacks:
@@ -91,12 +90,12 @@ class intermediateRepresentation:
             if type_conditional != BOOLEAN:
                 raise TypeError(f"Type mismatch")
             new_quadruple = Quadruple(GOTOF,"",conditional_element,'_')
-            self.__stacks[JUMPS].append(self.__temporal_counter+1)
+            self.__stacks[JUMPS].append(len(self.__stacks[QUADRUPLES])+1)
             self.__stacks[QUADRUPLES].append(new_quadruple)
     
     def fill(self):
         end = self.__stacks[JUMPS].pop()-1
-        print(self.__stacks[QUADRUPLES][end].set_avail(self.__temporal_counter+3))
+        self.__stacks[QUADRUPLES][end].set_avail(len(self.__stacks[QUADRUPLES])+1)
 
 
             

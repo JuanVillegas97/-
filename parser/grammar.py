@@ -142,6 +142,7 @@ def p_statements(p):
 def p_statement(p):
     '''
     statement : read 
+    | if_else
     | invocation
     | if
     | assingation
@@ -151,10 +152,21 @@ def p_statement(p):
 
 def p_if(p):
     '''
-    if : IF LPAREN expression RPAREN gotof LBRACE statements RBRACE 
+    if : IF LPAREN expression RPAREN gotof LBRACE statements RBRACE fill
+    '''
+
+def p_if_else(p):
+    '''
+    if_else : if ELSE LBRACE statements RBRACE 
+    '''
+    
+def p_fill(p):
+    '''
+    fill : empty
     '''
     inter_rep.fill()
     
+
     
 def p_gotof(p):
     '''
