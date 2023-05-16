@@ -97,6 +97,12 @@ class intermediateRepresentation:
         end = self.__stacks[JUMPS].pop()-1
         self.__stacks[QUADRUPLES][end].set_avail(len(self.__stacks[QUADRUPLES])+1)
 
+    def gotof_if_else(self):
+        end = self.__stacks[JUMPS].pop()-1
+        self.__stacks[QUADRUPLES][end].set_avail(len(self.__stacks[QUADRUPLES])+2)
+        new_quadruple = Quadruple(GOTO,"","",'_')
+        self.__stacks[JUMPS].append(len(self.__stacks[QUADRUPLES])+1)
+        self.__stacks[QUADRUPLES].append(new_quadruple)
 
             
 

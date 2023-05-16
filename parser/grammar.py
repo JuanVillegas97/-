@@ -157,9 +157,15 @@ def p_if(p):
 
 def p_if_else(p):
     '''
-    if_else : if ELSE LBRACE statements RBRACE 
+    if_else : IF LPAREN expression RPAREN  gotof LBRACE statements RBRACE  ELSE goto LBRACE statements RBRACE 
     '''
+    inter_rep.fill()
     
+def p_goto(p):
+    '''
+    goto : empty
+    '''
+    inter_rep.gotof_if_else()
 def p_fill(p):
     '''
     fill : empty
