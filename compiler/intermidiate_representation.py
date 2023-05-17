@@ -93,10 +93,20 @@ class intermediateRepresentation:
             self.__stacks[JUMPS].append(len(self.__stacks[QUADRUPLES])+1)
             self.__stacks[QUADRUPLES].append(new_quadruple)
     
+    def fill_while(self):
+        false = self.__stacks[JUMPS].pop()-1
+        return_ = self.__stacks[JUMPS].pop()
+        new_quadruple = Quadruple(GOTO,"","",return_)
+        self.__stacks[QUADRUPLES].append(new_quadruple)
+        self.__stacks[QUADRUPLES][false].set_avail(len(self.__stacks[QUADRUPLES])+1)
+        
     def fill(self):
         end = self.__stacks[JUMPS].pop()-1
         self.__stacks[QUADRUPLES][end].set_avail(len(self.__stacks[QUADRUPLES])+1)
-
+        
+    def push_breadcrumb(self):
+        self.__stacks[JUMPS].append(len(self.__stacks[QUADRUPLES])+1)
+        
     def gotof_if_else(self):
         end = self.__stacks[JUMPS].pop()-1
         self.__stacks[QUADRUPLES][end].set_avail(len(self.__stacks[QUADRUPLES])+2)

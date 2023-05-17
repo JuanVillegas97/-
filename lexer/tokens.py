@@ -9,7 +9,7 @@ reserved = {
     'もし' : 'IF',
     'ならば' : 'THEN',
     '違えば' : 'ELSE',
-    '繰り返す' : 'WHILE', 
+    'ワイル' : 'WHILE', 
     'プリント':'PRINT',
     'メイン' : 'MAIN',
     '真' : 'TRUE',

@@ -142,6 +142,7 @@ def p_statements(p):
 def p_statement(p):
     '''
     statement : read 
+    | while
     | if_else
     | invocation
     | if
@@ -150,14 +151,28 @@ def p_statement(p):
     | print
     '''
 
+def p_while(p):
+    '''
+    while : WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
+    '''
+    inter_rep.fill_while()
+    
+def p_breadcrumb(p):
+    '''
+    breadcrumb : empty
+    '''
+    inter_rep.push_breadcrumb() # Empujar la migajona de pan ole!
+    
 def p_if(p):
     '''
-    if : IF LPAREN expression RPAREN gotof LBRACE statements RBRACE fill
+    if : IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
     '''
+    inter_rep.fill()
+    
 
 def p_if_else(p):
     '''
-    if_else : IF LPAREN expression RPAREN  gotof LBRACE statements RBRACE  ELSE goto LBRACE statements RBRACE 
+    if_else : IF LPAREN expression RPAREN  gotof LBRACE statements RBRACE  ELSE goto LBRACE statements RBRACE
     '''
     inter_rep.fill()
     
@@ -166,11 +181,8 @@ def p_goto(p):
     goto : empty
     '''
     inter_rep.gotof_if_else()
-def p_fill(p):
-    '''
-    fill : empty
-    '''
-    inter_rep.fill()
+    
+
     
 
     
@@ -251,9 +263,6 @@ def p_print_argument(p):
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.print_stacks()
     
-        
-    
-
 
 
 def p_assingation(p): #! STILL NEED TO SEARCH EXPRESSIONS IF THE DO EXIST!

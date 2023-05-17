@@ -24,7 +24,7 @@ class SemanticCube:
         self.__operator_index= {
             PLUS:0,MINUS:1,TIMES:2,DIVIDE: 3,
             AND: 4, OR: 4, NOT: 4,
-            GREATER: 5, LESS: 5, GREATERTHAN: 5, LESSTHAN: 5, NOTEQUAL: 5, EQUALS:59,
+            GREATER: 5, LESS: 5, GREATERTHAN: 5, LESSTHAN: 5, NOTEQUAL: 5, EQUALS:5,
             ASSIGN: 6,
         }
     
