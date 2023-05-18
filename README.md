@@ -130,26 +130,10 @@ function generateIV(): string {
   // implementation here
 }
 ```
-## First commit
-The only notable mention is the one for the ID  that matches any sequence of one or more characters that are either Katakana, Hiragana, or Kanji.
-```py
-def t_ID(t):
-    r'[\u30A0-\u30FF\u3040-\u309F\u4E00-\u9FFF]+'
-    t.type = reserved.get(t.value,'ID')  
-    return t
-```
-For now it has structure very similar to our previous program littleduck20 these first progress I focused in the lexer
-
-## Second commit 
-I have a lot of things to do. First, I need to make sure that the parse is working correctly before I start creating more parsing blocks. Also, I should check that the ID can also get alphanumeric values
-## Third commt
-Well, I changed the regular expression of ID to a mix of Japanese and English words. I've made a lot of progress in the parse and am currently working with the list of statements.
-## Fourth commit
-I focused in the diagrams in this commit and my proposal so it took me time of no coding
 ### LEFT THINGS TO DO
 In `p_variable_declaration`, I need to add `p_complex_type`
 - Recheck my diagrams, missing statemtns and made some changes in the grammar.py in order to be able to perform certain behaviors
-- I still need ot implement the while, for, do-while, and also check the print function to print strings 
 - In SymbolTables.pdf check the neural point number 6 to delete directory
 - In expression when a variables is declared check if the id exists
-- SUPER IMPORTANT CHECK IN ASSIGN WHY I CANT DO IT
+- Check variable table with numbers 
+- Check counter pointer

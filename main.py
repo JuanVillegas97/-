@@ -4,7 +4,7 @@ from parser.parser import MyParser
 from parser.grammar import directory
 from parser.grammar import inter_rep
 def _main():
-    file  = "tests/while_test.txt"
+    file  = "tests/do_while.txt"
     functions   = "tests/parser_test.txt"
     lexer = MyLexer()
     # with open(file_name, "r",encoding="utf-8") as file:
@@ -17,7 +17,8 @@ def _main():
 
     parser.parse(code)
     
-    # directory.print_function_dictionary()
     inter_rep.print_stacks()
+    directory.print_function_dictionary()
+    
 if __name__ == '__main__':
     _main()

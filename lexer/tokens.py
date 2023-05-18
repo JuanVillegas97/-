@@ -5,6 +5,7 @@ reserved = {
     '浮動小数点数':'FLOAT', 
     '文字列': 'STRING', 
     '文字':  'CHAR',
+    '実行': 'DO',
     'ブール' : 'BOOLEAN',
     'もし' : 'IF',
     'ならば' : 'THEN',

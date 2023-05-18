@@ -43,8 +43,8 @@ def p_functions(p):
 
 def p_function(p):
     '''
-    function : FUNCTION simple_type ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
-            |  FUNCTION VOID ID LPAREN function_scope parameters RPAREN var_declarations LBRACE statements RBRACE
+    function : FUNCTION simple_type ID LPAREN function_scope open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
+            |  FUNCTION VOID ID LPAREN function_scope open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
     '''
 
 def p_function_scope(p):
@@ -82,14 +82,29 @@ def p_var_declarations(p):
     p[0] = p[1]
 
 
+
+# 2 neuronal points open and close variable declaration so I can cehck if and id has already been declared 
+# This can be seen in p_variable
 def p_var_declaration(p):
     '''
-    var_declaration : VARIABLE simple_type variables SEMICOLON
+    var_declaration : VARIABLE open_var_declaration simple_type variables SEMICOLON close_var_declaration
     '''
-    type = p[2]
-    ids = p[3]
+    type = p[3]
+    ids = p[4]
     directory.add_variable(ids,type)
-
+    
+def p_open_var_declaration(p):
+    '''
+    open_var_declaration : empty
+    '''
+    directory.set_is_variable_declaration_true()
+    
+def p_close_var_declaration(p):
+    '''
+    close_var_declaration : empty
+    '''
+    directory.set_is_variable_declaration_false()
+    
 
 def p_variables(p):
     '''
@@ -105,14 +120,18 @@ def p_variables(p):
         p[0] = p[3]
 
 
-
+# Here if is not open the variable declaration search for the id
 def p_variable(p):
     '''
     variable : ID
             | ID LBRACK expression RBRACK
             | ID LBRACK expression RBRACK LBRACK expression RBRACK
     '''
-    p[0] = p[1]
+    id = p[1]
+    p[0] = id
+    if not directory.get_is_variable_declaration():
+        directory.search_variable(id)
+
 
 
 
@@ -123,6 +142,7 @@ def p_parameters(p):
     | empty
     '''
 
+#! MAYBE HER ERE
 def p_parameter(p):
     '''
     parameter : simple_type ID 
@@ -142,6 +162,7 @@ def p_statements(p):
 def p_statement(p):
     '''
     statement : read 
+    | do_while
     | while
     | if_else
     | invocation
@@ -151,12 +172,18 @@ def p_statement(p):
     | print
     '''
 
+def p_do_while(p):
+    '''
+    do_while : DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON 
+    '''
+    
 def p_while(p):
     '''
     while : WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     '''
     inter_rep.fill_while()
     
+
 def p_breadcrumb(p):
     '''
     breadcrumb : empty
@@ -175,16 +202,18 @@ def p_if_else(p):
     if_else : IF LPAREN expression RPAREN  gotof LBRACE statements RBRACE  ELSE goto LBRACE statements RBRACE
     '''
     inter_rep.fill()
+
+def p_gotot(p):
+    '''
+    gotot : empty
+    '''
+    inter_rep.gotot_while()
     
 def p_goto(p):
     '''
     goto : empty
     '''
     inter_rep.gotof_if_else()
-    
-
-    
-
     
 def p_gotof(p):
     '''
@@ -230,8 +259,6 @@ def p_expressions(p):
                 | empty
     '''
 
-
-    
 def p_print(p):
     '''
     print : PRINT LPAREN print_arguments RPAREN SEMICOLON
@@ -351,6 +378,8 @@ def p_factor(p):
         inter_rep.push(OPERANDS,current_variable.id)
         inter_rep.push(TYPES,current_variable.type)
 
+    
+
 def p_expression_parenthesis(p):
     '''
     expression_parenthesis : LPAREN expression RPAREN 
@@ -392,6 +421,7 @@ def p_multiplication_operator(p):
     '''
     p[0] = p[1]
 
+
 def p_simple_type(p):
     '''
     simple_type : INT
@@ -401,7 +431,7 @@ def p_simple_type(p):
                 | BOOLEAN
     '''
     p[0] = p[1]
-    # implementation of simple_type function
+
 
 def p_cte(p):
     '''
@@ -412,7 +442,9 @@ def p_cte(p):
         | CTEB
     '''
     p[0] = p[1]
-    # implementation of cte function
+    value = p[1]
+    type = directory.check_value_type(value)
+    directory.add_variable([value],type) #! VERY IMPORTANT FOR NOW I ADDED THE NUMBERS IN THE VAR TABLE SO I CAN CONTINUE WITH THE PROJECT
 
 def p_empty(p):
     '''

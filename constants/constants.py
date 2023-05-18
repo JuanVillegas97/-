@@ -4,6 +4,7 @@ OPERANDS   ="operands"
 QUADRUPLES ="quadruples"
 JUMPS      ="jumps"
 GOTOF      ="gotoF"
+GOTOT      ="gotoT"
 GOTO      ="goto"
 # Types
 INT = 'INT'

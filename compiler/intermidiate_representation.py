@@ -85,13 +85,13 @@ class intermediateRepresentation:
                 raise TypeError(f"Type mismatch with: {left_type}{operator}{right_type}")
     
     def gotof_if(self):
-            conditional_element = self.__stacks[OPERANDS].pop()
-            type_conditional = self.__stacks[TYPES].pop()
-            if type_conditional != BOOLEAN:
-                raise TypeError(f"Type mismatch")
-            new_quadruple = Quadruple(GOTOF,"",conditional_element,'_')
-            self.__stacks[JUMPS].append(len(self.__stacks[QUADRUPLES])+1)
-            self.__stacks[QUADRUPLES].append(new_quadruple)
+        conditional_element = self.__stacks[OPERANDS].pop()
+        type_conditional = self.__stacks[TYPES].pop()
+        if type_conditional != BOOLEAN:
+            raise TypeError(f"Type mismatch")
+        new_quadruple = Quadruple(GOTOF,"",conditional_element,'_')
+        self.__stacks[JUMPS].append(len(self.__stacks[QUADRUPLES])+1)
+        self.__stacks[QUADRUPLES].append(new_quadruple)
     
     def fill_while(self):
         false = self.__stacks[JUMPS].pop()-1
@@ -113,6 +113,16 @@ class intermediateRepresentation:
         new_quadruple = Quadruple(GOTO,"","",'_')
         self.__stacks[JUMPS].append(len(self.__stacks[QUADRUPLES])+1)
         self.__stacks[QUADRUPLES].append(new_quadruple)
+    
+    def gotot_while(self):
+        conditional_element = self.__stacks[OPERANDS].pop()
+        type_conditional = self.__stacks[TYPES].pop()
+        if type_conditional != BOOLEAN:
+            raise TypeError(f"Type mismatch")
+        end = self.__stacks[JUMPS].pop()
+        new_quadruple = Quadruple(GOTOT,"",conditional_element,end)
+        self.__stacks[QUADRUPLES].append(new_quadruple)
+        
 
             
 
