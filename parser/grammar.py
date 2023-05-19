@@ -31,6 +31,7 @@ def p_global_scope(p):
     function_name = p[-2] 
     function_type = "PROGRAM"
     scope = "GLOBAL"
+    directory.set_program_name(function_name)
     directory.set_current(function_name,function_type,scope)
     directory.add_function()
 
@@ -82,9 +83,8 @@ def p_var_declarations(p):
     p[0] = p[1]
 
 
-
-# 2 neuronal points open and close variable declaration so I can cehck if and id has already been declared 
-# This can be seen in p_variable
+#? 2 neuronal points open and close variable declaration so I can cehck if and id has already been declared 
+#? This can be seen in p_variable
 def p_var_declaration(p):
     '''
     var_declaration : VARIABLE open_var_declaration simple_type variables SEMICOLON close_var_declaration
@@ -142,7 +142,6 @@ def p_parameters(p):
     | empty
     '''
 
-#! MAYBE HER ERE
 def p_parameter(p):
     '''
     parameter : simple_type ID 
@@ -362,8 +361,6 @@ def p_term(p):
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
 
-
-
 def p_factor(p):
     '''
     factor : variable
@@ -431,7 +428,7 @@ def p_simple_type(p):
     '''
     p[0] = p[1]
 
-
+#? Adding constants to the constant table
 def p_cte(p):
     '''
     cte : CTEI

@@ -10,6 +10,10 @@ class functionsDirectory:
         self.__current_function_scope = None
         self.__current_function_type = None
         self.__is_variable_declaration = False
+        self.__program_name = None
+    
+    def set_program_name(self, name):
+        self.__program_name = name
     
     def __check_value_type(self, value):
             if isinstance(value, bool):
@@ -44,18 +48,9 @@ class functionsDirectory:
     
     def get_current_function_name(self):
         return self.__current_function_name
+    
+    
 
-    def get_variable(self, function_name, variable_id):
-        if function_name not in self.__function_dictionary:
-            raise Exception("Function '{}' was not declared".format(function_name))
-        
-        if variable_id in self.__function_dictionary[function_name]["variable_table"]:
-            return self.__function_dictionary[function_name]["variable_table"][variable_id]
-        if variable_id in self.__constants_table:
-            return self.__constants_table[variable_id]
-        
-        else:
-            raise Exception("Variable '{}' not found".format(variable_id))
             
     def set_current(self, name, type, scope):
         self.__current_function_name = name
@@ -74,7 +69,7 @@ class functionsDirectory:
             "variable_table": {}
         }
     
-
+    
     def add_variable(self, ids,type):
         if self.__current_function_name is None:
             raise Exception("No function defined to add variable '{}'".format(id))
@@ -85,16 +80,51 @@ class functionsDirectory:
         for id in ids:
             if id in self.__function_dictionary[self.__current_function_name]["variable_table"]:
                 raise Exception("Variable '{}' multiple declaration".format(id))
-            
             new_variable = variable(id,type)
             self.__function_dictionary[self.__current_function_name]["variable_table"][id] = new_variable
-        
+    
+    
     def search_variable(self, ids):
         if self.__current_function_name is None:
             raise Exception("No function defined to add variable '{}'".format(id))
+        
+        #? First check for the variable in local scope
+        local_variable_table = self.__function_dictionary[self.__current_function_name]["variable_table"]
+        
+        #? Secondly, check the variable in the constant table
+        constant_table = self.__constants_table
+        
+        #? Lastly, check variables in the global scope (program variable table)
+        program_variable_table = self.__function_dictionary[self.__program_name]["variable_table"]
+        
         for id in ids:
-                if id not in self.__function_dictionary[self.__current_function_name]["variable_table"]:
-                    raise Exception("Variable '{}' was not declared".format(id))
+            if id not in local_variable_table and \
+            id not in constant_table and \
+            id not in program_variable_table:
+                raise Exception("Variable '{}' was not declared".format(id))
+
+    def get_variable(self, function_name, variable_id):
+        if function_name not in self.__function_dictionary:
+            raise Exception("Function '{}' was not declared".format(function_name))
+        
+        print(self.__function_dictionary)
+        local_variable_table = self.__function_dictionary[function_name]["variable_table"]
+        
+        if variable_id in local_variable_table:
+            return local_variable_table[variable_id]
+        
+        constant_table = self.__constants_table
+        
+        if variable_id in constant_table:
+            return constant_table[variable_id]
+        
+        program_variable_table = self.__function_dictionary[self.__program_name]["variable_table"]
+        
+        if variable_id in program_variable_table:
+            return program_variable_table[variable_id]
+
+        raise Exception("Variable '{}' not found".format(variable_id))
+
     
     def print_function_dictionary(self):
         print("{:15} {:10} {:20} {}".format("Function Name", "Type", "Scope", "Variables"))
