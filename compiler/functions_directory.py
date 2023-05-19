@@ -4,12 +4,32 @@ from constants.constants import *
 
 class functionsDirectory:   
     def __init__(self):
+        self.__constants_table = {}
         self.__function_dictionary = {}
         self.__current_function_name = None
         self.__current_function_scope = None
         self.__current_function_type = None
         self.__is_variable_declaration = False
     
+    def __check_value_type(self, value):
+            if isinstance(value, bool):
+                return BOOLEAN
+            elif isinstance(value, int):
+                return INT
+            elif isinstance(value, float):
+                return FLOAT
+            else:
+                return ERROR
+        
+    def add_constant(self, constant):
+        type = self.__check_value_type(constant)
+        if type == ERROR:
+            raise Exception("Constant is ERRROR type")
+        if constant not in self.__constants_table:
+            new_variable = variable(constant,type)
+            self.__constants_table[constant] = new_variable
+            
+        
     def set_is_variable_declaration_true(self):
         self.__is_variable_declaration = True
         
@@ -28,12 +48,15 @@ class functionsDirectory:
     def get_variable(self, function_name, variable_id):
         if function_name not in self.__function_dictionary:
             raise Exception("Function '{}' was not declared".format(function_name))
-        elif variable_id not in self.__function_dictionary[function_name]["variable_table"]:
-            raise Exception("Variable '{}' was not declared '{}'".format(variable_id, function_name))
+        
+        if variable_id in self.__function_dictionary[function_name]["variable_table"]:
+            return self.__function_dictionary[function_name]["variable_table"][variable_id]
+        if variable_id in self.__constants_table:
+            return self.__constants_table[variable_id]
         
         else:
-            return self.__function_dictionary[function_name]["variable_table"][variable_id]
-    
+            raise Exception("Variable '{}' not found".format(variable_id))
+            
     def set_current(self, name, type, scope):
         self.__current_function_name = name
         self.__current_function_type = type
@@ -50,6 +73,7 @@ class functionsDirectory:
             "scope": self.__current_function_scope,
             "variable_table": {}
         }
+    
 
     def add_variable(self, ids,type):
         if self.__current_function_name is None:
@@ -83,22 +107,18 @@ class functionsDirectory:
             variable_names = ", ".join(str(name) for name in variable_table.keys())
             
             print("{:15} {:10} {:20} {}".format(function_name, function_type, function_scope, variable_names))
-
+        
+        print("\nConstants Table:")
+        print("{:15} {}".format("Constant", "Type"))
+        
+        for constant, variable in self.__constants_table.items():
+            constant_type = variable.type
+            print("{:15} {}".format(constant, constant_type))
 
 
     def print_current(self):
             print(self.__current_function_type," ",self.__current_function_name," ",self.__current_function_scope)
 
-    def check_value_type(self, value):
-        if isinstance(value, str):
-            return STRING
-        elif isinstance(value, bool):
-            return BOOLEAN
-        elif isinstance(value, int):
-            return INT
-        elif isinstance(value, float):
-            return FLOAT
-        else:
-            return ERROR
+    
 
 

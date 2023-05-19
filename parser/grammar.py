@@ -427,7 +427,6 @@ def p_simple_type(p):
     simple_type : INT
                 | FLOAT
                 | CHAR
-                | STRING
                 | BOOLEAN
     '''
     p[0] = p[1]
@@ -438,13 +437,11 @@ def p_cte(p):
     cte : CTEI
         | CTEF
         | CTEC
-        | CTES
         | CTEB
     '''
     p[0] = p[1]
     value = p[1]
-    type = directory.check_value_type(value)
-    directory.add_variable([value],type) #! VERY IMPORTANT FOR NOW I ADDED THE NUMBERS IN THE VAR TABLE SO I CAN CONTINUE WITH THE PROJECT
+    directory.add_constant(value)
 
 def p_empty(p):
     '''
