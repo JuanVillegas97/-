@@ -49,9 +49,13 @@ class functionsDirectory:
     def get_current_function_name(self):
         return self.__current_function_name
     
-    
+    def add_parameters(self, type):
+        if type in reserved:
+            type = reserved[type]
+        self.__function_dictionary[self.__current_function_name]["parameters"].append(type)
 
-            
+        
+ 
     def set_current(self, name, type, scope):
         self.__current_function_name = name
         self.__current_function_type = type
@@ -66,6 +70,7 @@ class functionsDirectory:
         self.__function_dictionary[self.__current_function_name] = {
             "type": self.__current_function_type,
             "scope": self.__current_function_scope,
+            "parameters": [],
             "variable_table": {}
         }
     
@@ -107,7 +112,6 @@ class functionsDirectory:
         if function_name not in self.__function_dictionary:
             raise Exception("Function '{}' was not declared".format(function_name))
         
-        print(self.__function_dictionary)
         local_variable_table = self.__function_dictionary[function_name]["variable_table"]
         
         if variable_id in local_variable_table:
@@ -127,23 +131,24 @@ class functionsDirectory:
 
     
     def print_function_dictionary(self):
-        print("{:15} {:10} {:20} {}".format("Function Name", "Type", "Scope", "Variables"))
+        print("{:15} {:10} {:10} {:20} {} ".format("Function Name", "Type", "Scope", "Parameters", "Variables"))
         
         for function_name, function_details in self.__function_dictionary.items():
             function_type = function_details["type"]
             function_scope = function_details["scope"]
             variable_table = function_details["variable_table"]
-            
+            parameters_list = function_details["parameters"]
             variable_names = ", ".join(str(name) for name in variable_table.keys())
-            
-            print("{:15} {:10} {:20} {}".format(function_name, function_type, function_scope, variable_names))
+            parameters_types = ", ".join(str(types) for types in parameters_list)
+            print("{:15} {:10} {:10} {:20} {}".format(function_name, function_type, function_scope, parameters_types, variable_names))
+        
         
         print("\nConstants Table:")
-        print("{:15} {}".format("Constant", "Type"))
+        print("{:10} {}".format("Type","Constant"))
         
         for constant, variable in self.__constants_table.items():
             constant_type = variable.type
-            print("{:15} {}".format(constant, constant_type))
+            print("{:10} {}".format(constant_type, constant))
 
 
     def print_current(self):

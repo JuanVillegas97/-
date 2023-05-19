@@ -17,6 +17,7 @@ precedence = (
 
 directory = functionsDirectory()
 inter_rep = intermediateRepresentation()
+
 def p_program(p):
     '''
     program : PROGRAM ID SEMICOLON global_scope var_declarations functions main END
@@ -148,6 +149,7 @@ def p_parameter(p):
     '''
     type = p[1]
     ids = p[2]
+    directory.add_parameters(type)
     directory.add_variable([ids],type)
     
 
