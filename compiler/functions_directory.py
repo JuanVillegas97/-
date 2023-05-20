@@ -11,7 +11,14 @@ class functionsDirectory:
         self.__current_function_type = None
         self.__is_variable_declaration = False
         self.__program_name = None
+        self.__starting_addres= None
     
+    def is_function_name(self,function_name):
+        if function_name in self.__function_dictionary:
+            return True
+        else:
+            raise Exception("Function being called does not exist")
+        
     def set_program_name(self, name):
         self.__program_name = name
     
@@ -61,15 +68,16 @@ class functionsDirectory:
         self.__current_function_type = type
         self.__current_function_scope= scope
     
-    def add_function(self):
+    def add_function(self, starting_address=None):
         if self.__current_function_name in self.__function_dictionary:
             raise Exception("Function '{}' multiple declaration".format(self.__current_function_name))
-        
+
         if self.__current_function_type in reserved:
             self.__current_function_type = reserved[self.__current_function_type]
         self.__function_dictionary[self.__current_function_name] = {
             "type": self.__current_function_type,
             "scope": self.__current_function_scope,
+            "starting_address": starting_address,
             "parameters": [],
             "variable_table": {}
         }
@@ -131,16 +139,19 @@ class functionsDirectory:
 
     
     def print_function_dictionary(self):
-        print("{:15} {:10} {:10} {:20} {} ".format("Function Name", "Type", "Scope", "Parameters", "Variables"))
+        print("{:15} {:10} {:17} {:8} {:10} {} ".format("Function Name", "Type","Starting Address","Scope", "Parameters", "Variables"))
         
         for function_name, function_details in self.__function_dictionary.items():
             function_type = function_details["type"]
             function_scope = function_details["scope"]
             variable_table = function_details["variable_table"]
             parameters_list = function_details["parameters"]
+            starting_address = str(function_details["starting_address"])
+            
             variable_names = ", ".join(str(name) for name in variable_table.keys())
             parameters_types = ", ".join(str(types) for types in parameters_list)
-            print("{:15} {:10} {:10} {:20} {}".format(function_name, function_type, function_scope, parameters_types, variable_names))
+            
+            print("{:15} {:10} {:17} {:8} {:10} {}".format(function_name, function_type, starting_address, function_scope, parameters_types, variable_names))
         
         
         print("\nConstants Table:")

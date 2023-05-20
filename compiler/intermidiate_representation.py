@@ -13,6 +13,28 @@ class intermediateRepresentation:
             "jumps": []
         }
         self.__temporal_counter = 0
+        self.__is_invocation = False
+        self.__parameter_counter = 0
+    
+    
+    def __generate_paramater(self):
+        self.__parameter_counter += 1
+        return str(self.__parameter_counter)
+    
+    def reset_paramter_counter(self):
+        self.__parameter_counter = 0
+        
+    def get_is_invocation(self):
+        return self.__is_invocation
+    
+    def set_is_invocation_false(self):
+        self.__is_invocation = False
+        
+    def set_is_invocation_true(self):
+        self.__is_invocation = True
+        
+    def get_stack(self,stack_name):
+        return self.__stacks[stack_name]
     
     def push(self, stack_name, value):
         if stack_name in self.__stacks:
@@ -81,6 +103,12 @@ class intermediateRepresentation:
                 self.__stacks[QUADRUPLES].append(new_quadruple)
                 self.__stacks[OPERANDS].append(result)
                 self.__stacks[TYPES].append(result_type)
+                
+                if self.__is_invocation: #?Handles generation of parameters  
+                    argument = self.__stacks[OPERANDS].pop()
+                    parametN = self.__generate_paramater()
+                    new_quadruple = Quadruple(PARAM,argument,"",parametN)
+                    self.__stacks[QUADRUPLES].append(new_quadruple)
             else:
                 raise TypeError(f"Type mismatch with: {left_type}{operator}{right_type}")
     
@@ -103,6 +131,7 @@ class intermediateRepresentation:
     def fill(self):
         end = self.__stacks[JUMPS].pop()-1
         self.__stacks[QUADRUPLES][end].set_avail(len(self.__stacks[QUADRUPLES])+1)
+    
         
     def push_breadcrumb(self):
         self.__stacks[JUMPS].append(len(self.__stacks[QUADRUPLES])+1)
@@ -121,6 +150,14 @@ class intermediateRepresentation:
             raise TypeError(f"Type mismatch")
         end = self.__stacks[JUMPS].pop()
         new_quadruple = Quadruple(GOTOT,"",conditional_element,end)
+        self.__stacks[QUADRUPLES].append(new_quadruple)
+        
+    def generate_era(self,func_id):
+        new_quadruple = Quadruple(ERA,"","",func_id)
+        self.__stacks[QUADRUPLES].append(new_quadruple)
+        
+    def generate_gosub(self,func_id):
+        new_quadruple = Quadruple(GOSUB,"","",func_id)
         self.__stacks[QUADRUPLES].append(new_quadruple)
         
 

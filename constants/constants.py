@@ -6,6 +6,11 @@ JUMPS      ="jumps"
 GOTOF      ="gotoF"
 GOTOT      ="gotoT"
 GOTO      ="goto"
+GOTOMAIN  ="gotoMain"
+ENDFUNC   = "EndFunc"
+ERA = "ERA"
+PARAM = "Param"
+GOSUB = "gosub"
 # Types
 INT = 'INT'
 FLOAT = 'FLOAT'

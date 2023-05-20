@@ -3,11 +3,9 @@ from constants.constants import *
 from compiler.functions_directory import functionsDirectory
 from compiler.intermidiate_representation import intermediateRepresentation
 from compiler.quadruple import Quadruple
+
 # Because PLY is a bottom-up and cannot be converted to a top-down it's difficult to track stuff
 # The rules named with ..._scope are neural points to prepare the variable table
-
-
-
 precedence = (
      ('nonassoc', 'LESS', 'GREATER', 'EQUALS', 'NOTEQUAL', 'LESSTHAN', 'GREATERTHAN'),  # Nonassociative operators
      ('left', 'PLUS', 'MINUS'),
@@ -35,6 +33,10 @@ def p_global_scope(p):
     directory.set_program_name(function_name)
     directory.set_current(function_name,function_type,scope)
     directory.add_function()
+    
+    new_quadruple = Quadruple(GOTOMAIN,"","","_")
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    inter_rep.push(JUMPS,1)
 
 def p_functions(p):
     '''
@@ -48,6 +50,8 @@ def p_function(p):
     function : FUNCTION simple_type ID LPAREN function_scope open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
             |  FUNCTION VOID ID LPAREN function_scope open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
     '''
+    new_quadruple = Quadruple(ENDFUNC,"","","")
+    inter_rep.push(QUADRUPLES,new_quadruple)
 
 def p_function_scope(p):
     '''
@@ -57,7 +61,9 @@ def p_function_scope(p):
     function_type = p[-3]
     scope = "LOCAL"
     directory.set_current(function_name,function_type,scope)
-    directory.add_function()
+    directory.add_function(len(inter_rep.get_stack(QUADRUPLES))+1)
+    inter_rep.reset_temporal_counter()
+    
 
 def p_main(p):
     '''
@@ -73,6 +79,8 @@ def p_main_scope(p):
     scope = "LOCAL"
     directory.set_current(function_name,function_type,scope)
     directory.add_function()
+    
+    inter_rep.fill() #!CHECK THIS
 
 
 def p_var_declarations(p):
@@ -250,8 +258,30 @@ def p_variable_list(p):
         
 def p_invocation(p):
     '''
-    invocation : ID LPAREN expressions RPAREN SEMICOLON
+    invocation : ID generate_era LPAREN open_invocation expressions close_invocation RPAREN SEMICOLON
     '''
+    id = p[1]
+    inter_rep.reset_paramter_counter()
+    inter_rep.generate_gosub(id)
+    
+def p_open_invocation(p):
+    '''
+    open_invocation : empty
+    '''
+    inter_rep.set_is_invocation_true()
+def p_close_invocation(p):
+    '''
+    close_invocation : empty
+    '''
+    inter_rep.set_is_invocation_false()
+    
+def p_generate_era(p):
+    '''
+    generate_era : empty
+    '''
+    invoaction_id = p[-1]
+    if directory.is_function_name(invoaction_id):
+        inter_rep.generate_era(invoaction_id)
 
 def p_expressions(p):
     '''
@@ -311,6 +341,7 @@ def p_expression(p): # instead of = it ahs to be not
     expression : t_expression 
                 | NOT t_expression
     '''
+    
     if len(p) == 4: # push opeartor
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
@@ -376,6 +407,8 @@ def p_factor(p):
         current_variable  = directory.get_variable(current_function_name,id)
         inter_rep.push(OPERANDS,current_variable.id)
         inter_rep.push(TYPES,current_variable.type)
+        
+
 
     
 

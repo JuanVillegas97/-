@@ -18,7 +18,7 @@
     i = a;
     ワイル(a>0){
         a = a-k*j;
-        uno(a*2, a+j);
+        uno(a*2, a+k);
     }
     g=g*j-k;
 }

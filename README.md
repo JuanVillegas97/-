@@ -1,4 +1,11 @@
 # 竜語
+## Neraul-points
+
+### Modules
+#### global_scope
+Insert Function name into the DirFunc table (and its type, if any), verify semantics.
+
+
 ## Proposal
 1. $Cryptography$: Library for cryptography that supports Japanese-language inputs and outputs. This could be used for applications like secure messaging, file encryption, and digital signatures.
 
