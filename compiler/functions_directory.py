@@ -1,3 +1,4 @@
+import copy
 from lexer.tokens import reserved
 from compiler.variable import variable
 from constants.constants import *
@@ -11,13 +12,22 @@ class functionsDirectory:
         self.__current_function_type = None
         self.__is_variable_declaration = False
         self.__program_name = None
-        self.__starting_addres= None
-    
+        
+    def is_same_signature(self, signature):
+        func_name = signature.pop()
+        if func_name in self.__function_dictionary:
+            parameters = copy.deepcopy(self.__function_dictionary[func_name]["parameters"])
+            while signature and signature[-1] == parameters[-1]:
+                signature.pop()
+                parameters.pop()
+        if len(signature) != 0 and len(parameters) != 0:
+            raise Exception("Invocation does not has the same signature")
+            
     def is_function_name(self,function_name):
         if function_name in self.__function_dictionary:
             return True
         else:
-            raise Exception("Function being called does not exist")
+            raise Exception("Function being called does not exist or does not have the same signature")
         
     def set_program_name(self, name):
         self.__program_name = name
@@ -61,8 +71,6 @@ class functionsDirectory:
             type = reserved[type]
         self.__function_dictionary[self.__current_function_name]["parameters"].append(type)
 
-        
- 
     def set_current(self, name, type, scope):
         self.__current_function_name = name
         self.__current_function_type = type
@@ -70,7 +78,7 @@ class functionsDirectory:
     
     def add_function(self, starting_address=None):
         if self.__current_function_name in self.__function_dictionary:
-            raise Exception("Function '{}' multiple declaration".format(self.__current_function_name))
+            raise Exception("Function '{}' multiple declaration (functions can only have unique ID)".format(self.__current_function_name))
 
         if self.__current_function_type in reserved:
             self.__current_function_type = reserved[self.__current_function_type]
@@ -78,6 +86,7 @@ class functionsDirectory:
             "type": self.__current_function_type,
             "scope": self.__current_function_scope,
             "starting_address": starting_address,
+            "resources":{"parameters":None,"variables":None,"temporal":None},
             "parameters": [],
             "variable_table": {}
         }
@@ -139,7 +148,7 @@ class functionsDirectory:
 
     
     def print_function_dictionary(self):
-        print("{:15} {:10} {:17} {:8} {:10} {} ".format("Function Name", "Type","Starting Address","Scope", "Parameters", "Variables"))
+        print("{:15} {:10} {:17} {:8} {:10} {} ".format("Function Name", "Type","Starting Address","Scope", "Signature", "Variables"))
         
         for function_name, function_details in self.__function_dictionary.items():
             function_type = function_details["type"]

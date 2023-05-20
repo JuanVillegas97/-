@@ -261,6 +261,11 @@ def p_invocation(p):
     invocation : ID generate_era LPAREN open_invocation expressions close_invocation RPAREN SEMICOLON
     '''
     id = p[1]
+    
+    inter_rep.append_invocation_signatue(id)
+    signature = inter_rep.get_invocation_signature()
+    directory.is_same_signature(signature)
+    
     inter_rep.reset_paramter_counter()
     inter_rep.generate_gosub(id)
     
@@ -473,6 +478,8 @@ def p_cte(p):
     '''
     p[0] = p[1]
     value = p[1]
+
+
     directory.add_constant(value)
 
 def p_empty(p):

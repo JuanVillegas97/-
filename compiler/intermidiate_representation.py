@@ -1,7 +1,7 @@
 from compiler.sematnic_cube import SemanticCube
 from compiler.quadruple import Quadruple
-from constants.constants import *
 
+from constants.constants import *
 class intermediateRepresentation:
     def __init__(self):
         self.__semantic_cube = SemanticCube()
@@ -15,7 +15,14 @@ class intermediateRepresentation:
         self.__temporal_counter = 0
         self.__is_invocation = False
         self.__parameter_counter = 0
+        self.__invocation_signature = []
     
+    
+    def append_invocation_signatue(self, value):
+        self.__invocation_signature.append(value)
+        
+    def get_invocation_signature(self):
+        return self.__invocation_signature
     
     def __generate_paramater(self):
         self.__parameter_counter += 1
@@ -104,7 +111,8 @@ class intermediateRepresentation:
                 self.__stacks[OPERANDS].append(result)
                 self.__stacks[TYPES].append(result_type)
                 
-                if self.__is_invocation: #?Handles generation of parameters  
+                if self.__is_invocation: #?Handles generation of parameters AND respect to the same signature
+                    self.__invocation_signature.append(self.top(TYPES))
                     argument = self.__stacks[OPERANDS].pop()
                     parametN = self.__generate_paramater()
                     new_quadruple = Quadruple(PARAM,argument,"",parametN)
