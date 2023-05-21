@@ -261,7 +261,7 @@ def p_invocation(p):
     invocation : ID generate_era LPAREN open_invocation expressions close_invocation RPAREN SEMICOLON
     '''
     id = p[1]
-    
+
     inter_rep.append_invocation_signatue(id)
     signature = inter_rep.get_invocation_signature()
     directory.is_same_signature(signature)
@@ -305,6 +305,7 @@ def p_print_arguments(p):
     print_arguments : print_argument
                     | print_arguments COMMA print_argument
     '''
+    type_printed = inter_rep.pop(TYPES) #!Don't know what to do with them
     p[0] = p[1]
     if len(p) == 2:
         p[0] = [p[1]]

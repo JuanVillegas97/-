@@ -112,7 +112,8 @@ class intermediateRepresentation:
                 self.__stacks[TYPES].append(result_type)
                 
                 if self.__is_invocation: #?Handles generation of parameters AND respect to the same signature
-                    self.__invocation_signature.append(self.top(TYPES))
+                    self.__invocation_signature.append(self.__stacks[TYPES].pop()) #!Don't know what to do with them
+                    
                     argument = self.__stacks[OPERANDS].pop()
                     parametN = self.__generate_paramater()
                     new_quadruple = Quadruple(PARAM,argument,"",parametN)

@@ -27,7 +27,7 @@ class functionsDirectory:
         if function_name in self.__function_dictionary:
             return True
         else:
-            raise Exception("Function being called does not exist or does not have the same signature")
+            raise Exception("Function being called does not exist")
         
     def set_program_name(self, name):
         self.__program_name = name
