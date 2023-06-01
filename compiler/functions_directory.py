@@ -1,17 +1,29 @@
 import copy
 from lexer.tokens import reserved
-from compiler.variable import variable
+from compiler.interfaces.variable import variable
 from constants.constants import *
 
-class functionsDirectory:   
+class FunctionsDirectory:
+    __instance = None
+
+    @staticmethod
+    def get_instance():
+        if FunctionsDirectory.__instance is None:
+            FunctionsDirectory()
+        return FunctionsDirectory.__instance
+
     def __init__(self):
-        self.__constants_table = {}
-        self.__function_dictionary = {}
-        self.__current_function_name = None
-        self.__current_function_scope = None
-        self.__current_function_type = None
-        self.__is_variable_declaration = False
-        self.__program_name = None
+        if FunctionsDirectory.__instance is not None:
+            raise Exception("This class is a singleton. Use get_instance() method to get the instance.")
+        else:
+            FunctionsDirectory.__instance = self
+            self.__constants_table = {}
+            self.__function_dictionary = {}
+            self.__current_function_name = None
+            self.__current_function_scope = None
+            self.__current_function_type = None
+            self.__is_variable_declaration = False
+            self.__program_name = None
     
     def add_resource(self, ids, type, resource_type):
         if self.__current_function_name is None:
@@ -22,15 +34,7 @@ class functionsDirectory:
         for id in ids:
             self.__function_dictionary[self.__current_function_name][RESOURCES][resource_type][type] +=1
     
-    def is_same_signature(self, signature):
-        func_name = signature.pop()
-        if func_name in self.__function_dictionary:
-            parameters = copy.deepcopy(self.__function_dictionary[func_name]["parameters"])
-            while signature and signature[-1] == parameters[-1]:
-                signature.pop()
-                parameters.pop()
-        if len(signature) != 0 and len(parameters) != 0:
-            raise Exception("Invocation does not has the same signature")
+
             
     def is_function_name(self,function_name):
         if function_name in self.__function_dictionary:

@@ -1,9 +1,10 @@
 from lexer.tokens import tokens
 from constants.constants import *
 from compiler.sematnic_cube import SemanticCube
-from compiler.functions_directory import functionsDirectory
-from compiler.intermidiate_representation import intermediateRepresentation
-from compiler.quadruple import Quadruple
+from compiler.functions_directory import FunctionsDirectory
+from compiler.intermidiate_representation import IntermediateRepresentation
+from compiler.interfaces.quadruple import Quadruple
+from compiler.neural_points_handler import NeuralPointsHandler
 
 # Because PLY is a bottom-up and cannot be converted to a top-down it's difficult to track stuff
 # The rules named with ..._scope are neural points to prepare the variable table
@@ -14,9 +15,13 @@ precedence = (
      ('right', 'ASSIGN')
 )
 
-directory = functionsDirectory()
-inter_rep = intermediateRepresentation()
+directory = FunctionsDirectory.get_instance()
+inter_rep = IntermediateRepresentation.get_instance()
+neural_points_handler = NeuralPointsHandler()
+
 cube = SemanticCube()
+
+
 def p_program(p):
     '''
     program : PROGRAM ID SEMICOLON global_scope var_declarations functions main END
@@ -48,23 +53,21 @@ def p_functions(p):
 
 def p_function(p):
     '''
-    function : FUNCTION simple_type ID LPAREN function_scope open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
-            |  FUNCTION VOID ID LPAREN function_scope open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
+    function : FUNCTION simple_type ID function_1 LPAREN  open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
+            |  FUNCTION VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
     '''
     new_quadruple = Quadruple(ENDFUNC,"","","")
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.reset_temporal_counter()
     inter_rep.reset_temporal_counter_b()
 
-def p_function_scope(p):
+def p_function_1(p):
     '''
-    function_scope : empty
+    function_1 : empty
     '''
-    function_name = p[-2] 
-    function_type = p[-3]
-    scope = "LOCAL"
-    directory.set_current(function_name,function_type,scope)
-    directory.add_function(len(inter_rep.get_stack(QUADRUPLES))+1)
+    function_name = p[-1] 
+    function_type = p[-2]
+    neural_points_handler.function_1(function_name,function_type,LOCAL)
 
 def p_main(p):
     '''
@@ -280,7 +283,7 @@ def p_for_4(p):
         
 def p_while(p):
     '''
-    while : WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
+    while : WHILE breadcrumb LPAREN open_temporal_boolean expression close_temporal_boolean RPAREN gotof LBRACE statements RBRACE
     '''
     inter_rep.fill_while()
     
@@ -358,45 +361,58 @@ def p_variable_list(p):
     else:
         p[1].append(p[3])
         p[0] = p[1]
-        
+
+
 def p_invocation(p):
     '''
-    invocation : ID generate_era LPAREN open_invocation expressions close_invocation RPAREN SEMICOLON
-    '''
-    id = p[1]
-
-    inter_rep.append_invocation_signatue(id)
-    signature = inter_rep.get_invocation_signature()
-    directory.is_same_signature(signature)
+    invocation : ID invocation_1 LPAREN  invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6    '''
     
-    inter_rep.reset_paramter_counter()
-    inter_rep.generate_gosub(id)
+def p_invocation_1(p):
+    '''
+    invocation_1 : empty
+    '''
+    invocation_id = p[-1]
+    neural_points_handler.invocation_1(invocation_id)
     
-def p_open_invocation(p):
+def p_invocation_2(p):
     '''
-    open_invocation : empty
+    invocation_2 : empty
     '''
-    inter_rep.set_is_invocation_true()
-def p_close_invocation(p):
-    '''
-    close_invocation : empty
-    '''
-    inter_rep.set_is_invocation_false()
+    invocation_id = p[-3]
+    neural_points_handler.invocation_2(invocation_id)
     
-def p_generate_era(p):
+def p_invocation_3(p):
     '''
-    generate_era : empty
+    invocation_3 : empty
     '''
-    invoaction_id = p[-1]
-    if directory.is_function_name(invoaction_id):
-        inter_rep.generate_era(invoaction_id)
-
+    neural_points_handler.invocation_3()
+    
+def p_invocation_4(p):
+    '''
+    invocation_4 : empty
+    '''
+    neural_points_handler.invocation_4()
+    
+def p_invocation_5(p):
+    '''
+    invocation_5 : empty
+    '''
+    neural_points_handler.invocation_5()
+    
+def p_invocation_6(p):
+    '''
+    invocation_6 : empty
+    '''
+    invocation_id = p[-8]
+    neural_points_handler.invocation_6(invocation_id)
+    
 def p_expressions(p):
     '''
-    expressions : expressions COMMA expression  
-                | expression
+    expressions : expressions COMMA invocation_4 expression invocation_3
+                | expression invocation_3
                 | empty
     '''
+
 
 def p_print(p):
     '''

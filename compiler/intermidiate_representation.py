@@ -1,24 +1,48 @@
 from compiler.sematnic_cube import SemanticCube
-from compiler.quadruple import Quadruple
+from compiler.interfaces.quadruple import Quadruple
 from constants.constants import *
 
-class intermediateRepresentation:
+class IntermediateRepresentation:
+    __instance = None
+
+    @staticmethod
+    def get_instance():
+        if IntermediateRepresentation.__instance is None:
+            IntermediateRepresentation()
+        return IntermediateRepresentation.__instance
+
     def __init__(self):
-        self.__semantic_cube = SemanticCube()
-        self.__stacks = {
-            "operators": [],#POper
-            "types": [],    #PTYpes
-            "operands": [], #PilaO
-            "quadruples": [],
-            "jumps": []
-        }
-        self.__temporal_counter = 0
-        self.__temporal_counter_b = 0
-        self.__parameter_counter = 0
+        if IntermediateRepresentation.__instance is not None:
+            raise Exception("This class is a singleton. Use get_instance() method to get the instance.")
+        else:
+            IntermediateRepresentation.__instance = self
+            self.__semantic_cube = SemanticCube()
+            self.__stacks = {
+                "operators": [],
+                "types": [],
+                "operands": [],
+                "quadruples": [],
+                "jumps": []
+            }
+            self.__temporal_counter = 0
+            self.__temporal_counter_b = 0
+            self.__k = 0
+
+            self.__is_conditional = False
+            self.__is_invocation = False
+            self.__invocation_signature = []
+            
+    def generate_parameter(self):
+        return f'par{self.__k}'
+    
+    def move_to_next_parameter(self):
+        self.__k = self.__k + 1
+    
+    def reset_paramter_counter(self):
+        self.__k = 0
         
-        self.__is_condtional = False
-        self.__is_invocation = False
-        self.__invocation_signature = []
+    def set_parameter_counter(self, value):
+        self.__k = value
         
     def set_is_condtional_false(self):
         self.__is_condtional = False
@@ -33,7 +57,6 @@ class intermediateRepresentation:
     def reset_temporal_counter_b(self):
         self.__temporal_counter_b = 0
         
-        
     def __set_temporal_info(self, name, type):
         self.__temporal_info = (name, type)
     
@@ -43,18 +66,9 @@ class intermediateRepresentation:
     def get_stack(self, name):
         return self.__stacks[name]
     
-    def append_invocation_signatue(self, value):
-        self.__invocation_signature.append(value)
-        
-    def get_invocation_signature(self):
-        return self.__invocation_signature
+
     
-    def __generate_paramater(self):
-        self.__parameter_counter += 1
-        return str(self.__parameter_counter)
-    
-    def reset_paramter_counter(self):
-        self.__parameter_counter = 0
+
         
     def get_is_invocation(self):
         return self.__is_invocation
@@ -137,14 +151,10 @@ class intermediateRepresentation:
                 self.__stacks[TYPES].append(result_type)
 
                 self.__set_temporal_info(result,result_type) #?HANDLES RESOURCES FOR TEMPORALS
-                if self.__is_invocation: #?Handles generation of parameters AND respect to the same signature
-                    self.__invocation_signature.append(self.__stacks[TYPES].pop()) #!Don't know what to do with them
+                # if self.__is_invocation: #?Handles generation of parameters AND respect to the same signature
+                #     self.__invocation_signature.append(self.__stacks[TYPES].pop()) #!Don't know what to do with them
                     
-                    argument = self.__stacks[OPERANDS].pop()
-                    print(argument)
-                    parametN = self.__generate_paramater()
-                    new_quadruple = Quadruple(PARAM,argument,"",parametN)
-                    self.__stacks[QUADRUPLES].append(new_quadruple)
+
             else:
                 raise TypeError(f"Type mismatch with: {left_type}{operator}{right_type}")
     
@@ -188,13 +198,10 @@ class intermediateRepresentation:
         new_quadruple = Quadruple(GOTOT,"",conditional_element,end)
         self.__stacks[QUADRUPLES].append(new_quadruple)
         
-    def generate_era(self,func_id):
-        new_quadruple = Quadruple(ERA,"","",func_id)
-        self.__stacks[QUADRUPLES].append(new_quadruple)
-        
     def generate_gosub(self,func_id):
         new_quadruple = Quadruple(GOSUB,"","",func_id)
         self.__stacks[QUADRUPLES].append(new_quadruple)
+    
         
 
             

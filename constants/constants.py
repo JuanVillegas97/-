@@ -10,7 +10,7 @@ GOTOMAIN  ="gotoMain"
 ENDFUNC   = "EndFunc"
 VCONTROL = "VControl"
 VFINAL = "VFinal"
-
+LOCAL = "LOCAL"
 ERA = "ERA"
 PARAM = "Param"
 GOSUB = "gosub"
