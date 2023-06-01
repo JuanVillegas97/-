@@ -13,9 +13,26 @@ class intermediateRepresentation:
             "jumps": []
         }
         self.__temporal_counter = 0
-        self.__is_invocation = False
+        self.__temporal_counter_b = 0
         self.__parameter_counter = 0
+        
+        self.__is_condtional = False
+        self.__is_invocation = False
         self.__invocation_signature = []
+        
+    def set_is_condtional_false(self):
+        self.__is_condtional = False
+        
+    def set_is_condtional_true(self):
+        self.__is_condtional = True
+        
+    def generate_temporal_counter_b(self):
+        self.__temporal_counter_b += 1
+        return f'tb{self.__temporal_counter_b}'
+    
+    def reset_temporal_counter_b(self):
+        self.__temporal_counter_b = 0
+        
         
     def __set_temporal_info(self, name, type):
         self.__temporal_info = (name, type)
@@ -113,7 +130,7 @@ class intermediateRepresentation:
                 raise IndexError("Error: Pop from empty stack")
             result_type = self.__semantic_cube.get_type(left_type,right_type,operator)
             if result_type != "ERROR":
-                result = self.generate_avail()
+                result = self.generate_temporal_counter_b() if self.__is_condtional else self.generate_avail() 
                 new_quadruple = Quadruple(operator,left_operand,right_operand,result)
                 self.__stacks[QUADRUPLES].append(new_quadruple)
                 self.__stacks[OPERANDS].append(result)
@@ -124,6 +141,7 @@ class intermediateRepresentation:
                     self.__invocation_signature.append(self.__stacks[TYPES].pop()) #!Don't know what to do with them
                     
                     argument = self.__stacks[OPERANDS].pop()
+                    print(argument)
                     parametN = self.__generate_paramater()
                     new_quadruple = Quadruple(PARAM,argument,"",parametN)
                     self.__stacks[QUADRUPLES].append(new_quadruple)

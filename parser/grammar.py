@@ -54,6 +54,7 @@ def p_function(p):
     new_quadruple = Quadruple(ENDFUNC,"","","")
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.reset_temporal_counter()
+    inter_rep.reset_temporal_counter_b()
 
 def p_function_scope(p):
     '''
@@ -64,8 +65,6 @@ def p_function_scope(p):
     scope = "LOCAL"
     directory.set_current(function_name,function_type,scope)
     directory.add_function(len(inter_rep.get_stack(QUADRUPLES))+1)
-    
-    
 
 def p_main(p):
     '''
@@ -294,14 +293,25 @@ def p_breadcrumb(p):
     
 def p_if(p):
     '''
-    if : IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
+    if : IF LPAREN open_temporal_boolean expression close_temporal_boolean RPAREN gotof LBRACE statements RBRACE
     '''
     inter_rep.fill()
     
+def p_open_temporal_boolean(p):
+    '''
+    open_temporal_boolean : empty
+    '''
+    inter_rep.set_is_condtional_true()
 
+def p_close_temporal_boolean(p):
+    '''
+    close_temporal_boolean : empty
+    '''
+    inter_rep.set_is_condtional_false()
+    
 def p_if_else(p):
     '''
-    if_else : IF LPAREN expression RPAREN  gotof LBRACE statements RBRACE  ELSE goto LBRACE statements RBRACE
+    if_else : IF LPAREN  open_temporal_boolean expression  close_temporal_boolean RPAREN  gotof LBRACE statements RBRACE  ELSE goto LBRACE statements RBRACE
     '''
     inter_rep.fill()
 
