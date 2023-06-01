@@ -144,7 +144,7 @@ class IntermediateRepresentation:
                 raise IndexError("Error: Pop from empty stack")
             result_type = self.__semantic_cube.get_type(left_type,right_type,operator)
             if result_type != "ERROR":
-                result = self.generate_temporal_counter_b() if self.__is_condtional else self.generate_avail() 
+                result = self.generate_avail() 
                 new_quadruple = Quadruple(operator,left_operand,right_operand,result)
                 self.__stacks[QUADRUPLES].append(new_quadruple)
                 self.__stacks[OPERANDS].append(result)

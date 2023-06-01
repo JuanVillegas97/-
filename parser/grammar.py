@@ -51,15 +51,29 @@ def p_functions(p):
                     | empty
     '''
 
+
+
 def p_function(p):
     '''
-    function : FUNCTION simple_type ID function_1 LPAREN  open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
+    function : FUNCTION simple_type ID  function_1 LPAREN  open_var_declaration parameters close_var_declaration RPAREN var_declarations  RBRACE statements return_me RBRACE 
             |  FUNCTION VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
     '''
+
     new_quadruple = Quadruple(ENDFUNC,"","","")
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.reset_temporal_counter()
     inter_rep.reset_temporal_counter_b()
+
+def p_return_me(p):
+    '''
+    return_me : empty
+    '''
+    return_value = inter_rep.pop(OPERANDS)
+    return_type = inter_rep.pop(TYPES) #!vereify type with singature
+    new_quadruple = Quadruple(RETURN,"","",return_value)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    inter_rep.print_stacks()
+
 
 def p_function_1(p):
     '''
@@ -87,13 +101,20 @@ def p_main_scope(p):
     inter_rep.fill() 
 
 
+
 def p_var_declarations(p):
     '''
-    var_declarations : var_declaration var_declarations 
-                    | var_declaration
+    var_declarations : var_declaration_list
                     | empty
     '''
     p[0] = p[1]
+
+
+def p_var_declaration_list(p):
+    '''
+    var_declaration_list : var_declaration var_declarations
+    '''
+
 
 
 #? 2 neuronal points open and close variable declaration so I can cehck if and id has already been declared 
