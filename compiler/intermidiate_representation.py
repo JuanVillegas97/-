@@ -1,7 +1,7 @@
 from compiler.sematnic_cube import SemanticCube
 from compiler.quadruple import Quadruple
-
 from constants.constants import *
+
 class intermediateRepresentation:
     def __init__(self):
         self.__semantic_cube = SemanticCube()
@@ -16,7 +16,15 @@ class intermediateRepresentation:
         self.__is_invocation = False
         self.__parameter_counter = 0
         self.__invocation_signature = []
+        
+    def __set_temporal_info(self, name, type):
+        self.__temporal_info = (name, type)
     
+    def get_temporal_info(self):
+        return self.__temporal_info
+    
+    def get_stack(self, name):
+        return self.__stacks[name]
     
     def append_invocation_signatue(self, value):
         self.__invocation_signature.append(value)
@@ -45,11 +53,11 @@ class intermediateRepresentation:
     
     def push(self, stack_name, value):
         if stack_name in self.__stacks:
-            if stack_name == "operators":
+            if stack_name == OPERATORS:
                 if value not in ["+", "-", "*", "/", "<", ">","=","!","!="]:
                     raise ValueError("Invalid operator")
-            elif stack_name == "types":
-                if value not in ["BOOLEAN", "CHAR", "STRING", "FLOAT", "INT"]:
+            elif stack_name == TYPES:
+                if value not in [BOOLEAN, CHAR, STRING, FLOAT, INT]:
                     raise ValueError("Invalid type")
             self.__stacks[stack_name].append(value)
         else:
@@ -69,24 +77,24 @@ class intermediateRepresentation:
         
     def print_stacks(self):
         print('-' * 50)
-        print("Operators stack:", self.__stacks["operators"])
-        print("Types stack:", self.__stacks["types"])
-        print("Operands stack:", self.__stacks["operands"])
-        print("Jumps stack:", self.__stacks["jumps"])
+        print("Operators stack:", self.__stacks[OPERATORS])
+        print("Types stack:", self.__stacks[TYPES])
+        print("Operands stack:", self.__stacks[OPERANDS])
+        print("Jumps stack:", self.__stacks[JUMPS])
         print("Quadruples stack:")
-        for i, quad in enumerate(self.__stacks["quadruples"]):
+        for i, quad in enumerate(self.__stacks[QUADRUPLES]):
             print(f"  {i+1}: {quad.get_operator()} {quad.get_left_operand()} {quad.get_right_operand()} {quad.get_avail()}")
         print('-' * 50)
         print('\n')
     
-    def __generate_avail(self):
+    def generate_avail(self):
         self.__temporal_counter += 1
         return f't{self.__temporal_counter}'
     
     def reset_temporal_counter(self):
         self.__temporal_counter = 0
     
-    
+        
     def create_quadruple(self):
         operator = self.__stacks[OPERATORS].pop()
         if operator == '=':
@@ -105,12 +113,13 @@ class intermediateRepresentation:
                 raise IndexError("Error: Pop from empty stack")
             result_type = self.__semantic_cube.get_type(left_type,right_type,operator)
             if result_type != "ERROR":
-                result = self.__generate_avail()
+                result = self.generate_avail()
                 new_quadruple = Quadruple(operator,left_operand,right_operand,result)
                 self.__stacks[QUADRUPLES].append(new_quadruple)
                 self.__stacks[OPERANDS].append(result)
                 self.__stacks[TYPES].append(result_type)
-                
+
+                self.__set_temporal_info(result,result_type) #?HANDLES RESOURCES FOR TEMPORALS
                 if self.__is_invocation: #?Handles generation of parameters AND respect to the same signature
                     self.__invocation_signature.append(self.__stacks[TYPES].pop()) #!Don't know what to do with them
                     

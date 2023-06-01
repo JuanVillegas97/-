@@ -1,10 +1,12 @@
 # Tuple of reserved names.
 reserved = {
     'プログラム':'PROGRAM',
+    'から' : 'FROM',
     '整数': 'INT', 
     '浮動小数点数':'FLOAT', 
     '文字列': 'STRING', 
     '文字':  'CHAR',
+    '繰り返し': 'FOR',
     '実行': 'DO',
     'ブール' : 'BOOLEAN',
     'もし' : 'IF',

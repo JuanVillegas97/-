@@ -8,9 +8,16 @@ GOTOT      ="gotoT"
 GOTO      ="goto"
 GOTOMAIN  ="gotoMain"
 ENDFUNC   = "EndFunc"
+VCONTROL = "VControl"
+VFINAL = "VFinal"
+
 ERA = "ERA"
 PARAM = "Param"
 GOSUB = "gosub"
+RESOURCES = "resources"
+VARIABLES = "variables"
+PARAMETERS = "parameters"
+TEMPORAL = "temporal"
 # Types
 INT = 'INT'
 FLOAT = 'FLOAT'

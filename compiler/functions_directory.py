@@ -12,7 +12,16 @@ class functionsDirectory:
         self.__current_function_type = None
         self.__is_variable_declaration = False
         self.__program_name = None
+    
+    def add_resource(self, ids, type, resource_type):
+        if self.__current_function_name is None:
+            raise Exception("No function defined to add variable '{}'".format(id))
         
+        if type in reserved:
+            type = reserved[type]
+        for id in ids:
+            self.__function_dictionary[self.__current_function_name][RESOURCES][resource_type][type] +=1
+    
     def is_same_signature(self, signature):
         func_name = signature.pop()
         if func_name in self.__function_dictionary:
@@ -86,7 +95,11 @@ class functionsDirectory:
             "type": self.__current_function_type,
             "scope": self.__current_function_scope,
             "starting_address": starting_address,
-            "resources":{"parameters":None,"variables":None,"temporal":None},
+            RESOURCES:{
+                "parameters":{INT:0,CHAR:0,FLOAT:0,BOOLEAN:0},
+                "variables":{INT:0,CHAR:0,FLOAT:0,BOOLEAN:0},
+                "temporal":{INT:0,CHAR:0,FLOAT:0,BOOLEAN:0}
+            },
             "parameters": [],
             "variable_table": {}
         }
@@ -148,8 +161,8 @@ class functionsDirectory:
 
     
     def print_function_dictionary(self):
-        print("{:15} {:10} {:17} {:8} {:10} {} ".format("Function Name", "Type","Starting Address","Scope", "Signature", "Variables"))
-        
+        print("{:15} {:10} {:17} {:8} {:10} {:15}".format("Function Name", "Type","Starting Address","Scope", "Signature", "Variables"))
+
         for function_name, function_details in self.__function_dictionary.items():
             function_type = function_details["type"]
             function_scope = function_details["scope"]
@@ -157,11 +170,10 @@ class functionsDirectory:
             parameters_list = function_details["parameters"]
             starting_address = str(function_details["starting_address"])
             
-            variable_names = ", ".join(str(name) for name in variable_table.keys())
             parameters_types = ", ".join(str(types) for types in parameters_list)
-            
-            print("{:15} {:10} {:17} {:8} {:10} {}".format(function_name, function_type, starting_address, function_scope, parameters_types, variable_names))
-        
+            variable_names = ", ".join(str(name) for name in variable_table.keys())
+
+            print("{:15} {:10} {:17} {:8} {:10} {:15}".format(function_name, function_type, starting_address, function_scope, parameters_types, variable_names))
         
         print("\nConstants Table:")
         print("{:10} {}".format("Type","Constant"))

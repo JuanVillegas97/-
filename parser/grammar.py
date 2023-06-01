@@ -1,5 +1,6 @@
 from lexer.tokens import tokens
 from constants.constants import *
+from compiler.sematnic_cube import SemanticCube
 from compiler.functions_directory import functionsDirectory
 from compiler.intermidiate_representation import intermediateRepresentation
 from compiler.quadruple import Quadruple
@@ -15,7 +16,7 @@ precedence = (
 
 directory = functionsDirectory()
 inter_rep = intermediateRepresentation()
-
+cube = SemanticCube()
 def p_program(p):
     '''
     program : PROGRAM ID SEMICOLON global_scope var_declarations functions main END
@@ -52,6 +53,7 @@ def p_function(p):
     '''
     new_quadruple = Quadruple(ENDFUNC,"","","")
     inter_rep.push(QUADRUPLES,new_quadruple)
+    inter_rep.reset_temporal_counter()
 
 def p_function_scope(p):
     '''
@@ -62,7 +64,7 @@ def p_function_scope(p):
     scope = "LOCAL"
     directory.set_current(function_name,function_type,scope)
     directory.add_function(len(inter_rep.get_stack(QUADRUPLES))+1)
-    inter_rep.reset_temporal_counter()
+    
     
 
 def p_main(p):
@@ -80,7 +82,7 @@ def p_main_scope(p):
     directory.set_current(function_name,function_type,scope)
     directory.add_function()
     
-    inter_rep.fill() #!CHECK THIS
+    inter_rep.fill() 
 
 
 def p_var_declarations(p):
@@ -101,6 +103,7 @@ def p_var_declaration(p):
     type = p[3]
     ids = p[4]
     directory.add_variable(ids,type)
+    directory.add_resource(ids,type,VARIABLES)
     
 def p_open_var_declaration(p):
     '''
@@ -129,6 +132,7 @@ def p_variables(p):
         p[0] = p[3]
 
 
+    
 # Here if is not open the variable declaration search for the id
 def p_variable(p):
     '''
@@ -159,6 +163,8 @@ def p_parameter(p):
     ids = p[2]
     directory.add_parameters(type)
     directory.add_variable([ids],type)
+    directory.add_resource([ids],type,PARAMETERS)
+    
     
 
 def p_statements(p):
@@ -171,6 +177,7 @@ def p_statements(p):
 def p_statement(p):
     '''
     statement : read 
+    | for
     | do_while
     | while
     | if_else
@@ -185,6 +192,64 @@ def p_do_while(p):
     '''
     do_while : DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON 
     '''
+
+def p_for(p):
+    '''
+    for : FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 LBRACE RBRACE
+    '''
+#   
+def p_for_1(p):
+    '''
+    for_1 : empty
+    '''
+    id = p[-1]
+    function_name = directory.get_current_function_name()
+    variable = directory.get_variable(function_name,id)
+    if variable.type != INT:
+        raise TypeError("Type-mismatch lower limit must be an integer value")
+    else:
+        inter_rep.push(OPERANDS,id)
+        inter_rep.push(TYPES,variable.type)
+
+def p_for_2(p):
+    '''
+    for_2 : empty
+    '''
+    exp_type = inter_rep.pop(TYPES)
+    if exp_type != INT:
+        raise TypeError("Type-mismatch lower limit must be an integer value")
+    else:
+        exp = inter_rep.pop(OPERANDS)
+        v_control = inter_rep.top(OPERANDS)
+        control_type = inter_rep.top(TYPES)
+        res_type = cube.get_type(control_type,exp_type,ASSIGN)
+        if res_type == ERROR:
+            raise Exception("Type-mismatch")
+        else:
+            new_quadruple = Quadruple(ASSIGN,exp,"",v_control)
+            new_quadrupleVControl = Quadruple(ASSIGN,v_control,"",VCONTROL)
+            inter_rep.push(QUADRUPLES,new_quadruple)
+            inter_rep.push(QUADRUPLES,new_quadrupleVControl)
+            
+
+def p_for_3(p): 
+    '''
+    for_3 : empty
+    '''
+    exp_type = inter_rep.pop(TYPES)
+    if exp_type != INT:
+        raise TypeError("Type-mismatch lower limit must be an integer value")
+    else:
+        exp = inter_rep.pop(OPERANDS)
+        new_quadruple = Quadruple(ASSIGN,exp,"",VFINAL)
+        inter_rep.push(QUADRUPLES,new_quadruple)
+        new_temporal = inter_rep.generate_avail()
+        new_quadruple = Quadruple(LESS,VCONTROL,VFINAL,new_temporal)
+        inter_rep.push(QUADRUPLES,new_quadruple)
+        cont = len(inter_rep.get_stack(QUADRUPLES))
+        inter_rep.push(JUMPS,cont-1)
+        
+        
     
 def p_while(p):
     '''
@@ -317,7 +382,7 @@ def p_print_arguments(p):
 def p_print_argument(p):
     '''
     print_argument : CTES
-                   | expression
+                    | expression
     '''
     if p[1] == None: #Means it is an expression therefore I gotta create a new quadruple with print statement
         print_operand = inter_rep.pop(OPERANDS)
@@ -329,7 +394,7 @@ def p_print_argument(p):
     
 
 
-def p_assingation(p): #! STILL NEED TO SEARCH EXPRESSIONS IF THE DO EXIST!
+def p_assingation(p):
     '''
     assingation : variable ASSIGN expression SEMICOLON
     '''
@@ -341,6 +406,9 @@ def p_assingation(p): #! STILL NEED TO SEARCH EXPRESSIONS IF THE DO EXIST!
     inter_rep.push(OPERATORS,operator)
     inter_rep.print_stacks()
     inter_rep.create_quadruple()
+    name, type = inter_rep.get_temporal_info()
+    directory.add_resource([name],type,TEMPORAL)
+    
     
 def p_expression(p): # instead of = it ahs to be not
     '''
@@ -353,6 +421,9 @@ def p_expression(p): # instead of = it ahs to be not
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
+        name, type = inter_rep.get_temporal_info()
+        directory.add_resource([name],type,TEMPORAL)
+
 
 def p_t_expression(p):
     '''
@@ -364,6 +435,10 @@ def p_t_expression(p):
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
+        name, type = inter_rep.get_temporal_info()
+        directory.add_resource([name],type,TEMPORAL)
+
+        
 
 
 def p_g_expression(p):
@@ -376,6 +451,9 @@ def p_g_expression(p):
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
+        name, type = inter_rep.get_temporal_info()
+        directory.add_resource([name],type,TEMPORAL)
+
 
 def p_m_expression(p):
     '''
@@ -387,6 +465,9 @@ def p_m_expression(p):
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
+        name, type = inter_rep.get_temporal_info()
+        directory.add_resource([name],type,TEMPORAL)
+        
 
 
 def p_term(p):
@@ -399,6 +480,8 @@ def p_term(p):
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
+        name, type = inter_rep.get_temporal_info()
+        directory.add_resource([name],type,TEMPORAL)
 
 def p_factor(p):
     '''

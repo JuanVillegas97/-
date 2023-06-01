@@ -17,9 +17,9 @@
 {
     i = a;
     ワイル(a>0){
-        a = a-k*j;
-        uno(a*2, a+k);
-        g=g*j-k;
+        a = a-k*j; t9
+        uno(t1, t2);
+        g=g*j-k;t10
     }
     
 }
