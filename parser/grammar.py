@@ -195,7 +195,7 @@ def p_do_while(p):
 
 def p_for(p):
     '''
-    for : FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 LBRACE RBRACE
+    for : FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     '''
 #   
 def p_for_1(p):
@@ -247,10 +247,38 @@ def p_for_3(p):
         new_quadruple = Quadruple(LESS,VCONTROL,VFINAL,new_temporal)
         inter_rep.push(QUADRUPLES,new_quadruple)
         cont = len(inter_rep.get_stack(QUADRUPLES))
-        inter_rep.push(JUMPS,cont-1)
+        inter_rep.push(JUMPS,cont)
+        new_quadruple = Quadruple(GOTOF,new_temporal,"","_")
+        inter_rep.push(QUADRUPLES,new_quadruple)
+        cont = len(inter_rep.get_stack(QUADRUPLES))
+        inter_rep.push(JUMPS,cont)
         
-        
+def p_for_4(p): 
+    '''
+    for_4 : empty
+    '''
+    new_temporal = inter_rep.generate_avail()
+    new_quadruple = Quadruple(PLUS,VCONTROL,"1",new_temporal)
+    inter_rep.push(QUADRUPLES,new_quadruple)
     
+    new_quadruple = Quadruple(ASSIGN,new_temporal,"",VCONTROL)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    
+    original_id = inter_rep.top(OPERANDS)
+    new_quadruple = Quadruple(ASSIGN,new_temporal,"",original_id)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    
+    end = inter_rep.pop(JUMPS)-1
+    ret = inter_rep.pop(JUMPS)
+    new_quadruple = Quadruple(GOTO,"","",ret)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    quadruples_stack = inter_rep.get_stack(QUADRUPLES)
+    quadruples_stack[end].set_avail(len(quadruples_stack)+1)
+    
+    delete_original_id = inter_rep.pop(OPERANDS)
+    delete_type = inter_rep.pop(TYPES)
+    
+        
 def p_while(p):
     '''
     while : WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
