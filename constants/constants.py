@@ -18,7 +18,8 @@ GOSUB = "gosub"
 RESOURCES = "resources"
 VARIABLES = "variables"
 PARAMETERS = "parameters"
-TEMPORAL = "temporal"
+TEMPORALS = "temporals"
+END = "End"
 # Types
 INT = 'INT'
 FLOAT = 'FLOAT'

@@ -25,15 +25,18 @@ class FunctionsDirectory:
             self.__is_variable_declaration = False
             self.__program_name = None
     
-    def add_resource(self, ids, type, resource_type):
+    def add_resource(self, ids, resource_type):
         if self.__current_function_name is None:
             raise Exception("No function defined to add variable '{}'".format(id))
         
-        if type in reserved:
-            type = reserved[type]
         for id in ids:
-            self.__function_dictionary[self.__current_function_name][RESOURCES][resource_type][type] +=1
-    
+            self.__function_dictionary[self.__current_function_name][RESOURCES][resource_type] +=1
+
+    def set_resource(self, resource_type, num):
+            if self.__current_function_name is None:
+                raise Exception("No function defined to add variable '{}'".format(id))
+            
+            self.__function_dictionary[self.__current_function_name][RESOURCES][resource_type] = num
 
             
     def is_function_name(self,function_name):
@@ -100,9 +103,9 @@ class FunctionsDirectory:
             "scope": self.__current_function_scope,
             "starting_address": starting_address,
             RESOURCES:{
-                "parameters":{INT:0,CHAR:0,FLOAT:0,BOOLEAN:0},
-                "variables":{INT:0,CHAR:0,FLOAT:0,BOOLEAN:0},
-                "temporal":{INT:0,CHAR:0,FLOAT:0,BOOLEAN:0}
+                PARAMETERS : 0,
+                VARIABLES : 0,
+                TEMPORALS : 0,
             },
             "parameters": [],
             "variable_table": {}
@@ -167,7 +170,8 @@ class FunctionsDirectory:
 
     
     def print_function_dictionary(self):
-        print("{:15} {:10} {:17} {:8} {:10} {:15}".format("Function Name", "Type","Starting Address","Scope", "Signature", "Variables"))
+        print("{:15} {:10} {:17} {:8} {:10} {:15} {:25}".format(
+            "Function Name", "Type", "Starting Address", "Scope", "Signature", "Variables", "Resources"))
 
         for function_name, function_details in self.__function_dictionary.items():
             function_type = function_details["type"]
@@ -175,18 +179,26 @@ class FunctionsDirectory:
             variable_table = function_details["variable_table"]
             parameters_list = function_details["parameters"]
             starting_address = str(function_details["starting_address"])
-            
+
             parameters_types = ", ".join(str(types) for types in parameters_list)
             variable_names = ", ".join(str(name) for name in variable_table.keys())
+            resources = function_details[RESOURCES]
 
-            print("{:15} {:10} {:17} {:8} {:10} {:15}".format(function_name, function_type, starting_address, function_scope, parameters_types, variable_names))
-        
+            # Convert resource values to strings
+            resources_str = ", ".join("{}: {}".format(key, value) for key, value in resources.items())
+
+            print("{:15} {:10} {:17} {:8} {:10} {:15} {:25}".format(
+                function_name, function_type, starting_address, function_scope,
+                parameters_types, variable_names, resources_str))
+
         print("\nConstants Table:")
-        print("{:10} {}".format("Type","Constant"))
-        
+        print("{:10} {}".format("Type", "Constant"))
+
         for constant, variable in self.__constants_table.items():
             constant_type = variable.type
             print("{:10} {}".format(constant_type, constant))
+
+
 
 
     def print_current(self):

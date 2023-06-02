@@ -18,9 +18,7 @@ precedence = (
 directory = FunctionsDirectory.get_instance()
 inter_rep = IntermediateRepresentation.get_instance()
 neural_points_handler = NeuralPointsHandler()
-
 cube = SemanticCube()
-
 
 def p_program(p):
     '''
@@ -70,10 +68,11 @@ def p_function_body(p):
     '''
     new_quadruple = Quadruple(ENDFUNC,"","","")
     inter_rep.push(QUADRUPLES,new_quadruple)
+    
+    num_of_temporals = inter_rep.get_temporal_counter()
+    directory.set_resource(TEMPORALS,num_of_temporals)
+    
     inter_rep.reset_temporal_counter()
-    inter_rep.reset_temporal_counter_b()
-
-    # Process the function body
 
 def p_return_stmt(p):
     '''
@@ -85,15 +84,12 @@ def p_return_stmt(p):
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.print_stacks()
 
-
 def p_empty_return_stmt(p):
     '''
     return_stmt : RETURN SEMICOLON
     '''
     # Process the empty return statement
     
-
-
 def p_function_1(p):
     '''
     function_1 : empty
@@ -106,6 +102,11 @@ def p_main(p):
     '''
     main : MAIN LPAREN RPAREN main_scope var_declarations LBRACE statements RBRACE
     '''
+    num_of_temporals = inter_rep.get_temporal_counter()
+    directory.set_resource(TEMPORALS,num_of_temporals)
+    
+    new_quadruple = Quadruple(END,"","","")
+    inter_rep.push(QUADRUPLES,new_quadruple)
 
 def p_main_scope(p):
     '''
@@ -119,8 +120,6 @@ def p_main_scope(p):
     
     inter_rep.fill() 
 
-
-
 def p_var_declarations(p):
     '''
     var_declarations : var_declaration_list
@@ -128,13 +127,10 @@ def p_var_declarations(p):
     '''
     p[0] = p[1]
 
-
 def p_var_declaration_list(p):
     '''
     var_declaration_list : var_declaration var_declarations
     '''
-
-
 
 #? 2 neuronal points open and close variable declaration so I can cehck if and id has already been declared 
 #? This can be seen in p_variable
@@ -145,7 +141,8 @@ def p_var_declaration(p):
     type = p[3]
     ids = p[4]
     directory.add_variable(ids,type)
-    directory.add_resource(ids,type,VARIABLES)
+    
+    directory.add_resource(ids,VARIABLES)
     
 def p_open_var_declaration(p):
     '''
@@ -173,8 +170,6 @@ def p_variables(p):
         p[3].insert(0, p[1])  # Add the current variable to the list
         p[0] = p[3]
 
-
-    
 # Here if is not open the variable declaration search for the id
 def p_variable(p):
     '''
@@ -186,9 +181,6 @@ def p_variable(p):
     p[0] = id
     if not directory.get_is_variable_declaration():
         directory.search_variable(id)
-
-
-
 
 def p_parameters(p):
     '''
@@ -205,10 +197,8 @@ def p_parameter(p):
     ids = p[2]
     directory.add_parameters(type)
     directory.add_variable([ids],type)
-    directory.add_resource([ids],type,PARAMETERS)
+    directory.add_resource([ids],PARAMETERS)
     
-    
-
 def p_statements(p):
     '''
     statements : statements statement
@@ -319,14 +309,12 @@ def p_for_4(p):
     
     delete_original_id = inter_rep.pop(OPERANDS)
     delete_type = inter_rep.pop(TYPES)
-    
         
 def p_while(p):
     '''
-    while : WHILE breadcrumb LPAREN open_temporal_boolean expression close_temporal_boolean RPAREN gotof LBRACE statements RBRACE
+    while : WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     '''
     inter_rep.fill_while()
-    
 
 def p_breadcrumb(p):
     '''
@@ -336,25 +324,13 @@ def p_breadcrumb(p):
     
 def p_if(p):
     '''
-    if : IF LPAREN open_temporal_boolean expression close_temporal_boolean RPAREN gotof LBRACE statements RBRACE
+    if : IF LPAREN expression  RPAREN gotof LBRACE statements RBRACE
     '''
     inter_rep.fill()
     
-def p_open_temporal_boolean(p):
-    '''
-    open_temporal_boolean : empty
-    '''
-    inter_rep.set_is_condtional_true()
-
-def p_close_temporal_boolean(p):
-    '''
-    close_temporal_boolean : empty
-    '''
-    inter_rep.set_is_condtional_false()
-    
 def p_if_else(p):
     '''
-    if_else : IF LPAREN  open_temporal_boolean expression  close_temporal_boolean RPAREN  gotof LBRACE statements RBRACE  ELSE goto LBRACE statements RBRACE
+    if_else : IF LPAREN  expression  RPAREN  gotof LBRACE statements RBRACE  ELSE goto LBRACE statements RBRACE
     '''
     inter_rep.fill()
 
@@ -375,7 +351,6 @@ def p_gotof(p):
     gotof : empty
     '''
     inter_rep.gotof_if()
-
     
 def p_return(p):
     '''
@@ -401,7 +376,6 @@ def p_variable_list(p):
     else:
         p[1].append(p[3])
         p[0] = p[1]
-
 
 def p_invocation(p):
     '''
@@ -463,7 +437,6 @@ def p_expression(p): # instead of = it ahs to be not
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
         name, type = inter_rep.get_temporal_info()
-        directory.add_resource([name],type,TEMPORAL)
 
 def p_print(p):
     '''
@@ -482,7 +455,6 @@ def p_print_arguments(p):
     else:
         p[1].append(p[3])
         p[0] = p[1]
-
     
 def p_print_argument(p):
     '''
@@ -497,8 +469,6 @@ def p_print_argument(p):
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.print_stacks()
     
-
-
 def p_assingation(p):
     '''
     assingation : variable ASSIGN expression SEMICOLON
@@ -511,13 +481,7 @@ def p_assingation(p):
     inter_rep.push(OPERATORS,operator)
     inter_rep.print_stacks()
     inter_rep.create_quadruple()
-    name, type = inter_rep.get_temporal_info()
-    directory.add_resource([name],type,TEMPORAL)
     
-    
-
-
-
 def p_t_expression(p):
     '''
     t_expression : g_expression 
@@ -528,11 +492,6 @@ def p_t_expression(p):
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
-        name, type = inter_rep.get_temporal_info()
-        directory.add_resource([name],type,TEMPORAL)
-
-        
-
 
 def p_g_expression(p):
     '''
@@ -544,9 +503,6 @@ def p_g_expression(p):
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
-        name, type = inter_rep.get_temporal_info()
-        directory.add_resource([name],type,TEMPORAL)
-
 
 def p_m_expression(p):
     '''
@@ -558,11 +514,7 @@ def p_m_expression(p):
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
-        name, type = inter_rep.get_temporal_info()
-        directory.add_resource([name],type,TEMPORAL)
         
-
-
 def p_term(p):
     '''
     term : factor 
@@ -573,8 +525,6 @@ def p_term(p):
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
-        name, type = inter_rep.get_temporal_info()
-        directory.add_resource([name],type,TEMPORAL)
 
 def p_factor(p):
     '''
@@ -590,10 +540,6 @@ def p_factor(p):
         inter_rep.push(OPERANDS,current_variable.id)
         inter_rep.push(TYPES,current_variable.type)
         
-
-
-    
-
 def p_expression_parenthesis(p):
     '''
     expression_parenthesis : LPAREN expression RPAREN 
@@ -619,7 +565,6 @@ def p_addition_operator(p):
     '''
     p[0] = p[1]
 
-
 def p_boolean_operator(p):
     '''
     boolean_operator : AND
@@ -627,14 +572,12 @@ def p_boolean_operator(p):
     '''
     p[0] = p[1]
 
-
 def p_multiplication_operator(p):
     '''
     multiplication_operator : TIMES
                             | DIVIDE
     '''
     p[0] = p[1]
-
 
 def p_simple_type(p):
     '''
@@ -665,14 +608,12 @@ def p_empty(p):
     '''
     pass
 
-
 def p_error(p):
     if p:
         error_message = f"Syntax error at line {p.lineno}, token={p.type}, value={p.value}, "
         raise SyntaxError(error_message)
     else:
         raise SyntaxError("Syntax error: unexpected end of input")
-
 
 def error(token):
     print(f"Syntax error: Unexpected token '{token.value}' at line {token.lineno}, column {token.lexpos}")
