@@ -2,18 +2,17 @@ import copy
 from lexer.tokens import reserved
 from compiler.interfaces.variable import variable
 from constants.constants import *
-
 #VARIABLES AND TEMPORALS
 #INT     1000-1999
 #FLOAT   2000-2999
-#CHAR    2000-2999
-#BOOLEAN 3000-3999
+#CHAR    3000-3999
+#BOOLEAN 4000-4999
+
 #CTES
 #INT     4000-4499
 #FLOAT   4500-4999
 #CHAR    5000-5499
-#BOOLEAN 5000-5001
-
+#BOOLEAN 5500-5501
 class FunctionsDirectory:
     __instance = None
 
@@ -35,7 +34,53 @@ class FunctionsDirectory:
             self.__current_function_type = None
             self.__is_variable_declaration = False
             self.__program_name = None
+            
+            self.__virtual_address_ctes ={
+                INT : 4000,
+                FLOAT :4500,
+                CHAR : 5000,
+                BOOLEAN : 5500
+            }
+            self.__virtual_address_var_and_temp ={
+                INT : 1000,
+                FLOAT :2000,
+                CHAR : 3000,
+                BOOLEAN : 4000
+            }
     
+    def __get_next_virtual_address_var_and_temp(self, data_type):
+        virtual_address = self.__virtual_address_var_and_temp[data_type]
+
+        # Check if the virtual address is within the valid range
+        if data_type == INT and virtual_address >= 1000 and virtual_address <= 1999:
+            self.__virtual_address_var_and_temp[data_type] += 1
+        elif data_type == FLOAT and virtual_address >= 2000 and virtual_address <= 2999:
+            self.__virtual_address_var_and_temp[data_type] += 1
+        elif data_type == CHAR and virtual_address >= 3000 and virtual_address <= 3999:
+            self.__virtual_address_var_and_temp[data_type] += 1
+        elif data_type == BOOLEAN and virtual_address >= 4000 and virtual_address <= 4999:
+            self.__virtual_address_var_and_temp[data_type] += 1
+        else:
+            raise ValueError("Invalid data type or virtual address range")
+
+        return virtual_address
+    def __get_next_virtual_address_ctes(self, data_type):
+        virtual_address = self.__virtual_address_ctes[data_type]
+        
+        # Check if the virtual address is within the valid range
+        if data_type == INT and virtual_address >= 4000 and virtual_address <= 4499:
+            self.__virtual_address_ctes[data_type] += 1
+        elif data_type == FLOAT and virtual_address >= 4500 and virtual_address <= 4999:
+            self.__virtual_address_ctes[data_type] += 1
+        elif data_type == CHAR and virtual_address >= 5000 and virtual_address <= 5499:
+            self.__virtual_address_ctes[data_type] += 1
+        elif data_type == BOOLEAN and virtual_address >= 5500 and virtual_address <= 5501:
+            self.__virtual_address_ctes[data_type] += 1
+        else:
+            raise ValueError("Invalid data type or virtual address range")
+        
+        return virtual_address
+            
     def add_resource(self, ids, resource_type):
         if self.__current_function_name is None:
             raise Exception("No function defined to add variable '{}'".format(id))
@@ -74,7 +119,8 @@ class FunctionsDirectory:
         if type == ERROR:
             raise Exception("Constant is ERRROR type")
         if constant not in self.__constants_table:
-            new_variable = variable(constant,type,0)
+            new_vitrual_address = self.__get_next_virtual_address_ctes(type)
+            new_variable = variable(constant,type,new_vitrual_address)
             self.__constants_table[constant] = new_variable
             
         
@@ -133,7 +179,9 @@ class FunctionsDirectory:
         for id in ids:
             if id in self.__function_dictionary[self.__current_function_name]["variable_table"]:
                 raise Exception("Variable '{}' multiple declaration".format(id))
-            new_variable = variable(id,type,0)
+            
+            new_vitrual_address = self.__get_next_virtual_address_var_and_temp(type)
+            new_variable = variable(id,type,new_vitrual_address)
             self.__function_dictionary[self.__current_function_name]["variable_table"][id] = new_variable
     
     def get_invocation_type(self,invocation_id):
