@@ -19,7 +19,8 @@ directory = FunctionsDirectory.get_instance()
 inter_rep = IntermediateRepresentation.get_instance()
 neural_points_handler = NeuralPointsHandler()
 cube = SemanticCube()
-
+#* MANAGES VIRTUAL ADDRESS LOOK
+inter_rep.set_virtual_address(True)
 def p_program(p):
     '''
     program : PROGRAM ID SEMICOLON global_scope var_declarations functions main END
@@ -100,7 +101,9 @@ def p_function_1(p):
     neural_points_handler.function_1(function_name,function_type,LOCAL)
     
     #* HANDELS THE CONVERTION TO ADDRESSS I
-    directory.add_typed_func_to_global()
+    virtual_address = inter_rep.get_virtual_address()
+    if virtual_address:
+        directory.add_typed_func_to_global()
 
 
 def p_main(p):
@@ -469,7 +472,9 @@ def p_print_argument(p):
     if p[1] == None: #Means it is an expression therefore I gotta create a new quadruple with print statement
         print_operand = inter_rep.pop(OPERANDS)
         #* HANDELS THE CONVERTION TO ADDRESSS I
-        print_operand = inter_rep.convert_operand_to_address(print_operand)
+        virtual_address = inter_rep.get_virtual_address()
+        if virtual_address:
+            print_operand = inter_rep.convert_operand_to_address(print_operand)
         #*
         new_quadruple = Quadruple(PRINT,"","",print_operand)
     else: #Means it's a string therfore I gotta create anew quadruple with print statement

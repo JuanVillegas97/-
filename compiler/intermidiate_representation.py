@@ -32,6 +32,9 @@ class IntermediateRepresentation:
             self.__k = 0
             self.__is_virtual_address = False
     
+    def get_virtual_address(self):
+        return self.__is_virtual_address
+    
     def set_virtual_address (self, value):
         self.__is_virtual_address = value
         
@@ -120,9 +123,11 @@ class IntermediateRepresentation:
             assignation_operand = self.__stacks[OPERANDS].pop()
             last_type = self.__stacks[TYPES].pop()#!Still do not know what do with this one, maybe I gotta update it in the var table (TYPE)
             #* HANDELS THE CONVERTION TO ADDRESSS
-            operator = self.convert_operator_to_address(operator)
-            last_operand = self.convert_operand_to_address(last_operand)
-            assignation_operand  = self.convert_operand_to_address(last_operand)
+            virtual_address = self.get_virtual_address()
+            if virtual_address:
+                operator = self.convert_operator_to_address(operator)
+                last_operand = self.convert_operand_to_address(last_operand)
+                assignation_operand  = self.convert_operand_to_address(last_operand)
             #*
             new_quadruple = Quadruple(operator, assignation_operand, "", last_operand)
             self.__stacks[QUADRUPLES].append(new_quadruple)
@@ -138,10 +143,12 @@ class IntermediateRepresentation:
             if result_type != "ERROR":
                 result = self.generate_avail() 
                 #* HANDELS THE CONVERTION TO ADDRESSS
-                operator = self.convert_operator_to_address(operator)
-                result = self.convert_temporal_to_address(result_type)
-                left_operand = self.convert_operand_to_address(left_operand)
-                right_operand = self.convert_operand_to_address(right_operand)
+                virtual_address = self.get_virtual_address()
+                if virtual_address:
+                    operator = self.convert_operator_to_address(operator)
+                    result = self.convert_temporal_to_address(result_type)
+                    left_operand = self.convert_operand_to_address(left_operand)
+                    right_operand = self.convert_operand_to_address(right_operand)
                 #*
                 new_quadruple = Quadruple(operator,left_operand,right_operand,result)
                 self.__stacks[QUADRUPLES].append(new_quadruple)

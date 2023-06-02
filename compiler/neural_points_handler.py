@@ -57,7 +57,9 @@ class NeuralPointsHandler:
           #Generate action PARAMETER, Argument, Argument#k
           arg_num = self.__inter_rep.generate_parameter()
           #* HANDELS THE CONVERTION TO ADDRESSS
-          argument = self.__inter_rep.convert_operand_to_address(argument)
+          virtual_address = self.__inter_rep.get_virtual_address()
+          if virtual_address:
+               argument = self.__inter_rep.convert_operand_to_address(argument)
           #*
           new_quadruple = Quadruple(PARAM,argument,"",arg_num)
           self.__inter_rep.push(QUADRUPLES,new_quadruple)
@@ -81,11 +83,14 @@ class NeuralPointsHandler:
           if invocation_type is not "VOID":
                new_temporal = self.__inter_rep.generate_avail()
                assign = ASSIGN 
+               
                #* HANDELS THE CONVERTION TO ADDRESSS
-               if assign in virtual_operators:
-                    assign = virtual_operators[assign]
-               new_temporal = self.__inter_rep.convert_temporal_to_address(invocation_type)
-               global_invocation_id = self.__inter_rep.convert_operand_to_address(global_invocation_id)
+               virtual_address = self.__inter_rep.get_virtual_address()
+               if virtual_address:
+                    if assign in virtual_operators:
+                         assign = virtual_operators[assign]
+                    new_temporal = self.__inter_rep.convert_temporal_to_address(invocation_type)
+                    global_invocation_id = self.__inter_rep.convert_operand_to_address(global_invocation_id)
                #*
                self.__inter_rep.push(OPERANDS,new_temporal)
                self.__inter_rep.push(TYPES,invocation_type)
