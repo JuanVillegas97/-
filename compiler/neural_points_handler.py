@@ -3,6 +3,11 @@ from constants.virtual_constants import virtual_operators
 from compiler.interfaces.quadruple import Quadruple
 from compiler.functions_directory import FunctionsDirectory
 from compiler.intermidiate_representation import IntermediateRepresentation
+from compiler.interfaces.encoder import Encoder
+
+import json
+import os
+
 class NeuralPointsHandler:
      __instance = None
      
@@ -101,4 +106,27 @@ class NeuralPointsHandler:
           # Insert Function name into the DirFunc table (and its type, if any), verify semantics.
           self.__directory.set_current(function_name,function_type,scope)
           self.__directory.add_function(len(self.__inter_rep.get_stack(QUADRUPLES))+1)
+     
+     def convert_to_json(self):
+          self.__directory.kill_variable_table()
+          directory = self.__directory.get_function_dictionary()
+          constant_table = self.__directory.get_constant_table()
+          quadruples = self.__inter_rep.get_stack(QUADRUPLES)
           
+          # Create a dictionary to store both objects
+          data = {
+               "directory": directory,
+               "constant_table":constant_table,
+               "quadruples": quadruples,
+          }
+          
+          # Serialize the dictionary to JSON
+          
+          json_data = json.dumps(data, indent=4, cls=Encoder)
+          
+          # Specify the file path
+          file_path = os.path.join("vm_files", "programs", "data.json")
+          
+          # Write the JSON data to the file
+          with open(file_path, 'w') as json_file:
+               json_file.write(json_data)

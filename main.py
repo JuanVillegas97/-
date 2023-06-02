@@ -3,6 +3,9 @@ from lexer.lexer import MyLexer
 from parser.parser import MyParser
 from parser.grammar import directory
 from parser.grammar import inter_rep
+from compiler.neural_points_handler import NeuralPointsHandler
+
+neural = NeuralPointsHandler.get_instance()
 def _main():
     file  = "tests/modules.txt"
     functions   = "tests/parser_test.txt"
@@ -20,5 +23,6 @@ def _main():
     inter_rep.print_stacks()
     directory.print_function_dictionary()
     
+    neural.convert_to_json()
 if __name__ == '__main__':
     _main()

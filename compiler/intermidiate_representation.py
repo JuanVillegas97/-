@@ -1,9 +1,9 @@
+from constants.constants import *
+
 from compiler.sematnic_cube import SemanticCube
 from compiler.interfaces.quadruple import Quadruple
-from constants.constants import *
 from constants.virtual_constants import virtual_operators
 from compiler.functions_directory import FunctionsDirectory
-
 directory = FunctionsDirectory.get_instance()
 
 class IntermediateRepresentation:

@@ -21,7 +21,7 @@ class FunctionsDirectory:
         if FunctionsDirectory.__instance is None:
             FunctionsDirectory()
         return FunctionsDirectory.__instance
-
+    
     def __init__(self):
         if FunctionsDirectory.__instance is not None:
             raise Exception("This class is a singleton. Use get_instance() method to get the instance.")
@@ -176,7 +176,11 @@ class FunctionsDirectory:
             "variable_table": {}
         }
     
-    
+    def kill_variable_table(self):
+        for function_name in self.__function_dictionary:
+            function_data = self.__function_dictionary[function_name]
+            function_data.pop("variable_table", None)
+        
     def add_variable(self, ids,type):
         if self.__current_function_name is None:
             raise Exception("No function defined to add variable '{}'".format(id))
@@ -288,5 +292,3 @@ class FunctionsDirectory:
     def get_program_name(self):
         return self.__program_name
     
-
-
