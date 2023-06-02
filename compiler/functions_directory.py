@@ -3,6 +3,17 @@ from lexer.tokens import reserved
 from compiler.interfaces.variable import variable
 from constants.constants import *
 
+#VARIABLES AND TEMPORALS
+#INT     1000-1999
+#FLOAT   2000-2999
+#CHAR    2000-2999
+#BOOLEAN 3000-3999
+#CTES
+#INT     4000-4499
+#FLOAT   4500-4999
+#CHAR    5000-5499
+#BOOLEAN 5000-5001
+
 class FunctionsDirectory:
     __instance = None
 
@@ -63,7 +74,7 @@ class FunctionsDirectory:
         if type == ERROR:
             raise Exception("Constant is ERRROR type")
         if constant not in self.__constants_table:
-            new_variable = variable(constant,type)
+            new_variable = variable(constant,type,0)
             self.__constants_table[constant] = new_variable
             
         
@@ -122,7 +133,7 @@ class FunctionsDirectory:
         for id in ids:
             if id in self.__function_dictionary[self.__current_function_name]["variable_table"]:
                 raise Exception("Variable '{}' multiple declaration".format(id))
-            new_variable = variable(id,type)
+            new_variable = variable(id,type,0)
             self.__function_dictionary[self.__current_function_name]["variable_table"][id] = new_variable
     
     def get_invocation_type(self,invocation_id):
@@ -170,10 +181,9 @@ class FunctionsDirectory:
 
     
     def print_function_dictionary(self):
-        print("{:15} {:10} {:17} {:8} {:10} {:15} {:25}".format(
-            "Function Name", "Type", "Starting Address", "Scope", "Signature", "Variables", "Resources"))
-
         for function_name, function_details in self.__function_dictionary.items():
+            print("{:15} {:10} {:17} {:8} {:10}  {:25}".format(
+            "Function Name", "Type", "Starting Address", "Scope", "Signature",  "Resources"))
             function_type = function_details["type"]
             function_scope = function_details["scope"]
             variable_table = function_details["variable_table"]
@@ -187,18 +197,25 @@ class FunctionsDirectory:
             # Convert resource values to strings
             resources_str = ", ".join("{}: {}".format(key, value) for key, value in resources.items())
 
-            print("{:15} {:10} {:17} {:8} {:10} {:15} {:25}".format(
+            print("{:15} {:10} {:17} {:8} {:10} {:25}".format(
                 function_name, function_type, starting_address, function_scope,
-                parameters_types, variable_names, resources_str))
+                parameters_types, resources_str))
 
+            print("Variable Table:")
+            print("{:10} {:10} {:15}".format("ID", "Type", "Virtual Address"))
+
+            for variable_id, variable in variable_table.items():
+                variable_type = variable.type
+                virtual_address = str(variable.virtual_address)
+                print("{:10} {:10} {:15}".format(variable_id, variable_type, virtual_address))
+            print("\n")
         print("\nConstants Table:")
-        print("{:10} {}".format("Type", "Constant"))
+        print("{:10} {:10} {:15}".format("Type", "Constant", "Virtual Address"))
 
         for constant, variable in self.__constants_table.items():
             constant_type = variable.type
-            print("{:10} {}".format(constant_type, constant))
-
-
+            virtual_address = str(variable.virtual_address)
+            print("{:10} {:10} {:15}".format(constant_type, constant, virtual_address))
 
 
     def print_current(self):

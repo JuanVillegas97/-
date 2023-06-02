@@ -1,25 +1,17 @@
-OPERATORS  ="operators"
-TYPES      ="types"
-OPERANDS   ="operands"
-QUADRUPLES ="quadruples"
-JUMPS      ="jumps"
-GOTOF      ="gotoF"
-GOTOT      ="gotoT"
-GOTO      ="goto"
-GOTOMAIN  ="gotoMain"
-ENDFUNC   = "EndFunc"
+# Control Flow
+GOTOF = "gotoF"
+GOTOT = "gotoT"
+GOTO = "goto"
+GOTOMAIN = "gotoMain"
+ENDFUNC = "EndFunc"
 VCONTROL = "VControl"
 VFINAL = "VFinal"
-LOCAL = "LOCAL"
 RETURN = "return"
 ERA = "ERA"
 PARAM = "Param"
 GOSUB = "gosub"
-RESOURCES = "resources"
-VARIABLES = "variables"
-PARAMETERS = "parameters"
-TEMPORALS = "temporals"
 END = "End"
+
 # Types
 INT = 'INT'
 FLOAT = 'FLOAT'
@@ -28,21 +20,31 @@ BOOLEAN = 'BOOLEAN'
 ERROR = 'ERROR'
 STRING = 'STRING'
 VECTOR = 'VECTOR'
+
 # Operators
 PLUS = '+'
 MINUS = '-'
 TIMES = '*'
 DIVIDE = '/'
-# Boolean
 AND = 'AND'
 OR = 'OR'
 NOT = 'NOT'
-# Comparison
 EQUALS = '=='
 NOTEQUAL = '!='
 LESS = '<'
 LESSTHAN = '<='
 GREATERTHAN = '>='
 GREATER = '>'
-# Assignment
 ASSIGN = '='
+
+# Others
+RESOURCES = "resources"
+VARIABLES = "variables"
+PARAMETERS = "parameters"
+TEMPORALS = "temporals"
+OPERATORS = "operators"
+TYPES = "types"
+OPERANDS = "operands"
+QUADRUPLES = "quadruples"
+JUMPS = "jumps"
+LOCAL = "LOCAL"
