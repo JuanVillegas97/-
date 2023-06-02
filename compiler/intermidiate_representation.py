@@ -33,17 +33,20 @@ class IntermediateRepresentation:
             self.__invocation_signature = []
             
     def generate_parameter(self):
-        return f'par{self.__k}'
+        return f'par{self.__k+1}'
     
     def move_to_next_parameter(self):
-        self.__k = self.__k + 1
+        self.__k += 1
     
     def reset_paramter_counter(self):
         self.__k = 0
         
     def set_parameter_counter(self, value):
         self.__k = value
-        
+    
+    def get_paramater_counter(self):
+        return self.__k
+    
     def set_is_condtional_false(self):
         self.__is_condtional = False
         

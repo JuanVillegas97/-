@@ -51,28 +51,47 @@ def p_functions(p):
                     | empty
     '''
 
-
-
 def p_function(p):
     '''
-    function : FUNCTION simple_type ID  function_1 LPAREN  open_var_declaration parameters close_var_declaration RPAREN var_declarations  RBRACE statements return_me RBRACE 
-            |  FUNCTION VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations LBRACE statements RBRACE
+    function : FUNCTION function_signature function_body
     '''
 
+def p_function_signature(p):
+    '''
+    function_signature : simple_type ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations
+                    | VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations
+    '''
+    # Process the function signature
+
+def p_function_body(p):
+    '''
+    function_body : LBRACE statements return_stmt RBRACE
+                | LBRACE statements RBRACE
+    '''
     new_quadruple = Quadruple(ENDFUNC,"","","")
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.reset_temporal_counter()
     inter_rep.reset_temporal_counter_b()
 
-def p_return_me(p):
+    # Process the function body
+
+def p_return_stmt(p):
     '''
-    return_me : empty
+    return_stmt : RETURN expression SEMICOLON
     '''
     return_value = inter_rep.pop(OPERANDS)
     return_type = inter_rep.pop(TYPES) #!vereify type with singature
     new_quadruple = Quadruple(RETURN,"","",return_value)
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.print_stacks()
+
+
+def p_empty_return_stmt(p):
+    '''
+    return_stmt : RETURN SEMICOLON
+    '''
+    # Process the empty return statement
+    
 
 
 def p_function_1(p):
@@ -399,8 +418,7 @@ def p_invocation_2(p):
     '''
     invocation_2 : empty
     '''
-    invocation_id = p[-3]
-    neural_points_handler.invocation_2(invocation_id)
+    neural_points_handler.invocation_2()
     
 def p_invocation_3(p):
     '''
@@ -424,8 +442,7 @@ def p_invocation_6(p):
     '''
     invocation_6 : empty
     '''
-    invocation_id = p[-8]
-    neural_points_handler.invocation_6(invocation_id)
+    neural_points_handler.invocation_6()
     
 def p_expressions(p):
     '''
@@ -433,7 +450,20 @@ def p_expressions(p):
                 | expression invocation_3
                 | empty
     '''
-
+    
+def p_expression(p): # instead of = it ahs to be not
+    '''
+    expression : t_expression 
+                | NOT t_expression
+    '''
+    
+    if len(p) == 4: # push opeartor
+        operator = p[2]
+        inter_rep.push(OPERATORS,operator)
+        inter_rep.print_stacks()
+        inter_rep.create_quadruple()
+        name, type = inter_rep.get_temporal_info()
+        directory.add_resource([name],type,TEMPORAL)
 
 def p_print(p):
     '''
@@ -485,19 +515,7 @@ def p_assingation(p):
     directory.add_resource([name],type,TEMPORAL)
     
     
-def p_expression(p): # instead of = it ahs to be not
-    '''
-    expression : t_expression 
-                | NOT t_expression
-    '''
-    
-    if len(p) == 4: # push opeartor
-        operator = p[2]
-        inter_rep.push(OPERATORS,operator)
-        inter_rep.print_stacks()
-        inter_rep.create_quadruple()
-        name, type = inter_rep.get_temporal_info()
-        directory.add_resource([name],type,TEMPORAL)
+
 
 
 def p_t_expression(p):

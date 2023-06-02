@@ -122,6 +122,8 @@ class FunctionsDirectory:
             new_variable = variable(id,type)
             self.__function_dictionary[self.__current_function_name]["variable_table"][id] = new_variable
     
+    def get_invocation_type(self,invocation_id):
+        return self.__function_dictionary[invocation_id]["type"]
     
     def search_variable(self, ids):
         if self.__current_function_name is None:
