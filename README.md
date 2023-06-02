@@ -144,3 +144,8 @@ In `p_variable_declaration`, I need to add `p_complex_type`
 - In expression when a variables is declared check if the id exists
 - Check variable table with numbers 
 - Check counter pointer
+
+#### JUST IN CASE
+In order to check convertion to virtual address
+ #* HANDELS THE CONVERTION TO ADDRESSS
+ That are in inter.rep neurogical_pints_manager and the print statement

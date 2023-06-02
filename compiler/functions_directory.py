@@ -48,7 +48,7 @@ class FunctionsDirectory:
                 BOOLEAN : 4000
             }
     
-    def __get_next_virtual_address_var_and_temp(self, data_type):
+    def get_next_virtual_address_var_and_temp(self, data_type):
         virtual_address = self.__virtual_address_var_and_temp[data_type]
 
         # Check if the virtual address is within the valid range
@@ -149,6 +149,14 @@ class FunctionsDirectory:
         self.__current_function_type = type
         self.__current_function_scope= scope
     
+    def add_typed_func_to_global(self):
+        if self.__current_function_type in reserved:
+            self.__current_function_type = reserved[self.__current_function_type]
+        if self.__current_function_type is not "VOID":
+            new_virtual_address = self.get_next_virtual_address_var_and_temp(self.__current_function_type)
+            new_variable = variable(self.__current_function_name,self.__current_function_type,new_virtual_address)
+            self.__function_dictionary[self.__program_name]["variable_table"][self.__current_function_name] = new_variable
+                
     def add_function(self, starting_address=None):
         if self.__current_function_name in self.__function_dictionary:
             raise Exception("Function '{}' multiple declaration (functions can only have unique ID)".format(self.__current_function_name))
@@ -180,7 +188,7 @@ class FunctionsDirectory:
             if id in self.__function_dictionary[self.__current_function_name]["variable_table"]:
                 raise Exception("Variable '{}' multiple declaration".format(id))
             
-            new_vitrual_address = self.__get_next_virtual_address_var_and_temp(type)
+            new_vitrual_address = self.get_next_virtual_address_var_and_temp(type)
             new_variable = variable(id,type,new_vitrual_address)
             self.__function_dictionary[self.__current_function_name]["variable_table"][id] = new_variable
     
@@ -265,10 +273,20 @@ class FunctionsDirectory:
             virtual_address = str(variable.virtual_address)
             print("{:10} {:10} {:15}".format(constant_type, constant, virtual_address))
 
-
+    def get_constant_table(self):
+        return self.__constants_table
+    
+    def get_global_variable_table(self):
+        return self.__function_dictionary[self.__program_name]["variable_table"]
+    
+    def get_variable_table(self):
+        return self.__function_dictionary[self.__current_function_name]["variable_table"]
+    
     def print_current(self):
             print(self.__current_function_type," ",self.__current_function_name," ",self.__current_function_scope)
-
+    
+    def get_program_name(self):
+        return self.__program_name
     
 
 

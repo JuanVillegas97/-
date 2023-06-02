@@ -1,8 +1,8 @@
 from constants.constants import *
+from constants.virtual_constants import virtual_operators
 from compiler.interfaces.quadruple import Quadruple
 from compiler.functions_directory import FunctionsDirectory
 from compiler.intermidiate_representation import IntermediateRepresentation
-
 class NeuralPointsHandler:
      __instance = None
      
@@ -56,6 +56,9 @@ class NeuralPointsHandler:
           
           #Generate action PARAMETER, Argument, Argument#k
           arg_num = self.__inter_rep.generate_parameter()
+          #* HANDELS THE CONVERTION TO ADDRESSS
+          argument = self.__inter_rep.convert_operand_to_address(argument)
+          #*
           new_quadruple = Quadruple(PARAM,argument,"",arg_num)
           self.__inter_rep.push(QUADRUPLES,new_quadruple)
      
@@ -77,10 +80,16 @@ class NeuralPointsHandler:
           invocation_type = self.__directory.get_invocation_type(global_invocation_id)
           if invocation_type is not "VOID":
                new_temporal = self.__inter_rep.generate_avail()
+               assign = ASSIGN 
+               #* HANDELS THE CONVERTION TO ADDRESSS
+               if assign in virtual_operators:
+                    assign = virtual_operators[assign]
+               new_temporal = self.__inter_rep.convert_temporal_to_address(invocation_type)
+               global_invocation_id = self.__inter_rep.convert_operand_to_address(global_invocation_id)
+               #*
                self.__inter_rep.push(OPERANDS,new_temporal)
                self.__inter_rep.push(TYPES,invocation_type)
-               
-               new_quadruple = Quadruple(ASSIGN,global_invocation_id,"",new_temporal)
+               new_quadruple = Quadruple(assign,global_invocation_id,"",new_temporal)
                self.__inter_rep.push(QUADRUPLES,new_quadruple)
           
      def function_1(self,function_name,function_type,scope):

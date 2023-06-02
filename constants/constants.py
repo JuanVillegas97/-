@@ -1,17 +1,17 @@
 # Control Flow
-GOTOF = "gotoF"
-GOTOT = "gotoT"
-GOTO = "goto"
-GOTOMAIN = "gotoMain"
-ENDFUNC = "EndFunc"
-VCONTROL = "VControl"
-VFINAL = "VFinal"
-RETURN = "return"
-ERA = "ERA"
-PARAM = "Param"
-GOSUB = "gosub"
-END = "End"
-
+GOTOF = 21
+GOTOT = 22
+GOTO = 23
+GOTOMAIN = 24
+ENDFUNC = 25
+VCONTROL = 26
+VFINAL = 27
+RETURN = 28
+ERA = 29
+PARAM = 30
+GOSUB = 31
+END = 32
+PRINT = 33
 # Types
 INT = 'INT'
 FLOAT = 'FLOAT'

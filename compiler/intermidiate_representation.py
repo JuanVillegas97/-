@@ -1,6 +1,10 @@
 from compiler.sematnic_cube import SemanticCube
 from compiler.interfaces.quadruple import Quadruple
 from constants.constants import *
+from constants.virtual_constants import virtual_operators
+from compiler.functions_directory import FunctionsDirectory
+
+directory = FunctionsDirectory.get_instance()
 
 class IntermediateRepresentation:
     __instance = None
@@ -26,7 +30,11 @@ class IntermediateRepresentation:
             }
             self.__temporal_counter = 0
             self.__k = 0
-            
+            self.__is_virtual_address = False
+    
+    def set_virtual_address (self, value):
+        self.__is_virtual_address = value
+        
     def generate_parameter(self):
         return f'par{self.__k+1}'
     
@@ -81,13 +89,41 @@ class IntermediateRepresentation:
             return self.__stacks[stack_name].pop()
         else:
             raise ValueError(f"Invalid stack name: {stack_name}")
-        
+    
+
+    def convert_operator_to_address(self, operator):
+        if operator in virtual_operators:
+            operator = virtual_operators[operator]
+        return operator
+    
+    def convert_temporal_to_address(self, type):
+        result = directory.get_next_virtual_address_var_and_temp(type)
+        return result
+    
+    def convert_operand_to_address(self, operand):
+        constant_table = directory.get_constant_table()
+        variable_table = directory.get_variable_table()
+        global_var_table = directory.get_global_variable_table()
+        if operand in global_var_table:
+            operand = global_var_table[operand].virtual_address
+        elif operand in constant_table:
+            operand = constant_table[operand].virtual_address
+        elif operand in variable_table:
+            operand = variable_table[operand].virtual_address
+            
+        return operand
+
     def create_quadruple(self):
         operator = self.__stacks[OPERATORS].pop()
         if operator == '=':
             last_operand = self.__stacks[OPERANDS].pop()
             assignation_operand = self.__stacks[OPERANDS].pop()
             last_type = self.__stacks[TYPES].pop()#!Still do not know what do with this one, maybe I gotta update it in the var table (TYPE)
+            #* HANDELS THE CONVERTION TO ADDRESSS
+            operator = self.convert_operator_to_address(operator)
+            last_operand = self.convert_operand_to_address(last_operand)
+            assignation_operand  = self.convert_operand_to_address(last_operand)
+            #*
             new_quadruple = Quadruple(operator, assignation_operand, "", last_operand)
             self.__stacks[QUADRUPLES].append(new_quadruple)
         else:
@@ -101,6 +137,12 @@ class IntermediateRepresentation:
             result_type = self.__semantic_cube.get_type(left_type,right_type,operator)
             if result_type != "ERROR":
                 result = self.generate_avail() 
+                #* HANDELS THE CONVERTION TO ADDRESSS
+                operator = self.convert_operator_to_address(operator)
+                result = self.convert_temporal_to_address(result_type)
+                left_operand = self.convert_operand_to_address(left_operand)
+                right_operand = self.convert_operand_to_address(right_operand)
+                #*
                 new_quadruple = Quadruple(operator,left_operand,right_operand,result)
                 self.__stacks[QUADRUPLES].append(new_quadruple)
                 self.__stacks[OPERANDS].append(result)
@@ -150,7 +192,7 @@ class IntermediateRepresentation:
     def generate_gosub(self,func_id):
         new_quadruple = Quadruple(GOSUB,"","",func_id)
         self.__stacks[QUADRUPLES].append(new_quadruple)
-            
+    
     def print_stacks(self):
         print('-' * 50)
         print("Operators stack:", self.__stacks[OPERATORS])

@@ -5,7 +5,7 @@ from compiler.functions_directory import FunctionsDirectory
 from compiler.intermidiate_representation import IntermediateRepresentation
 from compiler.interfaces.quadruple import Quadruple
 from compiler.neural_points_handler import NeuralPointsHandler
-
+from compiler.interfaces.variable import variable
 # Because PLY is a bottom-up and cannot be converted to a top-down it's difficult to track stuff
 # The rules named with ..._scope are neural points to prepare the variable table
 precedence = (
@@ -84,6 +84,7 @@ def p_return_stmt(p):
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.print_stacks()
 
+
 def p_empty_return_stmt(p):
     '''
     return_stmt : RETURN SEMICOLON
@@ -97,6 +98,10 @@ def p_function_1(p):
     function_name = p[-1] 
     function_type = p[-2]
     neural_points_handler.function_1(function_name,function_type,LOCAL)
+    
+    #* HANDELS THE CONVERTION TO ADDRESSS I
+    directory.add_typed_func_to_global()
+
 
 def p_main(p):
     '''
@@ -463,9 +468,12 @@ def p_print_argument(p):
     '''
     if p[1] == None: #Means it is an expression therefore I gotta create a new quadruple with print statement
         print_operand = inter_rep.pop(OPERANDS)
-        new_quadruple = Quadruple("print","","",print_operand)
+        #* HANDELS THE CONVERTION TO ADDRESSS I
+        print_operand = inter_rep.convert_operand_to_address(print_operand)
+        #*
+        new_quadruple = Quadruple(PRINT,"","",print_operand)
     else: #Means it's a string therfore I gotta create anew quadruple with print statement
-        new_quadruple = Quadruple("print","","",p[1])
+        new_quadruple = Quadruple(PRINT,"","",p[1])
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.print_stacks()
     
