@@ -6,7 +6,7 @@
             "starting_address": null,
             "resources": {
                 "parameters": 0,
-                "variables": 0,
+                "variables": 4,
                 "temporals": 0
             },
             "parameters": []
@@ -17,15 +17,15 @@
             "starting_address": null,
             "resources": {
                 "parameters": 0,
-                "variables": 3,
-                "temporals": 2
+                "variables": 0,
+                "temporals": 0
             },
             "parameters": []
         }
     },
     "constant_table": {
-        "4": {
-            "id": 4,
+        "2": {
+            "id": 2,
             "type": "INT",
             "virtual_address": 5000
         }
@@ -38,22 +38,10 @@
             "_Quadruple__avail": 2
         },
         {
-            "_Quadruple__operator": 2,
-            "_Quadruple__left_operand": 1000,
-            "_Quadruple__right_operand": 5000,
-            "_Quadruple__avail": 1003
-        },
-        {
-            "_Quadruple__operator": 0,
-            "_Quadruple__left_operand": 1003,
-            "_Quadruple__right_operand": 1002,
-            "_Quadruple__avail": 1004
-        },
-        {
             "_Quadruple__operator": 13,
-            "_Quadruple__left_operand": 1004,
+            "_Quadruple__left_operand": 5000,
             "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 1001
+            "_Quadruple__avail": 1000
         },
         {
             "_Quadruple__operator": 32,

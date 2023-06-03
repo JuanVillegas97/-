@@ -14,24 +14,50 @@ class MemoryMap:
         else:
             MemoryMap.__instance = self
             self.__directory = directory
-            self.__memmory ={
-                    "int" : {}, 
-                    "float" : {}, 
-                    "char" : {} , 
-                    "boolean" : {},
+            self.__memory = {
+                    "INT" : {}, 
+                    "FLOAT" : {}, 
+                    "CHAR" : {} , 
+                    "BOOLEAN" : {},
                     "resources" : None
                 }
-            self.__malloc()
-            
-    def __malloc(self):
+            self.__set_resources()
+    
+    def __malloc(self,type,address):
+        if self.__memory["resources"] > 0 :
+            self.__memory["resources"] -= 1
+            self.__memory[type] = {address : None}
+            return address
+        
+    def get_value(self, type, address):
+        if type in self.__memory and address in self.__memory[type]:
+            value = self.__memory[type][address]
+            return value
+        else:
+            address = self.__malloc(type,address)
+            return address
+        
+    def set_value_at_address(self, type, address, value):
+        if type in self.__memory:
+            self.__memory[type][address] = value
+        
+    def __set_resources(self):
         total_resources = 0
         for program in self.__directory.values():
             resources = program.get("resources")
             for value in resources.values():
                 total_resources += value
-        self.__memmory["resources"] = total_resources
+        self.__memory["resources"] = total_resources
     
-    def get_memmory(self):
-        return self.__memmory
+    def get_memory(self):
+        return self.__memory
         
-            
+    def print_memory(self):
+        print("\n\n")
+        print("Memory:")
+        for key, value in self.__memory.items():
+            if key != "resources":
+                print(key + ":")
+                for address, data in value.items():
+                    print(f"  {address}: {data}")
+        print("Current memory:", self.__memory["resources"])

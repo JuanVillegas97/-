@@ -8,7 +8,7 @@ import json
 class VirtualMachine:
     def __init__(self):
         directory, constant_table, quadruples = self.__deserialize_json_from_file()
-        self.__memory = MemoryMap.get_instance(directory).get_memmory()
+        self.__memory = MemoryMap.get_instance(directory)
         self.__constant_table = constant_table
         self.__quadruples = quadruples
         
@@ -17,60 +17,68 @@ class VirtualMachine:
         
     def __execute(self):
         instruction_pointer = 0
-        print(self.__constant_table)
-        # while instruction_pointer < len(quadruples):
-        #     quadruple = quadruples[instruction_pointer]
-        #     operator = quadruple["_Quadruple__operator"]
-        #     left_operand = quadruple["_Quadruple__left_operand"]
-        #     right_operand = quadruple["_Quadruple__right_operand"]
-        #     result = quadruple["_Quadruple__avail"]
+        quadruples = self.__quadruples
+        while instruction_pointer < len(quadruples):
+            quadruple = quadruples[instruction_pointer]
+            operator = quadruple["_Quadruple__operator"]
+            left_operand = quadruple["_Quadruple__left_operand"]
+            right_operand = quadruple["_Quadruple__right_operand"]
+            result = quadruple["_Quadruple__avail"]
+            
+            # # Perform addition
+            # if operator == 0:
+            #     # Perform addition
+            #     value1 = self._get_value(left_operand)
+            #     value2 = self._get_value(right_operand)
+            #     result_value = value1 + value2
+            #     self._set_value(result, result_value)
+            # # Perform subtraction
+            # elif operator == 2:
+            #     value1 = self._get_value(left_operand)
+            #     value2 = self._get_value(right_operand)
+            #     result_value = value1 - value2
+            #     self._set_value(result, result_value)
+            # Perform assignation
+            if operator == 13:
+                left_side =  self.__get_value(left_operand)
+                right_side = self.__get_value(result) 
+                type = self.__get_type(right_side)
+                print("\n\n")
+                print(type,right_side, left_side)
+                self.__memory.set_value_at_address(type,right_side,left_side)
+                
+                
+            elif operator == 32:
+                # Exit the virtual machine
+                break
 
-        #     if operator == 0:
-        #         # Perform addition
-        #         value1 = self._get_value(left_operand)
-        #         value2 = self._get_value(right_operand)
-        #         result_value = value1 + value2
-        #         self._set_value(result, result_value)
-
-        #     elif operator == 2:
-        #         # Perform subtraction
-        #         value1 = self._get_value(left_operand)
-        #         value2 = self._get_value(right_operand)
-        #         result_value = value1 - value2
-        #         self._set_value(result, result_value)
-
-        #     # Add more operators and their corresponding actions here
-
-        #     elif operator == 32:
-        #         # Exit the virtual machine
-        #         break
-
-        #     instruction_pointer += 1
-
-    def _get_value(self, operand):
-        if isinstance(operand, int):
-            # Operand is a constant
-            return operand
-        else:
-            # Operand is a variable, fetch its value from memory
-            return self.memory.get(operand, 0)
-
-    def _set_value(self, variable, value):
-        # Store the value in memory
-        self.memory[variable] = value
+            instruction_pointer += 1
+            
+        self.__memory.print_memory()
 
     
-    def __determine_type(value):
-        if 1000 <= value <= 1999:
-            return "INT"
-        elif 2000 <= value <= 2999:
-            return "FLOAT"
-        elif 3000 <= value <= 3999:
-            return "CHAR"
-        elif 4000 <= value <= 4999:
-            return "BOOLEAN"
-        else:
-            return "UNKNOWN"
+    def __get_value(self, address):
+        if address > 4999:
+            for constant_id, constant_data in self.__constant_table.items():
+                virtual_address = constant_data['virtual_address']
+                if virtual_address == address:
+                    return constant_id
+                
+        if 1000 <= address < 5000:
+            if 1000 <= address <= 1999:
+                type =  "INT"
+            elif 2000 <= address <= 2999:
+                type =  "FLOAT"
+            elif 3000 <= address <= 3999:
+                type =  "CHAR"
+            elif 4000 <= address <= 4999:
+                type =  "BOOLEAN"
+            value = self.__memory.get_value(type,address)
+            return value
+        
+        return "ERROR"
+    
+
         
     def __deserialize_json_from_file(file_path):
         file_path = "ovejota.json"
@@ -83,3 +91,15 @@ class VirtualMachine:
     
 
     
+    def __get_type(self, address):
+        if 1000 <= address < 5000:
+            if 1000 <= address <= 1999:
+                return  "INT"
+            elif 2000 <= address <= 2999:
+                return  "FLOAT"
+            elif 3000 <= address <= 3999:
+                return "CHAR"
+            elif 4000 <= address <= 4999:
+                return  "BOOLEAN"
+
+        return "ERROR"
