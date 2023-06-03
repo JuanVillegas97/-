@@ -31,13 +31,14 @@ class FunctionsDirectory:
                 INT : 5000,
                 FLOAT :5500,
                 CHAR : 6000,
-                BOOLEAN : 6500
+                BOOLEAN : 6500,
+                STRING : 6502
             }
             self.__virtual_address_var_and_temp ={
                 INT : 1000,
                 FLOAT :2000,
                 CHAR : 3000,
-                BOOLEAN : 4000
+                BOOLEAN : 4000,
             }
     #VARIABLES AND TEMPORALS
     #INT     1000-1999
@@ -65,7 +66,7 @@ class FunctionsDirectory:
     #FLOAT   5500-5999
     #CHAR    6000-6499
     #BOOLEAN 6500-6501
-    
+    #STRING  6502-7000
     def __get_next_virtual_address_ctes(self, data_type):
         virtual_address = self.__virtual_address_ctes[data_type]
         
@@ -77,6 +78,8 @@ class FunctionsDirectory:
         elif data_type == CHAR and virtual_address >= 6000 and virtual_address <= 6499:
             self.__virtual_address_ctes[data_type] += 1
         elif data_type == BOOLEAN and virtual_address >= 6500 and virtual_address <= 6501:
+            self.__virtual_address_ctes[data_type] += 1
+        elif data_type == STRING and virtual_address >= 6502 and virtual_address <= 7000:
             self.__virtual_address_ctes[data_type] += 1
         else:
             raise ValueError("Invalid data type or virtual address range")
@@ -107,14 +110,16 @@ class FunctionsDirectory:
         self.__program_name = name
     
     def __check_value_type(self, value):
-            if isinstance(value, bool):
-                return BOOLEAN
-            elif isinstance(value, int):
-                return INT
-            elif isinstance(value, float):
-                return FLOAT
-            else:
-                return ERROR
+        if isinstance(value, bool):
+            return "BOOLEAN"
+        elif isinstance(value, int):
+            return "INT"
+        elif isinstance(value, float):
+            return "FLOAT"
+        elif isinstance(value, str):
+            return "STRING"
+        else:
+            return "ERROR"
         
     def add_constant(self, constant):
         type = self.__check_value_type(constant)
@@ -275,12 +280,12 @@ class FunctionsDirectory:
                 print("{:10} {:10} {:15}".format(variable_id, variable_type, virtual_address))
             print("\n")
         print("\nConstants Table:")
-        print("{:10} {:10} {:15}".format("Type", "Constant", "Virtual Address"))
+        print("{:10} {:20} {}".format("Type", "Virtual Address","Constant"))
 
         for constant, variable in self.__constants_table.items():
             constant_type = variable.type
             virtual_address = str(variable.virtual_address)
-            print("{:10} {:10} {:15}".format(constant_type, constant, virtual_address))
+            print("{:10} {:20} {}".format(constant_type, virtual_address, constant))
 
     def get_constant_table(self):
         return self.__constants_table

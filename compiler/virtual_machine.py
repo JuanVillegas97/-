@@ -18,7 +18,10 @@ class VirtualMachine:
     def __execute(self):
         instruction_pointer = 0
         quadruples = self.__quadruples
+        
         print("\n")
+        print("My program")
+        print(10*"-")
         while instruction_pointer < len(quadruples):
             quadruple = quadruples[instruction_pointer]
             operator = quadruple["_Quadruple__operator"]
@@ -64,12 +67,19 @@ class VirtualMachine:
                 addres_to_print = result 
                 value_to_print = self.__get_value(addres_to_print)
                 print(value_to_print)
+                
+            elif operator == 21: #!Perform IF
+                address_to_evaluate = self.__get_value(right_operand) 
+                conditional_element = address_to_evaluate
+                if not conditional_element:
+                    instruction_pointer = result - 2
             elif operator == 32:
                 # Exit the virtual machine
                 break
 
             instruction_pointer += 1
-            
+        print(10*"-")
+        print("\n")
         self.__memory.print_memory()
 
     
@@ -91,7 +101,6 @@ class VirtualMachine:
                 type =  "BOOLEAN"
             value = self.__memory.get_value(type,address)
             return value
-        
         return "ERROR"
     
 
@@ -105,8 +114,6 @@ class VirtualMachine:
         quadruples = json_data['quadruples']
         return directory,constant_table,quadruples
     
-
-    
     def __get_type(self, address):
         if 1000 <= address < 5000:
             if 1000 <= address <= 1999:
@@ -117,12 +124,10 @@ class VirtualMachine:
                 return "CHAR"
             elif 4000 <= address <= 4999:
                 return  "BOOLEAN"
-
         return "ERROR"
     
     def __get_variable_type(self, variable):
         variable_type = type(variable).__name__
-        
         if variable_type == 'bool':
             return 'BOOLEAN'
         elif variable_type == 'str' and len(variable) == 1:

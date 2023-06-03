@@ -171,6 +171,11 @@ class IntermediateRepresentation:
         type_conditional = self.__stacks[TYPES].pop()
         if type_conditional != BOOLEAN:
             raise TypeError(f"Type mismatch")
+        #* HANDELS THE CONVERTION TO ADDRESSS
+        if self.__is_virtual_address:
+            conditional_element = self.convert_operand_to_address(conditional_element)
+        #*
+            
         new_quadruple = Quadruple(GOTOF,"",conditional_element,'_')
         self.__stacks[JUMPS].append(len(self.__stacks[QUADRUPLES])+1)
         self.__stacks[QUADRUPLES].append(new_quadruple)

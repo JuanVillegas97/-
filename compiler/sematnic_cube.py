@@ -5,7 +5,7 @@ class SemanticCube:
         self.__cube = {
             (INT, INT):        [INT   , INT  , INT  , FLOAT, ERROR, BOOLEAN,  INT    ],
             (INT, FLOAT):      [FLOAT , FLOAT, FLOAT, FLOAT, ERROR, BOOLEAN,  FLOAT  ],
-            (INT, CHAR):       [INT   , INT  , INT  , INT  , ERROR, BOOLEAN,  INT    ],
+            (INT, CHAR):       [INT   , INT  , INT  , INT  , ERROR, BOOLEAN,  ERROR    ],
             (INT, BOOLEAN):    [ERROR , ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
             (INT, STRING):     [STRING, ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
             (INT, VECTOR):     [VECTOR, ERROR, ERROR, ERROR, ERROR, ERROR  ,  ERROR  ],
@@ -30,7 +30,6 @@ class SemanticCube:
     
     def get_type(self, left_op, right_op, operator):
         result_type = self.__operator_index.get(operator, None)
-        print(result_type)
         if result_type is not None:
             types = self.__cube.get((left_op, right_op), None)
             if not types:

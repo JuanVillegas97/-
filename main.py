@@ -23,9 +23,9 @@ def _main():
     inter_rep.print_stacks()
     directory.print_function_dictionary()
     
-    # neural.convert_to_json()
-    
-    # vm = VirtualMachine()
+    if inter_rep.get_virtual_address():
+        neural.convert_to_json()
+        vm = VirtualMachine()
     
 if __name__ == '__main__':
     _main()

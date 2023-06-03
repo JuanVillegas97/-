@@ -19,7 +19,7 @@ directory = FunctionsDirectory.get_instance()
 inter_rep = IntermediateRepresentation.get_instance()
 neural_points_handler = NeuralPointsHandler()
 cube = SemanticCube()
-#* MANAGES VIRTUAL ADDRESS REMEMBER TO ALSO TURN OFF IN CONSTANTS
+# * MANAGES VIRTUAL ADDRESS REMEMBER TO ALSO TURN OFF IN CONSTANTS
 inter_rep.set_virtual_address(True)
 def p_program(p):
     '''
@@ -459,7 +459,7 @@ def p_print_arguments(p):
     print_arguments : print_argument
                     | print_arguments COMMA print_argument
     '''
-    type_printed = inter_rep.pop(TYPES) #!Don't know what to do with them
+    type_printed = inter_rep.pop(TYPES) #!Don't know what to do with them I NEED TO VERIFY IF IS A STRING OR WHAT
     p[0] = p[1]
     if len(p) == 2:
         p[0] = [p[1]]
@@ -481,7 +481,16 @@ def p_print_argument(p):
         #*
         new_quadruple = Quadruple(PRINT,"","",print_operand)
     else: #Means it's a string therfore I gotta create anew quadruple with print statement
-        new_quadruple = Quadruple(PRINT,"","",p[1])
+        inter_rep.push(TYPES,"STRING")
+        directory.add_constant(p[1])
+        #* HANDELS THE CONVERTION TO ADDRESSS I
+        constant_string = p[1]
+        virtual_address = inter_rep.get_virtual_address()
+        if virtual_address:
+            constant_string = inter_rep.convert_operand_to_address(constant_string)
+        #*
+        new_quadruple = Quadruple(PRINT,"","",constant_string)
+        
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.print_stacks()
     

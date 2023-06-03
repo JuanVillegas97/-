@@ -3,10 +3,14 @@
 メイン()
 変数 浮動小数点数  Z, C, E;
 変数 ブール A, B;
-
 {
-    B = 真;
+    A = 真;
+    B = 偽;
 
-    A = 偽;
+    もし(B){
+        プリント("The if was true");
+    }
+    プリント("This is printed anyways");
+
 }
 エンド
