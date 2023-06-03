@@ -108,12 +108,12 @@ class IntermediateRepresentation:
         variable_table = directory.get_variable_table()
         global_var_table = directory.get_global_variable_table()
 
-        if operand in global_var_table:
-            operand = global_var_table[operand].virtual_address
-        elif operand in constant_table:
+        if operand in constant_table:
             operand = constant_table[operand].virtual_address
         elif operand in variable_table:
             operand = variable_table[operand].virtual_address
+        elif operand in global_var_table:
+            operand = global_var_table[operand].virtual_address
             
             
         return operand

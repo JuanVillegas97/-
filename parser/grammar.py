@@ -615,7 +615,6 @@ def p_cte(p):
     p[0] = p[1]
     value = p[1]
 
-
     directory.add_constant(value)
 
 def p_empty(p):

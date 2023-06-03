@@ -28,6 +28,13 @@ class VirtualMachine:
             
             # Perform addition
             if operator == 0:
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                address = result                                    # Saving the addres for later
+                result = left_operand + right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory.set_value_at_address(type,address,result)
+                print(left_operand, right_operand,"=", result)
                 pass
             # Perform assignation
             elif operator == 13:
@@ -49,7 +56,7 @@ class VirtualMachine:
             for constant_id, constant_data in self.__constant_table.items():
                 virtual_address = constant_data['virtual_address']
                 if virtual_address == address:
-                    return constant_id
+                    return constant_data['id']
                 
         if 1000 <= address < 5000:
             if 1000 <= address <= 1999:

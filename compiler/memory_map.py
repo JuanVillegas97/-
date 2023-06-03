@@ -19,10 +19,10 @@ class MemoryMap:
                     "FLOAT" : {}, 
                     "CHAR" : {} , 
                     "BOOLEAN" : {},
-                    "resources" : None
+                    "resources" : None 
                 }
             self.__set_resources()
-    
+
     def __malloc(self,type,address):
         if self.__memory["resources"] > 0 :
             self.__memory["resources"] -= 1
