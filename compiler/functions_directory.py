@@ -28,10 +28,10 @@ class FunctionsDirectory:
             self.__program_name = None
             
             self.__virtual_address_ctes ={
-                INT : 4000,
-                FLOAT :4500,
-                CHAR : 5000,
-                BOOLEAN : 5500
+                INT : 5000,
+                FLOAT :5500,
+                CHAR : 6000,
+                BOOLEAN : 6500
             }
             self.__virtual_address_var_and_temp ={
                 INT : 1000,
