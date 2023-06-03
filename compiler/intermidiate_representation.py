@@ -123,7 +123,13 @@ class IntermediateRepresentation:
         if operator == '=':
             last_operand = self.__stacks[OPERANDS].pop()
             assignation_operand = self.__stacks[OPERANDS].pop()
-            last_type = self.__stacks[TYPES].pop()#!Still do not know what do with this one, maybe I gotta update it in the var table (TYPE)
+            variable = directory.get_variable(directory.get_current_function_name(),last_operand)
+            last_type = self.__stacks[TYPES].pop()
+            result_type = self.__semantic_cube.get_type(last_type,variable.type,operator)
+            
+            if result_type == "ERROR":
+                raise TypeError(f"Type mismatch with: {left_type}{operator}{right_type}")
+            
             #* HANDELS THE CONVERTION TO ADDRESSS
             virtual_address = self.get_virtual_address()
             if virtual_address:

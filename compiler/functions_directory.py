@@ -244,7 +244,7 @@ class FunctionsDirectory:
 
         raise Exception("Variable '{}' not found".format(variable_id))
 
-    
+
     def print_function_dictionary(self):
         for function_name, function_details in self.__function_dictionary.items():
             print("{:15} {:10} {:17} {:8} {:10}  {:25}".format(

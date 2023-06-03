@@ -8,10 +8,9 @@ from compiler.virtual_machine import VirtualMachine
 
 neural = NeuralPointsHandler.get_instance()
 def _main():
-    file  = "tests/memmory.txt"
-    functions   = "tests/parser_test.txt"
+    file  = "tests/if.txt"
     lexer = MyLexer()
-    # with open(file_name, "r",encoding="utf-8") as file:
+    # with open(file, "r",encoding="utf-8") as file:
     #     tokens = file.read()
     # lexer.tokenize(tokens)
 
@@ -24,9 +23,9 @@ def _main():
     inter_rep.print_stacks()
     directory.print_function_dictionary()
     
-    neural.convert_to_json()
+    # neural.convert_to_json()
     
-    vm = VirtualMachine()
+    # vm = VirtualMachine()
     
 if __name__ == '__main__':
     _main()

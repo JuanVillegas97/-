@@ -604,7 +604,6 @@ def p_simple_type(p):
     '''
     p[0] = p[1]
 
-#? Adding constants to the constant table
 def p_cte(p):
     '''
     cte : CTEI
@@ -614,7 +613,6 @@ def p_cte(p):
     '''
     p[0] = p[1]
     value = p[1]
-
     directory.add_constant(value)
 
 def p_empty(p):

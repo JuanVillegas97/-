@@ -63,7 +63,7 @@ class VirtualMachine:
             elif operator == 33: #!Perform PRINT
                 addres_to_print = result 
                 value_to_print = self.__get_value(addres_to_print)
-                print(value_to_print,"This is a print")
+                print(value_to_print)
             elif operator == 32:
                 # Exit the virtual machine
                 break
@@ -108,8 +108,6 @@ class VirtualMachine:
 
     
     def __get_type(self, address):
-        if address is None:
-            print("Hi")
         if 1000 <= address < 5000:
             if 1000 <= address <= 1999:
                 return  "INT"

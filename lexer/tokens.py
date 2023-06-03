@@ -15,8 +15,6 @@ reserved = {
     'ワイル' : 'WHILE', 
     'プリント':'PRINT',
     'メイン' : 'MAIN',
-    '真' : 'TRUE',
-    '偽' : 'FALSE',
     'プリント' : 'PRINT',
     'リターン' : 'RETURN',
     '変数': 'VARIABLE',
@@ -86,9 +84,16 @@ t_NOT= r'!'
 t_AND     = r'&&'
 t_OR = r'\|\|'
 
-def t_ID(t):
-    r'[\u30A0-\u30FF\u3040-\u309F\u4E00-\u9FFF]+|[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value,'ID')   
+
+
+def t_CTEB(t):
+    r'[真偽]'
+    if t.value == '真':
+        t.value = True
+    elif t.value == '偽':
+        t.value = False
+    else:
+        raise ValueError("Invalid value encountered")
     return t
 
 def t_CTEF(t):
@@ -100,13 +105,6 @@ def t_CTEI(t):
     r'\d+'
     t.value = int(t.value)
     return t
-
-def t_CTEB(t):
-    r'\s*(true|false)\s*'
-    t.type = 'CTEB'
-    t.value = t.value.strip()# strip whitespace and convert to lowercase
-    return t
-
 
 def t_CTES(t):
     r'\".*?\"'
@@ -126,6 +124,11 @@ def t_newline(t):
 def t_COMMENT(t):
     r'\/\/.*'
     pass # ignore comments
+
+def t_ID(t):
+    r'[\u30A0-\u30FF\u3040-\u309F\u4E00-\u9FFF]+|[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value,'ID')   
+    return t
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'

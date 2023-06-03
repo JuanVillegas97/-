@@ -30,6 +30,7 @@ class SemanticCube:
     
     def get_type(self, left_op, right_op, operator):
         result_type = self.__operator_index.get(operator, None)
+        print(result_type)
         if result_type is not None:
             types = self.__cube.get((left_op, right_op), None)
             if not types:
