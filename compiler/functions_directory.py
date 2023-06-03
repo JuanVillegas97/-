@@ -65,6 +65,7 @@ class FunctionsDirectory:
     #FLOAT   5500-5999
     #CHAR    6000-6499
     #BOOLEAN 6500-6501
+    
     def __get_next_virtual_address_ctes(self, data_type):
         virtual_address = self.__virtual_address_ctes[data_type]
         
