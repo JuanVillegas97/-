@@ -2,17 +2,9 @@ import copy
 from lexer.tokens import reserved
 from compiler.interfaces.variable import variable
 from constants.constants import *
-#VARIABLES AND TEMPORALS
-#INT     1000-1999
-#FLOAT   2000-2999
-#CHAR    3000-3999
-#BOOLEAN 4000-4999
 
-#CTES
-#INT     4000-4499
-#FLOAT   4500-4999
-#CHAR    5000-5499
-#BOOLEAN 5500-5501
+
+
 class FunctionsDirectory:
     __instance = None
 
@@ -47,7 +39,11 @@ class FunctionsDirectory:
                 CHAR : 3000,
                 BOOLEAN : 4000
             }
-    
+    #VARIABLES AND TEMPORALS
+    #INT     1000-1999
+    #FLOAT   2000-2999
+    #CHAR    3000-3999
+    #BOOLEAN 4000-4999
     def get_next_virtual_address_var_and_temp(self, data_type):
         virtual_address = self.__virtual_address_var_and_temp[data_type]
 
@@ -62,19 +58,24 @@ class FunctionsDirectory:
             self.__virtual_address_var_and_temp[data_type] += 1
         else:
             raise ValueError("Invalid data type or virtual address range")
-
+        
         return virtual_address
+    
+    #INT     5000-5499
+    #FLOAT   5500-5999
+    #CHAR    6000-6499
+    #BOOLEAN 6500-6501
     def __get_next_virtual_address_ctes(self, data_type):
         virtual_address = self.__virtual_address_ctes[data_type]
         
         # Check if the virtual address is within the valid range
-        if data_type == INT and virtual_address >= 4000 and virtual_address <= 4499:
+        if data_type == INT and virtual_address >= 5000 and virtual_address <= 5499:
             self.__virtual_address_ctes[data_type] += 1
-        elif data_type == FLOAT and virtual_address >= 4500 and virtual_address <= 4999:
+        elif data_type == FLOAT and virtual_address >= 5500 and virtual_address <= 5999:
             self.__virtual_address_ctes[data_type] += 1
-        elif data_type == CHAR and virtual_address >= 5000 and virtual_address <= 5499:
+        elif data_type == CHAR and virtual_address >= 6000 and virtual_address <= 6499:
             self.__virtual_address_ctes[data_type] += 1
-        elif data_type == BOOLEAN and virtual_address >= 5500 and virtual_address <= 5501:
+        elif data_type == BOOLEAN and virtual_address >= 6500 and virtual_address <= 6501:
             self.__virtual_address_ctes[data_type] += 1
         else:
             raise ValueError("Invalid data type or virtual address range")
