@@ -129,7 +129,7 @@ class NeuralPointsHandler:
           json_data = json.dumps(data, indent=4, cls=Encoder)
           
           # Specify the file path
-          file_path = os.path.join("vm_files", "programs", "data.json")
+          file_path = os.path.join("ovejota.json")
           
           # Write the JSON data to the file
           with open(file_path, 'w') as json_file:

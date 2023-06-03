@@ -107,12 +107,14 @@ class IntermediateRepresentation:
         constant_table = directory.get_constant_table()
         variable_table = directory.get_variable_table()
         global_var_table = directory.get_global_variable_table()
+
         if operand in global_var_table:
             operand = global_var_table[operand].virtual_address
         elif operand in constant_table:
             operand = constant_table[operand].virtual_address
         elif operand in variable_table:
             operand = variable_table[operand].virtual_address
+            
             
         return operand
 
@@ -127,7 +129,8 @@ class IntermediateRepresentation:
             if virtual_address:
                 operator = self.convert_operator_to_address(operator)
                 last_operand = self.convert_operand_to_address(last_operand)
-                assignation_operand  = self.convert_operand_to_address(last_operand)
+                assignation_operand  = self.convert_operand_to_address(assignation_operand)
+                
             #*
             new_quadruple = Quadruple(operator, assignation_operand, "", last_operand)
             self.__stacks[QUADRUPLES].append(new_quadruple)

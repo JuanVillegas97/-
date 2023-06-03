@@ -12,6 +12,21 @@ PARAM = 30
 GOSUB = 31
 END = 32
 PRINT = 33
+
+# GOTOF = "GotoF"
+# GOTOT = "GotoT"
+# GOTO = "Goto"
+# GOTOMAIN = "GotoMain"
+# ENDFUNC = "EndFunc"
+# VCONTROL = "VControl"
+# VFINAL = "VFinal"
+# RETURN = "Retrun"
+# ERA = "Era"
+# PARAM = "Param"
+# GOSUB = "GoSub"
+# END = "End"
+# PRINT = "Print"
+
 # Types
 INT = 'INT'
 FLOAT = 'FLOAT'

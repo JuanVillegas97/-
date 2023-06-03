@@ -19,7 +19,7 @@ directory = FunctionsDirectory.get_instance()
 inter_rep = IntermediateRepresentation.get_instance()
 neural_points_handler = NeuralPointsHandler()
 cube = SemanticCube()
-#* MANAGES VIRTUAL ADDRESS LOOK
+#* MANAGES VIRTUAL ADDRESS REMEMBER TO ALSO TURN OFF IN CONSTANTS
 inter_rep.set_virtual_address(True)
 def p_program(p):
     '''
@@ -100,6 +100,7 @@ def p_function_1(p):
     '''
     function_name = p[-1] 
     function_type = p[-2]
+    
     neural_points_handler.function_1(function_name,function_type,LOCAL)
     
     #* HANDELS THE CONVERTION TO ADDRESSS I 

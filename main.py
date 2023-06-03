@@ -4,10 +4,11 @@ from parser.parser import MyParser
 from parser.grammar import directory
 from parser.grammar import inter_rep
 from compiler.neural_points_handler import NeuralPointsHandler
+from compiler.virtual_machine import VirtualMachine
 
 neural = NeuralPointsHandler.get_instance()
 def _main():
-    file  = "tests/modules.txt"
+    file  = "tests/memmory.txt"
     functions   = "tests/parser_test.txt"
     lexer = MyLexer()
     # with open(file_name, "r",encoding="utf-8") as file:
@@ -24,5 +25,8 @@ def _main():
     directory.print_function_dictionary()
     
     neural.convert_to_json()
+    
+    vm = VirtualMachine()
+    
 if __name__ == '__main__':
     _main()
