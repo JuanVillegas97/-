@@ -26,22 +26,44 @@ class VirtualMachine:
             right_operand = quadruple["_Quadruple__right_operand"]
             result = quadruple["_Quadruple__avail"]
             
-            # Perform addition
-            if operator == 0:
+            
+            if operator == 0: #! Perform ADDITION
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
                 address = result                                    # Saving the addres for later
                 result = left_operand + right_operand               # Performin addition
                 type = self.__get_variable_type(result)
                 self.__memory.set_value_at_address(type,address,result)
-                print(left_operand, right_operand,"=", result)
-                pass
-            # Perform assignation
-            elif operator == 13:
+            elif operator == 1:  #! Perform SUBSTRACTION
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                address = result                                    # Saving the addres for later
+                result = left_operand - right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory.set_value_at_address(type,address,result)
+            elif operator == 2:  #! Perform MULTIPLICATION
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                address = result                                    # Saving the addres for later
+                result = left_operand * right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory.set_value_at_address(type,address,result)
+            elif operator == 3:  #! Perform DIVISION
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                address = result                                    # Saving the addres for later
+                result = left_operand / right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory.set_value_at_address(type,address,result)
+            elif operator == 13: #!Perform ASSIGNATION
                 left_side =  self.__get_value(left_operand) # Get the value
                 address = result                            # Address where is going to bet set
                 type = self.__get_type(address)
                 self.__memory.set_value_at_address(type,address,left_side)
+            elif operator == 33: #!Perform PRINT
+                addres_to_print = result 
+                value_to_print = self.__get_value(addres_to_print)
+                print(value_to_print,"This is a print")
             elif operator == 32:
                 # Exit the virtual machine
                 break
