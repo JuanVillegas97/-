@@ -27,15 +27,13 @@ class MemoryMap:
         if self.__memory["resources"] > 0 :
             self.__memory["resources"] -= 1
             self.__memory[type] = {address : None}
-            return address
         
     def get_value(self, type, address):
         if type in self.__memory and address in self.__memory[type]:
             value = self.__memory[type][address]
             return value
         else:
-            address = self.__malloc(type,address)
-            return address
+            self.__malloc(type,address)
         
     def set_value_at_address(self, type, address, value):
         if type in self.__memory:
@@ -53,11 +51,10 @@ class MemoryMap:
         return self.__memory
         
     def print_memory(self):
-        print("\n\n")
         print("Memory:")
         for key, value in self.__memory.items():
             if key != "resources":
                 print(key + ":")
                 for address, data in value.items():
                     print(f"  {address}: {data}")
-        print("Current memory:", self.__memory["resources"])
+        print("Current memory:", self.__memory["resources"],"\n")

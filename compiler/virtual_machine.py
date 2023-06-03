@@ -18,6 +18,7 @@ class VirtualMachine:
     def __execute(self):
         instruction_pointer = 0
         quadruples = self.__quadruples
+        print("\n")
         while instruction_pointer < len(quadruples):
             quadruple = quadruples[instruction_pointer]
             operator = quadruple["_Quadruple__operator"]
@@ -25,29 +26,15 @@ class VirtualMachine:
             right_operand = quadruple["_Quadruple__right_operand"]
             result = quadruple["_Quadruple__avail"]
             
-            # # Perform addition
-            # if operator == 0:
-            #     # Perform addition
-            #     value1 = self._get_value(left_operand)
-            #     value2 = self._get_value(right_operand)
-            #     result_value = value1 + value2
-            #     self._set_value(result, result_value)
-            # # Perform subtraction
-            # elif operator == 2:
-            #     value1 = self._get_value(left_operand)
-            #     value2 = self._get_value(right_operand)
-            #     result_value = value1 - value2
-            #     self._set_value(result, result_value)
+            # Perform addition
+            if operator == 0:
+                pass
             # Perform assignation
-            if operator == 13:
-                left_side =  self.__get_value(left_operand)
-                right_side = self.__get_value(result) 
-                type = self.__get_type(right_side)
-                print("\n\n")
-                print(type,right_side, left_side)
-                self.__memory.set_value_at_address(type,right_side,left_side)
-                
-                
+            elif operator == 13:
+                left_side =  self.__get_value(left_operand) # Get the value
+                address = result                            # Address where is going to bet set
+                type = self.__get_type(address)
+                self.__memory.set_value_at_address(type,address,left_side)
             elif operator == 32:
                 # Exit the virtual machine
                 break
@@ -92,6 +79,8 @@ class VirtualMachine:
 
     
     def __get_type(self, address):
+        if address is None:
+            print("Hi")
         if 1000 <= address < 5000:
             if 1000 <= address <= 1999:
                 return  "INT"
@@ -103,3 +92,17 @@ class VirtualMachine:
                 return  "BOOLEAN"
 
         return "ERROR"
+    
+    def __get_variable_type(self, variable):
+        variable_type = type(variable).__name__
+        
+        if variable_type == 'bool':
+            return 'BOOLEAN'
+        elif variable_type == 'str' and len(variable) == 1:
+            return 'CHAR'
+        elif variable_type == 'float':
+            return 'FLOAT'
+        elif variable_type == 'int':
+            return 'INT'
+        else:
+            return variable_type.upper()
