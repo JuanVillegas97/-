@@ -26,8 +26,7 @@ def p_program(p):
     program : PROGRAM ID SEMICOLON global_scope var_declarations functions main END
     '''
     p[0] = "PROGRAM COMPILED"
-
-
+    
 def p_global_scope(p):
     '''
     global_scope : empty
@@ -42,6 +41,8 @@ def p_global_scope(p):
     new_quadruple = Quadruple(GOTOMAIN,"","","_")
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.push(JUMPS,1)
+
+    
 
 def p_functions(p):
     '''
@@ -84,6 +85,7 @@ def p_return_stmt(p):
     new_quadruple = Quadruple(RETURN,"","",return_value)
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.print_stacks()
+    
 
 
 def p_empty_return_stmt(p):
@@ -100,10 +102,10 @@ def p_function_1(p):
     function_type = p[-2]
     neural_points_handler.function_1(function_name,function_type,LOCAL)
     
-    #* HANDELS THE CONVERTION TO ADDRESSS I
-    virtual_address = inter_rep.get_virtual_address()
-    if virtual_address:
-        directory.add_typed_func_to_global()
+    #* HANDELS THE CONVERTION TO ADDRESSS I 
+    directory.add_typed_func_to_global()
+    
+    
 
 
 def p_main(p):

@@ -156,6 +156,9 @@ class FunctionsDirectory:
             new_virtual_address = self.get_next_virtual_address_var_and_temp(self.__current_function_type)
             new_variable = variable(self.__current_function_name,self.__current_function_type,new_virtual_address)
             self.__function_dictionary[self.__program_name]["variable_table"][self.__current_function_name] = new_variable
+            #* ALSO +1 IN NUM OF GLOBAL TEMPORALS
+            self.__function_dictionary[self.__program_name][RESOURCES][TEMPORALS] += 1
+        
                 
     def add_function(self, starting_address=None):
         if self.__current_function_name in self.__function_dictionary:
