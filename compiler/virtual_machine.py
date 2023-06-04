@@ -67,12 +67,13 @@ class VirtualMachine:
                 addres_to_print = result 
                 value_to_print = self.__get_value(addres_to_print)
                 print(value_to_print)
-                
             elif operator == 21: #!Perform IF
                 address_to_evaluate = self.__get_value(right_operand) 
                 conditional_element = address_to_evaluate
                 if not conditional_element:
                     instruction_pointer = result - 2
+            elif operator == 23: #!Perform IFELSE
+                instruction_pointer = result - 2
             elif operator == 32:
                 # Exit the virtual machine
                 break

@@ -1,0 +1,16 @@
+プログラム my_program;
+
+メイン()
+変数 ブール A;
+{
+    A = 偽;
+    もし(A){
+        プリント("If was true");
+    }違えば{
+        プリント("If was false");
+    }
+    プリント("This is printed anyways");
+}
+エンド
+
+

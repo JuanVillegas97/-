@@ -7,7 +7,7 @@
     A = 真;
     B = 偽;
 
-    もし(B){
+    もし(A){
         プリント("The if was true");
     }
     プリント("This is printed anyways");

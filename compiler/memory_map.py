@@ -23,6 +23,7 @@ class MemoryMap:
                 }
             self.__set_resources()
 
+    #! Means is a temporal and you need to reserve space
     def __malloc(self,type,address):
         if self.__memory["resources"] > 0 :
             self.__memory["resources"] -= 1
@@ -31,9 +32,12 @@ class MemoryMap:
     def get_value(self, type, address):
         if type in self.__memory and address in self.__memory[type]:
             value = self.__memory[type][address]
+            if self.__memory["resources"] > 0 :
+                self.__memory["resources"] -= 1
             return value
         else:
             self.__malloc(type,address)
+            return None
         
     def set_value_at_address(self, type, address, value):
         if type in self.__memory:
