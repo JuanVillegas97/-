@@ -98,8 +98,8 @@ class VirtualMachine:
                 type = self.__get_variable_type(result)
                 self.__memory.set_value_at_address(type,address,result)
             elif operator == 13: #!Perform ASSIGNATION
-                left_side =  self.__get_value(left_operand) # Get the value
-                memory_allocation = self.__get_value(result)
+                left_side =  self.__get_value(left_operand) # Get the value 
+                memory_allocation = self.__get_value(result)    
                 address = result                            # Address where is going to bet set
                 type = self.__get_type(address)
                 self.__memory.set_value_at_address(type,address,left_side)
@@ -128,12 +128,20 @@ class VirtualMachine:
             elif operator == 29: #!Perform ERA
                 id = result
                 name = self.__memory.find_key_by_id(id)
+                self.__memory.set_current(name)
                 self.__memory.load_resources(name)
                 #! LEFT TO DO SAVE MEMORY POINTER
                 pass
             elif operator == 30: #!Perform PARAMETERS
-
                 
+                # addres_paramater = result
+                # address_argument = left_operand
+                
+                # memory_allocation = self.__get_value(result)
+                # argument = self.__get_value(address_argument)
+                
+                # type = self.__get_type(addres_paramater)
+                # self.__memory.set_value_at_address(type,addres_paramater,argument)
                 pass
                 # instruction_pointer = result - 2
             elif operator == 32: #!perfrom END

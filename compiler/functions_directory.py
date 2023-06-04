@@ -51,6 +51,7 @@ class FunctionsDirectory:
     
     def get_id(self,name):
         return self.__function_dictionary[name]["id"]
+    
     def get_next_virtual_address_var_and_temp(self, data_type):
         virtual_address = self.__virtual_address_var_and_temp[data_type]
 
@@ -155,8 +156,15 @@ class FunctionsDirectory:
     def add_parameters(self, type):
         if type in reserved:
             type = reserved[type]
+        
         self.__function_dictionary[self.__current_function_name]["parameters"].append(type)
-
+        
+    def add_virtual_parameters(self, value):
+        self.__function_dictionary[self.__current_function_name]["virtual_parameters"].append(value)
+    
+    def get_virtual_parameter(self,name ,index):
+        return self.__function_dictionary[name]["virtual_parameters"][index]
+        
     def set_current(self, name, type, scope):
         self.__current_function_name = name
         self.__current_function_type = type
@@ -189,6 +197,7 @@ class FunctionsDirectory:
                 VARIABLES : 0,
                 TEMPORALS : 0,
             },
+            "virtual_parameters": [],
             "parameters": [],
             "variable_table": {},
             "id": 0

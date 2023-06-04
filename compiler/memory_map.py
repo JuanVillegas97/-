@@ -53,7 +53,7 @@ class MemoryMap:
         current = self.__memory["current"]
         if self.__memory["resources"][current] > 0 :
             self.__memory["resources"][current] -= 1
-            self.__memory[type] = {address : None}
+            self.__memory[type][address] = None
             print("Memory in the address ",address," Of type ",type," has been allocated")
         else:
             raise("Not enough memory")

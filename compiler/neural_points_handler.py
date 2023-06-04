@@ -75,11 +75,12 @@ class NeuralPointsHandler:
           virtual_address = self.__inter_rep.get_virtual_address()
           if virtual_address:
                argument = self.__inter_rep.convert_operand_to_address(argument)
-               arg_num = self.__inter_rep.convert_temporal_to_address(argumentType)
+               arg_num = self.__directory.get_virtual_parameter(global_invocation_id,k)
+               
           #*
           #* ALSO +1 IN NUM OF GLOBAL TEMPORALS BECAUSE EACH PARAMATER IS A NEW TEMPORAL
           
-          param_avail = self.__inter_rep.generate_avail()
+          # param_avail = self.__inter_rep.generate_avail()
           
           new_quadruple = Quadruple(PARAM,argument,"",arg_num)
           self.__inter_rep.push(QUADRUPLES,new_quadruple)
@@ -107,7 +108,7 @@ class NeuralPointsHandler:
           
           # If invocation has a type generate quadruple for invocation and push new temporal
           invocation_type = self.__directory.get_invocation_type(global_invocation_id)
-          if invocation_type is not "VOID":
+          if invocation_type != "VOID":
                new_temporal = self.__inter_rep.generate_avail()
                assign = ASSIGN 
                

@@ -210,9 +210,11 @@ def p_parameter(p):
     '''
     type = p[1]
     ids = p[2]
-    directory.add_parameters(type)
     directory.add_variable([ids],type)
     directory.add_resource([ids],PARAMETERS)
+     # * MANAGES VIRTUAL ADDRESS
+    directory.add_virtual_parameters(inter_rep.convert_operand_to_address(ids))
+    directory.add_parameters(type)
     
 def p_statements(p):
     '''

@@ -9,6 +9,7 @@
                 "variables": 0,
                 "temporals": 0
             },
+            "virtual_parameters": [],
             "parameters": [],
             "id": 0
         },
@@ -21,6 +22,10 @@
                 "variables": 0,
                 "temporals": 0
             },
+            "virtual_parameters": [
+                1000,
+                1001
+            ],
             "parameters": [
                 "INT",
                 "INT"
@@ -34,8 +39,9 @@
             "resources": {
                 "parameters": 0,
                 "variables": 2,
-                "temporals": 2
+                "temporals": 0
             },
+            "virtual_parameters": [],
             "parameters": [],
             "id": 0
         }
@@ -99,13 +105,13 @@
             "_Quadruple__operator": 30,
             "_Quadruple__left_operand": 1002,
             "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 1004
+            "_Quadruple__avail": 1000
         },
         {
             "_Quadruple__operator": 30,
             "_Quadruple__left_operand": 1003,
             "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 1005
+            "_Quadruple__avail": 1001
         },
         {
             "_Quadruple__operator": 31,
