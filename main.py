@@ -8,7 +8,7 @@ from compiler.virtual_machine import VirtualMachine
 
 neural = NeuralPointsHandler.get_instance()
 def _main():
-    file  = "tests/ifelse.txt"
+    file  = "tests/while_test.txt"
     lexer = MyLexer()
     # with open(file, "r",encoding="utf-8") as file:
     #     tokens = file.read()

@@ -18,31 +18,26 @@
             "resources": {
                 "parameters": 0,
                 "variables": 1,
-                "temporals": 0
+                "temporals": 2
             },
             "parameters": []
         }
     },
     "constant_table": {
-        "false": {
-            "id": false,
-            "type": "BOOLEAN",
-            "virtual_address": 6500
+        "0": {
+            "id": 0,
+            "type": "INT",
+            "virtual_address": 5000
         },
-        "If was true": {
-            "id": "If was true",
-            "type": "STRING",
-            "virtual_address": 6502
+        "5": {
+            "id": 5,
+            "type": "INT",
+            "virtual_address": 5001
         },
-        "If was false": {
-            "id": "If was false",
-            "type": "STRING",
-            "virtual_address": 6503
-        },
-        "This is printed anyways": {
-            "id": "This is printed anyways",
-            "type": "STRING",
-            "virtual_address": 6504
+        "1": {
+            "id": 1,
+            "type": "INT",
+            "virtual_address": 5002
         }
     },
     "quadruples": [
@@ -54,39 +49,45 @@
         },
         {
             "_Quadruple__operator": 13,
-            "_Quadruple__left_operand": 6500,
+            "_Quadruple__left_operand": 5000,
             "_Quadruple__right_operand": "",
+            "_Quadruple__avail": 1000
+        },
+        {
+            "_Quadruple__operator": 9,
+            "_Quadruple__left_operand": 1000,
+            "_Quadruple__right_operand": 5001,
             "_Quadruple__avail": 4000
         },
         {
             "_Quadruple__operator": 21,
             "_Quadruple__left_operand": "",
             "_Quadruple__right_operand": 4000,
-            "_Quadruple__avail": 6
+            "_Quadruple__avail": 9
         },
         {
             "_Quadruple__operator": 33,
             "_Quadruple__left_operand": "",
             "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 6502
+            "_Quadruple__avail": 1000
+        },
+        {
+            "_Quadruple__operator": 0,
+            "_Quadruple__left_operand": 1000,
+            "_Quadruple__right_operand": 5002,
+            "_Quadruple__avail": 1001
+        },
+        {
+            "_Quadruple__operator": 13,
+            "_Quadruple__left_operand": 1001,
+            "_Quadruple__right_operand": "",
+            "_Quadruple__avail": 1000
         },
         {
             "_Quadruple__operator": 23,
             "_Quadruple__left_operand": "",
             "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 7
-        },
-        {
-            "_Quadruple__operator": 33,
-            "_Quadruple__left_operand": "",
-            "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 6503
-        },
-        {
-            "_Quadruple__operator": 33,
-            "_Quadruple__left_operand": "",
-            "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 6504
+            "_Quadruple__avail": 3
         },
         {
             "_Quadruple__operator": 32,

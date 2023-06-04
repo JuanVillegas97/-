@@ -58,6 +58,34 @@ class VirtualMachine:
                 result = left_operand / right_operand               # Performin addition
                 type = self.__get_variable_type(result)
                 self.__memory.set_value_at_address(type,address,result)
+            elif operator == 9:  #! Perform LESS
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                address = result                                    # Saving the addres for later
+                result = left_operand < right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory.set_value_at_address(type,address,result)
+            elif operator == 10:  #! Perform LESS THAN
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                address = result                                    # Saving the addres for later
+                result = left_operand <= right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory.set_value_at_address(type,address,result)
+            elif operator == 11:  #! Perform GREATER THAN
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                address = result                                    # Saving the addres for later
+                result = left_operand >= right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory.set_value_at_address(type,address,result)
+            elif operator == 12:  #! Perform GREATER
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                address = result                                    # Saving the addres for later
+                result = left_operand > right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory.set_value_at_address(type,address,result)
             elif operator == 13: #!Perform ASSIGNATION
                 left_side =  self.__get_value(left_operand) # Get the value
                 address = result                            # Address where is going to bet set
@@ -67,12 +95,12 @@ class VirtualMachine:
                 addres_to_print = result 
                 value_to_print = self.__get_value(addres_to_print)
                 print(value_to_print)
-            elif operator == 21: #!Perform IF
+            elif operator == 21: #!Perform GOTF
                 address_to_evaluate = self.__get_value(right_operand) 
                 conditional_element = address_to_evaluate
                 if not conditional_element:
                     instruction_pointer = result - 2
-            elif operator == 23: #!Perform IFELSE
+            elif operator == 23: #!Perform GOTO
                 instruction_pointer = result - 2
             elif operator == 32:
                 # Exit the virtual machine
