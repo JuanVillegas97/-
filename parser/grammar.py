@@ -6,6 +6,7 @@ from compiler.intermidiate_representation import IntermediateRepresentation
 from compiler.interfaces.quadruple import Quadruple
 from compiler.neural_points_handler import NeuralPointsHandler
 from compiler.interfaces.variable import variable
+from constants.virtual_constants import virtual_operators
 # Because PLY is a bottom-up and cannot be converted to a top-down it's difficult to track stuff
 # The rules named with ..._scope are neural points to prepare the variable table
 precedence = (
@@ -19,8 +20,7 @@ directory = FunctionsDirectory.get_instance()
 inter_rep = IntermediateRepresentation.get_instance()
 neural_points_handler = NeuralPointsHandler()
 cube = SemanticCube()
-# * MANAGES VIRTUAL ADDRESS REMEMBER TO ALSO TURN OFF IN CONSTANTS
-inter_rep.set_virtual_address(True)
+
 def p_program(p):
     '''
     program : PROGRAM ID SEMICOLON global_scope var_declarations functions main END
@@ -269,8 +269,15 @@ def p_for_2(p):
         if res_type == ERROR:
             raise Exception("Type-mismatch")
         else:
-            new_quadruple = Quadruple(ASSIGN,exp,"",v_control)
-            new_quadrupleVControl = Quadruple(ASSIGN,v_control,"",VCONTROL)
+            assign = ASSIGN
+             # * MANAGES VIRTUAL ADDRESS
+            if inter_rep.get_virtual_address():
+                exp = inter_rep.convert_operand_to_address(exp)
+                v_control = inter_rep.convert_operand_to_address(v_control)
+                assign = virtual_operators[assign]
+                
+            new_quadruple = Quadruple(assign,exp,"",v_control)
+            new_quadrupleVControl = Quadruple(assign,v_control,"",VCONTROL)
             inter_rep.push(QUADRUPLES,new_quadruple)
             inter_rep.push(QUADRUPLES,new_quadrupleVControl)
             
@@ -283,15 +290,30 @@ def p_for_3(p):
     if exp_type != INT:
         raise TypeError("Type-mismatch lower limit must be an integer value")
     else:
+        assign = ASSIGN
         exp = inter_rep.pop(OPERANDS)
-        new_quadruple = Quadruple(ASSIGN,exp,"",VFINAL)
+        # * MANAGES VIRTUAL ADDRESS
+        if inter_rep.get_virtual_address():
+            exp = inter_rep.convert_operand_to_address(exp) 
+        new_quadruple = Quadruple(assign,exp,"",VFINAL)
+        
         inter_rep.push(QUADRUPLES,new_quadruple)
         new_temporal = inter_rep.generate_avail()
-        new_quadruple = Quadruple(LESS,VCONTROL,VFINAL,new_temporal)
+        less = LESS
+        # * MANAGES VIRTUAL ADDRESS
+        if inter_rep.get_virtual_address():
+            less = virtual_operators[less]   
+            new_temporal = inter_rep.convert_temporal_to_address(INT)
+        new_quadruple = Quadruple(less,VCONTROL,VFINAL,new_temporal)
+        
         inter_rep.push(QUADRUPLES,new_quadruple)
         cont = len(inter_rep.get_stack(QUADRUPLES))
         inter_rep.push(JUMPS,cont)
+        # * MANAGES VIRTUAL ADDRESS
+        if inter_rep.get_virtual_address():
+            new_temporal = inter_rep.convert_temporal_to_address(INT)
         new_quadruple = Quadruple(GOTOF,new_temporal,"","_")
+        
         inter_rep.push(QUADRUPLES,new_quadruple)
         cont = len(inter_rep.get_stack(QUADRUPLES))
         inter_rep.push(JUMPS,cont)
@@ -301,14 +323,33 @@ def p_for_4(p):
     for_4 : empty
     '''
     new_temporal = inter_rep.generate_avail()
-    new_quadruple = Quadruple(PLUS,VCONTROL,"1",new_temporal)
+    plus = PLUS
+    # * MANAGES VIRTUAL ADDRESS
+    if inter_rep.get_virtual_address():
+            new_temporal = inter_rep.convert_temporal_to_address(INT)
+            plus = virtual_operators[plus]
+            
+    new_quadruple = Quadruple(plus,VCONTROL,1,new_temporal)
+
     inter_rep.push(QUADRUPLES,new_quadruple)
     
-    new_quadruple = Quadruple(ASSIGN,new_temporal,"",VCONTROL)
-    inter_rep.push(QUADRUPLES,new_quadruple)
+    assign = ASSIGN
+    if inter_rep.get_virtual_address():
+            new_temporal = inter_rep.convert_temporal_to_address(INT)
+            assign = virtual_operators[assign]
+    new_quadruple = Quadruple(assign,new_temporal,"",VCONTROL)
     
+    inter_rep.push(QUADRUPLES,new_quadruple)
     original_id = inter_rep.top(OPERANDS)
-    new_quadruple = Quadruple(ASSIGN,new_temporal,"",original_id)
+    
+    # * MANAGES VIRTUAL ADDRESS
+    assign = ASSIGN
+    if inter_rep.get_virtual_address():
+            new_temporal = inter_rep.convert_temporal_to_address(INT)
+            original_id = inter_rep.convert_operand_to_address(original_id)
+            assign = virtual_operators[assign]
+            
+    new_quadruple = Quadruple(assign,new_temporal,"",original_id)
     inter_rep.push(QUADRUPLES,new_quadruple)
     
     end = inter_rep.pop(JUMPS)-1

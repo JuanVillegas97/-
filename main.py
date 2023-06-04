@@ -8,7 +8,9 @@ from compiler.virtual_machine import VirtualMachine
 
 neural = NeuralPointsHandler.get_instance()
 def _main():
-    file  = "tests/while_test.txt"
+    # * MANAGES VIRTUAL ADDRESS REMEMBER TO ALSO TURN OFF IN CONSTANTS
+    # inter_rep.set_virtual_address(True)
+    file  = "tests/for.txt"
     lexer = MyLexer()
     # with open(file, "r",encoding="utf-8") as file:
     #     tokens = file.read()
