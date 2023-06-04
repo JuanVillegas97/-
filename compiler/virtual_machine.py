@@ -20,8 +20,8 @@ class VirtualMachine:
         quadruples = self.__quadruples
         
         print("\n")
-        print("My program")
-        print(10*"-")
+        print("My program/memory in execution")
+        print(20*"-")
         while instruction_pointer < len(quadruples):
             quadruple = quadruples[instruction_pointer]
             operator = quadruple["_Quadruple__operator"]
@@ -29,7 +29,10 @@ class VirtualMachine:
             right_operand = quadruple["_Quadruple__right_operand"]
             result = quadruple["_Quadruple__avail"]
             
-            
+            print(10*"-")
+            self.__memory.print_memory()
+            print("My memory is about ot perform -> ",quadruple.values())
+            print(10*"-")
             if operator == 0: #! Perform ADDITION
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -47,6 +50,7 @@ class VirtualMachine:
             elif operator == 2:  #! Perform MULTIPLICATION
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
+                memory_allocation = self.__get_value(result)
                 address = result                                    # Saving the addres for later
                 result = left_operand * right_operand               # Performin addition
                 type = self.__get_variable_type(result)
@@ -124,11 +128,10 @@ class VirtualMachine:
                 # instruction_pointer = result - 2
             elif operator == 32: #!perfrom END
                 break
-
+            
             instruction_pointer += 1
-        print(10*"-")
+        print(20*"-")
         print("\n")
-        self.__memory.print_memory()
 
     
     def __get_value(self, address):
