@@ -26,7 +26,7 @@ class FunctionsDirectory:
             self.__current_function_type = None
             self.__is_variable_declaration = False
             self.__program_name = None
-            
+            self.__void_id = 0
             self.__virtual_address_ctes ={
                 INT : 5000,
                 FLOAT :5500,
@@ -45,6 +45,12 @@ class FunctionsDirectory:
     #FLOAT   2000-2999
     #CHAR    3000-3999
     #BOOLEAN 4000-4999
+    def get_void_id(self):
+        self.__void_id += 1
+        return self.__void_id
+    
+    def get_id(self,name):
+        return self.__function_dictionary[name]["id"]
     def get_next_virtual_address_var_and_temp(self, data_type):
         virtual_address = self.__virtual_address_var_and_temp[data_type]
 
@@ -166,7 +172,8 @@ class FunctionsDirectory:
             #* ALSO +1 IN NUM OF GLOBAL TEMPORALS
             self.__function_dictionary[self.__program_name][RESOURCES][TEMPORALS] += 1
         
-                
+    def set_func_id(self,id_):
+        self.__function_dictionary[self.__current_function_name]["id"] = id_
     def add_function(self, starting_address=None):
         if self.__current_function_name in self.__function_dictionary:
             raise Exception("Function '{}' multiple declaration (functions can only have unique ID)".format(self.__current_function_name))
@@ -183,7 +190,8 @@ class FunctionsDirectory:
                 TEMPORALS : 0,
             },
             "parameters": [],
-            "variable_table": {}
+            "variable_table": {},
+            "id": 0
         }
     
     def kill_variable_table(self):
@@ -252,13 +260,15 @@ class FunctionsDirectory:
 
     def print_function_dictionary(self):
         for function_name, function_details in self.__function_dictionary.items():
-            print("{:15} {:10} {:17} {:8} {:10}  {:25}".format(
+            print("{:5}{:15} {:10} {:17} {:8} {:10}  {:25}".format("ID",
             "Function Name", "Type", "Starting Address", "Scope", "Signature",  "Resources"))
             function_type = function_details["type"]
             function_scope = function_details["scope"]
             variable_table = function_details["variable_table"]
             parameters_list = function_details["parameters"]
             starting_address = str(function_details["starting_address"])
+            id_ = str(function_details["id"])
+            
 
             parameters_types = ", ".join(str(types) for types in parameters_list)
             variable_names = ", ".join(str(name) for name in variable_table.keys())
@@ -267,7 +277,7 @@ class FunctionsDirectory:
             # Convert resource values to strings
             resources_str = ", ".join("{}: {}".format(key, value) for key, value in resources.items())
 
-            print("{:15} {:10} {:17} {:8} {:10} {:25}".format(
+            print("{:5}{:15} {:10} {:17} {:8} {:10} {:25}".format(id_,
                 function_name, function_type, starting_address, function_scope,
                 parameters_types, resources_str))
 

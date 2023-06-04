@@ -105,6 +105,10 @@ def p_function_1(p):
     
     #* HANDELS THE CONVERTION TO ADDRESSS I 
     directory.add_typed_func_to_global()
+    id_ = inter_rep.convert_operand_to_address(function_name)
+    if isinstance(id_, str):
+        id_ = directory.get_void_id()
+    directory.set_func_id(id_)
     
     
 
@@ -127,7 +131,7 @@ def p_main_scope(p):
     function_type = "MAIN"
     scope = "LOCAL"
     directory.set_current(function_name,function_type,scope)
-    directory.add_function()
+    directory.add_function(len(inter_rep.get_stack(QUADRUPLES))+1)
     
     inter_rep.fill() 
 

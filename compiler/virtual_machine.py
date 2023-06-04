@@ -88,6 +88,8 @@ class VirtualMachine:
                 self.__memory.set_value_at_address(type,address,result)
             elif operator == 13: #!Perform ASSIGNATION
                 left_side =  self.__get_value(left_operand) # Get the value
+                memory_allocation = self.__get_value(result)
+                # print(result)
                 address = result                            # Address where is going to bet set
                 type = self.__get_type(address)
                 self.__memory.set_value_at_address(type,address,left_side)
@@ -108,10 +110,20 @@ class VirtualMachine:
             elif operator == 23: #!Perform GOTO
                 instruction_pointer = result - 2
             elif operator == 24: #!Perform GOTOMAIN
+                self.__memory.load_resources("my_program")
+                self.__memory.load_resources("MAIN")
+                self.__memory.set_current("MAIN")
                 instruction_pointer = result - 2
             elif operator == 29: #!Perform ERA
-                instruction_pointer = result - 2
-
+                # my_directory = self.__memory.get_directory()
+                # id_ = result
+                # name = self.__find_key_by_id(my_directory,id_)
+                # print("hiiixd",my_directory[name]["resources"])
+                
+                pass
+                # instruction_pointer = result - 2
+            elif operator == 32: #!perfrom END
+                break
 
             instruction_pointer += 1
         print(10*"-")
@@ -174,3 +186,4 @@ class VirtualMachine:
             return 'INT'
         else:
             return variable_type.upper()
+    

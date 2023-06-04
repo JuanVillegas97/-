@@ -34,9 +34,18 @@ class NeuralPointsHandler:
      def invocation_2(self):
           # Generate action ERA size (Activation Record expansion –NEW—size).
           global global_invocation_id
+
           new_quadruple = Quadruple(ERA,"","",global_invocation_id)
-          self.__inter_rep.push(QUADRUPLES,new_quadruple)
           
+          #* HANDELS THE CONVERTION TO ADDRESSS
+          if self.__inter_rep.get_virtual_address():
+               virtual_address = global_invocation_id
+               virtual_address = self.__inter_rep.convert_operand_to_address(virtual_address)
+               virtual_address = self.__directory.get_id(global_invocation_id)
+               new_quadruple = Quadruple(ERA,"","",virtual_address)
+          #*
+          
+          self.__inter_rep.push(QUADRUPLES,new_quadruple)
           # Start the parameter counter (k) in 0.
           self.__inter_rep.set_parameter_counter(0)
           
@@ -61,6 +70,7 @@ class NeuralPointsHandler:
           
           #Generate action PARAMETER, Argument, Argument#k
           arg_num = self.__inter_rep.generate_parameter()
+          
           #* HANDELS THE CONVERTION TO ADDRESSS
           virtual_address = self.__inter_rep.get_virtual_address()
           if virtual_address:
@@ -68,6 +78,7 @@ class NeuralPointsHandler:
                arg_num = self.__inter_rep.convert_temporal_to_address(argumentType)
           #*
           #* ALSO +1 IN NUM OF GLOBAL TEMPORALS BECAUSE EACH PARAMATER IS A NEW TEMPORAL
+          
           param_avail = self.__inter_rep.generate_avail()
           
           new_quadruple = Quadruple(PARAM,argument,"",arg_num)
@@ -85,7 +96,14 @@ class NeuralPointsHandler:
      def invocation_6(self):
           # Generate action GOSUB, procedure-name, , initial-address.
           global global_invocation_id
-          self.__inter_rep.generate_gosub(global_invocation_id)
+          
+          #* HANDELS THE CONVERTION TO ADDRESSS
+          virtual_address = global_invocation_id
+          if self.__inter_rep.get_virtual_address():
+               virtual_address = self.__inter_rep.convert_operand_to_address(virtual_address)
+               virtual_address = self.__directory.get_id(global_invocation_id)
+          #*
+          self.__inter_rep.generate_gosub(virtual_address)
           
           # If invocation has a type generate quadruple for invocation and push new temporal
           invocation_type = self.__directory.get_invocation_type(global_invocation_id)
@@ -101,6 +119,7 @@ class NeuralPointsHandler:
                     new_temporal = self.__inter_rep.convert_temporal_to_address(invocation_type)
                     global_invocation_id = self.__inter_rep.convert_operand_to_address(global_invocation_id)
                #*
+               
                self.__inter_rep.push(OPERANDS,new_temporal)
                self.__inter_rep.push(TYPES,invocation_type)
                new_quadruple = Quadruple(assign,global_invocation_id,"",new_temporal)
