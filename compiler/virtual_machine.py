@@ -29,10 +29,12 @@ class VirtualMachine:
             right_operand = quadruple["_Quadruple__right_operand"]
             result = quadruple["_Quadruple__avail"]
             
-            print(10*"-")
-            self.__memory.print_memory()
-            print("My memory is about ot perform -> ",quadruple.values())
-            print(10*"-")
+            if self.__memory.is_debuging:
+                print(10*"-")
+                self.__memory.print_memory()
+                print("My memory is about ot perform -> ",quadruple.values())
+                print(10*"-")
+            
             if operator == 0: #! Perform ADDITION
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -107,7 +109,7 @@ class VirtualMachine:
                 addres_to_print = result 
                 memory_allocation = self.__get_value(result)
                 value_to_print = self.__get_value(addres_to_print)
-                print(value_to_print," THIS IS FROM MY PORGRAM")
+                print(value_to_print)
             elif operator == 21: #!Perform GOTF
                 address_to_evaluate = self.__get_value(right_operand) 
                 conditional_element = address_to_evaluate

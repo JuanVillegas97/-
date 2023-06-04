@@ -22,6 +22,7 @@ class MemoryMap:
                     "resources" : {},
                     "current" : ""
                 }
+            self.is_debuging = False
 
 
     def print_memory(self):
@@ -54,7 +55,10 @@ class MemoryMap:
         if self.__memory["resources"][current] > 0 :
             self.__memory["resources"][current] -= 1
             self.__memory[type][address] = None
-            print("Memory in the address ",address," Of type ",type," has been allocated")
+            
+            if self.is_debuging: 
+                print("Memory in the address ",address," Of type ",type," has been allocated") 
+            
         else:
             raise("Not enough memory")
         
