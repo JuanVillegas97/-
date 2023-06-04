@@ -56,13 +56,11 @@ class MemoryMap:
             self.__memory[type] = {address : None}
             print("Memory in the address ",address," Of type ",type," has been allocated")
         else:
-            print("Not enough memory")
+            raise("Not enough memory")
         
     def get_value(self, type, address):
         if type in self.__memory and address in self.__memory[type]:
             value = self.__memory[type][address]
-            # if self.__memory["resources"] > 0 :
-            #     self.__memory["resources"] -= 1
             return value
         else:
             self.__malloc(type,address)
