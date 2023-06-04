@@ -126,10 +126,13 @@ class VirtualMachine:
                 self.__memory.set_current("MAIN")
                 instruction_pointer = result - 2
             elif operator == 29: #!Perform ERA
-                # my_directory = self.__memory.get_directory()
-                # id_ = result
-                # name = self.__find_key_by_id(my_directory,id_)
-                # print("hiiixd",my_directory[name]["resources"])
+                id = result
+                name = self.__memory.find_key_by_id(id)
+                self.__memory.load_resources(name)
+                #! LEFT TO DO SAVE MEMORY POINTER
+                pass
+            elif operator == 30: #!Perform PARAMETERS
+
                 
                 pass
                 # instruction_pointer = result - 2

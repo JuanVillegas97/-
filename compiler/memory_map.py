@@ -77,10 +77,10 @@ class MemoryMap:
     def get_directory(self):
         return self.__directory
     
-    def __find_key_by_id(self, dictionary, target_id):
-        for key, value in dictionary.items():
-            if value.get('id') == target_id:
+    def find_key_by_id(self, id):
+        for key, value in self.__directory.items():
+            if value["id"] == id:
                 return key
-        return None  # ID not found
+        return None
     
     
