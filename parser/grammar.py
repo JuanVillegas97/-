@@ -226,6 +226,7 @@ def p_statements(p):
 def p_statement(p):
     '''
     statement : read 
+    | assing_to_call
     | assingation
     | for
     | do_while
@@ -235,6 +236,11 @@ def p_statement(p):
     | if
     | return
     | print
+    '''
+
+def p_assing_to_call(p):
+    '''
+    assing_to_call : variable ASSIGN invocation
     '''
 
 def p_do_while(p):
@@ -602,7 +608,6 @@ def p_factor(p):
     '''
     factor : variable
             | cte
-            | invocation
             | expression_parenthesis
     '''
     id = p[1]
