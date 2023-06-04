@@ -73,14 +73,11 @@ class MemoryMap:
     def get_memory(self):
         return self.__memory
         
-
-    def get_directory(self):
-        return self.__directory
-    
     def find_key_by_id(self, id):
         for key, value in self.__directory.items():
             if value["id"] == id:
                 return key
         return None
     
-    
+    def get_func_starting_address(self,name):
+        return self.__directory[name]["starting_address"]
