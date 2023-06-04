@@ -12,6 +12,7 @@ class VirtualMachine:
         self.__constant_table = constant_table
         self.__quadruples = quadruples
         self.__insctruction_pointers = []
+        self.__context = []
         self.__execute()        
         
         
@@ -130,6 +131,10 @@ class VirtualMachine:
             elif operator == 29: #!Perform ERA
                 id = result
                 name = self.__memory.find_key_by_id(id)
+                
+                #*I need to know the previous context so...
+                self.__context.append(name)
+                
                 self.__memory.set_current(name)
                 self.__memory.load_resources(name)
                 #! LEFT TO DO SAVE MEMORY POINTER

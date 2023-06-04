@@ -22,7 +22,7 @@ class MemoryMap:
                     "resources" : {},
                     "current" : ""
                 }
-            self.is_debuging = False
+            self.is_debuging = True
 
 
     def print_memory(self):
