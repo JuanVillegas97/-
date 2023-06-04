@@ -44,7 +44,13 @@
             "id": 0
         }
     },
-    "constant_table": {},
+    "constant_table": {
+        "2": {
+            "id": 2,
+            "type": "INT",
+            "virtual_address": 5000
+        }
+    },
     "quadruples": [
         {
             "_Quadruple__operator": 24,
@@ -57,6 +63,12 @@
             "_Quadruple__left_operand": "",
             "_Quadruple__right_operand": "",
             "_Quadruple__avail": ""
+        },
+        {
+            "_Quadruple__operator": 13,
+            "_Quadruple__left_operand": 5000,
+            "_Quadruple__right_operand": "",
+            "_Quadruple__avail": 1002
         },
         {
             "_Quadruple__operator": 29,

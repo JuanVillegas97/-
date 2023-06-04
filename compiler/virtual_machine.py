@@ -143,8 +143,10 @@ class VirtualMachine:
                 addres_paramater = result
                 address_argument = left_operand
                 
-                memory_allocation = self.__get_value(result)
+                
                 argument = self.__get_value(address_argument)
+                memory_allocation = self.__get_value(result)
+                
                 
                 type = self.__get_type(addres_paramater)
                 self.__memory.set_value_at_address(type,addres_paramater,argument)

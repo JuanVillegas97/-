@@ -65,7 +65,7 @@ def p_function_signature(p):
 
 def p_function_body(p):
     '''
-    function_body : LBRACE statements return_stmt RBRACE
+    function_body : LBRACE statements return RBRACE
                 | LBRACE statements RBRACE
     '''
     new_quadruple = Quadruple(ENDFUNC,"","","")
@@ -75,24 +75,6 @@ def p_function_body(p):
     directory.set_resource(TEMPORALS,num_of_temporals)
     
     inter_rep.reset_temporal_counter()
-
-def p_return_stmt(p):
-    '''
-    return_stmt : RETURN expression SEMICOLON
-    '''
-    return_value = inter_rep.pop(OPERANDS)
-    return_type = inter_rep.pop(TYPES) #!vereify type with singature
-    new_quadruple = Quadruple(RETURN,"","",return_value)
-    inter_rep.push(QUADRUPLES,new_quadruple)
-    inter_rep.print_stacks()
-    
-
-
-def p_empty_return_stmt(p):
-    '''
-    return_stmt : RETURN SEMICOLON
-    '''
-    # Process the empty return statement
     
 def p_function_1(p):
     '''
@@ -420,6 +402,12 @@ def p_return(p):
     '''
     return : RETURN expression SEMICOLON
     '''
+    return_value = inter_rep.pop(OPERANDS)
+    return_type = inter_rep.pop(TYPES) #!vereify type with singature
+    new_quadruple = Quadruple(RETURN,"","",return_value)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    inter_rep.print_stacks()
+    
 
 def p_read(p):
     '''
