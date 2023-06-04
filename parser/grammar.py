@@ -226,13 +226,13 @@ def p_statements(p):
 def p_statement(p):
     '''
     statement : read 
+    | assingation
     | for
     | do_while
     | while
     | if_else
     | invocation
     | if
-    | assingation
     | return
     | print
     '''
@@ -602,8 +602,8 @@ def p_factor(p):
     '''
     factor : variable
             | cte
-            | expression_parenthesis
             | invocation
+            | expression_parenthesis
     '''
     id = p[1]
     if id != None: # Neurla-point 1 PilaO.Push(id.name) and PTypes.Push(id.type)

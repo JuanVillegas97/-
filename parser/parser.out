@@ -44,13 +44,13 @@ Rule 31    statements -> statements statement
 Rule 32    statements -> statement
 Rule 33    statements -> empty
 Rule 34    statement -> read
-Rule 35    statement -> for
-Rule 36    statement -> do_while
-Rule 37    statement -> while
-Rule 38    statement -> if_else
-Rule 39    statement -> invocation
-Rule 40    statement -> if
-Rule 41    statement -> assingation
+Rule 35    statement -> assingation
+Rule 36    statement -> for
+Rule 37    statement -> do_while
+Rule 38    statement -> while
+Rule 39    statement -> if_else
+Rule 40    statement -> invocation
+Rule 41    statement -> if
 Rule 42    statement -> return
 Rule 43    statement -> print
 Rule 44    do_while -> DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
@@ -98,8 +98,8 @@ Rule 85    term -> factor
 Rule 86    term -> term multiplication_operator factor
 Rule 87    factor -> variable
 Rule 88    factor -> cte
-Rule 89    factor -> expression_parenthesis
-Rule 90    factor -> invocation
+Rule 89    factor -> invocation
+Rule 90    factor -> expression_parenthesis
 Rule 91    expression_parenthesis -> LPAREN expression RPAREN
 Rule 92    comparison_operator -> LESS
 Rule 93    comparison_operator -> GREATER
@@ -181,19 +181,19 @@ error                :
 Nonterminals, with rules where they appear
 
 addition_operator    : 84
-assingation          : 41
+assingation          : 35
 boolean_operator     : 80
 breadcrumb           : 44 50
 close_var_declaration : 7 8 19
 comparison_operator  : 82
 cte                  : 88
-do_while             : 36
+do_while             : 37
 empty                : 2 5 13 15 17 20 21 29 33 46 47 48 49 51 54 55 56 62 63 64 65 66 67 70
 expression           : 11 25 26 26 44 45 45 50 52 53 57 68 69 77 78 91
-expression_parenthesis : 89
+expression_parenthesis : 90
 expressions          : 61 68
 factor               : 85 86
-for                  : 35
+for                  : 36
 for_1                : 45
 for_2                : 45
 for_3                : 45
@@ -208,9 +208,9 @@ global_scope         : 1
 goto                 : 53
 gotof                : 50 52 53
 gotot                : 44
-if                   : 40
-if_else              : 38
-invocation           : 39 90
+if                   : 41
+if_else              : 39
+invocation           : 40 89
 invocation_1         : 61
 invocation_2         : 61
 invocation_3         : 68 69
@@ -242,7 +242,7 @@ var_declarations     : 1 7 8 14 18
 variable             : 22 23 59 60 78 87
 variable_list        : 58 60
 variables            : 19 23
-while                : 37
+while                : 38
 
 Parsing method: LALR
 
@@ -587,24 +587,24 @@ state 33
     (32) statements -> . statement
     (33) statements -> . empty
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (112) empty -> .
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -621,11 +621,11 @@ state 33
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 112 (empty -> .)
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
@@ -642,16 +642,16 @@ state 33
     statement                      shift and go to state 41
     empty                          shift and go to state 42
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 34
 
@@ -723,23 +723,23 @@ state 40
     (11) return_stmt -> . RETURN expression SEMICOLON
     (12) return_stmt -> . RETURN SEMICOLON
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -749,26 +749,26 @@ state 40
     RBRACE          shift and go to state 71
     RETURN          shift and go to state 73
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     PRINT           shift and go to state 61
 
     return_stmt                    shift and go to state 70
     statement                      shift and go to state 72
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 41
 
@@ -817,107 +817,107 @@ state 43
 
 state 44
 
-    (35) statement -> for .
+    (35) statement -> assingation .
 
-    RBRACE          reduce using rule 35 (statement -> for .)
-    RETURN          reduce using rule 35 (statement -> for .)
-    READ            reduce using rule 35 (statement -> for .)
-    FOR             reduce using rule 35 (statement -> for .)
-    DO              reduce using rule 35 (statement -> for .)
-    WHILE           reduce using rule 35 (statement -> for .)
-    IF              reduce using rule 35 (statement -> for .)
-    ID              reduce using rule 35 (statement -> for .)
-    PRINT           reduce using rule 35 (statement -> for .)
+    RBRACE          reduce using rule 35 (statement -> assingation .)
+    RETURN          reduce using rule 35 (statement -> assingation .)
+    READ            reduce using rule 35 (statement -> assingation .)
+    FOR             reduce using rule 35 (statement -> assingation .)
+    DO              reduce using rule 35 (statement -> assingation .)
+    WHILE           reduce using rule 35 (statement -> assingation .)
+    IF              reduce using rule 35 (statement -> assingation .)
+    ID              reduce using rule 35 (statement -> assingation .)
+    PRINT           reduce using rule 35 (statement -> assingation .)
 
 
 state 45
 
-    (36) statement -> do_while .
+    (36) statement -> for .
 
-    RBRACE          reduce using rule 36 (statement -> do_while .)
-    RETURN          reduce using rule 36 (statement -> do_while .)
-    READ            reduce using rule 36 (statement -> do_while .)
-    FOR             reduce using rule 36 (statement -> do_while .)
-    DO              reduce using rule 36 (statement -> do_while .)
-    WHILE           reduce using rule 36 (statement -> do_while .)
-    IF              reduce using rule 36 (statement -> do_while .)
-    ID              reduce using rule 36 (statement -> do_while .)
-    PRINT           reduce using rule 36 (statement -> do_while .)
+    RBRACE          reduce using rule 36 (statement -> for .)
+    RETURN          reduce using rule 36 (statement -> for .)
+    READ            reduce using rule 36 (statement -> for .)
+    FOR             reduce using rule 36 (statement -> for .)
+    DO              reduce using rule 36 (statement -> for .)
+    WHILE           reduce using rule 36 (statement -> for .)
+    IF              reduce using rule 36 (statement -> for .)
+    ID              reduce using rule 36 (statement -> for .)
+    PRINT           reduce using rule 36 (statement -> for .)
 
 
 state 46
 
-    (37) statement -> while .
+    (37) statement -> do_while .
 
-    RBRACE          reduce using rule 37 (statement -> while .)
-    RETURN          reduce using rule 37 (statement -> while .)
-    READ            reduce using rule 37 (statement -> while .)
-    FOR             reduce using rule 37 (statement -> while .)
-    DO              reduce using rule 37 (statement -> while .)
-    WHILE           reduce using rule 37 (statement -> while .)
-    IF              reduce using rule 37 (statement -> while .)
-    ID              reduce using rule 37 (statement -> while .)
-    PRINT           reduce using rule 37 (statement -> while .)
+    RBRACE          reduce using rule 37 (statement -> do_while .)
+    RETURN          reduce using rule 37 (statement -> do_while .)
+    READ            reduce using rule 37 (statement -> do_while .)
+    FOR             reduce using rule 37 (statement -> do_while .)
+    DO              reduce using rule 37 (statement -> do_while .)
+    WHILE           reduce using rule 37 (statement -> do_while .)
+    IF              reduce using rule 37 (statement -> do_while .)
+    ID              reduce using rule 37 (statement -> do_while .)
+    PRINT           reduce using rule 37 (statement -> do_while .)
 
 
 state 47
 
-    (38) statement -> if_else .
+    (38) statement -> while .
 
-    RBRACE          reduce using rule 38 (statement -> if_else .)
-    RETURN          reduce using rule 38 (statement -> if_else .)
-    READ            reduce using rule 38 (statement -> if_else .)
-    FOR             reduce using rule 38 (statement -> if_else .)
-    DO              reduce using rule 38 (statement -> if_else .)
-    WHILE           reduce using rule 38 (statement -> if_else .)
-    IF              reduce using rule 38 (statement -> if_else .)
-    ID              reduce using rule 38 (statement -> if_else .)
-    PRINT           reduce using rule 38 (statement -> if_else .)
+    RBRACE          reduce using rule 38 (statement -> while .)
+    RETURN          reduce using rule 38 (statement -> while .)
+    READ            reduce using rule 38 (statement -> while .)
+    FOR             reduce using rule 38 (statement -> while .)
+    DO              reduce using rule 38 (statement -> while .)
+    WHILE           reduce using rule 38 (statement -> while .)
+    IF              reduce using rule 38 (statement -> while .)
+    ID              reduce using rule 38 (statement -> while .)
+    PRINT           reduce using rule 38 (statement -> while .)
 
 
 state 48
 
-    (39) statement -> invocation .
+    (39) statement -> if_else .
 
-    RBRACE          reduce using rule 39 (statement -> invocation .)
-    RETURN          reduce using rule 39 (statement -> invocation .)
-    READ            reduce using rule 39 (statement -> invocation .)
-    FOR             reduce using rule 39 (statement -> invocation .)
-    DO              reduce using rule 39 (statement -> invocation .)
-    WHILE           reduce using rule 39 (statement -> invocation .)
-    IF              reduce using rule 39 (statement -> invocation .)
-    ID              reduce using rule 39 (statement -> invocation .)
-    PRINT           reduce using rule 39 (statement -> invocation .)
+    RBRACE          reduce using rule 39 (statement -> if_else .)
+    RETURN          reduce using rule 39 (statement -> if_else .)
+    READ            reduce using rule 39 (statement -> if_else .)
+    FOR             reduce using rule 39 (statement -> if_else .)
+    DO              reduce using rule 39 (statement -> if_else .)
+    WHILE           reduce using rule 39 (statement -> if_else .)
+    IF              reduce using rule 39 (statement -> if_else .)
+    ID              reduce using rule 39 (statement -> if_else .)
+    PRINT           reduce using rule 39 (statement -> if_else .)
 
 
 state 49
 
-    (40) statement -> if .
+    (40) statement -> invocation .
 
-    RBRACE          reduce using rule 40 (statement -> if .)
-    RETURN          reduce using rule 40 (statement -> if .)
-    READ            reduce using rule 40 (statement -> if .)
-    FOR             reduce using rule 40 (statement -> if .)
-    DO              reduce using rule 40 (statement -> if .)
-    WHILE           reduce using rule 40 (statement -> if .)
-    IF              reduce using rule 40 (statement -> if .)
-    ID              reduce using rule 40 (statement -> if .)
-    PRINT           reduce using rule 40 (statement -> if .)
+    RBRACE          reduce using rule 40 (statement -> invocation .)
+    RETURN          reduce using rule 40 (statement -> invocation .)
+    READ            reduce using rule 40 (statement -> invocation .)
+    FOR             reduce using rule 40 (statement -> invocation .)
+    DO              reduce using rule 40 (statement -> invocation .)
+    WHILE           reduce using rule 40 (statement -> invocation .)
+    IF              reduce using rule 40 (statement -> invocation .)
+    ID              reduce using rule 40 (statement -> invocation .)
+    PRINT           reduce using rule 40 (statement -> invocation .)
 
 
 state 50
 
-    (41) statement -> assingation .
+    (41) statement -> if .
 
-    RBRACE          reduce using rule 41 (statement -> assingation .)
-    RETURN          reduce using rule 41 (statement -> assingation .)
-    READ            reduce using rule 41 (statement -> assingation .)
-    FOR             reduce using rule 41 (statement -> assingation .)
-    DO              reduce using rule 41 (statement -> assingation .)
-    WHILE           reduce using rule 41 (statement -> assingation .)
-    IF              reduce using rule 41 (statement -> assingation .)
-    ID              reduce using rule 41 (statement -> assingation .)
-    PRINT           reduce using rule 41 (statement -> assingation .)
+    RBRACE          reduce using rule 41 (statement -> if .)
+    RETURN          reduce using rule 41 (statement -> if .)
+    READ            reduce using rule 41 (statement -> if .)
+    FOR             reduce using rule 41 (statement -> if .)
+    DO              reduce using rule 41 (statement -> if .)
+    WHILE           reduce using rule 41 (statement -> if .)
+    IF              reduce using rule 41 (statement -> if .)
+    ID              reduce using rule 41 (statement -> if .)
+    PRINT           reduce using rule 41 (statement -> if .)
 
 
 state 51
@@ -959,12 +959,19 @@ state 53
 
 state 54
 
-    (45) for -> FOR . LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
+    (78) assingation -> variable . ASSIGN expression SEMICOLON
 
-    LPAREN          shift and go to state 75
+    ASSIGN          shift and go to state 75
 
 
 state 55
+
+    (45) for -> FOR . LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
+
+    LPAREN          shift and go to state 76
+
+
+state 56
 
     (61) invocation -> ID . invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (24) variable -> ID .
@@ -977,10 +984,10 @@ state 55
     LBRACK          shift and go to state 67
     LPAREN          reduce using rule 112 (empty -> .)
 
-    invocation_1                   shift and go to state 76
-    empty                          shift and go to state 77
+    invocation_1                   shift and go to state 77
+    empty                          shift and go to state 78
 
-state 56
+state 57
 
     (44) do_while -> DO . breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (51) breadcrumb -> . empty
@@ -988,10 +995,10 @@ state 56
 
     LBRACE          reduce using rule 112 (empty -> .)
 
-    breadcrumb                     shift and go to state 78
-    empty                          shift and go to state 79
+    breadcrumb                     shift and go to state 79
+    empty                          shift and go to state 80
 
-state 57
+state 58
 
     (50) while -> WHILE . breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (51) breadcrumb -> . empty
@@ -999,22 +1006,15 @@ state 57
 
     LPAREN          reduce using rule 112 (empty -> .)
 
-    breadcrumb                     shift and go to state 80
-    empty                          shift and go to state 79
+    breadcrumb                     shift and go to state 81
+    empty                          shift and go to state 80
 
-state 58
+state 59
 
     (53) if_else -> IF . LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (52) if -> IF . LPAREN expression RPAREN gotof LBRACE statements RBRACE
 
-    LPAREN          shift and go to state 81
-
-
-state 59
-
-    (78) assingation -> variable . ASSIGN expression SEMICOLON
-
-    ASSIGN          shift and go to state 82
+    LPAREN          shift and go to state 82
 
 
 state 60
@@ -1032,8 +1032,8 @@ state 60
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -1041,8 +1041,8 @@ state 60
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     ID              shift and go to state 94
@@ -1060,8 +1060,8 @@ state 60
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 61
 
@@ -1135,8 +1135,8 @@ state 67
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -1144,8 +1144,8 @@ state 67
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     ID              shift and go to state 94
@@ -1163,8 +1163,8 @@ state 67
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 68
 
@@ -1238,8 +1238,8 @@ state 73
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -1247,8 +1247,8 @@ state 73
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     SEMICOLON       shift and go to state 110
     NOT             shift and go to state 85
@@ -1267,8 +1267,8 @@ state 73
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 74
 
@@ -1286,33 +1286,79 @@ state 74
 
 state 75
 
-    (45) for -> FOR LPAREN . ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
+    (78) assingation -> variable ASSIGN . expression SEMICOLON
+    (71) expression -> . t_expression
+    (72) expression -> . NOT t_expression
+    (79) t_expression -> . g_expression
+    (80) t_expression -> . t_expression boolean_operator g_expression
+    (81) g_expression -> . m_expression
+    (82) g_expression -> . g_expression comparison_operator m_expression
+    (83) m_expression -> . term
+    (84) m_expression -> . m_expression addition_operator term
+    (85) term -> . factor
+    (86) term -> . term multiplication_operator factor
+    (87) factor -> . variable
+    (88) factor -> . cte
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
+    (24) variable -> . ID
+    (25) variable -> . ID LBRACK expression RBRACK
+    (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
+    (108) cte -> . CTEI
+    (109) cte -> . CTEF
+    (110) cte -> . CTEC
+    (111) cte -> . CTEB
+    (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
-    ID              shift and go to state 113
+    NOT             shift and go to state 85
+    ID              shift and go to state 94
+    CTEI            shift and go to state 95
+    CTEF            shift and go to state 96
+    CTEC            shift and go to state 97
+    CTEB            shift and go to state 98
+    LPAREN          shift and go to state 99
 
+    variable                       shift and go to state 90
+    expression                     shift and go to state 113
+    t_expression                   shift and go to state 84
+    g_expression                   shift and go to state 86
+    m_expression                   shift and go to state 87
+    term                           shift and go to state 88
+    factor                         shift and go to state 89
+    cte                            shift and go to state 91
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 76
 
-    (61) invocation -> ID invocation_1 . LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (45) for -> FOR LPAREN . ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
 
-    LPAREN          shift and go to state 114
+    ID              shift and go to state 114
 
 
 state 77
+
+    (61) invocation -> ID invocation_1 . LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+
+    LPAREN          shift and go to state 115
+
+
+state 78
 
     (62) invocation_1 -> empty .
 
     LPAREN          reduce using rule 62 (invocation_1 -> empty .)
 
 
-state 78
+state 79
 
     (44) do_while -> DO breadcrumb . LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
 
-    LBRACE          shift and go to state 115
+    LBRACE          shift and go to state 116
 
 
-state 79
+state 80
 
     (51) breadcrumb -> empty .
 
@@ -1320,14 +1366,14 @@ state 79
     LPAREN          reduce using rule 51 (breadcrumb -> empty .)
 
 
-state 80
+state 81
 
     (50) while -> WHILE breadcrumb . LPAREN expression RPAREN gotof LBRACE statements RBRACE
 
-    LPAREN          shift and go to state 116
+    LPAREN          shift and go to state 117
 
 
-state 81
+state 82
 
     (53) if_else -> IF LPAREN . expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (52) if -> IF LPAREN . expression RPAREN gotof LBRACE statements RBRACE
@@ -1343,8 +1389,8 @@ state 81
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -1352,8 +1398,8 @@ state 81
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     ID              shift and go to state 94
@@ -1363,62 +1409,16 @@ state 81
     CTEB            shift and go to state 98
     LPAREN          shift and go to state 99
 
-    expression                     shift and go to state 117
-    t_expression                   shift and go to state 84
-    g_expression                   shift and go to state 86
-    m_expression                   shift and go to state 87
-    term                           shift and go to state 88
-    factor                         shift and go to state 89
-    variable                       shift and go to state 90
-    cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
-
-state 82
-
-    (78) assingation -> variable ASSIGN . expression SEMICOLON
-    (71) expression -> . t_expression
-    (72) expression -> . NOT t_expression
-    (79) t_expression -> . g_expression
-    (80) t_expression -> . t_expression boolean_operator g_expression
-    (81) g_expression -> . m_expression
-    (82) g_expression -> . g_expression comparison_operator m_expression
-    (83) m_expression -> . term
-    (84) m_expression -> . m_expression addition_operator term
-    (85) term -> . factor
-    (86) term -> . term multiplication_operator factor
-    (87) factor -> . variable
-    (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
-    (24) variable -> . ID
-    (25) variable -> . ID LBRACK expression RBRACK
-    (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (108) cte -> . CTEI
-    (109) cte -> . CTEF
-    (110) cte -> . CTEC
-    (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
-    (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
-
-    NOT             shift and go to state 85
-    ID              shift and go to state 94
-    CTEI            shift and go to state 95
-    CTEF            shift and go to state 96
-    CTEC            shift and go to state 97
-    CTEB            shift and go to state 98
-    LPAREN          shift and go to state 99
-
-    variable                       shift and go to state 90
     expression                     shift and go to state 118
     t_expression                   shift and go to state 84
     g_expression                   shift and go to state 86
     m_expression                   shift and go to state 87
     term                           shift and go to state 88
     factor                         shift and go to state 89
+    variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 83
 
@@ -1457,8 +1457,8 @@ state 85
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -1466,8 +1466,8 @@ state 85
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     ID              shift and go to state 94
     CTEI            shift and go to state 95
@@ -1483,8 +1483,8 @@ state 85
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 86
 
@@ -1636,48 +1636,48 @@ state 91
 
 state 92
 
-    (89) factor -> expression_parenthesis .
+    (89) factor -> invocation .
 
-    TIMES           reduce using rule 89 (factor -> expression_parenthesis .)
-    DIVIDE          reduce using rule 89 (factor -> expression_parenthesis .)
-    PLUS            reduce using rule 89 (factor -> expression_parenthesis .)
-    MINUS           reduce using rule 89 (factor -> expression_parenthesis .)
-    LESS            reduce using rule 89 (factor -> expression_parenthesis .)
-    GREATER         reduce using rule 89 (factor -> expression_parenthesis .)
-    EQUALS          reduce using rule 89 (factor -> expression_parenthesis .)
-    NOTEQUAL        reduce using rule 89 (factor -> expression_parenthesis .)
-    GREATERTHAN     reduce using rule 89 (factor -> expression_parenthesis .)
-    LESSTHAN        reduce using rule 89 (factor -> expression_parenthesis .)
-    AND             reduce using rule 89 (factor -> expression_parenthesis .)
-    OR              reduce using rule 89 (factor -> expression_parenthesis .)
-    SEMICOLON       reduce using rule 89 (factor -> expression_parenthesis .)
-    RBRACK          reduce using rule 89 (factor -> expression_parenthesis .)
-    RPAREN          reduce using rule 89 (factor -> expression_parenthesis .)
-    COMMA           reduce using rule 89 (factor -> expression_parenthesis .)
-    FROM            reduce using rule 89 (factor -> expression_parenthesis .)
+    TIMES           reduce using rule 89 (factor -> invocation .)
+    DIVIDE          reduce using rule 89 (factor -> invocation .)
+    PLUS            reduce using rule 89 (factor -> invocation .)
+    MINUS           reduce using rule 89 (factor -> invocation .)
+    LESS            reduce using rule 89 (factor -> invocation .)
+    GREATER         reduce using rule 89 (factor -> invocation .)
+    EQUALS          reduce using rule 89 (factor -> invocation .)
+    NOTEQUAL        reduce using rule 89 (factor -> invocation .)
+    GREATERTHAN     reduce using rule 89 (factor -> invocation .)
+    LESSTHAN        reduce using rule 89 (factor -> invocation .)
+    AND             reduce using rule 89 (factor -> invocation .)
+    OR              reduce using rule 89 (factor -> invocation .)
+    SEMICOLON       reduce using rule 89 (factor -> invocation .)
+    RBRACK          reduce using rule 89 (factor -> invocation .)
+    RPAREN          reduce using rule 89 (factor -> invocation .)
+    COMMA           reduce using rule 89 (factor -> invocation .)
+    FROM            reduce using rule 89 (factor -> invocation .)
 
 
 state 93
 
-    (90) factor -> invocation .
+    (90) factor -> expression_parenthesis .
 
-    TIMES           reduce using rule 90 (factor -> invocation .)
-    DIVIDE          reduce using rule 90 (factor -> invocation .)
-    PLUS            reduce using rule 90 (factor -> invocation .)
-    MINUS           reduce using rule 90 (factor -> invocation .)
-    LESS            reduce using rule 90 (factor -> invocation .)
-    GREATER         reduce using rule 90 (factor -> invocation .)
-    EQUALS          reduce using rule 90 (factor -> invocation .)
-    NOTEQUAL        reduce using rule 90 (factor -> invocation .)
-    GREATERTHAN     reduce using rule 90 (factor -> invocation .)
-    LESSTHAN        reduce using rule 90 (factor -> invocation .)
-    AND             reduce using rule 90 (factor -> invocation .)
-    OR              reduce using rule 90 (factor -> invocation .)
-    SEMICOLON       reduce using rule 90 (factor -> invocation .)
-    RBRACK          reduce using rule 90 (factor -> invocation .)
-    RPAREN          reduce using rule 90 (factor -> invocation .)
-    COMMA           reduce using rule 90 (factor -> invocation .)
-    FROM            reduce using rule 90 (factor -> invocation .)
+    TIMES           reduce using rule 90 (factor -> expression_parenthesis .)
+    DIVIDE          reduce using rule 90 (factor -> expression_parenthesis .)
+    PLUS            reduce using rule 90 (factor -> expression_parenthesis .)
+    MINUS           reduce using rule 90 (factor -> expression_parenthesis .)
+    LESS            reduce using rule 90 (factor -> expression_parenthesis .)
+    GREATER         reduce using rule 90 (factor -> expression_parenthesis .)
+    EQUALS          reduce using rule 90 (factor -> expression_parenthesis .)
+    NOTEQUAL        reduce using rule 90 (factor -> expression_parenthesis .)
+    GREATERTHAN     reduce using rule 90 (factor -> expression_parenthesis .)
+    LESSTHAN        reduce using rule 90 (factor -> expression_parenthesis .)
+    AND             reduce using rule 90 (factor -> expression_parenthesis .)
+    OR              reduce using rule 90 (factor -> expression_parenthesis .)
+    SEMICOLON       reduce using rule 90 (factor -> expression_parenthesis .)
+    RBRACK          reduce using rule 90 (factor -> expression_parenthesis .)
+    RPAREN          reduce using rule 90 (factor -> expression_parenthesis .)
+    COMMA           reduce using rule 90 (factor -> expression_parenthesis .)
+    FROM            reduce using rule 90 (factor -> expression_parenthesis .)
 
 
 state 94
@@ -1709,8 +1709,8 @@ state 94
     LBRACK          shift and go to state 67
     LPAREN          reduce using rule 112 (empty -> .)
 
-    invocation_1                   shift and go to state 76
-    empty                          shift and go to state 77
+    invocation_1                   shift and go to state 77
+    empty                          shift and go to state 78
 
 state 95
 
@@ -1819,8 +1819,8 @@ state 99
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -1828,8 +1828,8 @@ state 99
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     ID              shift and go to state 94
@@ -1847,8 +1847,8 @@ state 99
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 100
 
@@ -1869,8 +1869,8 @@ state 100
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -1878,8 +1878,8 @@ state 100
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     CTES            shift and go to state 140
     NOT             shift and go to state 85
@@ -1900,8 +1900,8 @@ state 100
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 101
 
@@ -2020,16 +2020,23 @@ state 112
 
 state 113
 
+    (78) assingation -> variable ASSIGN expression . SEMICOLON
+
+    SEMICOLON       shift and go to state 149
+
+
+state 114
+
     (45) for -> FOR LPAREN ID . for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (46) for_1 -> . empty
     (112) empty -> .
 
     ASSIGN          reduce using rule 112 (empty -> .)
 
-    for_1                          shift and go to state 149
-    empty                          shift and go to state 150
+    for_1                          shift and go to state 150
+    empty                          shift and go to state 151
 
-state 114
+state 115
 
     (61) invocation -> ID invocation_1 LPAREN . invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (63) invocation_2 -> . empty
@@ -2045,34 +2052,34 @@ state 114
     RPAREN          reduce using rule 112 (empty -> .)
     COMMA           reduce using rule 112 (empty -> .)
 
-    invocation_2                   shift and go to state 151
-    empty                          shift and go to state 152
+    invocation_2                   shift and go to state 152
+    empty                          shift and go to state 153
 
-state 115
+state 116
 
     (44) do_while -> DO breadcrumb LBRACE . statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (31) statements -> . statements statement
     (32) statements -> . statement
     (33) statements -> . empty
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (112) empty -> .
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -2089,11 +2096,11 @@ state 115
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 112 (empty -> .)
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
@@ -2106,22 +2113,22 @@ state 115
   ! RETURN          [ reduce using rule 112 (empty -> .) ]
   ! PRINT           [ reduce using rule 112 (empty -> .) ]
 
-    statements                     shift and go to state 153
+    statements                     shift and go to state 154
     statement                      shift and go to state 41
     empty                          shift and go to state 42
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
-state 116
+state 117
 
     (50) while -> WHILE breadcrumb LPAREN . expression RPAREN gotof LBRACE statements RBRACE
     (71) expression -> . t_expression
@@ -2136,8 +2143,8 @@ state 116
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -2145,8 +2152,8 @@ state 116
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     ID              shift and go to state 94
@@ -2156,7 +2163,7 @@ state 116
     CTEB            shift and go to state 98
     LPAREN          shift and go to state 99
 
-    expression                     shift and go to state 154
+    expression                     shift and go to state 155
     t_expression                   shift and go to state 84
     g_expression                   shift and go to state 86
     m_expression                   shift and go to state 87
@@ -2164,22 +2171,15 @@ state 116
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
-state 117
+state 118
 
     (53) if_else -> IF LPAREN expression . RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (52) if -> IF LPAREN expression . RPAREN gotof LBRACE statements RBRACE
 
-    RPAREN          shift and go to state 155
-
-
-state 118
-
-    (78) assingation -> variable ASSIGN expression . SEMICOLON
-
-    SEMICOLON       shift and go to state 156
+    RPAREN          shift and go to state 156
 
 
 state 119
@@ -2208,8 +2208,8 @@ state 120
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -2217,8 +2217,8 @@ state 120
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     ID              shift and go to state 94
     CTEI            shift and go to state 95
@@ -2233,8 +2233,8 @@ state 120
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 121
 
@@ -2286,8 +2286,8 @@ state 124
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -2295,8 +2295,8 @@ state 124
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     ID              shift and go to state 94
     CTEI            shift and go to state 95
@@ -2310,8 +2310,8 @@ state 124
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 125
 
@@ -2392,8 +2392,8 @@ state 131
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -2401,8 +2401,8 @@ state 131
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     ID              shift and go to state 94
     CTEI            shift and go to state 95
@@ -2415,8 +2415,8 @@ state 131
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 132
 
@@ -2447,8 +2447,8 @@ state 134
     (86) term -> term multiplication_operator . factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -2456,8 +2456,8 @@ state 134
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     ID              shift and go to state 94
     CTEI            shift and go to state 95
@@ -2469,8 +2469,8 @@ state 134
     factor                         shift and go to state 160
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 135
 
@@ -2619,24 +2619,24 @@ state 145
     (32) statements -> . statement
     (33) statements -> . empty
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (112) empty -> .
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -2653,11 +2653,11 @@ state 145
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 112 (empty -> .)
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
@@ -2674,16 +2674,16 @@ state 145
     statement                      shift and go to state 41
     empty                          shift and go to state 42
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 146
 
@@ -2724,19 +2724,34 @@ state 148
 
 state 149
 
+    (78) assingation -> variable ASSIGN expression SEMICOLON .
+
+    RBRACE          reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    RETURN          reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    READ            reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    FOR             reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    DO              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    WHILE           reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    IF              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    ID              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    PRINT           reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+
+
+state 150
+
     (45) for -> FOR LPAREN ID for_1 . ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
 
     ASSIGN          shift and go to state 173
 
 
-state 150
+state 151
 
     (46) for_1 -> empty .
 
     ASSIGN          reduce using rule 46 (for_1 -> empty .)
 
 
-state 151
+state 152
 
     (61) invocation -> ID invocation_1 LPAREN invocation_2 . expressions RPAREN invocation_5 SEMICOLON invocation_6
     (68) expressions -> . expressions COMMA invocation_4 expression invocation_3
@@ -2755,8 +2770,8 @@ state 151
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -2764,8 +2779,8 @@ state 151
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     RPAREN          reduce using rule 112 (empty -> .)
@@ -2787,10 +2802,10 @@ state 151
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
-state 152
+state 153
 
     (63) invocation_2 -> empty .
 
@@ -2805,28 +2820,28 @@ state 152
     COMMA           reduce using rule 63 (invocation_2 -> empty .)
 
 
-state 153
+state 154
 
     (44) do_while -> DO breadcrumb LBRACE statements . RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (31) statements -> statements . statement
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -2835,35 +2850,35 @@ state 153
 
     RBRACE          shift and go to state 177
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
     statement                      shift and go to state 72
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
-state 154
+state 155
 
     (50) while -> WHILE breadcrumb LPAREN expression . RPAREN gotof LBRACE statements RBRACE
 
     RPAREN          shift and go to state 178
 
 
-state 155
+state 156
 
     (53) if_else -> IF LPAREN expression RPAREN . gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (52) if -> IF LPAREN expression RPAREN . gotof LBRACE statements RBRACE
@@ -2874,21 +2889,6 @@ state 155
 
     gotof                          shift and go to state 179
     empty                          shift and go to state 180
-
-state 156
-
-    (78) assingation -> variable ASSIGN expression SEMICOLON .
-
-    RBRACE          reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    RETURN          reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    READ            reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    FOR             reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    DO              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    WHILE           reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    IF              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    ID              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    PRINT           reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-
 
 state 157
 
@@ -3039,8 +3039,8 @@ state 163
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -3048,8 +3048,8 @@ state 163
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     CTES            shift and go to state 140
     NOT             shift and go to state 85
@@ -3069,8 +3069,8 @@ state 163
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 164
 
@@ -3136,8 +3136,8 @@ state 169
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -3145,8 +3145,8 @@ state 169
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     ID              shift and go to state 94
@@ -3164,31 +3164,31 @@ state 169
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 170
 
     (14) main -> MAIN LPAREN RPAREN main_scope var_declarations LBRACE statements . RBRACE
     (31) statements -> statements . statement
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -3197,26 +3197,26 @@ state 170
 
     RBRACE          shift and go to state 188
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
     statement                      shift and go to state 72
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 171
 
@@ -3256,8 +3256,8 @@ state 173
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -3265,8 +3265,8 @@ state 173
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     ID              shift and go to state 94
@@ -3284,8 +3284,8 @@ state 173
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 174
 
@@ -3502,24 +3502,24 @@ state 196
     (32) statements -> . statement
     (33) statements -> . empty
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (112) empty -> .
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -3536,11 +3536,11 @@ state 196
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 112 (empty -> .)
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
@@ -3557,16 +3557,16 @@ state 196
     statement                      shift and go to state 41
     empty                          shift and go to state 42
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 197
 
@@ -3677,8 +3677,8 @@ state 205
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -3686,8 +3686,8 @@ state 205
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     ID              shift and go to state 94
@@ -3705,8 +3705,8 @@ state 205
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 206
 
@@ -3736,8 +3736,8 @@ state 207
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -3745,8 +3745,8 @@ state 207
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     ID              shift and go to state 94
@@ -3764,8 +3764,8 @@ state 207
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 208
 
@@ -3774,24 +3774,24 @@ state 208
     (32) statements -> . statement
     (33) statements -> . empty
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (112) empty -> .
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -3808,11 +3808,11 @@ state 208
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 112 (empty -> .)
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
@@ -3829,16 +3829,16 @@ state 208
     statement                      shift and go to state 41
     empty                          shift and go to state 42
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 209
 
@@ -3846,23 +3846,23 @@ state 209
     (52) if -> IF LPAREN expression RPAREN gotof LBRACE statements . RBRACE
     (31) statements -> statements . statement
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -3871,26 +3871,26 @@ state 209
 
     RBRACE          shift and go to state 217
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
     statement                      shift and go to state 72
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 210
 
@@ -3921,8 +3921,8 @@ state 212
     (86) term -> . term multiplication_operator factor
     (87) factor -> . variable
     (88) factor -> . cte
-    (89) factor -> . expression_parenthesis
-    (90) factor -> . invocation
+    (89) factor -> . invocation
+    (90) factor -> . expression_parenthesis
     (24) variable -> . ID
     (25) variable -> . ID LBRACK expression RBRACK
     (26) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
@@ -3930,8 +3930,8 @@ state 212
     (109) cte -> . CTEF
     (110) cte -> . CTEC
     (111) cte -> . CTEB
-    (91) expression_parenthesis -> . LPAREN expression RPAREN
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+    (91) expression_parenthesis -> . LPAREN expression RPAREN
 
     NOT             shift and go to state 85
     ID              shift and go to state 94
@@ -3949,8 +3949,8 @@ state 212
     factor                         shift and go to state 89
     variable                       shift and go to state 90
     cte                            shift and go to state 91
-    expression_parenthesis         shift and go to state 92
-    invocation                     shift and go to state 93
+    invocation                     shift and go to state 92
+    expression_parenthesis         shift and go to state 93
 
 state 213
 
@@ -4012,23 +4012,23 @@ state 216
     (50) while -> WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements . RBRACE
     (31) statements -> statements . statement
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -4037,26 +4037,26 @@ state 216
 
     RBRACE          shift and go to state 223
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
     statement                      shift and go to state 72
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 217
 
@@ -4266,24 +4266,24 @@ state 233
     (32) statements -> . statement
     (33) statements -> . empty
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (112) empty -> .
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -4300,11 +4300,11 @@ state 233
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 112 (empty -> .)
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
@@ -4321,16 +4321,16 @@ state 233
     statement                      shift and go to state 41
     empty                          shift and go to state 42
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 234
 
@@ -4344,23 +4344,23 @@ state 235
     (53) if_else -> IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements . RBRACE
     (31) statements -> statements . statement
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -4369,26 +4369,26 @@ state 235
 
     RBRACE          shift and go to state 237
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
     statement                      shift and go to state 72
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 236
 
@@ -4397,24 +4397,24 @@ state 236
     (32) statements -> . statement
     (33) statements -> . empty
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (112) empty -> .
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -4431,11 +4431,11 @@ state 236
   ! shift/reduce conflict for PRINT resolved as shift
     RBRACE          reduce using rule 112 (empty -> .)
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
@@ -4452,16 +4452,16 @@ state 236
     statement                      shift and go to state 41
     empty                          shift and go to state 42
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 237
 
@@ -4483,23 +4483,23 @@ state 238
     (45) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements . RBRACE for_4
     (31) statements -> statements . statement
     (34) statement -> . read
-    (35) statement -> . for
-    (36) statement -> . do_while
-    (37) statement -> . while
-    (38) statement -> . if_else
-    (39) statement -> . invocation
-    (40) statement -> . if
-    (41) statement -> . assingation
+    (35) statement -> . assingation
+    (36) statement -> . for
+    (37) statement -> . do_while
+    (38) statement -> . while
+    (39) statement -> . if_else
+    (40) statement -> . invocation
+    (41) statement -> . if
     (42) statement -> . return
     (43) statement -> . print
     (58) read -> . READ LPAREN variable_list RPAREN SEMICOLON
+    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (45) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
     (44) do_while -> . DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON
     (50) while -> . WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
     (53) if_else -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE ELSE goto LBRACE statements RBRACE
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (52) if -> . IF LPAREN expression RPAREN gotof LBRACE statements RBRACE
-    (78) assingation -> . variable ASSIGN expression SEMICOLON
     (57) return -> . RETURN expression SEMICOLON
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
     (24) variable -> . ID
@@ -4508,26 +4508,26 @@ state 238
 
     RBRACE          shift and go to state 239
     READ            shift and go to state 53
-    FOR             shift and go to state 54
-    DO              shift and go to state 56
-    WHILE           shift and go to state 57
-    IF              shift and go to state 58
-    ID              shift and go to state 55
+    FOR             shift and go to state 55
+    DO              shift and go to state 57
+    WHILE           shift and go to state 58
+    IF              shift and go to state 59
+    ID              shift and go to state 56
     RETURN          shift and go to state 60
     PRINT           shift and go to state 61
 
     statement                      shift and go to state 72
     read                           shift and go to state 43
-    for                            shift and go to state 44
-    do_while                       shift and go to state 45
-    while                          shift and go to state 46
-    if_else                        shift and go to state 47
-    invocation                     shift and go to state 48
-    if                             shift and go to state 49
-    assingation                    shift and go to state 50
+    assingation                    shift and go to state 44
+    for                            shift and go to state 45
+    do_while                       shift and go to state 46
+    while                          shift and go to state 47
+    if_else                        shift and go to state 48
+    invocation                     shift and go to state 49
+    if                             shift and go to state 50
     return                         shift and go to state 51
     print                          shift and go to state 52
-    variable                       shift and go to state 59
+    variable                       shift and go to state 54
 
 state 239
 
@@ -4589,14 +4589,14 @@ WARNING: shift/reduce conflict for IF in state 33 resolved as shift
 WARNING: shift/reduce conflict for ID in state 33 resolved as shift
 WARNING: shift/reduce conflict for RETURN in state 33 resolved as shift
 WARNING: shift/reduce conflict for PRINT in state 33 resolved as shift
-WARNING: shift/reduce conflict for READ in state 115 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 115 resolved as shift
-WARNING: shift/reduce conflict for DO in state 115 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 115 resolved as shift
-WARNING: shift/reduce conflict for IF in state 115 resolved as shift
-WARNING: shift/reduce conflict for ID in state 115 resolved as shift
-WARNING: shift/reduce conflict for RETURN in state 115 resolved as shift
-WARNING: shift/reduce conflict for PRINT in state 115 resolved as shift
+WARNING: shift/reduce conflict for READ in state 116 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 116 resolved as shift
+WARNING: shift/reduce conflict for DO in state 116 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 116 resolved as shift
+WARNING: shift/reduce conflict for IF in state 116 resolved as shift
+WARNING: shift/reduce conflict for ID in state 116 resolved as shift
+WARNING: shift/reduce conflict for RETURN in state 116 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 116 resolved as shift
 WARNING: shift/reduce conflict for READ in state 145 resolved as shift
 WARNING: shift/reduce conflict for FOR in state 145 resolved as shift
 WARNING: shift/reduce conflict for DO in state 145 resolved as shift

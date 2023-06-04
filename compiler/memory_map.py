@@ -56,8 +56,8 @@ class MemoryMap:
             self.__memory["resources"][current] -= 1
             self.__memory[type][address] = None
             
-            if self.is_debuging: 
-                print("Memory in the address ",address," Of type ",type," has been allocated") 
+            print("Memory in the address", address, "of type", type, "has been allocated") if self.is_debuging else None
+
             
         else:
             raise("Not enough memory")
