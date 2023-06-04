@@ -100,9 +100,16 @@ class VirtualMachine:
                 conditional_element = address_to_evaluate
                 if not conditional_element:
                     instruction_pointer = result - 2
+            elif operator == 22: #!Perform GOTV
+                address_to_evaluate = self.__get_value(right_operand) 
+                conditional_element = address_to_evaluate
+                if conditional_element:
+                    instruction_pointer = result - 2
             elif operator == 23: #!Perform GOTO
                 instruction_pointer = result - 2
             elif operator == 24: #!Perform GOTOMAIN
+                instruction_pointer = result - 2
+            elif operator == 29: #!Perform ERA
                 instruction_pointer = result - 2
 
 
