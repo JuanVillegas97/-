@@ -102,9 +102,9 @@ class VirtualMachine:
                     instruction_pointer = result - 2
             elif operator == 23: #!Perform GOTO
                 instruction_pointer = result - 2
-            elif operator == 32:
-                # Exit the virtual machine
-                break
+            elif operator == 24: #!Perform GOTOMAIN
+                instruction_pointer = result - 2
+
 
             instruction_pointer += 1
         print(10*"-")
