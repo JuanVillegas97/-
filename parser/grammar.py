@@ -76,7 +76,7 @@ def p_function_signature(p):
 
 def p_return(p):
     '''
-    return : RETURN expressions SEMICOLON
+    return : RETURN expression SEMICOLON
     '''
     p[0] = "return was performed"
     return_value = inter_rep.pop(OPERANDS)
@@ -247,6 +247,7 @@ def p_statement(p):
     | if
     | print
     | read 
+    | return
     '''
     p[0] = p[1]
 
@@ -428,6 +429,8 @@ def p_read(p):
     #* HANDELS THE CONVERTION TO ADDRESSS I
     if inter_rep.get_virtual_address():
         read_operand = inter_rep.convert_operand_to_address(read_operand)
+        print(read_operand,"JKDSGBFCJHSDGBFHJ")
+
     new_quadruple = Quadruple(READ,"","",read_operand)
     inter_rep.push(QUADRUPLES,new_quadruple)
 

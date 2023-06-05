@@ -105,8 +105,9 @@ class VirtualMachine:
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
                 memory_allocation = self.__get_value(result)
+                print(result,"hisadasdasdasdasdasdi")
                 address = result                                    # Saving the addres for later
-                result = left_operand > right_operand               # Performin addition
+                result = int(left_operand) > right_operand               # Performin addition
                 type = self.__get_variable_type(result)
                 self.__memory.set_value_at_address(type,address,result)
             elif operator == 13: #!Perform ASSIGNATION
@@ -173,6 +174,7 @@ class VirtualMachine:
                 memory_allocation = self.__get_value(result)
                 type = self.__get_type(addres)
                 my_input = input("Write the input -> ")
+                
                 self.__memory.set_value_at_address(type,addres,my_input)
             elif operator == 35: #!Perform GEN KEY
                 operand_to_assing = result
