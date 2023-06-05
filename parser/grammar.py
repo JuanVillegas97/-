@@ -634,8 +634,6 @@ def p_invocation(p):
     '''
     invocation : ID invocation_1 LPAREN  invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 
     '''
-    
-
 
     
 def p_invocation_1(p):

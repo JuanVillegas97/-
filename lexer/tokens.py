@@ -122,6 +122,13 @@ def t_CTES(t):
     t.value = t.value[1:-1]  # Remove quotes from value
     return t
 
+
+
+def t_ID(t):
+    r'[\u30A0-\u30FF\u3040-\u309F\u4E00-\u9FFF]+|[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value,'ID')   
+    return t
+
 def t_CTEC(t):
     r'\'[^\']\''
     t.value = t.value[1:-1]  # Remove quotes from value
@@ -136,10 +143,6 @@ def t_COMMENT(t):
     r'\/\/.*'
     pass # ignore comments
 
-def t_ID(t):
-    r'[\u30A0-\u30FF\u3040-\u309F\u4E00-\u9FFF]+|[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value,'ID')   
-    return t
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
