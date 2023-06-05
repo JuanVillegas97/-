@@ -6,7 +6,9 @@ from compiler.memory_map import MemoryMap
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
 
 import json
 #INT     1000-1999
@@ -239,8 +241,51 @@ class VirtualMachine:
                 h = hmac.HMAC(key, msg=text_to_decrypt,digestmod=hashlib.sha256)
                 h.update(data)
 
+                type = self.__get_type(addres)
+                self.__memory.set_value_at_address(type,addres,h.digest())
+            elif operator == 41: #!Perform ECDSA PENDIENTE
+                pass
+                # addres = result 
+                # memory_allocation = self.__get_value(addres)
+                # text_to_decrypt = self.__get_value(right_operand)
+                
+                # key = self.__get_value(left_operand)
+                # key = key.encode('utf-8')
+                # text_to_decrypt = "your_text".encode('utf-8')
+                
+                # signature = key.sign(
+                #         data,
+                #         ec.ECDSA(hashes.SHA256())
+                #     )
+                
+                # r_hex = hex(signature.r)
+                # s_hex = hex(signature.s)
+
+                # # Remove the '0x' prefix from the hexadecimal strings
+                # r_hex = r_hex[2:]
+                # s_hex = s_hex[2:]
+                
+                # signature_string = f"{r_hex}:{s_hex}"
+                
+                # type = self.__get_type(addres)
+                # self.__memory.set_value_at_address(type,addres,signature_string)
+            elif operator == 42: #!Perform ECDAKEY
+                operand_to_assing = result
+                memory_allocation = self.__get_value(operand_to_assing)
+                
+                private_key = ec.generate_private_key(
+                    curve=ec.SECP256R1(),  # Select the desired elliptic curve
+                    backend=default_backend()
+                )
+                private_key_pem = private_key.private_bytes(
+                    encoding=serialization.Encoding.PEM,
+                    format=serialization.PrivateFormat.PKCS8,
+                    encryption_algorithm=serialization.NoEncryption()
+                )
+                private_key_pem_str = private_key_pem.decode('utf-8')
+
                 type = self.__get_type(operand_to_assing)
-                self.__memory.set_value_at_address(type,operand_to_assing,h.digest())
+                self.__memory.set_value_at_address(type,operand_to_assing,private_key_pem_str)
             elif operator == 32: #!perfrom END
                 break
             
