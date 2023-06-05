@@ -1,6 +1,8 @@
 
 from compiler.memory_map import MemoryMap
 from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+
 import json
 #INT     1000-1999
 #FLOAT   2000-2999
@@ -202,6 +204,19 @@ class VirtualMachine:
                 encrypted_data_string = encrypted_data.decode('utf-8')
                 type = self.__get_type(operand_to_assing)
                 self.__memory.set_value_at_address(type,operand_to_assing,encrypted_data_string)
+            elif operator == 38: #!Perform SHA
+                addres = result
+                memory_allocation = self.__get_value(addres)
+                text_to_hash = self.__get_value(left_operand)
+                
+                data = text_to_hash.encode('utf-8')
+                digest = hashes.Hash(hashes.SHA256())
+                digest.update(data)
+                hash_value = digest.finalize()
+                hash_value_hex = hash_value.hex()
+                type = self.__get_type(address)
+                self.__memory.set_value_at_address(type,operand_to_assing,hash_value_hex)
+        
             elif operator == 32: #!perfrom END
                 break
             

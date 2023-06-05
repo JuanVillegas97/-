@@ -257,9 +257,28 @@ def p_special_func(p):
     special_func : gen_key
                 | encrypt
                 | decrypt
+                | sha_256
     '''
 
-
+def p_sha_256(p):
+    '''
+    sha_256 : SHA_256 LPAREN ID RPAREN SPECIAL ID SEMICOLON
+    '''
+    operand_to_assing = p[6]
+    text_to_hash = p[3]
+    
+    
+    directory.search_variable(operand_to_assing)
+    
+    # #* HANDELS THE CONVERTION TO ADDRESSS I
+    if inter_rep.get_virtual_address():
+        operand_to_assing = inter_rep.convert_operand_to_address(operand_to_assing)
+        text_to_hash = inter_rep.convert_operand_to_address(text_to_hash)
+        
+        
+    new_quadruple = Quadruple(SHA_256,text_to_hash,"",operand_to_assing)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    
 def p_gen_key(p):
     '''
     gen_key : GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON

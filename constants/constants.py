@@ -16,7 +16,7 @@ READ = 34
 GENKEY = 35
 ENCRYPT = 36
 DECRYPT = 37
-
+SHA_256 = 38
 
 # GOTOF = "GotoF"
 # GOTOT = "GotoT"
