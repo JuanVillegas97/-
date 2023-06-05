@@ -23,7 +23,8 @@ reserved = {
     '入力する' : 'READ',
     '無効': 'VOID',
     '鍵生成': 'GENKEY',
-    '暗号化': 'ENCRYPT'
+    '暗号化': 'ENCRYPT',
+    '復号化': 'DECRYPT'
 }
 
 # List of token names.

@@ -66,6 +66,18 @@
             "_Quadruple__avail": 501
         },
         {
+            "_Quadruple__operator": 37,
+            "_Quadruple__left_operand": 502,
+            "_Quadruple__right_operand": 501,
+            "_Quadruple__avail": 501
+        },
+        {
+            "_Quadruple__operator": 33,
+            "_Quadruple__left_operand": "",
+            "_Quadruple__right_operand": "",
+            "_Quadruple__avail": 501
+        },
+        {
             "_Quadruple__operator": 32,
             "_Quadruple__left_operand": "",
             "_Quadruple__right_operand": "",

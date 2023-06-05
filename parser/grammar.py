@@ -256,6 +256,7 @@ def p_special_func(p):
     '''
     special_func : gen_key
                 | encrypt
+                | decrypt
     '''
 
 
@@ -296,7 +297,27 @@ def p_encrypt(p):
     new_quadruple = Quadruple(ENCRYPT,key,text_to_encrypt,operand_to_assing)
     inter_rep.push(QUADRUPLES,new_quadruple)
     
-
+def p_decrypt(p):
+    '''
+    decrypt : DECRYPT LPAREN ID COMMA ID RPAREN SPECIAL ID SEMICOLON
+    '''
+    key = p[3]
+    text_to_encrypt = p[5]
+    operand_to_assing = p[8]
+    
+    directory.search_variable(key)
+    directory.search_variable(text_to_encrypt)
+    directory.search_variable(operand_to_assing)
+    
+    # #* HANDELS THE CONVERTION TO ADDRESSS I
+    if inter_rep.get_virtual_address():
+        key = inter_rep.convert_operand_to_address(key)
+        text_to_encrypt = inter_rep.convert_operand_to_address(text_to_encrypt)
+        operand_to_assing = inter_rep.convert_operand_to_address(operand_to_assing)
+    
+    new_quadruple = Quadruple(DECRYPT,key,text_to_encrypt,operand_to_assing)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    
 def p_read(p):
     '''
     read : READ LPAREN ID RPAREN SEMICOLON

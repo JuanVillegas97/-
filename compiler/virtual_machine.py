@@ -188,6 +188,19 @@ class VirtualMachine:
                 encrypted_data = cipher.encrypt(data)
                 encrypted_data_string = encrypted_data.decode('utf-8')
                 type = self.__get_type(operand_to_assing)
+
+                self.__memory.set_value_at_address(type,result,encrypted_data_string)
+            elif operator == 37: #!Perform DECRYPT
+                addres = result
+                
+                memory_allocation = self.__get_value(addres)
+                text_to_decrypt = self.__get_value(right_operand)
+                key = self.__get_value(left_operand)
+                key = key.encode('utf-8')
+                cipher = Fernet(key)
+                encrypted_data = cipher.decrypt(text_to_decrypt)
+                encrypted_data_string = encrypted_data.decode('utf-8')
+                type = self.__get_type(operand_to_assing)
                 self.__memory.set_value_at_address(type,operand_to_assing,encrypted_data_string)
             elif operator == 32: #!perfrom END
                 break
