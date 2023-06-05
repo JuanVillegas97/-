@@ -168,15 +168,27 @@ class VirtualMachine:
                 self.__memory.set_value_at_address(type,addres,my_input)
             elif operator == 35: #!Perform GEN KEY
                 operand_to_assing = result
-                
                 memory_allocation = self.__get_value(operand_to_assing)
-                
                 key = Fernet.generate_key()
                 key_string = key.decode()
-                
                 type = self.__get_type(operand_to_assing)
                 self.__memory.set_value_at_address(type,operand_to_assing,key_string)
-
+            elif operator == 36: #!Perform ENCRYPT
+                operand_to_assing = result
+                text_to_encrypt = right_operand
+                key = left_operand
+                
+                memory_allocation = self.__get_value(operand_to_assing)
+                text_to_encrypt = self.__get_value(text_to_encrypt)
+                key = self.__get_value(key)
+                
+                key.encode('utf-8')                
+                cipher = Fernet(key)
+                data = text_to_encrypt.encode('utf-8')
+                encrypted_data = cipher.encrypt(data)
+                encrypted_data_string = encrypted_data.decode('utf-8')
+                type = self.__get_type(operand_to_assing)
+                self.__memory.set_value_at_address(type,operand_to_assing,encrypted_data_string)
             elif operator == 32: #!perfrom END
                 break
             

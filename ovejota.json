@@ -19,7 +19,7 @@
             "starting_address": 2,
             "resources": {
                 "parameters": 0,
-                "variables": 1,
+                "variables": 3,
                 "temporals": 0
             },
             "virtual_parameters": [],
@@ -27,7 +27,13 @@
             "id": 0
         }
     },
-    "constant_table": {},
+    "constant_table": {
+        "Texto a encriptar": {
+            "id": "Texto a encriptar",
+            "type": "STRING",
+            "virtual_address": 6502
+        }
+    },
     "quadruples": [
         {
             "_Quadruple__operator": 24,
@@ -36,16 +42,28 @@
             "_Quadruple__avail": 2
         },
         {
+            "_Quadruple__operator": 13,
+            "_Quadruple__left_operand": 6502,
+            "_Quadruple__right_operand": "",
+            "_Quadruple__avail": 500
+        },
+        {
             "_Quadruple__operator": 35,
             "_Quadruple__left_operand": "",
             "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 500
+            "_Quadruple__avail": 502
+        },
+        {
+            "_Quadruple__operator": 36,
+            "_Quadruple__left_operand": 502,
+            "_Quadruple__right_operand": 500,
+            "_Quadruple__avail": 501
         },
         {
             "_Quadruple__operator": 33,
             "_Quadruple__left_operand": "",
             "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 500
+            "_Quadruple__avail": 501
         },
         {
             "_Quadruple__operator": 32,

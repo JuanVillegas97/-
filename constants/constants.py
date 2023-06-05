@@ -14,6 +14,7 @@ END = 32
 PRINT = 33
 READ = 34
 GENKEY = 35
+ENCRYPT = 36
 
 # GOTOF = "GotoF"
 # GOTOT = "GotoT"
