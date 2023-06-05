@@ -1,7 +1,9 @@
 
+import os
 from compiler.memory_map import MemoryMap
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 import json
 #INT     1000-1999
@@ -216,7 +218,14 @@ class VirtualMachine:
                 hash_value_hex = hash_value.hex()
                 type = self.__get_type(address)
                 self.__memory.set_value_at_address(type,operand_to_assing,hash_value_hex)
-        
+            elif operator == 39: #!Perform SALT
+                addres = result
+                memory_allocation = self.__get_value(addres)
+                number = self.__get_value(left_operand)
+                salt = os.urandom(number)
+                type = self.__get_type(address)
+                self.__memory.set_value_at_address(type,result,salt)
+    
             elif operator == 32: #!perfrom END
                 break
             

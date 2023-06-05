@@ -19,7 +19,7 @@
             "starting_address": 2,
             "resources": {
                 "parameters": 0,
-                "variables": 3,
+                "variables": 4,
                 "temporals": 0
             },
             "virtual_parameters": [],
@@ -32,6 +32,11 @@
             "id": "\u3053\u3093\u306b\u3061\u306f",
             "type": "STRING",
             "virtual_address": 6502
+        },
+        "16": {
+            "id": 16,
+            "type": "INT",
+            "virtual_address": 5000
         }
     },
     "quadruples": [
@@ -88,6 +93,18 @@
             "_Quadruple__left_operand": "",
             "_Quadruple__right_operand": "",
             "_Quadruple__avail": 501
+        },
+        {
+            "_Quadruple__operator": 39,
+            "_Quadruple__left_operand": 5000,
+            "_Quadruple__right_operand": "",
+            "_Quadruple__avail": 503
+        },
+        {
+            "_Quadruple__operator": 33,
+            "_Quadruple__left_operand": "",
+            "_Quadruple__right_operand": "",
+            "_Quadruple__avail": 503
         },
         {
             "_Quadruple__operator": 32,

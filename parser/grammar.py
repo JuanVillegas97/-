@@ -258,8 +258,29 @@ def p_special_func(p):
                 | encrypt
                 | decrypt
                 | sha_256
+                | random_salt
     '''
 
+def p_random_salt(p):
+    '''
+    random_salt : RANDOM_SALT LPAREN CTEI RPAREN SPECIAL ID SEMICOLON
+    '''
+    operand_to_assing = p[6]
+    number = p[3]
+    
+    directory.add_constant(number)
+    directory.search_variable([number])
+    directory.search_variable([operand_to_assing])
+    
+    # # #* HANDELS THE CONVERTION TO ADDRESSS I
+    if inter_rep.get_virtual_address():
+        operand_to_assing = inter_rep.convert_operand_to_address(operand_to_assing)
+        number = inter_rep.convert_operand_to_address(number)
+        
+        
+    new_quadruple = Quadruple(RANDOM_SALT,number,"",operand_to_assing)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    
 def p_sha_256(p):
     '''
     sha_256 : SHA_256 LPAREN ID RPAREN SPECIAL ID SEMICOLON
@@ -268,7 +289,7 @@ def p_sha_256(p):
     text_to_hash = p[3]
     
     
-    directory.search_variable(operand_to_assing)
+    directory.search_variable([operand_to_assing])
     
     # #* HANDELS THE CONVERTION TO ADDRESSS I
     if inter_rep.get_virtual_address():
@@ -285,7 +306,7 @@ def p_gen_key(p):
     '''
     operand_to_assing = p[5]
     
-    directory.search_variable(operand_to_assing)
+    directory.search_variable([operand_to_assing])
     
     # #* HANDELS THE CONVERTION TO ADDRESSS I
     if inter_rep.get_virtual_address():
@@ -303,9 +324,9 @@ def p_encrypt(p):
     text_to_encrypt = p[5]
     operand_to_assing = p[8]
     
-    directory.search_variable(key)
-    directory.search_variable(text_to_encrypt)
-    directory.search_variable(operand_to_assing)
+    directory.search_variable([key])
+    directory.search_variable([text_to_encrypt])
+    directory.search_variable([operand_to_assing])
     
     # #* HANDELS THE CONVERTION TO ADDRESSS I
     if inter_rep.get_virtual_address():
@@ -324,9 +345,9 @@ def p_decrypt(p):
     text_to_encrypt = p[5]
     operand_to_assing = p[8]
     
-    directory.search_variable(key)
-    directory.search_variable(text_to_encrypt)
-    directory.search_variable(operand_to_assing)
+    directory.search_variable([key])
+    directory.search_variable([text_to_encrypt])
+    directory.search_variable([operand_to_assing])
     
     # #* HANDELS THE CONVERTION TO ADDRESSS I
     if inter_rep.get_virtual_address():
@@ -342,7 +363,7 @@ def p_read(p):
     read : READ LPAREN ID RPAREN SEMICOLON
     '''
     read_operand = p[3]
-    directory.search_variable(read_operand)
+    directory.search_variable([read_operand])
     #* HANDELS THE CONVERTION TO ADDRESSS I
     if inter_rep.get_virtual_address():
         read_operand = inter_rep.convert_operand_to_address(read_operand)

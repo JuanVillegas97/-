@@ -25,7 +25,8 @@ reserved = {
     '鍵生成': 'GENKEY',
     '暗号化': 'ENCRYPT',
     '復号化': 'DECRYPT',
-    'シャ' : 'SHA_256'
+    'シャ' : 'SHA_256',
+    'ランダムな塩': 'RANDOM_SALT'
 }
 
 # List of token names.
