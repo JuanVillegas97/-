@@ -46,7 +46,6 @@ def p_global_scope(p):
     inter_rep.push(JUMPS,1)
 
     
-
 def p_functions(p):
     '''
     functions : functions function
@@ -56,22 +55,8 @@ def p_functions(p):
 
 def p_function(p):
     '''
-    function : FUNCTION function_signature function_body
+    function : FUNCTION function_signature block
     '''
-
-def p_function_signature(p):
-    '''
-    function_signature : simple_type ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations
-                    | VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations
-    '''
-    # Process the function signature
-
-def p_function_body(p):
-    '''
-    function_body : LBRACE statements return RBRACE
-                | LBRACE statements RBRACE
-    '''
-    
     new_quadruple = Quadruple(ENDFUNC,"","","")
     inter_rep.push(QUADRUPLES,new_quadruple)
     
@@ -79,6 +64,14 @@ def p_function_body(p):
     directory.set_resource(TEMPORALS,num_of_temporals)
     
     inter_rep.reset_temporal_counter()
+
+
+def p_function_signature(p):
+    '''
+    function_signature : simple_type ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations
+                    | VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations
+    '''
+    # Process the function signature
 
 
 def p_return(p):
@@ -117,7 +110,7 @@ def p_function_1(p):
 
 def p_main(p):
     '''
-    main : MAIN LPAREN RPAREN main_scope var_declarations LBRACE statements RBRACE
+    main : MAIN LPAREN RPAREN main_scope var_declarations block
     '''
     num_of_temporals = inter_rep.get_temporal_counter()
     directory.set_resource(TEMPORALS,num_of_temporals)
@@ -129,6 +122,7 @@ def p_main_scope(p):
     '''
     main_scope : empty
     '''
+
     function_name = "MAIN"
     function_type = "MAIN"
     scope = "LOCAL"
@@ -219,16 +213,27 @@ def p_parameter(p):
     directory.add_virtual_parameters(inter_rep.convert_operand_to_address(ids))
     directory.add_parameters(type)
     
-def p_statements(p):
+
+
+def p_block(p):
     '''
-    statements : statements statement
-    | statement
-    | empty
+    block : LBRACE block2 RBRACE
     '''
-    print(len(p))
+    p[0]=('block',p[1],p[2],p[3])
+
+def p_block2(p):
+    '''
+    block2 : block3
+           | empty
+    '''
+    p[0]=('block2',p[1])
+
+def p_block3(p):
+    '''
+    block3 : statement block2
+    '''
+    p[0]=('block3',p[1])
     
-
-
 def p_statement(p):
     '''
     statement : read 
@@ -240,9 +245,9 @@ def p_statement(p):
     | if_else
     | invocation
     | if
-    | return
     | print
     '''
+    print ("dsadfasd")
     p[0] = p[1]
 
 def p_assing_to_call(p):
@@ -253,12 +258,12 @@ def p_assing_to_call(p):
 
 def p_do_while(p):
     '''
-    do_while : DO breadcrumb LBRACE statements RBRACE WHILE LPAREN expression RPAREN gotot SEMICOLON 
+    do_while : DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON 
     '''
 
 def p_for(p):
     '''
-    for : FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO LBRACE statements RBRACE for_4
+    for : FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4
     '''
 #   
 def p_for_1(p):
@@ -384,7 +389,7 @@ def p_for_4(p):
         
 def p_while(p):
     '''
-    while : WHILE breadcrumb LPAREN expression RPAREN gotof LBRACE statements RBRACE
+    while : WHILE breadcrumb LPAREN expression RPAREN gotof block
     '''
     inter_rep.fill_while()
 
@@ -396,14 +401,14 @@ def p_breadcrumb(p):
     
 def p_if(p):
     '''
-    if : IF LPAREN expression  RPAREN gotof LBRACE statements RBRACE
+    if : IF LPAREN expression  RPAREN gotof block
     '''
     p[0] = "if was performed"
     inter_rep.fill()
     
 def p_if_else(p):
     '''
-    if_else : IF LPAREN  expression  RPAREN  gotof LBRACE statements RBRACE  ELSE goto LBRACE statements RBRACE
+    if_else : IF LPAREN  expression  RPAREN  gotof block  ELSE goto block
     '''
     p[0] = "if else was perform"
     inter_rep.fill()
