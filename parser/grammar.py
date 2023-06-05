@@ -237,7 +237,7 @@ def p_block3(p):
 # THE ONES YOU WANT
 def p_statement(p):
     '''
-    statement : read 
+    statement : special_func 
     | assingation
     | for
     | do_while
@@ -246,7 +246,7 @@ def p_statement(p):
     | invocation
     | if
     | print
-    | special_func
+    | read 
     '''
     p[0] = p[1]
 
@@ -257,18 +257,42 @@ def p_special_func(p):
     special_func : gen_key
     '''
 
+
 def p_gen_key(p):
     '''
-    gen_key : GENKEY LPAREN CTES RPAREN SEMICOLON
+    gen_key : GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON
     '''
-    # operand = p[3]
-    # directory.search_variable(operand)
+    operand_to_assing = p[5]
+    
+    directory.search_variable(operand_to_assing)
+    
     # #* HANDELS THE CONVERTION TO ADDRESSS I
-    # if inter_rep.get_virtual_address():
-    #     operand = inter_rep.convert_operand_to_address(operand)
+    if inter_rep.get_virtual_address():
+        operand_to_assing = inter_rep.convert_operand_to_address(operand_to_assing)
         
-    # new_quadruple = Quadruple(GENKEY,"","",operand)
-    # inter_rep.push(QUADRUPLES,new_quadruple)
+        
+    new_quadruple = Quadruple(GENKEY,"","",operand_to_assing)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    
+# def p_gen_key(p):
+#     '''
+#     gen_key : GENKEY LPAREN ID RPAREN SPECIAL ID SEMICOLON
+#     '''
+#     operand_to_read = p[3]
+#     operand_to_assing = p[6]
+    
+#     directory.search_variable(operand_to_read)
+#     directory.search_variable(operand_to_assing)
+    
+#     # #* HANDELS THE CONVERTION TO ADDRESSS I
+#     if inter_rep.get_virtual_address():
+#         operand_to_read = inter_rep.convert_operand_to_address(operand_to_read)
+#         operand_to_assing = inter_rep.convert_operand_to_address(operand_to_assing)
+        
+        
+#     new_quadruple = Quadruple(GENKEY,operand_to_read,"",operand_to_assing)
+#     inter_rep.push(QUADRUPLES,new_quadruple)
+    
 
 def p_read(p):
     '''

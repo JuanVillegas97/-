@@ -56,12 +56,15 @@ tokens = [
     'OR',#Done
     'GREATERTHAN',
     'LESSTHAN',
-    'NOT'
+    'NOT',
+    'SPECIAL'
 ]+ list(reserved.values())
 
 
 # Regular expression rules for simple tokens
 t_PLUS    = r'\+'
+t_SPECIAL = r'->'
+
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
 t_DIVIDE  = r'/'

@@ -40,7 +40,7 @@ Rule 28    block -> LBRACE block2 RBRACE
 Rule 29    block2 -> block3
 Rule 30    block2 -> empty
 Rule 31    block3 -> statement block2
-Rule 32    statement -> read
+Rule 32    statement -> special_func
 Rule 33    statement -> assingation
 Rule 34    statement -> for
 Rule 35    statement -> do_while
@@ -49,9 +49,9 @@ Rule 37    statement -> if_else
 Rule 38    statement -> invocation
 Rule 39    statement -> if
 Rule 40    statement -> print
-Rule 41    statement -> special_func
+Rule 41    statement -> read
 Rule 42    special_func -> gen_key
-Rule 43    gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON
+Rule 43    gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON
 Rule 44    read -> READ LPAREN ID RPAREN SEMICOLON
 Rule 45    assing_to_call -> variable ASSIGN invocation
 Rule 46    do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON
@@ -137,7 +137,7 @@ CTEB                 : 112
 CTEC                 : 111
 CTEF                 : 110
 CTEI                 : 109
-CTES                 : 43 76 113
+CTES                 : 76 113
 DIVIDE               : 103
 DO                   : 46 47
 ELSE                 : 55
@@ -150,7 +150,7 @@ FUNCTION             : 6
 GENKEY               : 43
 GREATER              : 93
 GREATERTHAN          : 96
-ID                   : 1 7 8 21 22 23 27 44 47 61
+ID                   : 1 7 8 21 22 23 27 43 44 47 61
 IF                   : 54 55
 INT                  : 104
 LBRACE               : 28
@@ -172,6 +172,7 @@ READ                 : 44
 RETURN               : 9
 RPAREN               : 7 8 11 43 44 46 47 52 54 55 61 73 91
 SEMICOLON            : 1 9 16 43 44 46 61 73 78
+SPECIAL              : 43
 STRING               : 108
 THEN                 : 
 TIMES                : 102
@@ -234,10 +235,10 @@ print                : 40
 print_argument       : 74 75
 print_arguments      : 73 75
 program              : 0
-read                 : 32
+read                 : 41
 return               : 
 simple_type          : 7 16 27
-special_func         : 41
+special_func         : 32
 statement            : 31
 t_expression         : 71 72 80
 term                 : 83 84 86
@@ -603,7 +604,7 @@ state 34
     (30) block2 -> . empty
     (31) block3 -> . statement block2
     (114) empty -> .
-    (32) statement -> . read
+    (32) statement -> . special_func
     (33) statement -> . assingation
     (34) statement -> . for
     (35) statement -> . do_while
@@ -612,8 +613,8 @@ state 34
     (38) statement -> . invocation
     (39) statement -> . if
     (40) statement -> . print
-    (41) statement -> . special_func
-    (44) read -> . READ LPAREN ID RPAREN SEMICOLON
+    (41) statement -> . read
+    (42) special_func -> . gen_key
     (78) assingation -> . variable ASSIGN expression SEMICOLON
     (47) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4
     (46) do_while -> . DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON
@@ -622,27 +623,27 @@ state 34
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (54) if -> . IF LPAREN expression RPAREN gotof block
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
-    (42) special_func -> . gen_key
+    (44) read -> . READ LPAREN ID RPAREN SEMICOLON
+    (43) gen_key -> . GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON
     (21) variable -> . ID
     (22) variable -> . ID LBRACK expression RBRACK
     (23) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (43) gen_key -> . GENKEY LPAREN CTES RPAREN SEMICOLON
 
     RBRACE          reduce using rule 114 (empty -> .)
-    READ            shift and go to state 55
-    FOR             shift and go to state 58
+    FOR             shift and go to state 57
     DO              shift and go to state 59
     WHILE           shift and go to state 60
     IF              shift and go to state 61
-    ID              shift and go to state 56
+    ID              shift and go to state 58
     PRINT           shift and go to state 62
+    READ            shift and go to state 63
     GENKEY          shift and go to state 64
 
     block2                         shift and go to state 41
     block3                         shift and go to state 42
     empty                          shift and go to state 43
     statement                      shift and go to state 44
-    read                           shift and go to state 45
+    special_func                   shift and go to state 45
     assingation                    shift and go to state 46
     for                            shift and go to state 47
     do_while                       shift and go to state 48
@@ -651,9 +652,9 @@ state 34
     invocation                     shift and go to state 51
     if                             shift and go to state 52
     print                          shift and go to state 53
-    special_func                   shift and go to state 54
-    variable                       shift and go to state 57
-    gen_key                        shift and go to state 63
+    read                           shift and go to state 54
+    gen_key                        shift and go to state 55
+    variable                       shift and go to state 56
 
 state 35
 
@@ -744,7 +745,7 @@ state 44
     (30) block2 -> . empty
     (31) block3 -> . statement block2
     (114) empty -> .
-    (32) statement -> . read
+    (32) statement -> . special_func
     (33) statement -> . assingation
     (34) statement -> . for
     (35) statement -> . do_while
@@ -753,8 +754,8 @@ state 44
     (38) statement -> . invocation
     (39) statement -> . if
     (40) statement -> . print
-    (41) statement -> . special_func
-    (44) read -> . READ LPAREN ID RPAREN SEMICOLON
+    (41) statement -> . read
+    (42) special_func -> . gen_key
     (78) assingation -> . variable ASSIGN expression SEMICOLON
     (47) for -> . FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4
     (46) do_while -> . DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON
@@ -763,27 +764,27 @@ state 44
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (54) if -> . IF LPAREN expression RPAREN gotof block
     (73) print -> . PRINT LPAREN print_arguments RPAREN SEMICOLON
-    (42) special_func -> . gen_key
+    (44) read -> . READ LPAREN ID RPAREN SEMICOLON
+    (43) gen_key -> . GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON
     (21) variable -> . ID
     (22) variable -> . ID LBRACK expression RBRACK
     (23) variable -> . ID LBRACK expression RBRACK LBRACK expression RBRACK
-    (43) gen_key -> . GENKEY LPAREN CTES RPAREN SEMICOLON
 
     RBRACE          reduce using rule 114 (empty -> .)
-    READ            shift and go to state 55
-    FOR             shift and go to state 58
+    FOR             shift and go to state 57
     DO              shift and go to state 59
     WHILE           shift and go to state 60
     IF              shift and go to state 61
-    ID              shift and go to state 56
+    ID              shift and go to state 58
     PRINT           shift and go to state 62
+    READ            shift and go to state 63
     GENKEY          shift and go to state 64
 
     statement                      shift and go to state 44
     block2                         shift and go to state 74
     block3                         shift and go to state 42
     empty                          shift and go to state 43
-    read                           shift and go to state 45
+    special_func                   shift and go to state 45
     assingation                    shift and go to state 46
     for                            shift and go to state 47
     do_while                       shift and go to state 48
@@ -792,36 +793,36 @@ state 44
     invocation                     shift and go to state 51
     if                             shift and go to state 52
     print                          shift and go to state 53
-    special_func                   shift and go to state 54
-    variable                       shift and go to state 57
-    gen_key                        shift and go to state 63
+    read                           shift and go to state 54
+    gen_key                        shift and go to state 55
+    variable                       shift and go to state 56
 
 state 45
 
-    (32) statement -> read .
+    (32) statement -> special_func .
 
-    READ            reduce using rule 32 (statement -> read .)
-    FOR             reduce using rule 32 (statement -> read .)
-    DO              reduce using rule 32 (statement -> read .)
-    WHILE           reduce using rule 32 (statement -> read .)
-    IF              reduce using rule 32 (statement -> read .)
-    ID              reduce using rule 32 (statement -> read .)
-    PRINT           reduce using rule 32 (statement -> read .)
-    GENKEY          reduce using rule 32 (statement -> read .)
-    RBRACE          reduce using rule 32 (statement -> read .)
+    FOR             reduce using rule 32 (statement -> special_func .)
+    DO              reduce using rule 32 (statement -> special_func .)
+    WHILE           reduce using rule 32 (statement -> special_func .)
+    IF              reduce using rule 32 (statement -> special_func .)
+    ID              reduce using rule 32 (statement -> special_func .)
+    PRINT           reduce using rule 32 (statement -> special_func .)
+    READ            reduce using rule 32 (statement -> special_func .)
+    GENKEY          reduce using rule 32 (statement -> special_func .)
+    RBRACE          reduce using rule 32 (statement -> special_func .)
 
 
 state 46
 
     (33) statement -> assingation .
 
-    READ            reduce using rule 33 (statement -> assingation .)
     FOR             reduce using rule 33 (statement -> assingation .)
     DO              reduce using rule 33 (statement -> assingation .)
     WHILE           reduce using rule 33 (statement -> assingation .)
     IF              reduce using rule 33 (statement -> assingation .)
     ID              reduce using rule 33 (statement -> assingation .)
     PRINT           reduce using rule 33 (statement -> assingation .)
+    READ            reduce using rule 33 (statement -> assingation .)
     GENKEY          reduce using rule 33 (statement -> assingation .)
     RBRACE          reduce using rule 33 (statement -> assingation .)
 
@@ -830,13 +831,13 @@ state 47
 
     (34) statement -> for .
 
-    READ            reduce using rule 34 (statement -> for .)
     FOR             reduce using rule 34 (statement -> for .)
     DO              reduce using rule 34 (statement -> for .)
     WHILE           reduce using rule 34 (statement -> for .)
     IF              reduce using rule 34 (statement -> for .)
     ID              reduce using rule 34 (statement -> for .)
     PRINT           reduce using rule 34 (statement -> for .)
+    READ            reduce using rule 34 (statement -> for .)
     GENKEY          reduce using rule 34 (statement -> for .)
     RBRACE          reduce using rule 34 (statement -> for .)
 
@@ -845,13 +846,13 @@ state 48
 
     (35) statement -> do_while .
 
-    READ            reduce using rule 35 (statement -> do_while .)
     FOR             reduce using rule 35 (statement -> do_while .)
     DO              reduce using rule 35 (statement -> do_while .)
     WHILE           reduce using rule 35 (statement -> do_while .)
     IF              reduce using rule 35 (statement -> do_while .)
     ID              reduce using rule 35 (statement -> do_while .)
     PRINT           reduce using rule 35 (statement -> do_while .)
+    READ            reduce using rule 35 (statement -> do_while .)
     GENKEY          reduce using rule 35 (statement -> do_while .)
     RBRACE          reduce using rule 35 (statement -> do_while .)
 
@@ -860,13 +861,13 @@ state 49
 
     (36) statement -> while .
 
-    READ            reduce using rule 36 (statement -> while .)
     FOR             reduce using rule 36 (statement -> while .)
     DO              reduce using rule 36 (statement -> while .)
     WHILE           reduce using rule 36 (statement -> while .)
     IF              reduce using rule 36 (statement -> while .)
     ID              reduce using rule 36 (statement -> while .)
     PRINT           reduce using rule 36 (statement -> while .)
+    READ            reduce using rule 36 (statement -> while .)
     GENKEY          reduce using rule 36 (statement -> while .)
     RBRACE          reduce using rule 36 (statement -> while .)
 
@@ -875,13 +876,13 @@ state 50
 
     (37) statement -> if_else .
 
-    READ            reduce using rule 37 (statement -> if_else .)
     FOR             reduce using rule 37 (statement -> if_else .)
     DO              reduce using rule 37 (statement -> if_else .)
     WHILE           reduce using rule 37 (statement -> if_else .)
     IF              reduce using rule 37 (statement -> if_else .)
     ID              reduce using rule 37 (statement -> if_else .)
     PRINT           reduce using rule 37 (statement -> if_else .)
+    READ            reduce using rule 37 (statement -> if_else .)
     GENKEY          reduce using rule 37 (statement -> if_else .)
     RBRACE          reduce using rule 37 (statement -> if_else .)
 
@@ -890,13 +891,13 @@ state 51
 
     (38) statement -> invocation .
 
-    READ            reduce using rule 38 (statement -> invocation .)
     FOR             reduce using rule 38 (statement -> invocation .)
     DO              reduce using rule 38 (statement -> invocation .)
     WHILE           reduce using rule 38 (statement -> invocation .)
     IF              reduce using rule 38 (statement -> invocation .)
     ID              reduce using rule 38 (statement -> invocation .)
     PRINT           reduce using rule 38 (statement -> invocation .)
+    READ            reduce using rule 38 (statement -> invocation .)
     GENKEY          reduce using rule 38 (statement -> invocation .)
     RBRACE          reduce using rule 38 (statement -> invocation .)
 
@@ -905,13 +906,13 @@ state 52
 
     (39) statement -> if .
 
-    READ            reduce using rule 39 (statement -> if .)
     FOR             reduce using rule 39 (statement -> if .)
     DO              reduce using rule 39 (statement -> if .)
     WHILE           reduce using rule 39 (statement -> if .)
     IF              reduce using rule 39 (statement -> if .)
     ID              reduce using rule 39 (statement -> if .)
     PRINT           reduce using rule 39 (statement -> if .)
+    READ            reduce using rule 39 (statement -> if .)
     GENKEY          reduce using rule 39 (statement -> if .)
     RBRACE          reduce using rule 39 (statement -> if .)
 
@@ -920,40 +921,62 @@ state 53
 
     (40) statement -> print .
 
-    READ            reduce using rule 40 (statement -> print .)
     FOR             reduce using rule 40 (statement -> print .)
     DO              reduce using rule 40 (statement -> print .)
     WHILE           reduce using rule 40 (statement -> print .)
     IF              reduce using rule 40 (statement -> print .)
     ID              reduce using rule 40 (statement -> print .)
     PRINT           reduce using rule 40 (statement -> print .)
+    READ            reduce using rule 40 (statement -> print .)
     GENKEY          reduce using rule 40 (statement -> print .)
     RBRACE          reduce using rule 40 (statement -> print .)
 
 
 state 54
 
-    (41) statement -> special_func .
+    (41) statement -> read .
 
-    READ            reduce using rule 41 (statement -> special_func .)
-    FOR             reduce using rule 41 (statement -> special_func .)
-    DO              reduce using rule 41 (statement -> special_func .)
-    WHILE           reduce using rule 41 (statement -> special_func .)
-    IF              reduce using rule 41 (statement -> special_func .)
-    ID              reduce using rule 41 (statement -> special_func .)
-    PRINT           reduce using rule 41 (statement -> special_func .)
-    GENKEY          reduce using rule 41 (statement -> special_func .)
-    RBRACE          reduce using rule 41 (statement -> special_func .)
+    FOR             reduce using rule 41 (statement -> read .)
+    DO              reduce using rule 41 (statement -> read .)
+    WHILE           reduce using rule 41 (statement -> read .)
+    IF              reduce using rule 41 (statement -> read .)
+    ID              reduce using rule 41 (statement -> read .)
+    PRINT           reduce using rule 41 (statement -> read .)
+    READ            reduce using rule 41 (statement -> read .)
+    GENKEY          reduce using rule 41 (statement -> read .)
+    RBRACE          reduce using rule 41 (statement -> read .)
 
 
 state 55
 
-    (44) read -> READ . LPAREN ID RPAREN SEMICOLON
+    (42) special_func -> gen_key .
 
-    LPAREN          shift and go to state 75
+    FOR             reduce using rule 42 (special_func -> gen_key .)
+    DO              reduce using rule 42 (special_func -> gen_key .)
+    WHILE           reduce using rule 42 (special_func -> gen_key .)
+    IF              reduce using rule 42 (special_func -> gen_key .)
+    ID              reduce using rule 42 (special_func -> gen_key .)
+    PRINT           reduce using rule 42 (special_func -> gen_key .)
+    READ            reduce using rule 42 (special_func -> gen_key .)
+    GENKEY          reduce using rule 42 (special_func -> gen_key .)
+    RBRACE          reduce using rule 42 (special_func -> gen_key .)
 
 
 state 56
+
+    (78) assingation -> variable . ASSIGN expression SEMICOLON
+
+    ASSIGN          shift and go to state 75
+
+
+state 57
+
+    (47) for -> FOR . LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4
+
+    LPAREN          shift and go to state 76
+
+
+state 58
 
     (61) invocation -> ID . invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (21) variable -> ID .
@@ -966,22 +989,8 @@ state 56
     LBRACK          shift and go to state 70
     LPAREN          reduce using rule 114 (empty -> .)
 
-    invocation_1                   shift and go to state 76
-    empty                          shift and go to state 77
-
-state 57
-
-    (78) assingation -> variable . ASSIGN expression SEMICOLON
-
-    ASSIGN          shift and go to state 78
-
-
-state 58
-
-    (47) for -> FOR . LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4
-
-    LPAREN          shift and go to state 79
-
+    invocation_1                   shift and go to state 77
+    empty                          shift and go to state 78
 
 state 59
 
@@ -991,8 +1000,8 @@ state 59
 
     LBRACE          reduce using rule 114 (empty -> .)
 
-    breadcrumb                     shift and go to state 80
-    empty                          shift and go to state 81
+    breadcrumb                     shift and go to state 79
+    empty                          shift and go to state 80
 
 state 60
 
@@ -1002,42 +1011,34 @@ state 60
 
     LPAREN          reduce using rule 114 (empty -> .)
 
-    breadcrumb                     shift and go to state 82
-    empty                          shift and go to state 81
+    breadcrumb                     shift and go to state 81
+    empty                          shift and go to state 80
 
 state 61
 
     (55) if_else -> IF . LPAREN expression RPAREN gotof block ELSE goto block
     (54) if -> IF . LPAREN expression RPAREN gotof block
 
-    LPAREN          shift and go to state 83
+    LPAREN          shift and go to state 82
 
 
 state 62
 
     (73) print -> PRINT . LPAREN print_arguments RPAREN SEMICOLON
 
-    LPAREN          shift and go to state 84
+    LPAREN          shift and go to state 83
 
 
 state 63
 
-    (42) special_func -> gen_key .
+    (44) read -> READ . LPAREN ID RPAREN SEMICOLON
 
-    READ            reduce using rule 42 (special_func -> gen_key .)
-    FOR             reduce using rule 42 (special_func -> gen_key .)
-    DO              reduce using rule 42 (special_func -> gen_key .)
-    WHILE           reduce using rule 42 (special_func -> gen_key .)
-    IF              reduce using rule 42 (special_func -> gen_key .)
-    ID              reduce using rule 42 (special_func -> gen_key .)
-    PRINT           reduce using rule 42 (special_func -> gen_key .)
-    GENKEY          reduce using rule 42 (special_func -> gen_key .)
-    RBRACE          reduce using rule 42 (special_func -> gen_key .)
+    LPAREN          shift and go to state 84
 
 
 state 64
 
-    (43) gen_key -> GENKEY . LPAREN CTES RPAREN SEMICOLON
+    (43) gen_key -> GENKEY . LPAREN RPAREN SPECIAL ID SEMICOLON
 
     LPAREN          shift and go to state 85
 
@@ -1174,12 +1175,12 @@ state 73
     WHILE           reduce using rule 28 (block -> LBRACE block2 RBRACE .)
     END             reduce using rule 28 (block -> LBRACE block2 RBRACE .)
     ELSE            reduce using rule 28 (block -> LBRACE block2 RBRACE .)
-    READ            reduce using rule 28 (block -> LBRACE block2 RBRACE .)
     FOR             reduce using rule 28 (block -> LBRACE block2 RBRACE .)
     DO              reduce using rule 28 (block -> LBRACE block2 RBRACE .)
     IF              reduce using rule 28 (block -> LBRACE block2 RBRACE .)
     ID              reduce using rule 28 (block -> LBRACE block2 RBRACE .)
     PRINT           reduce using rule 28 (block -> LBRACE block2 RBRACE .)
+    READ            reduce using rule 28 (block -> LBRACE block2 RBRACE .)
     GENKEY          reduce using rule 28 (block -> LBRACE block2 RBRACE .)
     RBRACE          reduce using rule 28 (block -> LBRACE block2 RBRACE .)
 
@@ -1192,27 +1193,6 @@ state 74
 
 
 state 75
-
-    (44) read -> READ LPAREN . ID RPAREN SEMICOLON
-
-    ID              shift and go to state 110
-
-
-state 76
-
-    (61) invocation -> ID invocation_1 . LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
-
-    LPAREN          shift and go to state 111
-
-
-state 77
-
-    (62) invocation_1 -> empty .
-
-    LPAREN          reduce using rule 62 (invocation_1 -> empty .)
-
-
-state 78
 
     (78) assingation -> variable ASSIGN . expression SEMICOLON
     (71) expression -> . t_expression
@@ -1250,7 +1230,7 @@ state 78
     LPAREN          shift and go to state 108
 
     variable                       shift and go to state 99
-    expression                     shift and go to state 112
+    expression                     shift and go to state 110
     t_expression                   shift and go to state 93
     g_expression                   shift and go to state 95
     m_expression                   shift and go to state 96
@@ -1260,23 +1240,37 @@ state 78
     invocation                     shift and go to state 101
     expression_parenthesis         shift and go to state 102
 
-state 79
+state 76
 
     (47) for -> FOR LPAREN . ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4
 
-    ID              shift and go to state 113
+    ID              shift and go to state 111
 
 
-state 80
+state 77
+
+    (61) invocation -> ID invocation_1 . LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
+
+    LPAREN          shift and go to state 112
+
+
+state 78
+
+    (62) invocation_1 -> empty .
+
+    LPAREN          reduce using rule 62 (invocation_1 -> empty .)
+
+
+state 79
 
     (46) do_while -> DO breadcrumb . block WHILE LPAREN expression RPAREN gotot SEMICOLON
     (28) block -> . LBRACE block2 RBRACE
 
     LBRACE          shift and go to state 34
 
-    block                          shift and go to state 114
+    block                          shift and go to state 113
 
-state 81
+state 80
 
     (53) breadcrumb -> empty .
 
@@ -1284,14 +1278,14 @@ state 81
     LPAREN          reduce using rule 53 (breadcrumb -> empty .)
 
 
-state 82
+state 81
 
     (52) while -> WHILE breadcrumb . LPAREN expression RPAREN gotof block
 
-    LPAREN          shift and go to state 115
+    LPAREN          shift and go to state 114
 
 
-state 83
+state 82
 
     (55) if_else -> IF LPAREN . expression RPAREN gotof block ELSE goto block
     (54) if -> IF LPAREN . expression RPAREN gotof block
@@ -1329,7 +1323,7 @@ state 83
     CTES            shift and go to state 107
     LPAREN          shift and go to state 108
 
-    expression                     shift and go to state 116
+    expression                     shift and go to state 115
     t_expression                   shift and go to state 93
     g_expression                   shift and go to state 95
     m_expression                   shift and go to state 96
@@ -1340,7 +1334,7 @@ state 83
     invocation                     shift and go to state 101
     expression_parenthesis         shift and go to state 102
 
-state 84
+state 83
 
     (73) print -> PRINT LPAREN . print_arguments RPAREN SEMICOLON
     (74) print_arguments -> . print_argument
@@ -1372,7 +1366,7 @@ state 84
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (91) expression_parenthesis -> . LPAREN expression RPAREN
 
-    CTES            shift and go to state 119
+    CTES            shift and go to state 118
     NOT             shift and go to state 94
     ID              shift and go to state 91
     CTEI            shift and go to state 103
@@ -1381,9 +1375,9 @@ state 84
     CTEB            shift and go to state 106
     LPAREN          shift and go to state 108
 
-    print_arguments                shift and go to state 117
-    print_argument                 shift and go to state 118
-    expression                     shift and go to state 120
+    print_arguments                shift and go to state 116
+    print_argument                 shift and go to state 117
+    expression                     shift and go to state 119
     t_expression                   shift and go to state 93
     g_expression                   shift and go to state 95
     m_expression                   shift and go to state 96
@@ -1394,11 +1388,18 @@ state 84
     invocation                     shift and go to state 101
     expression_parenthesis         shift and go to state 102
 
+state 84
+
+    (44) read -> READ LPAREN . ID RPAREN SEMICOLON
+
+    ID              shift and go to state 120
+
+
 state 85
 
-    (43) gen_key -> GENKEY LPAREN . CTES RPAREN SEMICOLON
+    (43) gen_key -> GENKEY LPAREN . RPAREN SPECIAL ID SEMICOLON
 
-    CTES            shift and go to state 121
+    RPAREN          shift and go to state 121
 
 
 state 86
@@ -1492,8 +1493,8 @@ state 91
     LBRACK          shift and go to state 70
     LPAREN          reduce using rule 114 (empty -> .)
 
-    invocation_1                   shift and go to state 76
-    empty                          shift and go to state 77
+    invocation_1                   shift and go to state 77
+    empty                          shift and go to state 78
 
 state 92
 
@@ -1932,12 +1933,23 @@ state 109
 
 state 110
 
-    (44) read -> READ LPAREN ID . RPAREN SEMICOLON
+    (78) assingation -> variable ASSIGN expression . SEMICOLON
 
-    RPAREN          shift and go to state 144
+    SEMICOLON       shift and go to state 144
 
 
 state 111
+
+    (47) for -> FOR LPAREN ID . for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4
+    (48) for_1 -> . empty
+    (114) empty -> .
+
+    ASSIGN          reduce using rule 114 (empty -> .)
+
+    for_1                          shift and go to state 145
+    empty                          shift and go to state 146
+
+state 112
 
     (61) invocation -> ID invocation_1 LPAREN . invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (63) invocation_2 -> . empty
@@ -1954,35 +1966,17 @@ state 111
     RPAREN          reduce using rule 114 (empty -> .)
     COMMA           reduce using rule 114 (empty -> .)
 
-    invocation_2                   shift and go to state 145
-    empty                          shift and go to state 146
-
-state 112
-
-    (78) assingation -> variable ASSIGN expression . SEMICOLON
-
-    SEMICOLON       shift and go to state 147
-
+    invocation_2                   shift and go to state 147
+    empty                          shift and go to state 148
 
 state 113
 
-    (47) for -> FOR LPAREN ID . for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4
-    (48) for_1 -> . empty
-    (114) empty -> .
-
-    ASSIGN          reduce using rule 114 (empty -> .)
-
-    for_1                          shift and go to state 148
-    empty                          shift and go to state 149
-
-state 114
-
     (46) do_while -> DO breadcrumb block . WHILE LPAREN expression RPAREN gotot SEMICOLON
 
-    WHILE           shift and go to state 150
+    WHILE           shift and go to state 149
 
 
-state 115
+state 114
 
     (52) while -> WHILE breadcrumb LPAREN . expression RPAREN gotof block
     (71) expression -> . t_expression
@@ -2019,7 +2013,7 @@ state 115
     CTES            shift and go to state 107
     LPAREN          shift and go to state 108
 
-    expression                     shift and go to state 151
+    expression                     shift and go to state 150
     t_expression                   shift and go to state 93
     g_expression                   shift and go to state 95
     m_expression                   shift and go to state 96
@@ -2030,24 +2024,24 @@ state 115
     invocation                     shift and go to state 101
     expression_parenthesis         shift and go to state 102
 
-state 116
+state 115
 
     (55) if_else -> IF LPAREN expression . RPAREN gotof block ELSE goto block
     (54) if -> IF LPAREN expression . RPAREN gotof block
 
-    RPAREN          shift and go to state 152
+    RPAREN          shift and go to state 151
 
 
-state 117
+state 116
 
     (73) print -> PRINT LPAREN print_arguments . RPAREN SEMICOLON
     (75) print_arguments -> print_arguments . COMMA print_argument
 
-    RPAREN          shift and go to state 153
-    COMMA           shift and go to state 154
+    RPAREN          shift and go to state 152
+    COMMA           shift and go to state 153
 
 
-state 118
+state 117
 
     (74) print_arguments -> print_argument .
 
@@ -2055,7 +2049,7 @@ state 118
     COMMA           reduce using rule 74 (print_arguments -> print_argument .)
 
 
-state 119
+state 118
 
     (76) print_argument -> CTES .
     (113) cte -> CTES .
@@ -2081,7 +2075,7 @@ state 119
   ! COMMA           [ reduce using rule 113 (cte -> CTES .) ]
 
 
-state 120
+state 119
 
     (77) print_argument -> expression .
 
@@ -2089,11 +2083,18 @@ state 120
     COMMA           reduce using rule 77 (print_argument -> expression .)
 
 
+state 120
+
+    (44) read -> READ LPAREN ID . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 154
+
+
 state 121
 
-    (43) gen_key -> GENKEY LPAREN CTES . RPAREN SEMICOLON
+    (43) gen_key -> GENKEY LPAREN RPAREN . SPECIAL ID SEMICOLON
 
-    RPAREN          shift and go to state 155
+    SPECIAL         shift and go to state 155
 
 
 state 122
@@ -2511,12 +2512,34 @@ state 143
 
 state 144
 
-    (44) read -> READ LPAREN ID RPAREN . SEMICOLON
+    (78) assingation -> variable ASSIGN expression SEMICOLON .
 
-    SEMICOLON       shift and go to state 167
+    FOR             reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    DO              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    WHILE           reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    IF              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    ID              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    PRINT           reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    READ            reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    GENKEY          reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
+    RBRACE          reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
 
 
 state 145
+
+    (47) for -> FOR LPAREN ID for_1 . ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4
+
+    ASSIGN          shift and go to state 167
+
+
+state 146
+
+    (48) for_1 -> empty .
+
+    ASSIGN          reduce using rule 48 (for_1 -> empty .)
+
+
+state 147
 
     (61) invocation -> ID invocation_1 LPAREN invocation_2 . expressions RPAREN invocation_5 SEMICOLON invocation_6
     (68) expressions -> . expressions COMMA invocation_4 expression invocation_3
@@ -2572,7 +2595,7 @@ state 145
     invocation                     shift and go to state 101
     expression_parenthesis         shift and go to state 102
 
-state 146
+state 148
 
     (63) invocation_2 -> empty .
 
@@ -2588,50 +2611,21 @@ state 146
     COMMA           reduce using rule 63 (invocation_2 -> empty .)
 
 
-state 147
-
-    (78) assingation -> variable ASSIGN expression SEMICOLON .
-
-    READ            reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    FOR             reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    DO              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    WHILE           reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    IF              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    ID              reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    PRINT           reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    GENKEY          reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-    RBRACE          reduce using rule 78 (assingation -> variable ASSIGN expression SEMICOLON .)
-
-
-state 148
-
-    (47) for -> FOR LPAREN ID for_1 . ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4
-
-    ASSIGN          shift and go to state 171
-
-
 state 149
 
-    (48) for_1 -> empty .
+    (46) do_while -> DO breadcrumb block WHILE . LPAREN expression RPAREN gotot SEMICOLON
 
-    ASSIGN          reduce using rule 48 (for_1 -> empty .)
+    LPAREN          shift and go to state 171
 
 
 state 150
 
-    (46) do_while -> DO breadcrumb block WHILE . LPAREN expression RPAREN gotot SEMICOLON
+    (52) while -> WHILE breadcrumb LPAREN expression . RPAREN gotof block
 
-    LPAREN          shift and go to state 172
+    RPAREN          shift and go to state 172
 
 
 state 151
-
-    (52) while -> WHILE breadcrumb LPAREN expression . RPAREN gotof block
-
-    RPAREN          shift and go to state 173
-
-
-state 152
 
     (55) if_else -> IF LPAREN expression RPAREN . gotof block ELSE goto block
     (54) if -> IF LPAREN expression RPAREN . gotof block
@@ -2640,17 +2634,17 @@ state 152
 
     LBRACE          reduce using rule 114 (empty -> .)
 
-    gotof                          shift and go to state 174
-    empty                          shift and go to state 175
+    gotof                          shift and go to state 173
+    empty                          shift and go to state 174
 
-state 153
+state 152
 
     (73) print -> PRINT LPAREN print_arguments RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 176
+    SEMICOLON       shift and go to state 175
 
 
-state 154
+state 153
 
     (75) print_arguments -> print_arguments COMMA . print_argument
     (76) print_argument -> . CTES
@@ -2680,7 +2674,7 @@ state 154
     (61) invocation -> . ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6
     (91) expression_parenthesis -> . LPAREN expression RPAREN
 
-    CTES            shift and go to state 119
+    CTES            shift and go to state 118
     NOT             shift and go to state 94
     ID              shift and go to state 91
     CTEI            shift and go to state 103
@@ -2689,8 +2683,8 @@ state 154
     CTEB            shift and go to state 106
     LPAREN          shift and go to state 108
 
-    print_argument                 shift and go to state 177
-    expression                     shift and go to state 120
+    print_argument                 shift and go to state 176
+    expression                     shift and go to state 119
     t_expression                   shift and go to state 93
     g_expression                   shift and go to state 95
     m_expression                   shift and go to state 96
@@ -2701,11 +2695,18 @@ state 154
     invocation                     shift and go to state 101
     expression_parenthesis         shift and go to state 102
 
+state 154
+
+    (44) read -> READ LPAREN ID RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 177
+
+
 state 155
 
-    (43) gen_key -> GENKEY LPAREN CTES RPAREN . SEMICOLON
+    (43) gen_key -> GENKEY LPAREN RPAREN SPECIAL . ID SEMICOLON
 
-    SEMICOLON       shift and go to state 178
+    ID              shift and go to state 178
 
 
 state 156
@@ -2932,50 +2933,6 @@ state 166
 
 state 167
 
-    (44) read -> READ LPAREN ID RPAREN SEMICOLON .
-
-    READ            reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
-    FOR             reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
-    DO              reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
-    WHILE           reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
-    IF              reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
-    ID              reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
-    PRINT           reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
-    GENKEY          reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
-    RBRACE          reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
-
-
-state 168
-
-    (61) invocation -> ID invocation_1 LPAREN invocation_2 expressions . RPAREN invocation_5 SEMICOLON invocation_6
-    (68) expressions -> expressions . COMMA invocation_4 expression invocation_3
-
-    RPAREN          shift and go to state 184
-    COMMA           shift and go to state 185
-
-
-state 169
-
-    (69) expressions -> expression . invocation_3
-    (64) invocation_3 -> . empty
-    (114) empty -> .
-
-    RPAREN          reduce using rule 114 (empty -> .)
-    COMMA           reduce using rule 114 (empty -> .)
-
-    invocation_3                   shift and go to state 186
-    empty                          shift and go to state 187
-
-state 170
-
-    (70) expressions -> empty .
-
-    RPAREN          reduce using rule 70 (expressions -> empty .)
-    COMMA           reduce using rule 70 (expressions -> empty .)
-
-
-state 171
-
     (47) for -> FOR LPAREN ID for_1 ASSIGN . expression for_2 FROM expression RPAREN for_3 DO block for_4
     (71) expression -> . t_expression
     (72) expression -> . NOT t_expression
@@ -3011,7 +2968,7 @@ state 171
     CTES            shift and go to state 107
     LPAREN          shift and go to state 108
 
-    expression                     shift and go to state 188
+    expression                     shift and go to state 184
     t_expression                   shift and go to state 93
     g_expression                   shift and go to state 95
     m_expression                   shift and go to state 96
@@ -3022,7 +2979,36 @@ state 171
     invocation                     shift and go to state 101
     expression_parenthesis         shift and go to state 102
 
-state 172
+state 168
+
+    (61) invocation -> ID invocation_1 LPAREN invocation_2 expressions . RPAREN invocation_5 SEMICOLON invocation_6
+    (68) expressions -> expressions . COMMA invocation_4 expression invocation_3
+
+    RPAREN          shift and go to state 185
+    COMMA           shift and go to state 186
+
+
+state 169
+
+    (69) expressions -> expression . invocation_3
+    (64) invocation_3 -> . empty
+    (114) empty -> .
+
+    RPAREN          reduce using rule 114 (empty -> .)
+    COMMA           reduce using rule 114 (empty -> .)
+
+    invocation_3                   shift and go to state 187
+    empty                          shift and go to state 188
+
+state 170
+
+    (70) expressions -> empty .
+
+    RPAREN          reduce using rule 70 (expressions -> empty .)
+    COMMA           reduce using rule 70 (expressions -> empty .)
+
+
+state 171
 
     (46) do_while -> DO breadcrumb block WHILE LPAREN . expression RPAREN gotot SEMICOLON
     (71) expression -> . t_expression
@@ -3070,7 +3056,7 @@ state 172
     invocation                     shift and go to state 101
     expression_parenthesis         shift and go to state 102
 
-state 173
+state 172
 
     (52) while -> WHILE breadcrumb LPAREN expression RPAREN . gotof block
     (58) gotof -> . empty
@@ -3079,9 +3065,9 @@ state 173
     LBRACE          reduce using rule 114 (empty -> .)
 
     gotof                          shift and go to state 190
-    empty                          shift and go to state 175
+    empty                          shift and go to state 174
 
-state 174
+state 173
 
     (55) if_else -> IF LPAREN expression RPAREN gotof . block ELSE goto block
     (54) if -> IF LPAREN expression RPAREN gotof . block
@@ -3091,29 +3077,29 @@ state 174
 
     block                          shift and go to state 191
 
-state 175
+state 174
 
     (58) gotof -> empty .
 
     LBRACE          reduce using rule 58 (gotof -> empty .)
 
 
-state 176
+state 175
 
     (73) print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .
 
-    READ            reduce using rule 73 (print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .)
     FOR             reduce using rule 73 (print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .)
     DO              reduce using rule 73 (print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .)
     WHILE           reduce using rule 73 (print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .)
     IF              reduce using rule 73 (print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .)
     ID              reduce using rule 73 (print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .)
     PRINT           reduce using rule 73 (print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .)
+    READ            reduce using rule 73 (print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .)
     GENKEY          reduce using rule 73 (print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .)
     RBRACE          reduce using rule 73 (print -> PRINT LPAREN print_arguments RPAREN SEMICOLON .)
 
 
-state 177
+state 176
 
     (75) print_arguments -> print_arguments COMMA print_argument .
 
@@ -3121,19 +3107,26 @@ state 177
     COMMA           reduce using rule 75 (print_arguments -> print_arguments COMMA print_argument .)
 
 
+state 177
+
+    (44) read -> READ LPAREN ID RPAREN SEMICOLON .
+
+    FOR             reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
+    DO              reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
+    WHILE           reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
+    IF              reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
+    ID              reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
+    PRINT           reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
+    READ            reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
+    GENKEY          reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
+    RBRACE          reduce using rule 44 (read -> READ LPAREN ID RPAREN SEMICOLON .)
+
+
 state 178
 
-    (43) gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON .
+    (43) gen_key -> GENKEY LPAREN RPAREN SPECIAL ID . SEMICOLON
 
-    READ            reduce using rule 43 (gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON .)
-    FOR             reduce using rule 43 (gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON .)
-    DO              reduce using rule 43 (gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON .)
-    WHILE           reduce using rule 43 (gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON .)
-    IF              reduce using rule 43 (gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON .)
-    ID              reduce using rule 43 (gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON .)
-    PRINT           reduce using rule 43 (gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON .)
-    GENKEY          reduce using rule 43 (gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON .)
-    RBRACE          reduce using rule 43 (gen_key -> GENKEY LPAREN CTES RPAREN SEMICOLON .)
+    SEMICOLON       shift and go to state 192
 
 
 state 179
@@ -3148,7 +3141,7 @@ state 180
 
     (7) function_signature -> simple_type ID function_1 LPAREN open_var_declaration parameters close_var_declaration . RPAREN var_declarations
 
-    RPAREN          shift and go to state 192
+    RPAREN          shift and go to state 193
 
 
 state 181
@@ -3167,24 +3160,35 @@ state 181
     BOOLEAN         shift and go to state 28
     STRING          shift and go to state 29
 
-    parameter                      shift and go to state 193
+    parameter                      shift and go to state 194
     simple_type                    shift and go to state 156
 
 state 182
 
     (8) function_signature -> VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration . RPAREN var_declarations
 
-    RPAREN          shift and go to state 194
+    RPAREN          shift and go to state 195
 
 
 state 183
 
     (23) variable -> ID LBRACK expression RBRACK LBRACK expression . RBRACK
 
-    RBRACK          shift and go to state 195
+    RBRACK          shift and go to state 196
 
 
 state 184
+
+    (47) for -> FOR LPAREN ID for_1 ASSIGN expression . for_2 FROM expression RPAREN for_3 DO block for_4
+    (49) for_2 -> . empty
+    (114) empty -> .
+
+    FROM            reduce using rule 114 (empty -> .)
+
+    for_2                          shift and go to state 197
+    empty                          shift and go to state 198
+
+state 185
 
     (61) invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN . invocation_5 SEMICOLON invocation_6
     (66) invocation_5 -> . empty
@@ -3192,10 +3196,10 @@ state 184
 
     SEMICOLON       reduce using rule 114 (empty -> .)
 
-    invocation_5                   shift and go to state 196
-    empty                          shift and go to state 197
+    invocation_5                   shift and go to state 199
+    empty                          shift and go to state 200
 
-state 185
+state 186
 
     (68) expressions -> expressions COMMA . invocation_4 expression invocation_3
     (65) invocation_4 -> . empty
@@ -3210,10 +3214,10 @@ state 185
     CTES            reduce using rule 114 (empty -> .)
     LPAREN          reduce using rule 114 (empty -> .)
 
-    invocation_4                   shift and go to state 198
-    empty                          shift and go to state 199
+    invocation_4                   shift and go to state 201
+    empty                          shift and go to state 202
 
-state 186
+state 187
 
     (69) expressions -> expression invocation_3 .
 
@@ -3221,7 +3225,7 @@ state 186
     COMMA           reduce using rule 69 (expressions -> expression invocation_3 .)
 
 
-state 187
+state 188
 
     (64) invocation_3 -> empty .
 
@@ -3229,22 +3233,11 @@ state 187
     COMMA           reduce using rule 64 (invocation_3 -> empty .)
 
 
-state 188
-
-    (47) for -> FOR LPAREN ID for_1 ASSIGN expression . for_2 FROM expression RPAREN for_3 DO block for_4
-    (49) for_2 -> . empty
-    (114) empty -> .
-
-    FROM            reduce using rule 114 (empty -> .)
-
-    for_2                          shift and go to state 200
-    empty                          shift and go to state 201
-
 state 189
 
     (46) do_while -> DO breadcrumb block WHILE LPAREN expression . RPAREN gotot SEMICOLON
 
-    RPAREN          shift and go to state 202
+    RPAREN          shift and go to state 203
 
 
 state 190
@@ -3254,53 +3247,43 @@ state 190
 
     LBRACE          shift and go to state 34
 
-    block                          shift and go to state 203
+    block                          shift and go to state 204
 
 state 191
 
     (55) if_else -> IF LPAREN expression RPAREN gotof block . ELSE goto block
     (54) if -> IF LPAREN expression RPAREN gotof block .
 
-    ELSE            shift and go to state 204
-    READ            reduce using rule 54 (if -> IF LPAREN expression RPAREN gotof block .)
+    ELSE            shift and go to state 205
     FOR             reduce using rule 54 (if -> IF LPAREN expression RPAREN gotof block .)
     DO              reduce using rule 54 (if -> IF LPAREN expression RPAREN gotof block .)
     WHILE           reduce using rule 54 (if -> IF LPAREN expression RPAREN gotof block .)
     IF              reduce using rule 54 (if -> IF LPAREN expression RPAREN gotof block .)
     ID              reduce using rule 54 (if -> IF LPAREN expression RPAREN gotof block .)
     PRINT           reduce using rule 54 (if -> IF LPAREN expression RPAREN gotof block .)
+    READ            reduce using rule 54 (if -> IF LPAREN expression RPAREN gotof block .)
     GENKEY          reduce using rule 54 (if -> IF LPAREN expression RPAREN gotof block .)
     RBRACE          reduce using rule 54 (if -> IF LPAREN expression RPAREN gotof block .)
 
 
 state 192
 
-    (7) function_signature -> simple_type ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN . var_declarations
-    (13) var_declarations -> . var_declaration_list
-    (14) var_declarations -> . empty
-    (15) var_declaration_list -> . var_declaration var_declarations
-    (114) empty -> .
-    (16) var_declaration -> . VARIABLE open_var_declaration simple_type variables SEMICOLON close_var_declaration
+    (43) gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON .
 
-    LBRACE          reduce using rule 114 (empty -> .)
-    VARIABLE        shift and go to state 11
+    FOR             reduce using rule 43 (gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON .)
+    DO              reduce using rule 43 (gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON .)
+    WHILE           reduce using rule 43 (gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON .)
+    IF              reduce using rule 43 (gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON .)
+    ID              reduce using rule 43 (gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON .)
+    PRINT           reduce using rule 43 (gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON .)
+    READ            reduce using rule 43 (gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON .)
+    GENKEY          reduce using rule 43 (gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON .)
+    RBRACE          reduce using rule 43 (gen_key -> GENKEY LPAREN RPAREN SPECIAL ID SEMICOLON .)
 
-    var_declarations               shift and go to state 205
-    var_declaration_list           shift and go to state 8
-    empty                          shift and go to state 9
-    var_declaration                shift and go to state 10
 
 state 193
 
-    (24) parameters -> parameters COMMA parameter .
-
-    COMMA           reduce using rule 24 (parameters -> parameters COMMA parameter .)
-    RPAREN          reduce using rule 24 (parameters -> parameters COMMA parameter .)
-
-
-state 194
-
-    (8) function_signature -> VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN . var_declarations
+    (7) function_signature -> simple_type ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN . var_declarations
     (13) var_declarations -> . var_declaration_list
     (14) var_declarations -> . empty
     (15) var_declaration_list -> . var_declaration var_declarations
@@ -3315,7 +3298,32 @@ state 194
     empty                          shift and go to state 9
     var_declaration                shift and go to state 10
 
+state 194
+
+    (24) parameters -> parameters COMMA parameter .
+
+    COMMA           reduce using rule 24 (parameters -> parameters COMMA parameter .)
+    RPAREN          reduce using rule 24 (parameters -> parameters COMMA parameter .)
+
+
 state 195
+
+    (8) function_signature -> VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN . var_declarations
+    (13) var_declarations -> . var_declaration_list
+    (14) var_declarations -> . empty
+    (15) var_declaration_list -> . var_declaration var_declarations
+    (114) empty -> .
+    (16) var_declaration -> . VARIABLE open_var_declaration simple_type variables SEMICOLON close_var_declaration
+
+    LBRACE          reduce using rule 114 (empty -> .)
+    VARIABLE        shift and go to state 11
+
+    var_declarations               shift and go to state 207
+    var_declaration_list           shift and go to state 8
+    empty                          shift and go to state 9
+    var_declaration                shift and go to state 10
+
+state 196
 
     (23) variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .
 
@@ -3339,21 +3347,35 @@ state 195
     FROM            reduce using rule 23 (variable -> ID LBRACK expression RBRACK LBRACK expression RBRACK .)
 
 
-state 196
+state 197
+
+    (47) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 . FROM expression RPAREN for_3 DO block for_4
+
+    FROM            shift and go to state 208
+
+
+state 198
+
+    (49) for_2 -> empty .
+
+    FROM            reduce using rule 49 (for_2 -> empty .)
+
+
+state 199
 
     (61) invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 . SEMICOLON invocation_6
 
-    SEMICOLON       shift and go to state 207
+    SEMICOLON       shift and go to state 209
 
 
-state 197
+state 200
 
     (66) invocation_5 -> empty .
 
     SEMICOLON       reduce using rule 66 (invocation_5 -> empty .)
 
 
-state 198
+state 201
 
     (68) expressions -> expressions COMMA invocation_4 . expression invocation_3
     (71) expression -> . t_expression
@@ -3390,7 +3412,7 @@ state 198
     CTES            shift and go to state 107
     LPAREN          shift and go to state 108
 
-    expression                     shift and go to state 208
+    expression                     shift and go to state 210
     t_expression                   shift and go to state 93
     g_expression                   shift and go to state 95
     m_expression                   shift and go to state 96
@@ -3401,7 +3423,7 @@ state 198
     invocation                     shift and go to state 101
     expression_parenthesis         shift and go to state 102
 
-state 199
+state 202
 
     (65) invocation_4 -> empty .
 
@@ -3415,21 +3437,7 @@ state 199
     LPAREN          reduce using rule 65 (invocation_4 -> empty .)
 
 
-state 200
-
-    (47) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 . FROM expression RPAREN for_3 DO block for_4
-
-    FROM            shift and go to state 209
-
-
-state 201
-
-    (49) for_2 -> empty .
-
-    FROM            reduce using rule 49 (for_2 -> empty .)
-
-
-state 202
+state 203
 
     (46) do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN . gotot SEMICOLON
     (56) gotot -> . empty
@@ -3437,25 +3445,25 @@ state 202
 
     SEMICOLON       reduce using rule 114 (empty -> .)
 
-    gotot                          shift and go to state 210
-    empty                          shift and go to state 211
+    gotot                          shift and go to state 211
+    empty                          shift and go to state 212
 
-state 203
+state 204
 
     (52) while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .
 
-    READ            reduce using rule 52 (while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .)
     FOR             reduce using rule 52 (while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .)
     DO              reduce using rule 52 (while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .)
     WHILE           reduce using rule 52 (while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .)
     IF              reduce using rule 52 (while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .)
     ID              reduce using rule 52 (while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .)
     PRINT           reduce using rule 52 (while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .)
+    READ            reduce using rule 52 (while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .)
     GENKEY          reduce using rule 52 (while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .)
     RBRACE          reduce using rule 52 (while -> WHILE breadcrumb LPAREN expression RPAREN gotof block .)
 
 
-state 204
+state 205
 
     (55) if_else -> IF LPAREN expression RPAREN gotof block ELSE . goto block
     (57) goto -> . empty
@@ -3463,72 +3471,24 @@ state 204
 
     LBRACE          reduce using rule 114 (empty -> .)
 
-    goto                           shift and go to state 212
-    empty                          shift and go to state 213
+    goto                           shift and go to state 213
+    empty                          shift and go to state 214
 
-state 205
+state 206
 
     (7) function_signature -> simple_type ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations .
 
     LBRACE          reduce using rule 7 (function_signature -> simple_type ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations .)
 
 
-state 206
+state 207
 
     (8) function_signature -> VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations .
 
     LBRACE          reduce using rule 8 (function_signature -> VOID ID function_1 LPAREN open_var_declaration parameters close_var_declaration RPAREN var_declarations .)
 
 
-state 207
-
-    (61) invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON . invocation_6
-    (67) invocation_6 -> . empty
-    (114) empty -> .
-
-    READ            reduce using rule 114 (empty -> .)
-    FOR             reduce using rule 114 (empty -> .)
-    DO              reduce using rule 114 (empty -> .)
-    WHILE           reduce using rule 114 (empty -> .)
-    IF              reduce using rule 114 (empty -> .)
-    ID              reduce using rule 114 (empty -> .)
-    PRINT           reduce using rule 114 (empty -> .)
-    GENKEY          reduce using rule 114 (empty -> .)
-    RBRACE          reduce using rule 114 (empty -> .)
-    TIMES           reduce using rule 114 (empty -> .)
-    DIVIDE          reduce using rule 114 (empty -> .)
-    PLUS            reduce using rule 114 (empty -> .)
-    MINUS           reduce using rule 114 (empty -> .)
-    LESS            reduce using rule 114 (empty -> .)
-    GREATER         reduce using rule 114 (empty -> .)
-    EQUALS          reduce using rule 114 (empty -> .)
-    NOTEQUAL        reduce using rule 114 (empty -> .)
-    GREATERTHAN     reduce using rule 114 (empty -> .)
-    LESSTHAN        reduce using rule 114 (empty -> .)
-    AND             reduce using rule 114 (empty -> .)
-    OR              reduce using rule 114 (empty -> .)
-    RBRACK          reduce using rule 114 (empty -> .)
-    SEMICOLON       reduce using rule 114 (empty -> .)
-    RPAREN          reduce using rule 114 (empty -> .)
-    COMMA           reduce using rule 114 (empty -> .)
-    FROM            reduce using rule 114 (empty -> .)
-
-    invocation_6                   shift and go to state 214
-    empty                          shift and go to state 215
-
 state 208
-
-    (68) expressions -> expressions COMMA invocation_4 expression . invocation_3
-    (64) invocation_3 -> . empty
-    (114) empty -> .
-
-    RPAREN          reduce using rule 114 (empty -> .)
-    COMMA           reduce using rule 114 (empty -> .)
-
-    invocation_3                   shift and go to state 216
-    empty                          shift and go to state 187
-
-state 209
 
     (47) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM . expression RPAREN for_3 DO block for_4
     (71) expression -> . t_expression
@@ -3565,7 +3525,7 @@ state 209
     CTES            shift and go to state 107
     LPAREN          shift and go to state 108
 
-    expression                     shift and go to state 217
+    expression                     shift and go to state 215
     t_expression                   shift and go to state 93
     g_expression                   shift and go to state 95
     m_expression                   shift and go to state 96
@@ -3576,47 +3536,102 @@ state 209
     invocation                     shift and go to state 101
     expression_parenthesis         shift and go to state 102
 
+state 209
+
+    (61) invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON . invocation_6
+    (67) invocation_6 -> . empty
+    (114) empty -> .
+
+    FOR             reduce using rule 114 (empty -> .)
+    DO              reduce using rule 114 (empty -> .)
+    WHILE           reduce using rule 114 (empty -> .)
+    IF              reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    PRINT           reduce using rule 114 (empty -> .)
+    READ            reduce using rule 114 (empty -> .)
+    GENKEY          reduce using rule 114 (empty -> .)
+    RBRACE          reduce using rule 114 (empty -> .)
+    TIMES           reduce using rule 114 (empty -> .)
+    DIVIDE          reduce using rule 114 (empty -> .)
+    PLUS            reduce using rule 114 (empty -> .)
+    MINUS           reduce using rule 114 (empty -> .)
+    LESS            reduce using rule 114 (empty -> .)
+    GREATER         reduce using rule 114 (empty -> .)
+    EQUALS          reduce using rule 114 (empty -> .)
+    NOTEQUAL        reduce using rule 114 (empty -> .)
+    GREATERTHAN     reduce using rule 114 (empty -> .)
+    LESSTHAN        reduce using rule 114 (empty -> .)
+    AND             reduce using rule 114 (empty -> .)
+    OR              reduce using rule 114 (empty -> .)
+    RBRACK          reduce using rule 114 (empty -> .)
+    SEMICOLON       reduce using rule 114 (empty -> .)
+    RPAREN          reduce using rule 114 (empty -> .)
+    COMMA           reduce using rule 114 (empty -> .)
+    FROM            reduce using rule 114 (empty -> .)
+
+    invocation_6                   shift and go to state 216
+    empty                          shift and go to state 217
+
 state 210
+
+    (68) expressions -> expressions COMMA invocation_4 expression . invocation_3
+    (64) invocation_3 -> . empty
+    (114) empty -> .
+
+    RPAREN          reduce using rule 114 (empty -> .)
+    COMMA           reduce using rule 114 (empty -> .)
+
+    invocation_3                   shift and go to state 218
+    empty                          shift and go to state 188
+
+state 211
 
     (46) do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot . SEMICOLON
 
-    SEMICOLON       shift and go to state 218
+    SEMICOLON       shift and go to state 219
 
 
-state 211
+state 212
 
     (56) gotot -> empty .
 
     SEMICOLON       reduce using rule 56 (gotot -> empty .)
 
 
-state 212
+state 213
 
     (55) if_else -> IF LPAREN expression RPAREN gotof block ELSE goto . block
     (28) block -> . LBRACE block2 RBRACE
 
     LBRACE          shift and go to state 34
 
-    block                          shift and go to state 219
+    block                          shift and go to state 220
 
-state 213
+state 214
 
     (57) goto -> empty .
 
     LBRACE          reduce using rule 57 (goto -> empty .)
 
 
-state 214
+state 215
+
+    (47) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression . RPAREN for_3 DO block for_4
+
+    RPAREN          shift and go to state 221
+
+
+state 216
 
     (61) invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .
 
-    READ            reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
     FOR             reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
     DO              reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
     WHILE           reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
     IF              reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
     ID              reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
     PRINT           reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
+    READ            reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
     GENKEY          reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
     RBRACE          reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
     TIMES           reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
@@ -3638,17 +3653,17 @@ state 214
     FROM            reduce using rule 61 (invocation -> ID invocation_1 LPAREN invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 .)
 
 
-state 215
+state 217
 
     (67) invocation_6 -> empty .
 
-    READ            reduce using rule 67 (invocation_6 -> empty .)
     FOR             reduce using rule 67 (invocation_6 -> empty .)
     DO              reduce using rule 67 (invocation_6 -> empty .)
     WHILE           reduce using rule 67 (invocation_6 -> empty .)
     IF              reduce using rule 67 (invocation_6 -> empty .)
     ID              reduce using rule 67 (invocation_6 -> empty .)
     PRINT           reduce using rule 67 (invocation_6 -> empty .)
+    READ            reduce using rule 67 (invocation_6 -> empty .)
     GENKEY          reduce using rule 67 (invocation_6 -> empty .)
     RBRACE          reduce using rule 67 (invocation_6 -> empty .)
     TIMES           reduce using rule 67 (invocation_6 -> empty .)
@@ -3670,7 +3685,7 @@ state 215
     FROM            reduce using rule 67 (invocation_6 -> empty .)
 
 
-state 216
+state 218
 
     (68) expressions -> expressions COMMA invocation_4 expression invocation_3 .
 
@@ -3678,44 +3693,37 @@ state 216
     COMMA           reduce using rule 68 (expressions -> expressions COMMA invocation_4 expression invocation_3 .)
 
 
-state 217
-
-    (47) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression . RPAREN for_3 DO block for_4
-
-    RPAREN          shift and go to state 220
-
-
-state 218
+state 219
 
     (46) do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .
 
-    READ            reduce using rule 46 (do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .)
     FOR             reduce using rule 46 (do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .)
     DO              reduce using rule 46 (do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .)
     WHILE           reduce using rule 46 (do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .)
     IF              reduce using rule 46 (do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .)
     ID              reduce using rule 46 (do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .)
     PRINT           reduce using rule 46 (do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .)
+    READ            reduce using rule 46 (do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .)
     GENKEY          reduce using rule 46 (do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .)
     RBRACE          reduce using rule 46 (do_while -> DO breadcrumb block WHILE LPAREN expression RPAREN gotot SEMICOLON .)
 
 
-state 219
+state 220
 
     (55) if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .
 
-    READ            reduce using rule 55 (if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .)
     FOR             reduce using rule 55 (if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .)
     DO              reduce using rule 55 (if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .)
     WHILE           reduce using rule 55 (if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .)
     IF              reduce using rule 55 (if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .)
     ID              reduce using rule 55 (if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .)
     PRINT           reduce using rule 55 (if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .)
+    READ            reduce using rule 55 (if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .)
     GENKEY          reduce using rule 55 (if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .)
     RBRACE          reduce using rule 55 (if_else -> IF LPAREN expression RPAREN gotof block ELSE goto block .)
 
 
-state 220
+state 221
 
     (47) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN . for_3 DO block for_4
     (50) for_3 -> . empty
@@ -3723,77 +3731,77 @@ state 220
 
     DO              reduce using rule 114 (empty -> .)
 
-    for_3                          shift and go to state 221
-    empty                          shift and go to state 222
+    for_3                          shift and go to state 222
+    empty                          shift and go to state 223
 
-state 221
+state 222
 
     (47) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 . DO block for_4
 
-    DO              shift and go to state 223
+    DO              shift and go to state 224
 
 
-state 222
+state 223
 
     (50) for_3 -> empty .
 
     DO              reduce using rule 50 (for_3 -> empty .)
 
 
-state 223
+state 224
 
     (47) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO . block for_4
     (28) block -> . LBRACE block2 RBRACE
 
     LBRACE          shift and go to state 34
 
-    block                          shift and go to state 224
+    block                          shift and go to state 225
 
-state 224
+state 225
 
     (47) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block . for_4
     (51) for_4 -> . empty
     (114) empty -> .
 
-    READ            reduce using rule 114 (empty -> .)
     FOR             reduce using rule 114 (empty -> .)
     DO              reduce using rule 114 (empty -> .)
     WHILE           reduce using rule 114 (empty -> .)
     IF              reduce using rule 114 (empty -> .)
     ID              reduce using rule 114 (empty -> .)
     PRINT           reduce using rule 114 (empty -> .)
+    READ            reduce using rule 114 (empty -> .)
     GENKEY          reduce using rule 114 (empty -> .)
     RBRACE          reduce using rule 114 (empty -> .)
 
-    for_4                          shift and go to state 225
-    empty                          shift and go to state 226
+    for_4                          shift and go to state 226
+    empty                          shift and go to state 227
 
-state 225
+state 226
 
     (47) for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .
 
-    READ            reduce using rule 47 (for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .)
     FOR             reduce using rule 47 (for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .)
     DO              reduce using rule 47 (for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .)
     WHILE           reduce using rule 47 (for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .)
     IF              reduce using rule 47 (for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .)
     ID              reduce using rule 47 (for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .)
     PRINT           reduce using rule 47 (for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .)
+    READ            reduce using rule 47 (for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .)
     GENKEY          reduce using rule 47 (for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .)
     RBRACE          reduce using rule 47 (for -> FOR LPAREN ID for_1 ASSIGN expression for_2 FROM expression RPAREN for_3 DO block for_4 .)
 
 
-state 226
+state 227
 
     (51) for_4 -> empty .
 
-    READ            reduce using rule 51 (for_4 -> empty .)
     FOR             reduce using rule 51 (for_4 -> empty .)
     DO              reduce using rule 51 (for_4 -> empty .)
     WHILE           reduce using rule 51 (for_4 -> empty .)
     IF              reduce using rule 51 (for_4 -> empty .)
     ID              reduce using rule 51 (for_4 -> empty .)
     PRINT           reduce using rule 51 (for_4 -> empty .)
+    READ            reduce using rule 51 (for_4 -> empty .)
     GENKEY          reduce using rule 51 (for_4 -> empty .)
     RBRACE          reduce using rule 51 (for_4 -> empty .)
 
@@ -3801,5 +3809,5 @@ WARNING:
 WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for FUNCTION in state 7 resolved as shift
-WARNING: reduce/reduce conflict in state 119 resolved using rule (print_argument -> CTES)
-WARNING: rejected rule (cte -> CTES) in state 119
+WARNING: reduce/reduce conflict in state 118 resolved using rule (print_argument -> CTES)
+WARNING: rejected rule (cte -> CTES) in state 118

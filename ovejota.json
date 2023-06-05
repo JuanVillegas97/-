@@ -27,18 +27,7 @@
             "id": 0
         }
     },
-    "constant_table": {
-        "asdaaaskdjb": {
-            "id": "asdaaaskdjb",
-            "type": "STRING",
-            "virtual_address": 6502
-        },
-        "DASKJBASD": {
-            "id": "DASKJBASD",
-            "type": "STRING",
-            "virtual_address": 6503
-        }
-    },
+    "constant_table": {},
     "quadruples": [
         {
             "_Quadruple__operator": 24,
@@ -47,13 +36,7 @@
             "_Quadruple__avail": 2
         },
         {
-            "_Quadruple__operator": 13,
-            "_Quadruple__left_operand": 6502,
-            "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 500
-        },
-        {
-            "_Quadruple__operator": 33,
+            "_Quadruple__operator": 35,
             "_Quadruple__left_operand": "",
             "_Quadruple__right_operand": "",
             "_Quadruple__avail": 500
@@ -62,7 +45,7 @@
             "_Quadruple__operator": 33,
             "_Quadruple__left_operand": "",
             "_Quadruple__right_operand": "",
-            "_Quadruple__avail": 6503
+            "_Quadruple__avail": 500
         },
         {
             "_Quadruple__operator": 32,

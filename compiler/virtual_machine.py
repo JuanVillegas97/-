@@ -1,5 +1,6 @@
 
 from compiler.memory_map import MemoryMap
+from cryptography.fernet import Fernet
 import json
 #INT     1000-1999
 #FLOAT   2000-2999
@@ -108,7 +109,6 @@ class VirtualMachine:
                 self.__memory.set_value_at_address(type,address,left_side)
             elif operator == 33: #!Perform PRINT
                 addres_to_print = result 
-             
                 memory_allocation = self.__get_value(result)
                 value_to_print = self.__get_value(addres_to_print)
                 print(value_to_print)
@@ -166,7 +166,17 @@ class VirtualMachine:
                 type = self.__get_type(addres)
                 my_input = input("Write the input -> ")
                 self.__memory.set_value_at_address(type,addres,my_input)
-                pass
+            elif operator == 35: #!Perform GEN KEY
+                operand_to_assing = result
+                
+                memory_allocation = self.__get_value(operand_to_assing)
+                
+                key = Fernet.generate_key()
+                key_string = key.decode()
+                
+                type = self.__get_type(operand_to_assing)
+                self.__memory.set_value_at_address(type,operand_to_assing,key_string)
+
             elif operator == 32: #!perfrom END
                 break
             
