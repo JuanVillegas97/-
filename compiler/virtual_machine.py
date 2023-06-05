@@ -24,8 +24,7 @@ class VirtualMachine:
         self.__insctruction_pointers = []
         self.__context = []
         self.__execute()        
-        
-        
+        self.__key = None
     def __execute(self):
         instruction_pointer = 0
         quadruples = self.__quadruples
@@ -247,19 +246,24 @@ class VirtualMachine:
                 pass
                 # addres = result 
                 # memory_allocation = self.__get_value(addres)
-                # text_to_decrypt = self.__get_value(right_operand)
-                
+                # data = self.__get_value(right_operand)
                 # key = self.__get_value(left_operand)
-                # key = key.encode('utf-8')
-                # text_to_decrypt = "your_text".encode('utf-8')
                 
-                # signature = key.sign(
+                # key = key.encode('utf-8')
+                # # Load the private key object from PEM bytes
+                # private_key = serialization.load_pem_private_key(
+                #     key,
+                #     password=None,  # No password protection in this example
+                #     backend=default_backend()
+                # )
+                # data = data.encode('utf-8')
+                # signature = private_key.sign(
                 #         data,
                 #         ec.ECDSA(hashes.SHA256())
                 #     )
                 
-                # r_hex = hex(signature.r)
-                # s_hex = hex(signature.s)
+                # r_hex = signature.r.to_bytes((signature.r.bit_length() + 7) // 8, 'big').hex()
+                # s_hex = signature.s.to_bytes((signature.s.bit_length() + 7) // 8, 'big').hex()
 
                 # # Remove the '0x' prefix from the hexadecimal strings
                 # r_hex = r_hex[2:]
@@ -283,7 +287,7 @@ class VirtualMachine:
                     encryption_algorithm=serialization.NoEncryption()
                 )
                 private_key_pem_str = private_key_pem.decode('utf-8')
-
+                self.__key = private_key
                 type = self.__get_type(operand_to_assing)
                 self.__memory.set_value_at_address(type,operand_to_assing,private_key_pem_str)
             elif operator == 32: #!perfrom END
