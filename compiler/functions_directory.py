@@ -19,6 +19,9 @@ class FunctionsDirectory:
             raise Exception("This class is a singleton. Use get_instance() method to get the instance.")
         else:
             FunctionsDirectory.__instance = self
+            self.current_array_id = None
+            self.auxStackDim = []
+            self.nodeCounter = 0
             self.__constants_table = {}
             self.__function_dictionary = {}
             self.__current_function_name = None
@@ -47,6 +50,13 @@ class FunctionsDirectory:
     #FLOAT   2000-2999
     #CHAR    3000-3999
     #BOOLEAN 4000-4999
+    
+    def r_formula(self,lims,r):
+        return (lims + 1) * r
+    def array_op(self):
+        r = len(self.auxStackDim)
+        r=self.r_formula(self.auxStackDim[self.nodeCounter].lims,r)
+        print(r)
     def get_void_id(self):
         self.__void_id += 1
         return self.__void_id
@@ -176,7 +186,7 @@ class FunctionsDirectory:
     def add_typed_func_to_global(self):
         if self.__current_function_type in reserved:
             self.__current_function_type = reserved[self.__current_function_type]
-        if self.__current_function_type is not "VOID":
+        if self.__current_function_type != "VOID":
             new_virtual_address = self.get_next_virtual_address_var_and_temp(self.__current_function_type)
             new_variable = variable(self.__current_function_name,self.__current_function_type,new_virtual_address)
             self.__function_dictionary[self.__program_name]["variable_table"][self.__current_function_name] = new_variable
@@ -222,8 +232,9 @@ class FunctionsDirectory:
                 raise Exception("Variable '{}' multiple declaration".format(id))
             
             new_vitrual_address = self.get_next_virtual_address_var_and_temp(type)
-            new_variable = variable(id,type,new_vitrual_address)
+            new_variable = variable(id,type,new_vitrual_address,self.auxStackDim)
             self.__function_dictionary[self.__current_function_name]["variable_table"][id] = new_variable
+            self.auxStackDim = []
     
     def get_invocation_type(self,invocation_id):
         return self.__function_dictionary[invocation_id]["type"]
@@ -293,12 +304,16 @@ class FunctionsDirectory:
                 parameters_types, resources_str))
 
             print("Variable Table:")
-            print("{:10} {:10} {:15}".format("ID", "Type", "Virtual Address"))
+            print("{:10} {:10} {:10} {:15}".format("ID", "Type", "Virtual Address","Dimensions"))
 
             for variable_id, variable in variable_table.items():
                 variable_type = variable.type
                 virtual_address = str(variable.virtual_address)
-                print("{:10} {:10} {:15}".format(variable_id, variable_type, virtual_address))
+                dims = ""
+                for dim in variable.dim:
+                    dims += dim.get_string()
+
+                print("{:10} {:10} {:15} {:15}".format(variable_id, variable_type, virtual_address,dims))
             print("\n")
         print("\nConstants Table:")
         print("{:10} {:20} {}".format("Type", "Virtual Address","Constant"))

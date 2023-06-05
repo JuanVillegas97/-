@@ -7,7 +7,7 @@ from compiler.interfaces.quadruple import Quadruple
 from compiler.neural_points_handler import NeuralPointsHandler
 from compiler.interfaces.variable import variable
 from constants.virtual_constants import virtual_operators
-
+from compiler.interfaces.dim import Dim
 
 global invocation_flag
 invocation_flag = False
@@ -151,6 +151,7 @@ def p_var_declaration(p):
     type = p[3]
     ids = p[4]
     directory.add_variable(ids,type)
+
     
     directory.add_resource(ids,VARIABLES)
     
@@ -184,14 +185,35 @@ def p_variables(p):
 def p_variable(p):
     '''
     variable : ID
-            | ID LBRACK expression RBRACK
-            | ID LBRACK expression RBRACK LBRACK expression RBRACK
+            | ID array_true array_dim
+            | ID array_true array_dim array_dim
+            | ID array_true array_dim array_dim array_dim
     '''
     id = p[1]
     p[0] = id
-    if not directory.get_is_variable_declaration():
-        directory.search_variable(id)
+    if len(p)>2:
+        directory.array_op()
 
+def p_array_true(p):
+    '''
+    array_true : empty
+    '''
+    id = p[-1]
+    directory.current_array_id = id
+    
+def p_array_dim(p):
+    '''
+    array_dim : LBRACK expression RBRACK 
+    '''
+    if inter_rep.pop(TYPES) == 'INT':
+        lims = inter_rep.pop(OPERANDS)
+        id = directory.current_array_id
+        directory.auxStackDim.append(Dim(lims))
+        
+    else:
+        raise("Limit is not an integer")
+    
+    
 def p_parameters(p):
     '''
     parameters : parameters  COMMA parameter
@@ -689,18 +711,7 @@ def p_expressions(p):
                 | empty
     '''
     
-def p_expression(p): # instead of = it ahs to be not
-    '''
-    expression : t_expression 
-                | NOT t_expression
-    '''
-    
-    if len(p) == 4: # push opeartor
-        operator = p[2]
-        inter_rep.push(OPERATORS,operator)
-        inter_rep.print_stacks()
-        inter_rep.create_quadruple()
-        name, type = inter_rep.get_temporal_info()
+
 
 def p_print(p):
     '''
@@ -762,17 +773,35 @@ def p_assingation(p):
     inter_rep.push(OPERATORS,operator)
     inter_rep.print_stacks()
     inter_rep.create_quadruple()
-    
+
+def p_expression(p): # instead of = it ahs to be not
+    '''
+    expression : t_expression 
+                | NOT t_expression
+    '''
+    if len(p) == 4: # push opeartor
+        p[0] = p[2]
+        operator = p[2]
+        inter_rep.push(OPERATORS,operator)
+        inter_rep.print_stacks()
+        inter_rep.create_quadruple()
+        name, type = inter_rep.get_temporal_info()
+    else:
+        p[0] = p[1]
+        
 def p_t_expression(p):
     '''
     t_expression : g_expression 
                 | t_expression boolean_operator g_expression
     '''
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
+        p[0] = p[2]
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
+    else:
+        p[0] = p[1]
 
 def p_g_expression(p):
     '''
@@ -780,10 +809,14 @@ def p_g_expression(p):
                 | g_expression comparison_operator m_expression
     '''
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
+        p[0] = p[2]
+        
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
+    else:
+        p[0] = p[1]
 
 def p_m_expression(p):
     '''
@@ -791,21 +824,31 @@ def p_m_expression(p):
                 |  m_expression addition_operator term
     '''
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
+        p[0] = p[2]
+        
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
+    else:
+        p[0] = p[1]
         
 def p_term(p):
     '''
     term : factor 
         |  term multiplication_operator factor
     '''
+    
     if len(p) == 4: # Neural-point 2 POper.Push(* or /)
+        p[0] = p[2]
+        
         operator = p[2]
         inter_rep.push(OPERATORS,operator)
         inter_rep.print_stacks()
         inter_rep.create_quadruple()
+    else:
+        p[0] = p[1]
+
 
 def p_factor(p):
     '''
@@ -814,6 +857,8 @@ def p_factor(p):
             | invocation
             | expression_parenthesis
     '''
+
+    p[0] = p[1]
     id = p[1]
     if id != None: # Neurla-point 1 PilaO.Push(id.name) and PTypes.Push(id.type)
         current_function_name = directory.get_current_function_name()
@@ -878,6 +923,7 @@ def p_cte(p):
         | CTEB
         | CTES
     '''
+
     p[0] = p[1]
     value = p[1]
     directory.add_constant(value)
