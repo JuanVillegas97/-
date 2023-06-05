@@ -105,7 +105,6 @@ class VirtualMachine:
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
                 memory_allocation = self.__get_value(result)
-                print(result,"hisadasdasdasdasdasdi")
                 address = result                                    # Saving the addres for later
                 result = int(left_operand) > right_operand               # Performin addition
                 type = self.__get_variable_type(result)
