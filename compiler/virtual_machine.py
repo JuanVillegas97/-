@@ -138,7 +138,6 @@ class VirtualMachine:
                 self.__memory.set_current(name)
                 self.__memory.load_resources(name)
                 #! LEFT TO DO SAVE MEMORY POINTER
-                pass
             elif operator == 30: #!Perform PARAMETERS
                 addres_paramater = result
                 address_argument = left_operand
@@ -150,18 +149,17 @@ class VirtualMachine:
                 
                 type = self.__get_type(addres_paramater)
                 self.__memory.set_value_at_address(type,addres_paramater,argument)
-                pass
             elif operator == 31: #!Perform GOSUB
                 self.__insctruction_pointers.append(instruction_pointer)
                 id = result
                 name = self.__memory.find_key_by_id(id)
                 starting_address = self.__memory.get_func_starting_address(name)
+                
                 instruction_pointer = starting_address - 2
-                pass
             elif operator == 25: #!Perform END FUNC
                 stacked_instruction_pointer = self.__insctruction_pointers.pop()
                 instruction_pointer = stacked_instruction_pointer
-                
+            elif operator == 28: #!Perform Return
                 pass
             elif operator == 32: #!perfrom END
                 break

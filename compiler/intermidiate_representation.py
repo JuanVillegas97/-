@@ -72,7 +72,7 @@ class IntermediateRepresentation:
     def push(self, stack_name, value):
         if stack_name in self.__stacks:
             if stack_name == OPERATORS:
-                if value not in ["+", "-", "*", "/", "<", ">","=","!","!="]:
+                if value not in ["+", "-", "*", "/", "<", ">","=","!","!=",'==']:
                     raise ValueError("Invalid operator")
             elif stack_name == TYPES:
                 if value not in [BOOLEAN, CHAR, STRING, FLOAT, INT]:

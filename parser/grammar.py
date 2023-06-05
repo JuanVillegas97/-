@@ -7,8 +7,11 @@ from compiler.interfaces.quadruple import Quadruple
 from compiler.neural_points_handler import NeuralPointsHandler
 from compiler.interfaces.variable import variable
 from constants.virtual_constants import virtual_operators
-# Because PLY is a bottom-up and cannot be converted to a top-down it's difficult to track stuff
-# The rules named with ..._scope are neural points to prepare the variable table
+
+
+global invocation_flag
+invocation_flag = False
+
 precedence = (
      ('nonassoc', 'LESS', 'GREATER', 'EQUALS', 'NOTEQUAL', 'LESSTHAN', 'GREATERTHAN'),  # Nonassociative operators
      ('left', 'PLUS', 'MINUS'),
@@ -68,6 +71,7 @@ def p_function_body(p):
     function_body : LBRACE statements return RBRACE
                 | LBRACE statements RBRACE
     '''
+    
     new_quadruple = Quadruple(ENDFUNC,"","","")
     inter_rep.push(QUADRUPLES,new_quadruple)
     
@@ -75,6 +79,22 @@ def p_function_body(p):
     directory.set_resource(TEMPORALS,num_of_temporals)
     
     inter_rep.reset_temporal_counter()
+
+
+def p_return(p):
+    '''
+    return : RETURN expressions SEMICOLON
+    | RETURN SEMICOLON
+    | empty
+    '''
+    p[0] = "return was performed"
+    return_value = inter_rep.pop(OPERANDS)
+    return_type = inter_rep.pop(TYPES) #!vereify type with singature
+    if inter_rep.get_virtual_address():
+        return_value = inter_rep.convert_operand_to_address(return_value)
+    new_quadruple = Quadruple(RETURN,"","",return_value)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    inter_rep.print_stacks()
     
 def p_function_1(p):
     '''
@@ -185,6 +205,7 @@ def p_parameters(p):
     | parameter
     | empty
     '''
+    
 
 def p_parameter(p):
     '''
@@ -204,6 +225,9 @@ def p_statements(p):
     | statement
     | empty
     '''
+    print(len(p))
+    
+
 
 def p_statement(p):
     '''
@@ -219,11 +243,13 @@ def p_statement(p):
     | return
     | print
     '''
+    p[0] = p[1]
 
 def p_assing_to_call(p):
     '''
     assing_to_call : variable ASSIGN invocation
     '''
+    p[0] = "ASSING CALL WAS PERFORM"
 
 def p_do_while(p):
     '''
@@ -372,12 +398,14 @@ def p_if(p):
     '''
     if : IF LPAREN expression  RPAREN gotof LBRACE statements RBRACE
     '''
+    p[0] = "if was performed"
     inter_rep.fill()
     
 def p_if_else(p):
     '''
     if_else : IF LPAREN  expression  RPAREN  gotof LBRACE statements RBRACE  ELSE goto LBRACE statements RBRACE
     '''
+    p[0] = "if else was perform"
     inter_rep.fill()
 
 def p_gotot(p):
@@ -397,16 +425,6 @@ def p_gotof(p):
     gotof : empty
     '''
     inter_rep.gotof_if()
-    
-def p_return(p):
-    '''
-    return : RETURN expression SEMICOLON
-    '''
-    return_value = inter_rep.pop(OPERANDS)
-    return_type = inter_rep.pop(TYPES) #!vereify type with singature
-    new_quadruple = Quadruple(RETURN,"","",return_value)
-    inter_rep.push(QUADRUPLES,new_quadruple)
-    inter_rep.print_stacks()
     
 
 def p_read(p):
@@ -431,7 +449,11 @@ def p_variable_list(p):
 
 def p_invocation(p):
     '''
-    invocation : ID invocation_1 LPAREN  invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6    '''
+    invocation : ID invocation_1 LPAREN  invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 
+    '''
+    
+
+
     
 def p_invocation_1(p):
     '''
@@ -439,24 +461,31 @@ def p_invocation_1(p):
     '''
     invocation_id = p[-1]
     neural_points_handler.invocation_1(invocation_id)
-    
+
+
 def p_invocation_2(p):
     '''
     invocation_2 : empty
     '''
+    global invocation_flag 
+    invocation_flag = True
     neural_points_handler.invocation_2()
-    
+
 def p_invocation_3(p):
     '''
     invocation_3 : empty
     '''
-    neural_points_handler.invocation_3()
+    global invocation_flag 
+    if invocation_flag:
+        neural_points_handler.invocation_3()
     
 def p_invocation_4(p):
     '''
     invocation_4 : empty
     '''
-    neural_points_handler.invocation_4()
+    global invocation_flag 
+    if invocation_flag:
+        neural_points_handler.invocation_4()
     
 def p_invocation_5(p):
     '''
@@ -468,6 +497,8 @@ def p_invocation_6(p):
     '''
     invocation_6 : empty
     '''
+    global invocation_flag
+    invocation_flag = True
     neural_points_handler.invocation_6()
     
 def p_expressions(p):
@@ -539,6 +570,7 @@ def p_assingation(p):
     '''
     assingation : variable ASSIGN expression SEMICOLON
     '''
+    p[0] = "assignation was perform"
     variable = p[1]
     operator = p[2]
     directory.search_variable([variable])
@@ -596,6 +628,7 @@ def p_factor(p):
     '''
     factor : variable
             | cte
+            | invocation
             | expression_parenthesis
     '''
     id = p[1]

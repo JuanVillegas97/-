@@ -55,6 +55,8 @@ class NeuralPointsHandler:
           
           global parameter
           k = self.__inter_rep.get_paramater_counter()
+          
+          
           parameter = self.__directory.get_function_dictionary()[global_invocation_id][PARAMETERS][k]
           
           
