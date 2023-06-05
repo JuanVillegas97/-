@@ -18,6 +18,7 @@ ENCRYPT = 36
 DECRYPT = 37
 SHA_256 = 38
 RANDOM_SALT = 39
+HMAC = 40
 # GOTOF = "GotoF"
 # GOTOT = "GotoT"
 # GOTO = "Goto"

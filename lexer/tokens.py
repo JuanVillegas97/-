@@ -26,7 +26,8 @@ reserved = {
     '暗号化': 'ENCRYPT',
     '復号化': 'DECRYPT',
     'シャ' : 'SHA_256',
-    'ランダムな塩': 'RANDOM_SALT'
+    'ランダムな塩': 'RANDOM_SALT',
+    'エイチマック': 'HMAC'
 }
 
 # List of token names.

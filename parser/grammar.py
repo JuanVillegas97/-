@@ -259,8 +259,30 @@ def p_special_func(p):
                 | decrypt
                 | sha_256
                 | random_salt
+                | hmac
     '''
 
+def p_hmac(p):
+    '''
+    hmac : HMAC LPAREN ID COMMA ID RPAREN SPECIAL ID SEMICOLON
+    '''
+    key = p[3]
+    text_to_encrypt = p[5]
+    operand_to_assing = p[8]
+    
+    directory.search_variable([key])
+    directory.search_variable([text_to_encrypt])
+    directory.search_variable([operand_to_assing])
+    
+    # #* HANDELS THE CONVERTION TO ADDRESSS I
+    if inter_rep.get_virtual_address():
+        key = inter_rep.convert_operand_to_address(key)
+        text_to_encrypt = inter_rep.convert_operand_to_address(text_to_encrypt)
+        operand_to_assing = inter_rep.convert_operand_to_address(operand_to_assing)
+    
+    new_quadruple = Quadruple(HMAC,key,text_to_encrypt,operand_to_assing)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+    
 def p_random_salt(p):
     '''
     random_salt : RANDOM_SALT LPAREN CTEI RPAREN SPECIAL ID SEMICOLON
