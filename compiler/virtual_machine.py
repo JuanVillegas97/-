@@ -142,10 +142,8 @@ class VirtualMachine:
                 addres_paramater = result
                 address_argument = left_operand
                 
-                
                 argument = self.__get_value(address_argument)
                 memory_allocation = self.__get_value(result)
-                
                 
                 type = self.__get_type(addres_paramater)
                 self.__memory.set_value_at_address(type,addres_paramater,argument)
@@ -160,6 +158,13 @@ class VirtualMachine:
                 stacked_instruction_pointer = self.__insctruction_pointers.pop()
                 instruction_pointer = stacked_instruction_pointer
             elif operator == 28: #!Perform Return
+                pass
+            elif operator == 34: #!Perform READ
+                addres = result
+                memory_allocation = self.__get_value(result)
+                type = self.__get_type(addres)
+                my_input = input("Write the input -> ")
+                self.__memory.set_value_at_address(type,addres,my_input)
                 pass
             elif operator == 32: #!perfrom END
                 break

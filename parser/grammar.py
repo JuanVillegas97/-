@@ -77,8 +77,6 @@ def p_function_signature(p):
 def p_return(p):
     '''
     return : RETURN expressions SEMICOLON
-    | RETURN SEMICOLON
-    | empty
     '''
     p[0] = "return was performed"
     return_value = inter_rep.pop(OPERANDS)
@@ -233,11 +231,12 @@ def p_block3(p):
     block3 : statement block2
     '''
     p[0]=('block3',p[1])
-    
+
+
+# THE ONES YOU WANT
 def p_statement(p):
     '''
     statement : read 
-    | assing_to_call
     | assingation
     | for
     | do_while
@@ -247,7 +246,6 @@ def p_statement(p):
     | if
     | print
     '''
-    print ("dsadfasd")
     p[0] = p[1]
 
 def p_assing_to_call(p):
@@ -432,14 +430,8 @@ def p_gotof(p):
     inter_rep.gotof_if()
     
 
-def p_read(p):
-    '''
-    read : READ LPAREN variable_list RPAREN SEMICOLON
-    '''
-    variables = p[3]
-    for variable in variables:
-        new_quadruple = Quadruple("read","","",variable)
-        inter_rep.push(QUADRUPLES,new_quadruple)
+
+
 
 def p_variable_list(p):
     '''
@@ -530,6 +522,19 @@ def p_print(p):
     '''
     print : PRINT LPAREN print_arguments RPAREN SEMICOLON
     '''
+    
+def p_read(p):
+    '''
+    read : READ LPAREN ID RPAREN SEMICOLON
+    '''
+    read_operand = p[3]
+    directory.search_variable(read_operand)
+    #* HANDELS THE CONVERTION TO ADDRESSS I
+    if inter_rep.get_virtual_address():
+        read_operand = inter_rep.convert_operand_to_address(read_operand)
+    new_quadruple = Quadruple(READ,"","",read_operand)
+    inter_rep.push(QUADRUPLES,new_quadruple)
+
     
 def p_print_arguments(p):
     '''

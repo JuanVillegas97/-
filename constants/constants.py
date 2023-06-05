@@ -12,6 +12,7 @@ PARAM = 30
 GOSUB = 31
 END = 32
 PRINT = 33
+READ = 34
 
 # GOTOF = "GotoF"
 # GOTOT = "GotoT"
