@@ -19,6 +19,7 @@ class MemoryMap:
                     "FLOAT" : {}, 
                     "CHAR" : {} , 
                     "BOOLEAN" : {},
+                    "STRING" :{},
                     "resources" : {},
                     "current" : ""
                 }
@@ -27,6 +28,9 @@ class MemoryMap:
 
     def print_memory(self):
         print("=== MEMORY ===")
+        print("STRING:")
+        for key, value in self.__memory["STRING"].items():
+            print(f"{key}: {value}")
         print("INT:")
         for key, value in self.__memory["INT"].items():
             print(f"{key}: {value}")

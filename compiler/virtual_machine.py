@@ -108,6 +108,7 @@ class VirtualMachine:
                 self.__memory.set_value_at_address(type,address,left_side)
             elif operator == 33: #!Perform PRINT
                 addres_to_print = result 
+             
                 memory_allocation = self.__get_value(result)
                 value_to_print = self.__get_value(addres_to_print)
                 print(value_to_print)
@@ -181,7 +182,9 @@ class VirtualMachine:
                 if virtual_address == address:
                     return constant_data['id']
                 
-        if 1000 <= address < 5000:
+        if 500 <= address < 5000:
+            if 500 <= address <= 999:
+                type =  "STRING"
             if 1000 <= address <= 1999:
                 type =  "INT"
             elif 2000 <= address <= 2999:
@@ -206,8 +209,10 @@ class VirtualMachine:
         return directory,constant_table,quadruples
     
     def __get_type(self, address):
-        if 1000 <= address < 5000:
-            if 1000 <= address <= 1999:
+        if 500 <= address < 5000:
+            if 500 <= address <= 999:
+                return  "STRING"
+            elif 1000 <= address <= 1999:
                 return  "INT"
             elif 2000 <= address <= 2999:
                 return  "FLOAT"

@@ -35,12 +35,14 @@ class FunctionsDirectory:
                 STRING : 6502
             }
             self.__virtual_address_var_and_temp ={
+                STRING: 500,
                 INT : 1000,
                 FLOAT :2000,
                 CHAR : 3000,
                 BOOLEAN : 4000,
             }
     #VARIABLES AND TEMPORALS
+    #STRIN    500-999
     #INT     1000-1999
     #FLOAT   2000-2999
     #CHAR    3000-3999
@@ -54,9 +56,10 @@ class FunctionsDirectory:
     
     def get_next_virtual_address_var_and_temp(self, data_type):
         virtual_address = self.__virtual_address_var_and_temp[data_type]
-
         # Check if the virtual address is within the valid range
-        if data_type == INT and virtual_address >= 1000 and virtual_address <= 1999:
+        if data_type == STRING and virtual_address >= 500 and virtual_address <= 999:
+            self.__virtual_address_var_and_temp[data_type] += 1
+        elif data_type == INT and virtual_address >= 1000 and virtual_address <= 1999:
             self.__virtual_address_var_and_temp[data_type] += 1
         elif data_type == FLOAT and virtual_address >= 2000 and virtual_address <= 2999:
             self.__virtual_address_var_and_temp[data_type] += 1
@@ -214,7 +217,6 @@ class FunctionsDirectory:
         
         if type in reserved:
             type = reserved[type]
-
         for id in ids:
             if id in self.__function_dictionary[self.__current_function_name]["variable_table"]:
                 raise Exception("Variable '{}' multiple declaration".format(id))

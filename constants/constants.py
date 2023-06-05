@@ -13,6 +13,7 @@ GOSUB = 31
 END = 32
 PRINT = 33
 READ = 34
+GENKEY = 35
 
 # GOTOF = "GotoF"
 # GOTOT = "GotoT"

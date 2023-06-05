@@ -1,10 +1,10 @@
 プログラム my_program;
 
 メイン()
-変数 整数 A;
+変数 文字列 A;
 {
-    入力する(A);
-    プリント(A);
+    A = "asdaaaskdjb";
+    プリント(A,"DASKJBASD");
 }
 
 エンド

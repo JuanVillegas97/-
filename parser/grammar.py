@@ -141,6 +141,7 @@ def p_var_declaration_list(p):
     var_declaration_list : var_declaration var_declarations
     '''
 
+    
 #? 2 neuronal points open and close variable declaration so I can cehck if and id has already been declared 
 #? This can be seen in p_variable
 def p_var_declaration(p):
@@ -245,8 +246,41 @@ def p_statement(p):
     | invocation
     | if
     | print
+    | special_func
     '''
     p[0] = p[1]
+
+
+
+def p_special_func(p):
+    '''
+    special_func : gen_key
+    '''
+
+def p_gen_key(p):
+    '''
+    gen_key : GENKEY LPAREN CTES RPAREN SEMICOLON
+    '''
+    # operand = p[3]
+    # directory.search_variable(operand)
+    # #* HANDELS THE CONVERTION TO ADDRESSS I
+    # if inter_rep.get_virtual_address():
+    #     operand = inter_rep.convert_operand_to_address(operand)
+        
+    # new_quadruple = Quadruple(GENKEY,"","",operand)
+    # inter_rep.push(QUADRUPLES,new_quadruple)
+
+def p_read(p):
+    '''
+    read : READ LPAREN ID RPAREN SEMICOLON
+    '''
+    read_operand = p[3]
+    directory.search_variable(read_operand)
+    #* HANDELS THE CONVERTION TO ADDRESSS I
+    if inter_rep.get_virtual_address():
+        read_operand = inter_rep.convert_operand_to_address(read_operand)
+    new_quadruple = Quadruple(READ,"","",read_operand)
+    inter_rep.push(QUADRUPLES,new_quadruple)
 
 def p_assing_to_call(p):
     '''
@@ -523,17 +557,6 @@ def p_print(p):
     print : PRINT LPAREN print_arguments RPAREN SEMICOLON
     '''
     
-def p_read(p):
-    '''
-    read : READ LPAREN ID RPAREN SEMICOLON
-    '''
-    read_operand = p[3]
-    directory.search_variable(read_operand)
-    #* HANDELS THE CONVERTION TO ADDRESSS I
-    if inter_rep.get_virtual_address():
-        read_operand = inter_rep.convert_operand_to_address(read_operand)
-    new_quadruple = Quadruple(READ,"","",read_operand)
-    inter_rep.push(QUADRUPLES,new_quadruple)
 
     
 def p_print_arguments(p):
@@ -693,6 +716,7 @@ def p_simple_type(p):
                 | FLOAT
                 | CHAR
                 | BOOLEAN
+                | STRING
     '''
     p[0] = p[1]
 
@@ -702,6 +726,7 @@ def p_cte(p):
         | CTEF
         | CTEC
         | CTEB
+        | CTES
     '''
     p[0] = p[1]
     value = p[1]
