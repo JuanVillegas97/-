@@ -1,0 +1,36 @@
+プログラム my_program;
+
+メイン()
+変数 文字列 T,D;
+変数 文字列 テ,鍵;
+変数 文字列 S;
+{
+    プリント("The following is your new random key, using the Fernet algorithm");
+    鍵生成() -> 鍵;
+    プリント(鍵," ");
+
+    プリント("Give me a text to encrypt with the generated key");
+    入力する(T);
+    プリント(T," ");
+
+    プリント("The following is your text encrypted");
+    暗号化(鍵,T) -> D;
+    プリント(D," ");
+
+    プリント("Now let's decrypt it, with the same key");
+    復号化(鍵,D) -> D;
+    プリント(D,"");
+
+    T = "こんにちは";
+    プリント("Now let's compute a SHA256 hash with the following string",T);
+    シャ(T) -> D;
+    プリント(D);
+    プリント("Let's repeat the proccess to enusre is the same hasshing",T);
+    シャ(T) -> D;
+    プリント(D);
+
+    ランダムな塩(16) -> S;
+    プリント(S);
+}
+
+エンド
