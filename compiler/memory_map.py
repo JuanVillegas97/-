@@ -50,6 +50,9 @@ class MemoryMap:
 
     def set_current(self,current):
         self.__memory["current"] = current
+    
+    def get_current(self):
+        return self.__memory["current"]
         
     def load_resources(self,name):
         self.__memory["resources"][name] = sum(self.__directory[name]["resources"].values())
@@ -59,12 +62,18 @@ class MemoryMap:
         if self.__memory["resources"][current] > 0 :
             self.__memory["resources"][current] -= 1
             self.__memory[type][address] = None
-            
-            print("Memory in the address", address, "of type", type, "has been allocated") if self.is_debuging else None
-
-            
+            if self.is_debuging:
+                print("Memory in the address", address, "of type", type, "has been allocated") if self.is_debuging else None
+                print("From the context ",current, " current memory ",self.__memory["resources"][current])
+        elif self.__memory["resources"]["my_program"] > 0:
+            self.__memory["resources"]["my_program"] -= 1
+            self.__memory[type][address] = None
+            if self.is_debuging:
+                print("Memory in the address", address, "of type", type, "has been allocated ") 
+                print("From the context my_program, current memory ",self.__memory["resources"]["my_program"])
         else:
-            raise("Not enough memory")
+            address = str(address)
+            raise Exception("Not enough memory with allocation for address" + address)
         
     def get_value(self, type, address):
         if type in self.__memory and address in self.__memory[type]:
@@ -86,6 +95,12 @@ class MemoryMap:
             if value["id"] == id:
                 return key
         return None
+    
+    def find_address_by_name(self,name):
+        if name in self.__directory:
+            return self.__directory[name].get("id")
+        else:
+            return None
     
     def get_func_starting_address(self,name):
         return self.__directory[name]["starting_address"]

@@ -29,7 +29,9 @@ reserved = {
     'ランダムな塩': 'RANDOM_SALT',
     'エイチマック': 'HMAC',
     '楕円署名': 'ECDSA',
-    '鍵生成楕円署名' : 'ECDSAKEY'
+    '鍵生成楕円署名' : 'ECDSAKEY',
+    'ピビケデエフ' : 'PBKDF',
+    
 }
 
 # List of token names.
@@ -64,14 +66,15 @@ tokens = [
     'GREATERTHAN',
     'LESSTHAN',
     'NOT',
-    'SPECIAL'
+    'SPECIAL',
+    'ARROBA'
 ]+ list(reserved.values())
 
 
 # Regular expression rules for simple tokens
+t_ARROBA = r'%'
 t_PLUS    = r'\+'
 t_SPECIAL = r'->'
-
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
 t_DIVIDE  = r'/'

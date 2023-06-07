@@ -82,7 +82,7 @@ class NeuralPointsHandler:
           #*
           #* ALSO +1 IN NUM OF GLOBAL TEMPORALS BECAUSE EACH PARAMATER IS A NEW TEMPORAL
           
-          # param_avail = self.__inter_rep.generate_avail()
+          #param_avail = self.__inter_rep.generate_avail()
           
           new_quadruple = Quadruple(PARAM,argument,"",arg_num)
           self.__inter_rep.push(QUADRUPLES,new_quadruple)
@@ -112,6 +112,7 @@ class NeuralPointsHandler:
           invocation_type = self.__directory.get_invocation_type(global_invocation_id)
           if invocation_type != "VOID":
                new_temporal = self.__inter_rep.generate_avail()
+               
                assign = ASSIGN 
                
                #* HANDELS THE CONVERTION TO ADDRESSS

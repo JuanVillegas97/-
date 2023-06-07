@@ -21,6 +21,8 @@ RANDOM_SALT = 39
 HMAC = 40
 ECDSA = 41
 ECDAKEY = 42
+PBKDF2 = 43
+
 # GOTOF = "GotoF"
 # GOTOT = "GotoT"
 # GOTO = "Goto"
@@ -73,3 +75,5 @@ JUMPS = "jumps"
 LOCAL = "LOCAL"
 VARIABLES_TEMPORALS = "variables_temporals"
 CTES = "ctes"
+
+PROGRAM = "PROGRAM"

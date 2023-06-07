@@ -23,8 +23,8 @@ class VirtualMachine:
         self.__quadruples = quadruples
         self.__insctruction_pointers = []
         self.__context = []
+        self.__retrun_aux = []
         self.__execute()        
-        self.__key = None
     def __execute(self):
         instruction_pointer = 0
         quadruples = self.__quadruples
@@ -77,6 +77,14 @@ class VirtualMachine:
                 result = left_operand / right_operand               # Performin addition
                 type = self.__get_variable_type(result)
                 self.__memory.set_value_at_address(type,address,result)
+            elif operator == 7:  #! Perform EQUALS
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                memory_allocation = self.__get_value(result)
+                address = result                                    # Saving the addres for later
+                result = left_operand == right_operand   
+                type = self.__get_variable_type(result)
+                self.__memory.set_value_at_address(type,address,result)
             elif operator == 9:  #! Perform LESS
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -105,7 +113,6 @@ class VirtualMachine:
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
                 memory_allocation = self.__get_value(result)
-                print(result,"hisadasdasdasdasdasdi")
                 address = result                                    # Saving the addres for later
                 result = int(left_operand) > right_operand               # Performin addition
                 type = self.__get_variable_type(result)
@@ -143,7 +150,8 @@ class VirtualMachine:
                 name = self.__memory.find_key_by_id(id)
                 
                 #*I need to know the previous context so...
-                self.__context.append(name)
+                current_context = self.__memory.get_current()
+                self.__context.append(current_context)
                 
                 self.__memory.set_current(name)
                 self.__memory.load_resources(name)
@@ -165,9 +173,24 @@ class VirtualMachine:
                 
                 instruction_pointer = starting_address - 2
             elif operator == 25: #!Perform END FUNC
+                previous_context = self.__context.pop()
+                
+                self.__memory.set_current(previous_context)
+                
                 stacked_instruction_pointer = self.__insctruction_pointers.pop()
+                
                 instruction_pointer = stacked_instruction_pointer
             elif operator == 28: #!Perform Return
+                return_address = result
+                current = self.__memory.get_current()
+                address_to_set = self.__memory.find_address_by_name(current) #find me the addres of the global variable to be set in the current context
+                type = self.__get_type(address_to_set)
+
+                self.__memory.set_current("my_program") #Change the context to global
+                self.__memory.get_value(type,address_to_set) #Allocate memory in global
+                
+                self.__memory.set_value_at_address(type,address_to_set,return_address) #set value in the address
+
                 pass
             elif operator == 34: #!Perform READ
                 addres = result

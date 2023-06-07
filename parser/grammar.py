@@ -76,7 +76,7 @@ def p_function_signature(p):
 
 def p_return(p):
     '''
-    return : RETURN expression SEMICOLON
+    return : RETURN expression
     '''
     p[0] = "return was performed"
     return_value = inter_rep.pop(OPERANDS)
@@ -263,8 +263,15 @@ def p_special_func(p):
                 | hmac
                 | ecdsa
                 | ecdsa_key
+                | pbkdf2
     '''
 
+def p_pbkdf2(p):
+    '''
+    pbkdf2 : PBKDF LPAREN ID COMMA ID RPAREN SPECIAL ID SEMICOLON
+    '''
+    
+    
 def p_ecdsa_key(p):
     '''
     ecdsa_key : ECDSAKEY LPAREN RPAREN SPECIAL ID SEMICOLON
@@ -632,11 +639,8 @@ def p_variable_list(p):
 
 def p_invocation(p):
     '''
-    invocation : ID invocation_1 LPAREN  invocation_2 expressions RPAREN invocation_5 SEMICOLON invocation_6 
+    invocation : ARROBA ID invocation_1 LPAREN  invocation_2 expressions RPAREN invocation_5 invocation_6 
     '''
-    
-
-
     
 def p_invocation_1(p):
     '''

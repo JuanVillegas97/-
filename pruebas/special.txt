@@ -1,5 +1,6 @@
 プログラム my_program;
 
+
 メイン()
 変数 文字列 T,D;
 変数 文字列 テ,鍵;
@@ -27,10 +28,14 @@
     プリント(D);
     プリント("Let's repeat the proccess to enusre is the same hasshing",T);
     シャ(T) -> D;
-    プリント(D);
+    プリント(D,"");
 
+    プリント("Let's generate a random salt to generate a strong key");
+    シャ(T) -> D;
     ランダムな塩(16) -> S;
     プリント(S);
+
+    ピビケデエフ(D,S) -> S;
 }
 
 エンド
