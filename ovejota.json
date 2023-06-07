@@ -39,7 +39,7 @@
             "resources": {
                 "parameters": 2,
                 "variables": 0,
-                "temporals": 2
+                "temporals": 4
             },
             "virtual_parameters": [
                 1004,
@@ -58,7 +58,7 @@
             "resources": {
                 "parameters": 0,
                 "variables": 2,
-                "temporals": 0
+                "temporals": 2
             },
             "virtual_parameters": [],
             "parameters": [],

@@ -25,6 +25,7 @@ class VirtualMachine:
         self.__memory_stack = []
         self.__memory_pointers = []
         self.__memory_pointer = None
+        self.__param_aux = []
         self.__insctruction_pointers = []
         self.__execute()        
     
@@ -42,11 +43,9 @@ class VirtualMachine:
             right_operand = quadruple["_Quadruple__right_operand"]
             result = quadruple["_Quadruple__avail"]
             
-            # if self.__memory_stack.is_debuging:
-            #     print(10*"-")
-            #     self.__memory_stack.print_memory()
-            #     print("My memory is about ot perform -> ",quadruple.values())
-            #     print(10*"-")
+
+            # self.__print_memory_stack()
+            # print("My memory is about ot perform -> ",quadruple.values())
             
             if operator == 24: #!Perform GOTOMAIN
                 #* Append segment of global and main
@@ -153,30 +152,38 @@ class VirtualMachine:
             elif operator == 23: #!Perform GOTO
                 instruction_pointer = result - 2
             elif operator == 29: #!Perform ERA
+                #* Create nee memory
                 id_address = result
                 function_name = self.__find_key_by_id(id_address)
                 function = MemorySegment(self.__get_resources(function_name))
                 self.__memory_stack.append(function)
                 
-                # #*I need to know the previous context so...
+                # #*IF need to know the previous context so...
                 self.__memory_pointers.append(self.__memory_pointer)
-                self.__memory_pointer += 1
                 
             elif operator == 30: #!Perform PARAMETERS
-                addres_paramater = result
-                address_argument = left_operand
+                parameter_address = result        #Address to be set in the new func
+                argument_address = left_operand  #Address to to send to the new func
                 
-                argument = self.__get_value(address_argument)
+                argument_value = self.__get_value(argument_address)
                 memory_allocation = self.__get_value(result)
                 
-                type = self.__get_type(addres_paramater)
-                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,addres_paramater,argument)
+                self.__param_aux.append((parameter_address,argument_value))
+                
+                
+                
+
             elif operator == 31: #!Perform GOSUB
                 self.__insctruction_pointers.append(instruction_pointer) # Save current inscuction pointer
-                id = result
-                name = self.__find_key_by_id(id)
-                starting_address = self.__directory[name]["starting_address"]
+                starting_address = self.__directory[self.__find_key_by_id(result)]["starting_address"] # Get the starting address
                 instruction_pointer = starting_address - 2
+                
+                self.__memory_pointer += 1 #Move to the resources of the function
+                for tuple in self.__param_aux:
+                    parameter_address, argument_value = tuple
+                    type = self.__get_type(parameter_address)
+                    self.__memory_stack[self.__memory_pointer].set_value_at_address(type,parameter_address,argument_value)
+                
             elif operator == 25: #!Perform END FUNC
                 self.__memory_pointer = self.__memory_pointers.pop()
                 self.__memory_stack.pop()
@@ -334,7 +341,7 @@ class VirtualMachine:
                 break
             
             instruction_pointer += 1
-            self.__print_memory_stack()
+            # self.__print_memory_stack()
             
         # print(self.__memory_pointer)
         # print(self.__memory_pointers)

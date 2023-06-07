@@ -8,7 +8,7 @@ class MemorySegment:
             "STRING" :{},
         }
         self.resources = resources
-        self.is_debugging = True
+        self.is_debugging = False
 
     def print_memory(self):
         print("=== MEMORY ===")
