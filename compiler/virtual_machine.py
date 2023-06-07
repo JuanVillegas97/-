@@ -23,7 +23,8 @@ class VirtualMachine:
         self.__quadruples = quadruples
         
         self.__memory_stack = []
-        self.__memory_stack_pointer = None
+        self.__memory_pointers = []
+        self.__memory_pointer = None
         self.__insctruction_pointers = []
         self.__execute()        
     
@@ -56,7 +57,7 @@ class VirtualMachine:
                 self.__memory_stack.append(main_memory)
 
                 #* Move memory pointer to main
-                self.__memory_stack_pointer = 1
+                self.__memory_pointer = 1
                 instruction_pointer = result - 2
             elif operator == 0: #! Perform ADDITION
                 left_operand =  self.__get_value(left_operand)   # Getting the address for left operand
@@ -65,7 +66,7 @@ class VirtualMachine:
                 address = result                                 # Saving the addres to be set
                 result = left_operand + right_operand            # Performin arithmetic
                 type = self.__get_variable_type(result)          # Getting type of result
-                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,address,result)
             elif operator == 1:  #! Perform SUBSTRACTION
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -73,7 +74,7 @@ class VirtualMachine:
                 address = result                                    # Saving the addres for later
                 result = left_operand - right_operand               # Performin addition
                 type = self.__get_variable_type(result)
-                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,address,result)
             elif operator == 2:  #! Perform MULTIPLICATION
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -81,7 +82,7 @@ class VirtualMachine:
                 address = result                                    # Saving the addres for later
                 result = left_operand * right_operand               # Performin addition
                 type = self.__get_variable_type(result)
-                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,address,result)
             elif operator == 3:  #! Perform DIVISION
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -89,7 +90,7 @@ class VirtualMachine:
                 address = result                                    # Saving the addres for later
                 result = left_operand / right_operand               # Performin addition
                 type = self.__get_variable_type(result)
-                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,address,result)
             elif operator == 7:  #! Perform EQUALS
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -97,7 +98,7 @@ class VirtualMachine:
                 address = result                                    # Saving the addres for later
                 result = left_operand == right_operand   
                 type = self.__get_variable_type(result)
-                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,address,result)
             elif operator == 9:  #! Perform LESS
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -105,7 +106,7 @@ class VirtualMachine:
                 address = result                                    # Saving the addres for later
                 result = left_operand < right_operand               # Performin addition
                 type = self.__get_variable_type(result)
-                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,address,result)
             elif operator == 10:  #! Perform LESS THAN
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -113,7 +114,7 @@ class VirtualMachine:
                 address = result                                    # Saving the addres for later
                 result = left_operand <= right_operand               # Performin addition
                 type = self.__get_variable_type(result)
-                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,address,result)
             elif operator == 11:  #! Perform GREATER THAN
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -121,7 +122,7 @@ class VirtualMachine:
                 address = result                                    # Saving the addres for later
                 result = left_operand >= right_operand               # Performin addition
                 type = self.__get_variable_type(result)
-                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,address,result)
             elif operator == 12:  #! Perform GREATER
                 left_operand =  self.__get_value(left_operand) 
                 right_operand =  self.__get_value(right_operand)
@@ -129,13 +130,13 @@ class VirtualMachine:
                 address = result                                    # Saving the addres for later
                 result = int(left_operand) > right_operand               # Performin addition
                 type = self.__get_variable_type(result)
-                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,address,result)
             elif operator == 13: #!Perform ASSIGNATION
                 left_side =  self.__get_value(left_operand) # Get the value 
                 memory_allocation = self.__get_value(result)    
                 address = result                            # Address where is going to bet set
                 type = self.__get_type(address)
-                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,left_side)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,address,left_side)
             elif operator == 33: #!Perform PRINT
                 addres_to_print = result 
                 memory_allocation = self.__get_value(result)
@@ -152,41 +153,36 @@ class VirtualMachine:
             elif operator == 23: #!Perform GOTO
                 instruction_pointer = result - 2
             elif operator == 29: #!Perform ERA
-                pass
-                # id = result
-                # name = self.__memory_stack.find_key_by_id(id)
+                id_address = result
+                function_name = self.__find_key_by_id(id_address)
+                function = MemorySegment(self.__get_resources(function_name))
+                self.__memory_stack.append(function)
                 
                 # #*I need to know the previous context so...
-                # current_context = self.__memory_stack.get_current()
-                # self.__context.append(current_context)
+                self.__memory_pointers.append(self.__memory_pointer)
+                self.__memory_pointer += 1
                 
-                # self.__memory_stack.set_current(name) # If its already there means is recurssion so I gotta create new context
-                # self.__memory_stack.load_resources(name)
-                #! LEFT TO DO SAVE MEMORY POINTER
             elif operator == 30: #!Perform PARAMETERS
-                pass
-                # addres_paramater = result
-                # address_argument = left_operand
+                addres_paramater = result
+                address_argument = left_operand
                 
-                # argument = self.__get_value(address_argument)
-                # memory_allocation = self.__get_value(result)
+                argument = self.__get_value(address_argument)
+                memory_allocation = self.__get_value(result)
                 
-                # type = self.__get_type(addres_paramater)
-                # self.__memory_stack.set_value_at_address(type,addres_paramater,argument)
+                type = self.__get_type(addres_paramater)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,addres_paramater,argument)
             elif operator == 31: #!Perform GOSUB
-                pass
-                # self.__insctruction_pointers.append(instruction_pointer)
-                # id = result
-                # name = self.__memory_stack.find_key_by_id(id)
-                # starting_address = self.__memory_stack.get_func_starting_address(name)
-                
-                # instruction_pointer = starting_address - 2
+                self.__insctruction_pointers.append(instruction_pointer) # Save current inscuction pointer
+                id = result
+                name = self.__find_key_by_id(id)
+                starting_address = self.__directory[name]["starting_address"]
+                instruction_pointer = starting_address - 2
             elif operator == 25: #!Perform END FUNC
-                pass
-                # previous_context = self.__context.pop()
-                # self.__memory_stack.set_current(previous_context)
-                # stacked_instruction_pointer = self.__insctruction_pointers.pop()
-                # instruction_pointer = stacked_instruction_pointer
+                self.__memory_pointer = self.__memory_pointers.pop()
+                self.__memory_stack.pop()
+                
+                stacked_instruction_pointer = self.__insctruction_pointers.pop()
+                instruction_pointer = stacked_instruction_pointer
             elif operator == 28: #!Perform Return
                 pass
                 # return_address = result
@@ -338,6 +334,11 @@ class VirtualMachine:
                 break
             
             instruction_pointer += 1
+            self.__print_memory_stack()
+            
+        # print(self.__memory_pointer)
+        # print(self.__memory_pointers)
+        
         print(20*"-")
         print("\n")
 
@@ -360,7 +361,7 @@ class VirtualMachine:
                 type =  "CHAR"
             elif 4000 <= address <= 4999:
                 type =  "BOOLEAN"
-            value = self.__memory_stack[self.__memory_stack_pointer].get_value(type,address)
+            value = self.__memory_stack[self.__memory_pointer].get_value(type,address)
             return value
         return "ERROR"
     
@@ -406,8 +407,9 @@ class VirtualMachine:
         return sum(self.__directory[name]["resources"].values())
     
     def __print_memory_stack(self):
+        print(10*"-")
         for index, memory_segment in enumerate(self.__memory_stack):
-            print(f"Memory Segment {index + 1}:")
+            print(f"Memory Segment {index}:")
             print(f"Resources: {memory_segment.resources}")
             print("Segment Contents:")
             for data_type, values in memory_segment.segment.items():
@@ -415,6 +417,12 @@ class VirtualMachine:
                 for variable, value in values.items():
                     print(f"\t{variable}: {value}")
             print()
+        print(10*"-")
+
             
 
-        
+    def __find_key_by_id(self, id):
+        for key, value in self.__directory.items():
+            if value["id"] == id:
+                return key
+        return None

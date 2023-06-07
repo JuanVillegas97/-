@@ -8,7 +8,7 @@ class MemorySegment:
             "STRING" :{},
         }
         self.resources = resources
-        self.is_debugging = False
+        self.is_debugging = True
 
     def print_memory(self):
         print("=== MEMORY ===")
@@ -54,11 +54,6 @@ class MemorySegment:
     def get_memory(self):
         return self.segment
         
-    def find_key_by_id(self, id):
-        for key, value in self.__directory.items():
-            if value["id"] == id:
-                return key
-        return None
     
     def find_address_by_name(self,name):
         if name in self.__directory:
@@ -66,5 +61,3 @@ class MemorySegment:
         else:
             return None
     
-    def get_func_starting_address(self,name):
-        return self.__directory[name]["starting_address"]
