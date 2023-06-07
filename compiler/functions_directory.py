@@ -185,6 +185,9 @@ class FunctionsDirectory:
         
     def set_func_id(self,id_):
         self.__function_dictionary[self.__current_function_name]["id"] = id_
+    def get_func_id(self):
+        return self.__function_dictionary[self.__current_function_name]["id"]
+    
     def add_function(self, starting_address=None):
         if self.__current_function_name in self.__function_dictionary:
             raise Exception("Function '{}' multiple declaration (functions can only have unique ID)".format(self.__current_function_name))

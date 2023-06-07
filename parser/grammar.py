@@ -83,7 +83,8 @@ def p_return(p):
     return_type = inter_rep.pop(TYPES) #!vereify type with singature
     if inter_rep.get_virtual_address():
         return_value = inter_rep.convert_operand_to_address(return_value)
-    new_quadruple = Quadruple(RETURN,"","",return_value)
+    
+    new_quadruple = Quadruple(RETURN,"",directory.get_func_id(),return_value)
     inter_rep.push(QUADRUPLES,new_quadruple)
     inter_rep.print_stacks()
     

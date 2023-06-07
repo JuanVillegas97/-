@@ -21,7 +21,7 @@ class VirtualMachine:
         self.__directory = directory
         self.__constant_table = constant_table
         self.__quadruples = quadruples
-        
+        self.__current_global = None
         self.__memory_stack = []
         self.__memory_pointers = []
         self.__memory_pointer = None
@@ -166,10 +166,11 @@ class VirtualMachine:
                 self.__param_aux.append((parameter_address,argument_value))
             elif operator == 31: #!Perform GOSUB
                 self.__insctruction_pointers.append(instruction_pointer) # Save current inscuction pointer
+                self.__current_global = result #Save the current id global
                 starting_address = self.__directory[self.__find_key_by_id(result)]["starting_address"] # Get the starting address
                 instruction_pointer = starting_address - 2
                 
-                self.__memory_pointer += 1 #Move to the resources of the function
+                self.__memory_pointer = len(self.__memory_stack) - 1
                 for tuple in self.__param_aux:
                     parameter_address, argument_value = tuple
                     type = self.__get_type(parameter_address)
@@ -182,20 +183,13 @@ class VirtualMachine:
                 stacked_instruction_pointer = self.__insctruction_pointers.pop()
                 instruction_pointer = stacked_instruction_pointer
             elif operator == 28: #!Perform Return
-                pass
-                # return_address = result
-                # current = self.__memory_stack.get_current()
-                # address_to_set = self.__memory_stack.find_address_by_name(current) #find me the addres of the global variable to be set in the current context
-                # type = self.__get_type(address_to_set)
+                return_address = result
                 
-                # return_value = self.__get_value(return_address)
-                
-                # self.__retrun_aux.append(return_value)
-
-                # self.__memory_stack.set_current("my_program") #Change the context to global
-                # self.__memory_stack.get_value(type,address_to_set) #Allocate memory in global
-                
-                # self.__memory_stack.set_value_at_address(type,address_to_set,return_value) #set value in the address
+                return_value =  self.__get_value(return_address)
+                self.__memory_pointer = 0
+                global_id = right_operand
+                type = self.__get_variable_type(return_address)
+                self.__memory_stack[self.__memory_pointer].set_value_at_address(type,global_id,return_value)
             elif operator == 34: #!Perform READ
                 pass
                 # addres = result
@@ -332,8 +326,8 @@ class VirtualMachine:
                 break
             
             instruction_pointer += 1
-            print("My memory after performing -> ",quadruple.values())
-            self.__print_memory_stack()
+            # print("My memory after performing -> ",quadruple.values())
+            # self.__print_memory_stack()
             
         
         print(20*"-")
@@ -359,6 +353,8 @@ class VirtualMachine:
             elif 4000 <= address <= 4999:
                 type =  "BOOLEAN"
             value = self.__memory_stack[self.__memory_pointer].get_value(type,address)
+            if value == None:
+                value = self.__memory_stack[0].get_value(type,address)
             return value
         return "ERROR"
     

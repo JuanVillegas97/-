@@ -8,36 +8,14 @@ class MemorySegment:
             "STRING" :{},
         }
         self.resources = resources
-        self.is_debugging = True
-
-    def print_memory(self):
-        print("=== MEMORY ===")
-        print("STRING:")
-        for key, value in self.segment["STRING"].items():
-            print(f"{key}: {value}")
-        print("INT:")
-        for key, value in self.segment["INT"].items():
-            print(f"{key}: {value}")
-        print("FLOAT:")
-        for key, value in self.segment["FLOAT"].items():
-            print(f"{key}: {value}")
-        print("CHAR:")
-        for key, value in self.segment["CHAR"].items():
-            print(f"{key}: {value}")
-        print("BOOLEAN:")
-        for key, value in self.segment["BOOLEAN"].items():
-            print(f"{key}: {value}")
-        print("Resources:")
-        print(self.resources)
+        self.is_debugging = False
         
     def __malloc(self,type,address):
         if self.resources > 0 :
             self.resources -= 1
             self.segment[type][address] = None
             print("Memory in the address", address, "of type", type, "has been allocated") if self.is_debugging else None
-        else:
-            address = str(address)
-            raise Exception("Not enough memory with allocation for address" + address)
+        
         
     def get_value(self, type, address):
         if type in self.segment and address in self.segment[type]:
@@ -51,13 +29,5 @@ class MemorySegment:
         if type in self.segment:
             self.segment[type][address] = value
         
-    def get_memory(self):
-        return self.segment
+
         
-    
-    def find_address_by_name(self,name):
-        if name in self.__directory:
-            return self.__directory[name].get("id")
-        else:
-            return None
-    
