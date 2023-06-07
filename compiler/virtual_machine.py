@@ -91,50 +91,45 @@ class VirtualMachine:
                 type = self.__get_variable_type(result)
                 self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
             elif operator == 7:  #! Perform EQUALS
-                pass
-                # left_operand =  self.__get_value(left_operand) 
-                # right_operand =  self.__get_value(right_operand)
-                # memory_allocation = self.__get_value(result)
-                # address = result                                    # Saving the addres for later
-                # result = left_operand == right_operand   
-                # type = self.__get_variable_type(result)
-                # self.__memory_stack.set_value_at_address(type,address,result)
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                memory_allocation = self.__get_value(result)
+                address = result                                    # Saving the addres for later
+                result = left_operand == right_operand   
+                type = self.__get_variable_type(result)
+                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
             elif operator == 9:  #! Perform LESS
-                pass
-                # left_operand =  self.__get_value(left_operand) 
-                # right_operand =  self.__get_value(right_operand)
-                # memory_allocation = self.__get_value(result)
-                # address = result                                    # Saving the addres for later
-                # result = left_operand < right_operand               # Performin addition
-                # type = self.__get_variable_type(result)
-                # self.__memory_stack.set_value_at_address(type,address,result)
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                memory_allocation = self.__get_value(result)
+                address = result                                    # Saving the addres for later
+                result = left_operand < right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
             elif operator == 10:  #! Perform LESS THAN
-                pass
-                # left_operand =  self.__get_value(left_operand) 
-                # right_operand =  self.__get_value(right_operand)
-                # memory_allocation = self.__get_value(result)
-                # address = result                                    # Saving the addres for later
-                # result = left_operand <= right_operand               # Performin addition
-                # type = self.__get_variable_type(result)
-                # self.__memory_stack.set_value_at_address(type,address,result)
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                memory_allocation = self.__get_value(result)
+                address = result                                    # Saving the addres for later
+                result = left_operand <= right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
             elif operator == 11:  #! Perform GREATER THAN
-                pass
-                # left_operand =  self.__get_value(left_operand) 
-                # right_operand =  self.__get_value(right_operand)
-                # memory_allocation = self.__get_value(result)
-                # address = result                                    # Saving the addres for later
-                # result = left_operand >= right_operand               # Performin addition
-                # type = self.__get_variable_type(result)
-                # self.__memory_stack.set_value_at_address(type,address,result)
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                memory_allocation = self.__get_value(result)
+                address = result                                    # Saving the addres for later
+                result = left_operand >= right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
             elif operator == 12:  #! Perform GREATER
-                pass
-                # left_operand =  self.__get_value(left_operand) 
-                # right_operand =  self.__get_value(right_operand)
-                # memory_allocation = self.__get_value(result)
-                # address = result                                    # Saving the addres for later
-                # result = int(left_operand) > right_operand               # Performin addition
-                # type = self.__get_variable_type(result)
-                # self.__memory_stack.set_value_at_address(type,address,result)
+                left_operand =  self.__get_value(left_operand) 
+                right_operand =  self.__get_value(right_operand)
+                memory_allocation = self.__get_value(result)
+                address = result                                    # Saving the addres for later
+                result = int(left_operand) > right_operand               # Performin addition
+                type = self.__get_variable_type(result)
+                self.__memory_stack[self.__memory_stack_pointer].set_value_at_address(type,address,result)
             elif operator == 13: #!Perform ASSIGNATION
                 left_side =  self.__get_value(left_operand) # Get the value 
                 memory_allocation = self.__get_value(result)    
@@ -147,20 +142,15 @@ class VirtualMachine:
                 value_to_print = self.__get_value(addres_to_print)
                 print(value_to_print)
             elif operator == 21: #!Perform GOTF
-                pass
-                # address_to_evaluate = self.__get_value(right_operand) 
-                # conditional_element = address_to_evaluate
-                # if not conditional_element:
-                #     instruction_pointer = result - 2
+                conditional_element = self.__get_value(right_operand) 
+                if not conditional_element:
+                    instruction_pointer = result - 2
             elif operator == 22: #!Perform GOTV
-                pass
-                # address_to_evaluate = self.__get_value(right_operand) 
-                # conditional_element = address_to_evaluate
-                # if conditional_element:
-                #     instruction_pointer = result - 2
+                conditional_element = self.__get_value(right_operand) 
+                if conditional_element:
+                    instruction_pointer = result - 2
             elif operator == 23: #!Perform GOTO
-                pass
-                # instruction_pointer = result - 2
+                instruction_pointer = result - 2
             elif operator == 29: #!Perform ERA
                 pass
                 # id = result

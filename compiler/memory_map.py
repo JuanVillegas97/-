@@ -8,7 +8,7 @@ class MemorySegment:
             "STRING" :{},
         }
         self.resources = resources
-
+        self.is_debugging = False
 
     def print_memory(self):
         print("=== MEMORY ===")
@@ -34,6 +34,7 @@ class MemorySegment:
         if self.resources > 0 :
             self.resources -= 1
             self.segment[type][address] = None
+            print("Memory in the address", address, "of type", type, "has been allocated") if self.is_debugging else None
         else:
             address = str(address)
             raise Exception("Not enough memory with allocation for address" + address)
