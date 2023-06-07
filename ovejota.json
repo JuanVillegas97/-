@@ -59,6 +59,11 @@
             "id": "Factorial of 5 is: ",
             "type": "STRING",
             "virtual_address": 6502
+        },
+        "6": {
+            "id": 6,
+            "type": "INT",
+            "virtual_address": 5002
         }
     },
     "quadruples": [
@@ -154,7 +159,7 @@
         },
         {
             "_Quadruple__operator": 30,
-            "_Quadruple__left_operand": 5001,
+            "_Quadruple__left_operand": 5002,
             "_Quadruple__right_operand": "",
             "_Quadruple__avail": 1001
         },

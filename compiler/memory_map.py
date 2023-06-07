@@ -23,6 +23,7 @@ class MemoryMap:
                     "resources" : {},
                     "current" : ""
                 }
+            self.current_counter = 0
             self.is_debuging = True
 
 

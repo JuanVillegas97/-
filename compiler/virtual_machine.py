@@ -153,7 +153,7 @@ class VirtualMachine:
                 current_context = self.__memory.get_current()
                 self.__context.append(current_context)
                 
-                self.__memory.set_current(name)
+                self.__memory.set_current(name) # If its already there means is recurssion so I gotta create new context
                 self.__memory.load_resources(name)
                 #! LEFT TO DO SAVE MEMORY POINTER
             elif operator == 30: #!Perform PARAMETERS
@@ -174,11 +174,8 @@ class VirtualMachine:
                 instruction_pointer = starting_address - 2
             elif operator == 25: #!Perform END FUNC
                 previous_context = self.__context.pop()
-                
                 self.__memory.set_current(previous_context)
-                
                 stacked_instruction_pointer = self.__insctruction_pointers.pop()
-                
                 instruction_pointer = stacked_instruction_pointer
             elif operator == 28: #!Perform Return
                 return_address = result
@@ -188,12 +185,12 @@ class VirtualMachine:
                 
                 return_value = self.__get_value(return_address)
                 
+                self.__retrun_aux.append(return_value)
+
                 self.__memory.set_current("my_program") #Change the context to global
                 self.__memory.get_value(type,address_to_set) #Allocate memory in global
                 
                 self.__memory.set_value_at_address(type,address_to_set,return_value) #set value in the address
-
-                pass
             elif operator == 34: #!Perform READ
                 addres = result
                 memory_allocation = self.__get_value(result)

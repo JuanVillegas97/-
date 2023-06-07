@@ -77,12 +77,13 @@ class NeuralPointsHandler:
           virtual_address = self.__inter_rep.get_virtual_address()
           if virtual_address:
                argument = self.__inter_rep.convert_operand_to_address(argument)
-               arg_num = self.__directory.get_virtual_parameter(global_invocation_id,k)
+               # arg_num = self.__inter_rep.convert_temporal_to_address(argumentType)
+               # THIS IS HOW I HAD IT
+               arg_num = self.__directory.get_virtual_parameter(global_invocation_id,k) 
                
           #*
           #* ALSO +1 IN NUM OF GLOBAL TEMPORALS BECAUSE EACH PARAMATER IS A NEW TEMPORAL
-          
-          #param_avail = self.__inter_rep.generate_avail()
+          # param_avail = self.__inter_rep.generate_avail()
           
           new_quadruple = Quadruple(PARAM,argument,"",arg_num)
           self.__inter_rep.push(QUADRUPLES,new_quadruple)
