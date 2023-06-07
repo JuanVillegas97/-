@@ -11,7 +11,7 @@
 
 メイン()
 {
-    プリント("Factorial of 5 is: ",%factorial(6));
+    プリント("Factorial of 5 is: ",%factorial(1));
 }
 
 エンド

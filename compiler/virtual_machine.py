@@ -44,9 +44,6 @@ class VirtualMachine:
             result = quadruple["_Quadruple__avail"]
             
 
-            # self.__print_memory_stack()
-            # print("My memory is about ot perform -> ",quadruple.values())
-            
             if operator == 24: #!Perform GOTOMAIN
                 #* Append segment of global and main
                 global_memory = MemorySegment(self.__get_resources("my_program"))
@@ -160,19 +157,13 @@ class VirtualMachine:
                 
                 # #*IF need to know the previous context so...
                 self.__memory_pointers.append(self.__memory_pointer)
-                
             elif operator == 30: #!Perform PARAMETERS
                 parameter_address = result        #Address to be set in the new func
                 argument_address = left_operand  #Address to to send to the new func
                 
                 argument_value = self.__get_value(argument_address)
-                memory_allocation = self.__get_value(result)
                 
                 self.__param_aux.append((parameter_address,argument_value))
-                
-                
-                
-
             elif operator == 31: #!Perform GOSUB
                 self.__insctruction_pointers.append(instruction_pointer) # Save current inscuction pointer
                 starting_address = self.__directory[self.__find_key_by_id(result)]["starting_address"] # Get the starting address
@@ -341,10 +332,9 @@ class VirtualMachine:
                 break
             
             instruction_pointer += 1
-            # self.__print_memory_stack()
+            print("My memory after performing -> ",quadruple.values())
+            self.__print_memory_stack()
             
-        # print(self.__memory_pointer)
-        # print(self.__memory_pointers)
         
         print(20*"-")
         print("\n")
