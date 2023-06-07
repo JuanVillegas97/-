@@ -185,11 +185,13 @@ class VirtualMachine:
                 current = self.__memory.get_current()
                 address_to_set = self.__memory.find_address_by_name(current) #find me the addres of the global variable to be set in the current context
                 type = self.__get_type(address_to_set)
-
+                
+                return_value = self.__get_value(return_address)
+                
                 self.__memory.set_current("my_program") #Change the context to global
                 self.__memory.get_value(type,address_to_set) #Allocate memory in global
                 
-                self.__memory.set_value_at_address(type,address_to_set,return_address) #set value in the address
+                self.__memory.set_value_at_address(type,address_to_set,return_value) #set value in the address
 
                 pass
             elif operator == 34: #!Perform READ
