@@ -10,7 +10,7 @@ neural = NeuralPointsHandler.get_instance()
 def _main():
     # * MANAGES VIRTUAL ADDRESS REMEMBER TO ALSO TURN OFF IN CONSTANTS
     inter_rep.set_virtual_address(True)
-    file  = "pruebas/factorial.txt"
+    file  = "pruebas/new_vm.txt"
     lexer = MyLexer()
     # with open(file, "r",encoding="utf-8") as file:
     #     tokens = file.read()
