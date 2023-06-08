@@ -5,13 +5,13 @@
     もし(n == 0){
         リターン 1
     }違えば{
-        リターン n * %factorial(n - 1)
+        リターン  %factorial(n - 1)  * n 
     }
 }
 
 メイン()
 {
-    プリント("Factorial of 5 is: ",%factorial(10));
+    プリント("Factorial of 10 is: ",%factorial(10));
 }
 
 エンド
