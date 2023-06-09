@@ -1,0 +1,22 @@
+プログラム my_program;
+
+メイン()
+変数 ブール b;
+変数 整数 i;
+変数 浮動小数点数 f;
+変数 文字列 s;
+変数 文字 c;
+{
+    b = 真;
+    i = 25;
+    f = 3.14;
+    s = "こんにちは";
+    c = 'c';
+    プリント("The value of b is: ",b);
+    プリント("The value of i is: ",i);
+    プリント("The value of f is: ",f);
+    プリント("The value of s is: ",s);
+    プリント("The value of c is: ",c);
+
+}
+エンド
